@@ -7,12 +7,12 @@ public sealed class TagCloudForm : Form
 {
     private readonly Ui ui;
 
-    public TagCloudForm(ApplicationProperties appProperties)
+    public TagCloudForm(ApplicationProperties appProperties, IWordsParser wordParser)
     {
         Size = new Size(960, 540);
         MinimumSize = Size;
         ApplicationProperties = appProperties;
-        ui = new Ui(ApplicationProperties) { Dock = DockStyle.Fill };
+        ui = new Ui(ApplicationProperties, wordParser) { Dock = DockStyle.Fill };
         Controls.Add(ui);
         Show();
     }

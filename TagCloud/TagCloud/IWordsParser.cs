@@ -2,5 +2,5 @@
 
 public interface IWordsParser
 {
-    public IEnumerable<string> Parse(string text);
+    public List<string> Parse(string text);
 }

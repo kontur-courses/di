@@ -13,8 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\GuiApp\GuiApp.csproj"/>
-        <ProjectReference Include="..\GuiApp\GuiApp.csproj"/>
         <ProjectReference Include="..\TagCloud\TagCloud.csproj"/>
     </ItemGroup>
 

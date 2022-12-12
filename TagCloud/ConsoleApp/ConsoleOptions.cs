@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using Autofac;
 using CommandLine;
 using TagCloud;
 
@@ -41,40 +40,38 @@ public class ConsoleOptions
     [Option("exclude", Required = false, HelpText = "Words to exclude")]
     public string? ExcludedWords { get; set; }
 
-    public void Apply(IContainer container)
+    public void Apply(ApplicationProperties properties, IWordsParser wordsParser)
     {
-        ApplySizeOption(container);
-        ApplyFontOption(container);
-        ApplyFileOption(container);
-        var cloudProperties = container.Resolve<CloudProperties>();
+        ApplySizeOption(properties.SizeProperties, properties.CloudProperties);
+        ApplyFontOption(properties.FontProperties);
+        ApplyFileOption(properties);
+        var cloudProperties = properties.CloudProperties;
         cloudProperties.Density = Density;
-        cloudProperties.ExcludedWords = ExcludedWords?.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
-        var palette = container.Resolve<Palette>();
+        if (ExcludedWords is not null)
+            cloudProperties.ExcludedWords = wordsParser.Parse(ExcludedWords);
+        var palette = properties.Palette;
         if (BackgroundColor is not null)
             palette.Background = ColorTranslator.FromHtml(BackgroundColor);
         if (ForegroundColor is not null)
             palette.Foreground = ColorTranslator.FromHtml(ForegroundColor);
     }
 
-    private void ApplySizeOption(IComponentContext container)
+    private void ApplySizeOption(SizeProperties sizeProperties, CloudProperties cloudProperties)
     {
-        var sizeProperties = container.Resolve<SizeProperties>();
         sizeProperties.ImageSize = new Size(Width, Height);
-        container.Resolve<CloudProperties>().Center = sizeProperties.ImageCenter;
+        cloudProperties.Center = sizeProperties.ImageCenter;
     }
 
-    private void ApplyFontOption(IComponentContext container)
+    private void ApplyFontOption(FontProperties fontProperties)
     {
-        var fontProperties = container.Resolve<FontProperties>();
         if (FontName != null)
             fontProperties.Family = new FontFamily(FontName);
         fontProperties.MinSize = MinFont;
         fontProperties.MaxSize = MaxFont;
     }
 
-    private void ApplyFileOption(IComponentContext container)
+    private void ApplyFileOption(ApplicationProperties properties)
     {
-        var properties = container.Resolve<ApplicationProperties>();
         if (File is not null)
             properties.Path = File;
 

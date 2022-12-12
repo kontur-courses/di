@@ -2,7 +2,7 @@
 
 public class FrequencyDictionary
 {
-    public static Dictionary<string, int> GetWordsFrequency(IEnumerable<string> text)
+    public Dictionary<string, int> GetWordsFrequency(IEnumerable<string> text)
     {
         var dictionary = new Dictionary<string, int>();
         foreach (var word in text)

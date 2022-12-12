@@ -4,12 +4,12 @@ namespace TagsCloudLayouter;
 
 public class CircularCloudLayouter : ICloudLayouter
 {
-    public Point Center { get; }
+    private Point Center { get; }
     public IReadOnlyList<Rectangle> Rectangles => rectangles;
 
     private double Density { get; }
     private double AngleStep { get; }
-    private readonly List<Rectangle> rectangles = new();
+    private List<Rectangle> rectangles = new();
     private PolarPoint CurrentPosition { get; set; }
     private List<(PolarPoint Start, PolarPoint End)> unusedRanges = new();
 

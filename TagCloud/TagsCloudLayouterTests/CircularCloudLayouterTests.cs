@@ -6,15 +6,14 @@ using TagsCloudLayouter;
 
 namespace TagsCloudLayouterTests;
 
+[TestFixture]
 public class CircularCloudLayouterTests
 {
-    private Point center = new Point(500, 500);
-    private CircularCloudLayouter layouter;
-
     [SetUp]
     public void Setup()
     {
         layouter = new CircularCloudLayouter(new Point(500, 500));
+        center = new Point(500, 500);
     }
 
     [TearDown]
@@ -39,6 +38,9 @@ public class CircularCloudLayouterTests
         TestContext.Error.WriteLine($"Tag cloud visualization saved to file {path}");
     }
 
+    private Point center;
+    private CircularCloudLayouter layouter;
+
     [TestCase(0, 0)]
     [TestCase(1, 0)]
     [TestCase(0, 1)]
@@ -48,18 +50,21 @@ public class CircularCloudLayouterTests
     public void PutNextRectangle_ThrowArgumentException_OnNonPositiveSize(int width, int height)
     {
         var action = () => layouter.PutNextRectangle(new Size(width, height));
+
         action.Should().Throw<ArgumentException>();
     }
 
     [Test]
     public void PutNextRectangle_ThrowException_OnHaveNoSpace()
     {
-        var layouter = new CircularCloudLayouter(this.layouter.Center, int.MaxValue, int.MaxValue);
+        layouter = new CircularCloudLayouter(center, int.MaxValue, int.MaxValue);
+
         var action = () =>
         {
             for (var i = 0; i < 100; i++)
                 layouter.PutNextRectangle(new Size(int.MaxValue, int.MaxValue));
         };
+
         action.Should().Throw<Exception>().WithMessage("There is no place for the rectangle");
     }
 
@@ -67,6 +72,7 @@ public class CircularCloudLayouterTests
     public void PutNextRectangle_NotThrowArgumentException_OnPositiveSize()
     {
         Action act = () => layouter.PutNextRectangle(new Size(1, 1));
+
         act.Should().NotThrow<ArgumentException>();
     }
 
@@ -74,11 +80,16 @@ public class CircularCloudLayouterTests
     public void PutNextRectangle_FirstInCenter()
     {
         var size = new Size(43, 45);
+
         layouter.PutNextRectangle(size);
-        layouter.Rectangles.Count.Should().Be(1);
-        layouter.Rectangles[^1].Location
+
+        layouter.Rectangles
             .Should()
-            .Be(new Point(center.X - size.Width / 2, center.Y - size.Height / 2));
+            .BeEquivalentTo(
+                new[]
+                {
+                    new Rectangle(new Point(center.X - size.Width / 2, center.Y - size.Height / 2), size)
+                });
     }
 
     [TestCase(81, 97, TestName = "Added with correct size on odd numbers")]
@@ -86,7 +97,9 @@ public class CircularCloudLayouterTests
     public void PutNextRectangle_AddedWithCorrectSize(int width, int height)
     {
         var size = new Size(width, height);
+
         layouter.PutNextRectangle(size);
+
         layouter.Rectangles.Should().Contain(x => x.Size == size);
     }
 
@@ -108,12 +121,11 @@ public class CircularCloudLayouterTests
     public bool HasOverlapWith_CorrectAnswer_OnOverlap(int xOffset, int yOffset, int width, int height)
     {
         var staticSize = new Size(12, 12);
-        
+
         layouter.PutNextRectangle(staticSize);
         var rectangle = new Rectangle(new Point(center.X + xOffset, center.Y + yOffset), new Size(width, height));
-        var hasOverlap = layouter.HasOverlapWith(rectangle);
-        
-        return hasOverlap;
+
+        return layouter.HasOverlapWith(rectangle);
     }
 
     [Test]
@@ -128,8 +140,8 @@ public class CircularCloudLayouterTests
         var rectangleArea = rects.Select(x => x.Width * x.Height).Sum();
         var horizontalRadius = Math.Abs(rects.Max(x => x.Right) - rects.Min(x => x.Left)) / 2;
         var verticalRadius = Math.Abs(rects.Max(x => x.Bottom) - rects.Min(x => x.Top)) / 2;
-        var boundingElipseArea = Math.PI * horizontalRadius * verticalRadius;
-        Math.Abs(rectangleArea / boundingElipseArea - 1).Should().BeLessThan(accuracy);
+        var boundingEllipseArea = Math.PI * horizontalRadius * verticalRadius;
+        Math.Abs(rectangleArea / boundingEllipseArea - 1).Should().BeLessThan(accuracy);
     }
 
 
@@ -145,7 +157,7 @@ public class CircularCloudLayouterTests
         var centers = rects.Select(r => new Point(r.X + r.Width / 2, r.Y + r.Height / 2));
 
         var distance = (Point p) =>
-            Math.Sqrt(Math.Pow(p.X - layouter.Center.X, 2) + Math.Pow(p.Y - layouter.Center.Y, 2));
+            Math.Sqrt(Math.Pow(p.X - center.X, 2) + Math.Pow(p.Y - center.Y, 2));
         centers.All(center => distance(center) < Math.Max(horizontalRadius, verticalRadius)).Should().BeTrue();
     }
 
@@ -156,6 +168,7 @@ public class CircularCloudLayouterTests
             layouter.PutNextRectangle(new Size(50, 50));
 
         layouter.Clear();
+
         layouter.Rectangles.Should().BeEmpty();
     }
 }

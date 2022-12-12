@@ -1,15 +1,15 @@
 ﻿namespace TagCloud;
 
-public class TextWrapper
+public class SizeByFrequency
 {
-    public TextWrapper(FontProperties fontProperties)
+    public SizeByFrequency(FontProperties fontProperties)
     {
         FontProperties = fontProperties;
     }
 
     private FontProperties FontProperties { get; }
 
-    public IEnumerable<Label> Wrap(Dictionary<string, int> wordsWithSize)
+    public IEnumerable<Label> ResizeAll(Dictionary<string, int> wordsWithSize)
     {
         var maxCount = wordsWithSize.Values.Max();
         var texts = new List<Label>();

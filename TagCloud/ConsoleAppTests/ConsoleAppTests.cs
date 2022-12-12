@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace ConsoleAppTests;
 
+[TestFixture]
 public class ConsoleAppTests
 {
     [TestCase("--help", TestName = "Help contains information about itself")]
@@ -19,8 +20,10 @@ public class ConsoleAppTests
         var args = new[] { "--help" };
         var sw = new StringWriter();
         Console.SetError(sw);
+        
         new ArgumentsParser().ParseArgs(args);
         var result = sw.ToString();
+        
         result.Should().Contain(info);
     }
 }

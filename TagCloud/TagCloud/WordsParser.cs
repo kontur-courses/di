@@ -2,8 +2,8 @@
 
 public class WordsParser : IWordsParser
 {
-    public IEnumerable<string> Parse(string text)
+    public List<string> Parse(string text)
     {
-        return text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        return text.Split(new[] { "\n", " ", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 }

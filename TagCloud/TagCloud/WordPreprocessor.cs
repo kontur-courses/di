@@ -7,10 +7,9 @@ public class WordPreprocessor : IWordPreprocessor
         excludedWords ??= Array.Empty<string>();
         var except = excludedWords
             .Select(word => word.ToLower().Trim())
-            .ToArray();
-        var w = words
+            .ToHashSet();
+        return words
             .Select(word => word.ToLower().Trim())
-            .Where(x => !except.Contains(x)).ToArray();
-        return w;
+            .Where(x => !except.Contains(x));
     }
 }

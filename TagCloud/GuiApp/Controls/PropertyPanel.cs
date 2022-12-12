@@ -8,7 +8,7 @@ public sealed class PropertyPanel : TableLayoutPanel
 
     private readonly ControlWithDescription<NumericUpDown> density = new(new NumericUpDown(), "Density");
 
-    private readonly ExcludedWords excludedWords = new();
+    private readonly ExcludedWords excludedWords;
 
     private readonly ControlWithDescription<FontComboBox> font = new(new FontComboBox(), "Font");
 
@@ -28,9 +28,10 @@ public sealed class PropertyPanel : TableLayoutPanel
     
     private readonly SaveButton saveButton = new();
 
-    public PropertyPanel(ApplicationProperties properties)
+    public PropertyPanel(ApplicationProperties properties, IWordsParser wordParser)
     {
         this.properties = properties;
+        excludedWords = new ExcludedWords(wordParser);
         BorderStyle = BorderStyle.FixedSingle;
         ColumnCount = 1;
         AddControls();
@@ -146,8 +147,9 @@ public sealed class PropertyPanel : TableLayoutPanel
 
     private void OnExcludedExcludedWordsChanged(object? sender, EventArgs args)
     {
-        properties.CloudProperties.ExcludedWords =
-            excludedWords.Text.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+        if (sender is not ExcludedWords words)
+            return;
+        properties.CloudProperties.ExcludedWords = words.Words;
     }
 
     private void OnDensityChanged(object? sender, EventArgs args)

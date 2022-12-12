@@ -6,9 +6,9 @@ public class Ui : TableLayoutPanel
 {
     private readonly PropertyPanel propertyPanel;
 
-    public Ui(ApplicationProperties properties)
+    public Ui(ApplicationProperties properties, IWordsParser wordParser)
     {
-        propertyPanel = new PropertyPanel(properties);
+        propertyPanel = new PropertyPanel(properties, wordParser);
         RowCount = 1;
         ColumnCount = 2;
         RowStyles.Add(new RowStyle(SizeType.AutoSize));
