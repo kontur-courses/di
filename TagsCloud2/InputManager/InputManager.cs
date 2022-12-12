@@ -1,66 +1,42 @@
 ﻿using System.Drawing;
 using System.Text;
 using McMaster.Extensions.CommandLineUtils;
-using TagsCloud2.FrequencyCompiler;
-using TagsCloud2.ImageSaver;
-using TagsCloud2.Lemmatizer;
-using TagsCloud2.Reader;
-using TagsCloud2.TagsCloudMaker;
-using TagsCloud2.TagsCloudMaker.BitmapMaker;
-using TagsCloud2.TagsCloudMaker.SizeDefiner;
 
-namespace TagsCloud2.Manager;
+namespace TagsCloud2.InputManager;
 
-public class ConsoleManager : IManager
+public class InputManager : IInputManager
 {
-    private IReader reader;
-    private ILemmatizer lemmatizer;
-    private IFrequencyCompiler frequencyCompiler;
-    private IImageSaver imageSaver;
-    private ITagsCloudMaker tagsCloudMaker;
-    private IBitmapTagsCloudMaker bitmapTagsCloudMaker;
-    private ISizeDefiner sizeDefiner;
+    private string path;
+    private string pathToSave;
+    private int size;
+    private Brush colorBrush;
+    private string fontFamilyName;
+    private string formatToSave;
+    private bool isVerticalWords;
 
-    public ConsoleManager(IReader reader,
-        ILemmatizer lemmatizer,
-        IFrequencyCompiler frequencyCompiler,
-        IImageSaver imageSaver,
-        ITagsCloudMaker tagsCloudMaker,
-        IBitmapTagsCloudMaker bitmapTagsCloudMaker,
-        ISizeDefiner sizeDefiner)
-    {
-        this.reader = reader;
-        this.lemmatizer = lemmatizer;
-        this.frequencyCompiler = frequencyCompiler;
-        this.imageSaver = imageSaver;
-        this.tagsCloudMaker = tagsCloudMaker;
-        this.bitmapTagsCloudMaker = bitmapTagsCloudMaker;
-        this.sizeDefiner = sizeDefiner;
-    }
-
-    public void StartConsoleProgram()
+    public void GatherInformation()
     {
         Console.OutputEncoding = Encoding.UTF8;
-        var path = GetInputWordsPath();
+        path = GetInputWordsPath();
         if (!File.Exists(path))
         {
             throw new FileNotFoundException();
         }
 
-        var pathToSave = GetDirectoryToSave();
+        pathToSave = GetDirectoryToSave();
         if (!Directory.Exists(pathToSave))
         {
             throw new DirectoryNotFoundException();
         }
 
-        var size = GetSize();
+        size = GetSize();
         if (size < 2000 && size > 4000)
         {
             Console.WriteLine("Размер не из диапазона :(");
             throw new ArgumentException();
         }
 
-        var isVerticalWords = GetIsVerticalWords();
+        isVerticalWords = GetIsVerticalWords();
 
         var color = GetColor();
         if (color < 1 && color > 2)
@@ -69,7 +45,7 @@ public class ConsoleManager : IManager
             throw new ArgumentException();
         }
 
-        var colorBrush = ColorBrush(color);
+        colorBrush = ColorBrush(color);
 
         var font = GetFontFamilyName();
         if (font < 1 && font > 2)
@@ -78,7 +54,7 @@ public class ConsoleManager : IManager
             throw new ArgumentException();
         }
 
-        var fontFamilyName = DefineFontFamilyName(font);
+        fontFamilyName = DefineFontFamilyName(font);
 
         var format = GetFormatToSave();
 
@@ -88,18 +64,43 @@ public class ConsoleManager : IManager
             throw new ArgumentException();
         }
 
-        var formatToSave = DefineFormatToSave(format);
-
-        var words = reader.ReadWordsFromFile(path);
-        var normalizeWords = lemmatizer.Lemmatize(words);
-        var frequencyDict = frequencyCompiler.GetFrequencyOfWords(normalizeWords);
-        var frequencyList = frequencyCompiler.GetFrequencyList(frequencyDict, 100);
-        var tagsCloudBitmap = tagsCloudMaker.MakeTagsCloud(frequencyList, fontFamilyName, 50,
-            colorBrush, new Size(size, size), bitmapTagsCloudMaker, sizeDefiner, isVerticalWords);
-        imageSaver.SaveImage(pathToSave, @"img", formatToSave, tagsCloudBitmap);
-        Console.WriteLine($"Готово! Сохранено в файле {pathToSave}+img.{formatToSave}! :)");
+        formatToSave = DefineFormatToSave(format);
+    }
+    public string Path()
+    {
+        return path;
     }
 
+    public string PathToSave()
+    {
+        return pathToSave;
+    }
+
+    public int Size()
+    {
+        return size;
+    }
+
+    public Brush BrushColor()
+    {
+        return colorBrush;
+    }
+
+    public string FontFamilyName()
+    {
+        return fontFamilyName;
+    }
+
+    public string FormatToSave()
+    {
+        return formatToSave;
+    }
+
+    public bool IsVerticalWords()
+    {
+        return isVerticalWords;
+    }
+    
     private static string DefineFormatToSave(int format)
     {
         string formatToSave = "png";

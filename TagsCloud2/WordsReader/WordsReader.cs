@@ -1,6 +1,6 @@
 ﻿namespace TagsCloud2.Reader;
 
-public class Reader: IReader
+public class WordsReader: IWordsReader
 {
     public List<string> ReadWordsFromFile(string pathToFile)
     {
