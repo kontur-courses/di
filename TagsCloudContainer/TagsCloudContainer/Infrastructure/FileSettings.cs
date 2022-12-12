@@ -10,16 +10,25 @@ namespace TagsCloudContainer.Infrastructure
     {
         public static string PathToProjResources = string.Join("\\", Environment.CurrentDirectory.Split('\\').SkipLast(3))
             + @"\Sources";
-        public string ResultImagePath { get; set; } = PathToProjResources;
-        public string SourceFilePath { get; set; } = PathToProjResources + @"\source.txt";
-        public string CustomBoringWordsFilePath { get; set; } = PathToProjResources + @"\boring.txt";
+        private string resultImagePath = PathToProjResources;
+        private string sourceFilePath = PathToProjResources + @"\source.txt";
+        private string customBoringWordsFilePath = PathToProjResources + @"\boring.txt";
 
-        public void ThrowExcIfFileNotFound()
+
+        public string ResultImagePath
         {
-            if (!File.Exists(SourceFilePath))
-                throw new FileNotFoundException($"Ресурсного файла со словами не существует {SourceFilePath}");
-            if (!File.Exists(SourceFilePath))
-                throw new FileNotFoundException($"Ресурсного файла со скучными словами не существует {SourceFilePath}");
+            get => resultImagePath;
+            set => resultImagePath =  File.Exists(value) ? value : resultImagePath;
+        }
+        public string SourceFilePath
+        {
+            get => sourceFilePath;
+            set => sourceFilePath = File.Exists(value) ? value : sourceFilePath;
+        }
+        public string CustomBoringWordsFilePath
+        {
+            get => customBoringWordsFilePath;
+            set => customBoringWordsFilePath = File.Exists(value) ? value : customBoringWordsFilePath;
         }
     }
 }

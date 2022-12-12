@@ -23,8 +23,6 @@ namespace TagsCloudContainer.Algorithm
 
         public CircularCloudLayouter(AlgorithmSettings algoSettings)
         {
-            algoSettings.ThrowExcIfNonPositiveArgs();
-
             this.algoSettings = algoSettings;
             rectangles = new List<(Rectangle rectangle, string text)>();
         }

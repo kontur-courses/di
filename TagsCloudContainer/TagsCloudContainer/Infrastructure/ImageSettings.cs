@@ -10,12 +10,23 @@ namespace TagsCloudContainer.Infrastructure
 {
     public class ImageSettings
     {
+        private int width = 500;
+        private int height = 500;
+
         [DisplayName("Ширина")]
         [Category("1. Размеры")]
-        public int Width { get; set; } = 500;
+        public int Width
+        {
+            get => width;
+            set => width = value > 0 ? value : width;
+        }
         [DisplayName("Высота")]
         [Category("1. Размеры")]
-        public int Height { get; set; } = 500;
+        public int Height
+        {
+            get => height;
+            set => height = value > 0 ? value : height;
+        }
 
 
         
@@ -36,15 +47,5 @@ namespace TagsCloudContainer.Infrastructure
         [DisplayName("Шрифт")]
         [Category("3. Шрифт")]
         public Font Font { get; set; } = new Font("Arial", 20, FontStyle.Bold, GraphicsUnit.Point);
-
-
-
-        public void ThrowExcIfNonPositiveArgs()
-        {
-            if (Width <= 0)
-                throw new ArgumentException($"Параметры только положительны! Width={Width}");
-            if (Height <= 0)
-                throw new ArgumentException($"Параметры только положительны! Height={Height}");
-        }
     }
 }

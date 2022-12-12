@@ -9,17 +9,20 @@ namespace TagsCloudContainer.Infrastructure
 {
     public class AlgorithmSettings
     {
-        [DisplayName("Скорость отдаления спирали от центра")]
-        public double Dr { get; set; } = 0.01;
-        [DisplayName("Скорость изменения угла")]
-        public double Fi { get; set; } = 0.0368;
+        private double dr = 0.01;
+        private double fi = 0.0368;
 
-        public void ThrowExcIfNonPositiveArgs()
+        [DisplayName("Скорость отдаления спирали от центра")]
+        public double Dr 
         {
-            if (Dr <= 0)
-                throw new ArgumentException($"Параметры только положительны! Dr={Dr}");
-            if (Fi <= 0)
-                throw new ArgumentException($"Параметры только положительны! Fi={Fi}");
+            get => dr;
+            set => dr = value > 0 ? value : dr;
+        }
+        [DisplayName("Скорость изменения угла")]
+        public double Fi
+        {
+            get => fi;
+            set => fi = value > 0 ? value : fi;
         }
     }
 }
