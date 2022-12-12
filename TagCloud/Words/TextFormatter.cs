@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using MoreLinq.Extensions;
 
 namespace TagCloud.Words;
 
@@ -28,22 +29,14 @@ public class TextFormatter
     private IList<Word> GetAllWordsFromText(string text)
     {
         var allWords = text.Split(Environment.NewLine);
-        var words = new Dictionary<string, Word>();
-        foreach (var word in allWords)
-        {
-            if (words.ContainsKey(word) == false)
-                words[word] = new Word(word);
-            words[word].Amount++;
-        }
+        
+        var words = allWords
+            .CountBy(word => word)
+            .Select(wordsWithAmount => 
+                new Word(wordsWithAmount.Key, (float)wordsWithAmount.Value / allWords.Length))
+            .ToList();
 
-        SetFrequencyToWords(words.Values, allWords.Length);
-        return words.Values.ToList();
-    }
-
-    private void SetFrequencyToWords(IEnumerable<Word> words, int totalAmountOfWords)
-    {
-        foreach (var word in words)
-            word.Frequency = (float)word.Amount / totalAmountOfWords;
+        return words;
     }
 
     private void Strip(IEnumerable<Word> words)
