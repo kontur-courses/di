@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Application;
 using TagsCloudContainer.TextReaders;
@@ -13,7 +11,6 @@ namespace TagsCloudContainer.Container
     {
         public static IContainer SetDiBuilder(Options options)
         {
-            var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             var builder = new ContainerBuilder();
             builder.Register(x => new Settings()
                 {
