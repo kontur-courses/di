@@ -17,11 +17,6 @@ static class Program
     static void Main()
     {
         var mystemExePath = @"D:\шпора-2022\di\TagsCloud2\Lemmatizer\mystem.exe";
-        
-        var mystemThread = new MystemHandler.MystemMultiThread(1, mystemExePath);
-
-        var lemma = mystemThread.StemWords("мама мыла раму");
-        
         var services = ConfigureSercices(mystemExePath);
         var serviceProvider = services.BuildServiceProvider();
         var manager = serviceProvider.GetService<IManager>();

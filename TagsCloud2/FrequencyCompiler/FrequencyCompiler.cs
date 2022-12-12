@@ -27,7 +27,6 @@ public class FrequencyCompiler : IFrequencyCompiler
             frequencyList.Add(new WordFrequency(item.Key, item.Value));
         }
         
-        // вот тут не уверена в компораторной функции
         frequencyList.Sort((x, y) => x.Frequency - y.Frequency);
         frequencyList.Reverse();
         var result = new List<WordFrequency>();
