@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Windows;
 using Autofac;
-using TagsCloud.WPF.ContainerConfigurator;
-using TagsCloud.WPF.ContainerConfigurator.Implementation;
+using TagsCloud.FileConverter;
+using TagsCloud.FileConverter.Implementation;
+using TagsCloud.FileReader;
+using TagsCloud.FileReader.Implementation;
+using TagsCloud.WordHandler;
+using TagsCloud.WordHandler.Implementation;
+using TagsCloud.WPF.PictureSaver;
+using TagsCloud.WPF.PictureSaver.Implementation;
 
 namespace TagsCloud.WPF
 {
@@ -20,11 +26,24 @@ namespace TagsCloud.WPF
         private static void Main()
         {
             var app = new App();
-            var container = GetContainer(new WpfContainerDocx());
+            var container = GetContainer("../../../Words.docx");
             var window = container.Resolve<MainWindow>();
             app.Run(window);
         }
 
-        private static IContainer GetContainer(IContainerConfigurator config) => config.GetContainer();
+        private static IContainer GetContainer(string path)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MainWindow>().SingleInstance();
+            builder.Register(_ => new PathShell(path)).As<PathShell>();
+            builder.RegisterType<LowerCaseHandler>().As<IWordHandler>();
+            builder.RegisterType<BoringRusWordsHandler>().As<IWordHandler>();
+            builder.RegisterType<RecurringWordsHandler>().As<IWordHandler>();
+            builder.RegisterType<PictureSaverCanvas>().As<IPictureSaver>();
+            builder.RegisterType<DocxReader>().As<IFileReader>();
+            builder.RegisterType<ConvertToTxt>().As<IFileConverter>();
+
+            return builder.Build();
+        }
     }
 }

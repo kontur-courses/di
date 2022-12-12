@@ -40,7 +40,7 @@ public partial class MainWindow
     private const int DefaultFontSize = 10;
     private FontStyle fontStyle;
 
-    public MainWindow(IWordHandler[] wordHandlers, IFileReader reader, IPictureSaver pictureSaver, string path)
+    public MainWindow(IWordHandler[] wordHandlers, IFileReader reader, IPictureSaver pictureSaver, PathShell path)
     {
         InitializeComponent();
         UpdateCircularCloudFromTextBox();
@@ -49,7 +49,7 @@ public partial class MainWindow
         fontStyle = FontStyles.Normal;
         customColor = new SolidColorBrush(Colors.Beige);
         recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
-        words = ProcessWords(reader.Read(path));
+        words = ProcessWords(reader.Read(path.path));
         rectanglesCount = words.Length;
         MyCanvas.Focus();
         timer.Interval = TimeSpan.FromSeconds(0);
