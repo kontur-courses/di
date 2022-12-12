@@ -9,13 +9,13 @@ namespace TagsCloudContainer
     {
         private Dictionary<string, Word> _boringWords;
         private ITextReader _reader;
+        private Settings _settings;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
-        private string _fileName;
         private readonly string _projectDirectory;
 
         public WordHandler(ITextReader reader, Settings settings)
         {
-            _fileName = settings.FileName;
+            _settings = settings;
             _reader = reader;
             _projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
                 .Parent.Parent.FullName;
@@ -31,9 +31,9 @@ namespace TagsCloudContainer
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
-        public List<Word> ProcessWords(Settings settings)
+        public List<Word> ProcessWords()
         {
-            var text = _reader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_fileName}");
+            var text = _reader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_settings.FileName}");
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)
@@ -41,7 +41,7 @@ namespace TagsCloudContainer
                 .ToList();
 
             foreach (var word in words)
-                word.GenerateSize(settings, words.Count);
+                word.GenerateSize(_settings, words.Count);
 
             return words;
         }

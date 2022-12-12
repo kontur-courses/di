@@ -15,7 +15,7 @@ namespace TagsCloudContainer
 
         public RectangleVisualisator(WordHandler handler, CircularCloudLayouter layouter, Settings settings)
         {
-            _words = handler.ProcessWords(settings);
+            _words = handler.ProcessWords();
             _settings = settings;
             _rectangles = WordGenerator.GenerateRectanglesByWords(_words, layouter, settings);
             _bitmap = GenerateBitmap();
