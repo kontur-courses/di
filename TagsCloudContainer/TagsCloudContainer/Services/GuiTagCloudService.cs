@@ -10,7 +10,7 @@ using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer.Services
 {
-    public class GUIService : IService
+    public class GuiTagCloudService : ITagCloudService
     {
         private readonly IPainter painter;
         private readonly ICloudLayouter cloudLayouter;
@@ -18,7 +18,7 @@ namespace TagsCloudContainer.Services
         private readonly IWordsCounter wordscounter;
         private readonly PictureBox pictureBox;
 
-        public GUIService(ImageSettings imageSettings, PictureBox pictureBox, ICloudLayouter cloudLayouter, 
+        public GuiTagCloudService(ImageSettings imageSettings, PictureBox pictureBox, ICloudLayouter cloudLayouter, 
             IPainter painter, IWordsCounter wordsCounter)
         {
             this.imageSettings = imageSettings;

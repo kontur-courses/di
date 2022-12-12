@@ -11,11 +11,11 @@ namespace TagsCloudContainer.Actions
     public class ChoseBoringWordsSourceFileAction : IUiAction
     {
         private FileSettings fileSettings;
-        private readonly IService service;
+        private readonly ITagCloudService _tagCloudService;
 
-        public ChoseBoringWordsSourceFileAction(IService service, FileSettings fileSettings)
+        public ChoseBoringWordsSourceFileAction(ITagCloudService tagCloudService, FileSettings fileSettings)
         {
-            this.service = service;
+            this._tagCloudService = tagCloudService;
             this.fileSettings = fileSettings;
         }
 
@@ -25,7 +25,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            fileSettings.CustomBoringWordsFilePath = service.SetFilePath(fileSettings.CustomBoringWordsFilePath);
+            fileSettings.CustomBoringWordsFilePath = _tagCloudService.SetFilePath(fileSettings.CustomBoringWordsFilePath);
         }
     }
 }

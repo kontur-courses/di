@@ -14,12 +14,12 @@ namespace TagsCloudContainer.Actions
     {
         private ImageSettings imageSettings;
         private readonly FileSettings fileSettings;
-        private readonly IService service;
+        private readonly ITagCloudService _tagCloudService;
 
-        public DrawImageAction(IService service, ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings, 
+        public DrawImageAction(ITagCloudService tagCloudService, ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings, 
             IWordsCounter wordsCounter, FileSettings fileSettings)
         {
-            this.service = service;
+            this._tagCloudService = tagCloudService;
             this.imageSettings = imageSettings;
             this.fileSettings = fileSettings;
         }
@@ -30,7 +30,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            service.DrawImage(fileSettings.SourceFilePath, fileSettings.CustomBoringWordsFilePath,
+            _tagCloudService.DrawImage(fileSettings.SourceFilePath, fileSettings.CustomBoringWordsFilePath,
                 imageSettings.Width, imageSettings.Height);
         }
     }

@@ -12,11 +12,11 @@ namespace TagsCloudContainer.Actions
     public class ImageSettingsAction : IUiAction
     {
         private ImageSettings imageSettings;
-        private readonly IService service;
+        private readonly ITagCloudService _tagCloudService;
 
-        public ImageSettingsAction(IService service, PictureBox pictureBox, ImageSettings imageSettings)
+        public ImageSettingsAction(ITagCloudService tagCloudService, PictureBox pictureBox, ImageSettings imageSettings)
         {
-            this.service = service;
+            this._tagCloudService = tagCloudService;
             this.imageSettings = imageSettings;
         }
 
@@ -26,7 +26,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            service.SetSettings(imageSettings);
+            _tagCloudService.SetSettings(imageSettings);
         }
     }
 }
