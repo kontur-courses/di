@@ -1,21 +1,13 @@
 namespace TagCloudContainer;
 
-public partial class MainForm : Form
+public partial class TagCloudForm : Form
 {
     private Graphics _graphics;
-
-    private Color _backgroundColor;
-    private Color _penColor;
+    private MainFormConfig _mainFormConfig; 
     
-    [STAThread]
-    private static void Main()
+    public TagCloudForm(MainFormConfig mainFormConfig)
     {
-        ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
-    }
-    
-    private MainForm()
-    {
+        _mainFormConfig = mainFormConfig;
         InitializeComponent();
         SetupApplication();
     }
@@ -23,39 +15,32 @@ public partial class MainForm : Form
     private void SetupApplication()
     {
         SetupWindow();
-        SetupColors();
     }
 
     private void SetupWindow()
     {
         Text = "Tag Cloud Container";
         TopMost = true;
-        WindowState = FormWindowState.Maximized;
-    }
-
-    private void SetupColors()
-    {
-        _backgroundColor = Color.FromArgb(47, 47, 42);
-        _penColor = Color.White;
+        Size = _mainFormConfig.FormSize;
     }
 
     private void Render(object sender, PaintEventArgs e)
     {
         _graphics = e.Graphics;
-        _graphics.Clear(_backgroundColor);
+        _graphics.Clear(_mainFormConfig.BackgroundColor);
     
-        var pen = new Pen(_penColor);
+        var pen = new Pen(_mainFormConfig.Color);
 
         var center = new Point(Width / 2, Height / 2);
         var standartSize = new Size(10, 10);
-        var tagCloudProvider = new TagCloudProvider("words.txt", center, standartSize);
+        var tagCloudProvider = new TagCloudProvider("words.txt", center, standartSize, _mainFormConfig);
         var words = tagCloudProvider.GetPreparedWords();
 
         foreach (var word in words)
         {
             _graphics.DrawString(
                 word.Value, 
-                new Font("Arial", word.Weight * standartSize.Width), 
+                new Font(_mainFormConfig.FontFamily, word.Weight * standartSize.Width), 
                 pen.Brush, 
                 word.Position);
         }

@@ -3,9 +3,10 @@
 public class WordsReader
 {
     private readonly Dictionary<string, Word> _words = new Dictionary<string, Word>();
-    private WordConfig _wordConfig = new WordConfig();
+    private IWordConfig _wordConfig = new WordConfig();
+    private IMainFormConfig _mainFormConfig;
     
-    public IEnumerable<Word> GetWordsFromFile(string fileName, bool needValidate)
+    public IEnumerable<Word> GetWordsFromFile(string fileName, bool needValidate, IMainFormConfig mainFormConfig)
     {
         if (string.IsNullOrEmpty(fileName))
             throw new ArgumentException("File name can not be null or empty");
@@ -15,15 +16,16 @@ public class WordsReader
 
         if (!File.Exists(filePath))
             throw new ApplicationException("File does not exists");
-        
+
+        _mainFormConfig = mainFormConfig;
         Read(filePath, needValidate);
         
         var wordsList = new List<Word>();
         foreach (var w in _words)
             wordsList.Add(w.Value);
         
-        return wordsList.OrderByDescending(w => w.Weight);
-        //return _wordConfig.ShuffleWords(wordsList);
+        return _mainFormConfig.Random ? _wordConfig.ShuffleWords(wordsList)
+            : wordsList.OrderByDescending(w => w.Weight);
     }
 
     private void Read(string filePath, bool needValidate)

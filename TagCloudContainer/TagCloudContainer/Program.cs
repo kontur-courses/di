@@ -1,11 +1,11 @@
-namespace TagCloudContainer;
+﻿namespace TagCloudContainer;
 
-static class Program
+public class Program
 {
-    //[STAThread]
-    //static void Main()
-    //{
-    //    ApplicationConfiguration.Initialize();
-    //    Application.Run(new MainForm());
-    //}
+    [STAThread]
+    private static void Main()
+    {
+        ApplicationConfiguration.Initialize();
+        Application.Run(new Settings());
+    }
 }

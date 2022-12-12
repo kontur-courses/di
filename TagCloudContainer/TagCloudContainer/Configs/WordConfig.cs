@@ -2,7 +2,7 @@
 
 namespace TagCloudContainer;
 
-public class WordConfig
+public class WordConfig : IWordConfig
 {
     private StringBuilder _word;
     private Dictionary<string, int> _boringWords;
@@ -17,12 +17,12 @@ public class WordConfig
         if (lines == null)
             throw new ArgumentException("Argument is null");
 
-        return lines 
+        return lines
             .Where(line => !string.IsNullOrWhiteSpace(line))
             .Select(w => For(w)
-                                .RemovePunctuationMarks()
-                                .RemoveIfItBoring()
-                                .Result)
+                .RemovePunctuationMarks()
+                .RemoveIfItBoring()
+                .Result)
             .Where(line => !string.IsNullOrWhiteSpace(line));
     }
 

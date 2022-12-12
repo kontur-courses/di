@@ -1,6 +1,6 @@
 ﻿namespace TagCloudContainer;
 
-partial class MainForm
+partial class TagCloudForm
 {
     private System.ComponentModel.IContainer components = null;
 
@@ -15,8 +15,7 @@ partial class MainForm
     {
         this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Name = "MainForm";
+        this.Name = "Tag Cloud Form";
         this.Text = "Tag cloud container";
         this.Paint += new System.Windows.Forms.PaintEventHandler(this.Render);
         this.ResumeLayout(false);

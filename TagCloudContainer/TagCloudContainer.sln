@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer", "TagCloudContainer\TagCloudContainer.csproj", "{5592BE90-6225-4A6A-A524-F626724490EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Tests", "TagCloudContainer.Tests\TagCloudContainer.Tests.csproj", "{919A7056-79BE-4262-BB1C-29BE91E5ADFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5592BE90-6225-4A6A-A524-F626724490EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5592BE90-6225-4A6A-A524-F626724490EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5592BE90-6225-4A6A-A524-F626724490EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

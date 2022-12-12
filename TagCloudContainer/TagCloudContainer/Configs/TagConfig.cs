@@ -2,20 +2,19 @@
 
 namespace TagCloudContainer;
 
-public class TagConfig
+public class TagConfig : ITagConfig
 {
     private readonly Point _center;
     private readonly Size _standartSize;
+    private IMainFormConfig _mainFormConfig;
     private SortedList<float, Point> _nearestToTheCenterPoints;
     private List<Rectangle> _putRectangles;
 
-    public TagConfig(Point center, Size standartSize)
+    public TagConfig(Point center, Size standartSize, IMainFormConfig mainFormConfig)
     {
-        if (center.IsEmpty)
-            throw new ArgumentException("Center can't be empty");
-        if (center.X < 0 || center.Y < 0)
-            throw new ArgumentException("Center can't be located outside of drawing field");
-            
+        IsValidArguments(center, standartSize);
+
+        _mainFormConfig = mainFormConfig;
         _center = center;
         _standartSize = standartSize;
         _nearestToTheCenterPoints = new SortedList<float, Point>();
@@ -24,15 +23,17 @@ public class TagConfig
         AddFreePoint(center);
     }
     
-    public Word ConfigureWordTag(Word word)
+    public Word ConfigureWordTag(Word word, IMainFormConfig mainFormConfig)
     {
-        word.Size = TextRenderer.MeasureText(word.Value, new Font("Arial", word.Weight * _standartSize.Width));
+        word.Size = TextRenderer
+            .MeasureText(word.Value, new Font(_mainFormConfig.FontFamily, word.Weight * _standartSize.Width));
         
-        if (word.Size.IsEmpty)
-            throw new ArgumentException("Rectangle size can't be empty");
+        if (word.Size.IsEmpty || word.Size == null)
+            throw new ArgumentException("Word size can't be empty or null");
         if (word.Size.Width < 0 || word.Size.Height < 0) 
-            throw new ArgumentException("Rectangle size can't have negative side value");
+            throw new ArgumentException("Word size can't have negative side value");
 
+        _mainFormConfig = mainFormConfig;
         var nearestFreePoint = GetNearestInsertionPoint(word.Size);
         var rectangle = new Rectangle(nearestFreePoint, word.Size);
         
@@ -98,4 +99,16 @@ public class TagConfig
         var distanceFromCenter = new Vector2(point.X - _center.X, point.Y - _center.Y);
         return distanceFromCenter.Length();
     }
+
+    private void IsValidArguments(Point center, Size standartSize)
+    {
+        if (center.IsEmpty || center == null)
+            throw new ArgumentException("Center can't be empty or null");
+        if (center.X < 0 || center.Y < 0)
+            throw new ArgumentException("Center can't be located outside of drawing field");
+        if (standartSize.IsEmpty || standartSize == null)
+            throw new ArgumentException("Standart size can't be empty or null");
+        if (standartSize.Width < 0 || standartSize.Height < 0)
+            throw new ArgumentException("Standart size can't be smaller than 0");
+    } 
 }
