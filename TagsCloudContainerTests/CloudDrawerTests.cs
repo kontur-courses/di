@@ -8,8 +8,8 @@ namespace TagsCloudContainerTests
     [TestFixture]
     public class CloudDrawer_Should
     {
-        private string firstPath = Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud1.png");
-        private string secondPath = Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud2.png");
+        private string firstPath;
+        private string secondPath;
         private CustomOptions defaultOptions;
         private CloudDrawer sut;
 
@@ -33,8 +33,15 @@ namespace TagsCloudContainerTests
                 MaxTagSize = 35,
                 BackgroundColor = "White",
                 FontColor = "Blue",
-                ExcludedParticals = "SPRO, PR, PART, CONJ"
+                ExcludedParticals = "SPRO, PR, PART, CONJ",
+                ImageFormat = "Png",
+                ImageName = "Cloud"
             };
+
+            firstPath = Path.Combine(defaultOptions.WorkingDir,
+                (defaultOptions.ImageName + "1." + defaultOptions.ImageFormat));
+            secondPath = Path.Combine(defaultOptions.WorkingDir,
+                (defaultOptions.ImageName + "2." + defaultOptions.ImageFormat));
         }
 
         [TearDown]
@@ -54,8 +61,14 @@ namespace TagsCloudContainerTests
                 MaxTagSize = 35,
                 BackgroundColor = "White",
                 FontColor = "Blue",
-                ExcludedParticals = "SPRO, PR, PART, CONJ"
+                ExcludedParticals = "SPRO, PR, PART, CONJ",
+                ImageFormat = "Png",
+                ImageName = "Cloud1"
             };
+            firstPath = Path.Combine(defaultOptions.WorkingDir,
+                (defaultOptions.ImageName + "1." + defaultOptions.ImageFormat));
+            secondPath = Path.Combine(defaultOptions.WorkingDir,
+                (defaultOptions.ImageName + "2." + defaultOptions.ImageFormat));
         }
 
         [Test]
@@ -63,17 +76,21 @@ namespace TagsCloudContainerTests
         {
             sut.DrawCloud(firstPath, defaultOptions);
 
-            File.Exists(Path.Combine(firstPath)).Should().BeTrue();
+            File.Exists(firstPath).Should().BeTrue();
         }
 
-        [Test]
-        public void DrawAPNGPicture()
+        [TestCase("png")]
+        [TestCase("jpeg")]
+        public void DrawAPNGPicture(string format)
         {
+            defaultOptions.ImageFormat = format;
             sut.DrawCloud(firstPath, defaultOptions);
+            firstPath = Path.Combine(defaultOptions.WorkingDir,
+                (defaultOptions.ImageName + "1." + defaultOptions.ImageFormat));
 
             var result = new FileInfo(firstPath);
 
-            result.Extension.Should().Be(".png");
+            result.Extension.Should().Be("." + format);
         }
 
         [Test]
