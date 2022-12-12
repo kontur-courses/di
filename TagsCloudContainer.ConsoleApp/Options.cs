@@ -31,10 +31,10 @@ namespace TagsCloudContainer.ConsoleApp
         [Option("maxColor", Required = false, Default = "#FFFF0000", HelpText = "Set maximum frequency word plate color (ARGB with '#')")]
         public string MaxFrequencyColorString { get; set; }
 
-        [Option("minFontSize", Required = false, Default = 5F, HelpText = "Set minimum frequency word font size")]
+        [Option("minFontSize", Required = false, Default = 14F, HelpText = "Set minimum frequency word font size")]
         public float MinFrequncyFontSize { get; set; }
 
-        [Option("maxFontSize", Required = false, Default = 14F, HelpText = "Set minimum frequency word font size")]
+        [Option("maxFontSize", Required = false, Default = 24F, HelpText = "Set minimum frequency word font size")]
         public float MaxFrequncyFontSize { get; set; }
     }
 }
