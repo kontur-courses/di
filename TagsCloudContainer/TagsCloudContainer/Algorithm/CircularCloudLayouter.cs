@@ -16,27 +16,25 @@ namespace TagsCloudContainer.Algorithm
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<(Rectangle rectangle, string text)> rectangles;
-        private readonly IParser parser;
         private Func<int, Point> pointFinderFunc;
         private AlgorithmSettings algoSettings;
 
         public Point Center;
 
-        public CircularCloudLayouter(AlgorithmSettings algoSettings, IParser parser)
+        public CircularCloudLayouter(AlgorithmSettings algoSettings)
         {
             algoSettings.ThrowExcIfNonPositiveArgs();
 
             this.algoSettings = algoSettings;
             rectangles = new List<(Rectangle rectangle, string text)>();
-            this.parser = parser;
         }
 
-        public List<(Rectangle rectangle, string text)> FindRectanglesPositions(int imgWidth, int imgHeight)
+        public List<(Rectangle rectangle, string text)> FindRectanglesPositions(int imgWidth, int imgHeight,
+            Dictionary<string, int> wordsCount)
         {
             rectangles.Clear();
             Center = new Point(imgWidth / 2, imgHeight / 2);
             this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
-            var wordsCount = parser.GetWordsCountWithoutBoring();
             var sumWords = wordsCount.Sum(e => e.Value);
             foreach (var pair in wordsCount)
             {

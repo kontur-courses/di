@@ -22,6 +22,7 @@ namespace TagsCloudContainer
             builder.RegisterType<PictureBox>().AsSelf().SingleInstance();
             builder.RegisterType<Algorithm.Parser>().As<IParser>();
             builder.RegisterType<MorphAnalyzer>().AsSelf().SingleInstance();
+            builder.RegisterType<WordsCounter>().As<IWordsCounter>();
             builder.RegisterType<Algorithm.CircularCloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<TagCloudPainter>().As<IPainter>();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();

@@ -14,12 +14,17 @@ namespace TagsCloudContainer.Actions
         private IPainter painter;
         private ICloudLayouter cloudLayouter;
         private ImageSettings imageSettings;
+        private readonly IWordsCounter wordscounter;
+        private readonly FileSettings fileSettings;
 
-        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings)
+        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings, 
+            IWordsCounter wordsCounter, FileSettings fileSettings)
         {
             this.cloudLayouter = cloudLayouter;
             this.painter = painter;
             this.imageSettings = imageSettings;
+            this.wordscounter = wordsCounter;
+            this.fileSettings = fileSettings;
         }
 
         public string Category => "Изображение";
@@ -28,7 +33,9 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            painter.Paint(cloudLayouter.FindRectanglesPositions(imageSettings.Width, imageSettings.Height));
+            var wordsCount = wordscounter.CountWords(fileSettings.SourceFilePath
+                , fileSettings.CustomBoringWordsFilePath);
+            painter.Paint(cloudLayouter.FindRectanglesPositions(imageSettings.Width, imageSettings.Height, wordsCount));
         }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer.Algorithm
 {
-    public interface IParser
+    public interface IWordsCounter
     {
-        Dictionary<string, int> CountWordsInFile(string pathToFile);
-        HashSet<string> FindWordsInFile(string pathToFile);
+        public Dictionary<string, int> CountWords(string pathToSource, string pathToCustomBoringWords);
     }
 }
