@@ -10,6 +10,8 @@ namespace TagsCloudContainer.Infrastructure
     {
         public string[] Prepare(IEnumerable<string> words)
         {
+            ArgumentNullException.ThrowIfNull(words, nameof(words));
+
             return words.Select(word => word.ToLower()).ToArray();       
         }
     }
