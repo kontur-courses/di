@@ -21,13 +21,21 @@ namespace TagsCloudContainer.Infrastructure
             if ((extension = Path.GetExtension(filename)) != fileExtension)
                 return new Result() { Success = false, Message = $"File was wrong extension: should be: '{fileExtension}', but have '{extension}'" };
 
-            var wordList = new List<string>();
-            using var stream = new StreamReader(filename);
-            while (!stream.EndOfStream)
-                wordList.Add(stream.ReadLine()!);
+            try
+            {
+                var wordList = new List<string>();
+                using var stream = new StreamReader(filename);
+                while (!stream.EndOfStream)
+                    wordList.Add(stream.ReadLine()!);
 
-            words = wordList.ToArray();
-            return Result.Ok;
+                words = wordList.ToArray();
+                return Result.Ok;
+            }
+            catch(Exception e)
+            {
+                return new Result() { Success = false, Message = e.Message };
+            }
+            
         }
     }
 }
