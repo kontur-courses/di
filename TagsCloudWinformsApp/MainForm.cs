@@ -167,29 +167,23 @@ public partial class MainForm : Form
         builder.RegisterInstance(inputFilesReader).As<IWordSequenceProvider>();
         builder.RegisterInstance(inputFilesReader).As<IWordFilterProvider>();
 
-        switch (wordColoring_comboBox.SelectedIndex)
-        {
-            case 0:
-                builder.RegisterType<SimpleColorer>().As<IColorer>();
-                break;
-            case 1:
-                builder.RegisterType<RandomColorer>().As<IColorer>();
-                break;
-            case 2:
-                builder.RegisterType<TransparencyOverFrequencyColorer>().As<IColorer>();
-                break;
-        }
-
-        switch (layout_comboBox.SelectedIndex)
-        {
-            case 0:
-                builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>();
-                break;
-            case 1:
-                builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>();
-                break;
-        }
-
+        SetColorProvider[wordColoring_comboBox.SelectedIndex](builder);
+        SetLayouter[layout_comboBox.SelectedIndex](builder);
+        
         return builder.Build();
     }
+
+    private Action<ContainerBuilder>[] SetColorProvider = 
+    {
+        (builder) => builder.RegisterType<SimpleColorProvider>().As<IColorProvider>(),
+        (builder) => builder.RegisterType<RandomColorProvider>().As<IColorProvider>(),
+        (builder) => builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>()
+    };
+    
+    private Action<ContainerBuilder>[] SetLayouter = 
+    {
+        (builder) => builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>(),
+        (builder) => builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>()
+    };
+
 }
