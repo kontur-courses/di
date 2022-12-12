@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Application;
-using TagsCloudContainer.TextReaders;
 using TagsCloudContainer.Visualisators;
 using TagsCloudContainer.WorkWithWords;
 
@@ -17,14 +16,10 @@ namespace TagsCloudContainer.Container
                     WordColor = Color.FromName(options.ColorName),
                     WordFontName = options.FontName,
                     WordFontSize = options.FontSize,
-                    FileName = options.InputFile,
-                    BoringWordsFileName = options.BorringWordsFile
+                    FileName = options.PathToInputFile,
+                    BoringWordsFileName = options.PathToBoringWordsFile
                 })
                 .As<Settings>();
-            if (options.InputFile.Contains("docx"))
-                builder.RegisterType<WordReader>().As<ITextReader>();
-            else
-                builder.RegisterType<TxtReader>().As<ITextReader>();
             builder.RegisterType<WordHandler>().AsSelf();
             builder.Register(x =>
                     new CircularCloudLayouter(new Point(options.CenterX, options.CenterY)))

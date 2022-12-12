@@ -1,15 +1,16 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 
 namespace TagsCloudContainer
 {
     //https://github.com/commandlineparser/commandline
     public class Options
     {
-        [Option('i', "Input", Required = true, HelpText = "Input file name.")]
-        public string InputFile { get; set; }
+        [Option('i', "Input", Required = true, HelpText = "Path to input file")]
+        public string PathToInputFile { get; set; }
 
-        [Option('b', "Borring", Required = false, HelpText = "Borring words file name")]
-        public string BorringWordsFile { get; set; } = "BoringWords.txt";
+        [Option('b', "Boring", Required = false, HelpText = "Path to boring words file")]
+        public string PathToBoringWordsFile { get; set; } = String.Empty;
 
         [Option('c', "Color", Required = false)]
         public string ColorName { get; set; } = "purple";

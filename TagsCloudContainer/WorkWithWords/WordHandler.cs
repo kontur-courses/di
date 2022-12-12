@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using TagsCloudContainer.TextReaders;
 
@@ -9,32 +8,29 @@ namespace TagsCloudContainer.WorkWithWords
     public class WordHandler
     {
         private Dictionary<string, Word> _boringWords;
-        private ITextReader _reader;
         private Settings _settings;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
-        private readonly string _projectDirectory;
 
-        public WordHandler(ITextReader reader, Settings settings)
+        public WordHandler(Settings settings)
         {
             _settings = settings;
-            _reader = reader;
-            _projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
-                .Parent.Parent.FullName;
-            SetUpBoringWords(settings.BoringWordsFileName);
+            if (settings.BoringWordsFileName != String.Empty)
+                SetUpBoringWords();
         }
 
-        public void SetUpBoringWords(string boringWordsFileName)
+        private void SetUpBoringWords()
         {
-            var text = _reader.GetTextFromFile(String.IsNullOrEmpty(boringWordsFileName)
-                ? $"{_projectDirectory}\\TextFiles\\BoringWords.txt"
-                : $"{_projectDirectory}\\TextFiles\\{boringWordsFileName}");
+            var reader = TextReaderGenerator.GetReader(_settings.BoringWordsFileName);
+            var text = reader.GetTextFromFile(_settings.BoringWordsFileName);
 
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
         public List<Word> ProcessWords()
         {
-            var text = _reader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_settings.FileName}");
+            var reader = TextReaderGenerator.GetReader(_settings.FileName);
+            var text = reader.GetTextFromFile(_settings.FileName);
+
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)
