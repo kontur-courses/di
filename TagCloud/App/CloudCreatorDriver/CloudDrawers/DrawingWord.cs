@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
-namespace TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw;
+namespace TagCloud.App.CloudCreatorDriver.CloudDrawers;
 
 public class DrawingWord : IDrawingWord
 {

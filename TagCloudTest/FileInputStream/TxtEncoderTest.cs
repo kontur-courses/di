@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+using TagCloud.App.WordPreprocessorDriver.InputStream;
 
 namespace TagCloudTest.FileInputStream;
 

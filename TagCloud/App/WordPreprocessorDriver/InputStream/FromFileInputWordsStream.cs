@@ -1,6 +1,6 @@
 ﻿using TagCloud.App.WordPreprocessorDriver.InputStream.TextSplitters;
 
-namespace TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+namespace TagCloud.App.WordPreprocessorDriver.InputStream;
 
 public class FromFileInputWordsStream
 {

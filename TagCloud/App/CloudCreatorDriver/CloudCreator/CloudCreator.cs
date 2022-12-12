@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 using TagCloud.App.CloudCreatorDriver.CloudDrawers;
-using TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw;
-using TagCloud.App.CloudCreatorDriver.DrawingSettings;
+using TagCloud.App.CloudCreatorDriver.CloudDrawers.DrawingSettings;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
-using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+using TagCloud.App.WordPreprocessorDriver.InputStream;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
@@ -14,7 +13,7 @@ public class CloudCreator : ICloudCreator
 {
     private readonly FromFileInputWordsStream inputWordsStream;
     private readonly IWordsPreprocessor wordsPreprocessor;
-    private readonly IReadOnlyCollection<IBoringWords> boringWords;
+    private readonly List<IBoringWords> boringWords;
     private readonly ICloudLayouter cloudLayouter;
     private readonly ICloudLayouterSettings cloudLayouterSettings;
     private readonly ICloudDrawer cloudDrawer;
@@ -22,17 +21,22 @@ public class CloudCreator : ICloudCreator
     
     public CloudCreator(
         FromFileInputWordsStream inputWordsStream,
-        IWordsPreprocessor wordsPreprocessor, IReadOnlyCollection<IBoringWords> boringWords,
+        IWordsPreprocessor wordsPreprocessor, IEnumerable<IBoringWords> boringWords,
         ICloudLayouter cloudLayouter, ICloudLayouterSettings cloudLayouterSettings,
         ICloudDrawer cloudDrawer, IDrawingSettings drawingSettings)
     {
         this.inputWordsStream = inputWordsStream;
         this.wordsPreprocessor = wordsPreprocessor;
-        this.boringWords = boringWords;
+        this.boringWords = boringWords.ToList();
         this.cloudLayouter = cloudLayouter;
         this.cloudLayouterSettings = cloudLayouterSettings;
         this.cloudDrawer = cloudDrawer;
         this.drawingSettings = drawingSettings;
+    }
+
+    public void AddBoringWordManager(IBoringWords boringWordsManager)
+    {
+        boringWords.Add(boringWordsManager);
     }
     
     public Bitmap CreatePicture(FromFileStreamContext streamContext)

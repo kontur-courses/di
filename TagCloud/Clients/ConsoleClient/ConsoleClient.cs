@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using TagCloud.App.CloudCreatorDriver.CloudCreator;
-using TagCloud.App.CloudCreatorDriver.DrawingSettings;
+using TagCloud.App.CloudCreatorDriver.CloudDrawers.DrawingSettings;
 using TagCloud.App.CloudCreatorDriver.ImageSaver;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
@@ -21,19 +21,21 @@ public class ConsoleClient : IClient
     private readonly ICloudLayouterSettings cloudLayouterSettings;
     private readonly IDrawingSettings drawingSettings;
     private readonly IImageSaver imageSaver;
+    private readonly FromFileInputWordsStream inputWordsStream;
         
     public ConsoleClient(
         IReadOnlyCollection<IFileEncoder> fileEncoders,
         ICloudLayouterSettings cloudLayouterSettings,
         IDrawingSettings drawingSettings,
         ICloudCreator cloudCreator,
-        IImageSaver imageSaver)
+        IImageSaver imageSaver, FromFileInputWordsStream inputWordsStream)
     {
         this.fileEncoders = fileEncoders;
         this.cloudLayouterSettings = cloudLayouterSettings;
         this.drawingSettings = drawingSettings;
         creator = cloudCreator;
         this.imageSaver = imageSaver;
+        this.inputWordsStream = inputWordsStream;
     }
 
     public void Run()
@@ -63,6 +65,10 @@ public class ConsoleClient : IClient
                 if (Console.ReadLine() == Phrases.Yes) 
                     FillWordVisualisationSettings(drawingSettings);
                 
+                Console.Write(Phrases.AskingAddingUsersBoringWords);
+                if (Console.ReadLine() == Phrases.Yes)
+                    creator.AddBoringWordManager(GetBoringWords());
+                
                 var image = creator.CreatePicture(streamContext);
 
                 Console.WriteLine(imageSaver.TrySaveImage(image, savePath!)
@@ -76,6 +82,36 @@ public class ConsoleClient : IClient
         }
 
         Stop();
+    }
+
+    private BoringWordsFromUser GetBoringWords()
+    {
+        Console.WriteLine(Phrases.AskingFullPathToBoringWords);
+        
+        var boringWords = new BoringWordsFromUser();
+        if (!TryGetFilePathFromConsole(out var boringWordsPath) || boringWordsPath == null)
+        {
+            Console.Write(Phrases.FailGettingFullPath + Phrases.TryAgain);
+            return Console.ReadLine() == Phrases.Yes
+                ? GetBoringWords()
+                : boringWords;
+
+        }
+        
+        if (!TryGetFileEncoder(fileEncoders, boringWordsPath!, out var suitableFileEncoder))
+        {
+            Console.WriteLine(Phrases.FailGettingFileEncoder);
+            return boringWords;
+        }
+        
+        var streamContext = new FromFileStreamContext(boringWordsPath!, suitableFileEncoder!);
+        foreach (var word in inputWordsStream.GetAllWordsFromStream(streamContext))
+        {
+            boringWords.AddBoringWord(word);
+        }
+        Console.WriteLine(Phrases.SuccessUploadBoringWords);
+
+        return boringWords;
     }
 
     private static void FillWordVisualisationSettings(IDrawingSettings drawingSettings)

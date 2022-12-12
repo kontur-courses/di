@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.App.CloudCreatorDriver.DrawingSettings;
+namespace TagCloud.App.CloudCreatorDriver.CloudDrawers.DrawingSettings;
 
 public class DrawingSettings : IDrawingSettings
 {

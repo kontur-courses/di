@@ -1,4 +1,4 @@
-﻿using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+﻿using TagCloud.App.WordPreprocessorDriver.InputStream;
 
 namespace TagCloudTest.FileInputStream.Infrastructure;
 

@@ -1,4 +1,4 @@
-﻿namespace TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+﻿namespace TagCloud.App.WordPreprocessorDriver.InputStream;
 
 public class TxtEncoder : IFileEncoder
 {

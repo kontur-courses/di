@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
-using TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw;
-using TagCloud.App.CloudCreatorDriver.DrawingSettings;
+using TagCloud.App.CloudCreatorDriver.CloudDrawers.DrawingSettings;
 
 namespace TagCloud.App.CloudCreatorDriver.CloudDrawers;
 
