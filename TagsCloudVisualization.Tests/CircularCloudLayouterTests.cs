@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
@@ -10,6 +9,7 @@ using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.CloudLayouter.PointGenerator;
 using TagsCloudVisualization.ColorGenerator;
+using TagsCloudVisualization.Drawer;
 using TagsCloudVisualization.ImageSavers;
 using TagsCloudVisualization.ImageSettings;
 

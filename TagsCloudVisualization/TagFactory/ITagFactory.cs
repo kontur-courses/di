@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualization.TagFactory;
+﻿using TagsCloudVisualization.Drawer;
+
+namespace TagsCloudVisualization.TagFactory;
 
 public interface ITagFactory
 {

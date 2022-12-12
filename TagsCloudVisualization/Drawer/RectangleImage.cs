@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.ColorGenerator;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.Drawer;
 
 public class RectangleImage : IDrawImage
 {

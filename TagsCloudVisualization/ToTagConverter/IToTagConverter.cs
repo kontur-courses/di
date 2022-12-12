@@ -2,5 +2,5 @@
 
 public interface IToTagConverter
 {
-    IReadOnlyCollection<Tag> Convert(IEnumerable<string> words);
+    IEnumerable<Tag> Convert(IEnumerable<string> words);
 }

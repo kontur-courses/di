@@ -2,7 +2,7 @@
 using TagsCloudVisualization.ColorGenerator;
 using TagsCloudVisualization.FontSettings;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.Drawer;
 
 public class TagImage : IDrawImage
 {

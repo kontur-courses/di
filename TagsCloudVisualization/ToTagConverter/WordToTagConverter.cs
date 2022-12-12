@@ -4,7 +4,7 @@ public class WordToTagConverter : IToTagConverter
 {
     private readonly Dictionary<string, int> weights = new Dictionary<string, int>();
 
-    public IReadOnlyCollection<Tag> Convert(IEnumerable<string> words)
+    public IEnumerable<Tag> Convert(IEnumerable<string> words)
     {
         var maxCount = 1;
         foreach (var word in words)
@@ -22,7 +22,6 @@ public class WordToTagConverter : IToTagConverter
         }
 
         return weights.Select(x => new Tag(x.Key, x.Value / (float)maxCount))
-            .OrderByDescending(x => x.Weight)
-            .ToList();
+            .OrderByDescending(x => x.Weight);
     }
 }

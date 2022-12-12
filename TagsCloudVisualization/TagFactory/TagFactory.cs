@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.ColorGenerator;
+using TagsCloudVisualization.Drawer;
 using TagsCloudVisualization.FontSettings;
 
 namespace TagsCloudVisualization.TagFactory;
