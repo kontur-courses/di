@@ -19,13 +19,15 @@ namespace TagsCloudContainerTests
                 Font = "Arial",
                 PictureSize = 600,
                 MinTagSize = 15,
+                MaxTagSize = 30,
                 BackgroundColor = "White",
-                FontColor = "Blue"
+                FontColor = "Blue",
+                ImageFormat = "png"
             };
         }
 
         [Test]
-        public void ValidateConfig_AddPreSetConfig_ShouldNotThrowAnyExceptions()
+        public void ValidateConfig_AddPreSetOptions_ShouldNotThrowAnyExceptions()
         {
             var act = () => CustomOptionsValidator.ValidateOptions(options);
 
@@ -33,7 +35,7 @@ namespace TagsCloudContainerTests
         }
 
         [Test]
-        public void ValidateConfig_AddPreSetConfigWithLowerCaseColor_ShouldNotThrowAnyExceptions()
+        public void ValidateConfig_AddLowerCaseColor_ShouldNotThrowAnyExceptions()
         {
             options.FontColor = "white";
 
@@ -43,7 +45,7 @@ namespace TagsCloudContainerTests
         }
 
         [Test]
-        public void ValidateConfig_AddConfigWithEmptyTextsPath_ShouldThrowArgumentException()
+        public void ValidateConfig_AddEmptyTextsPath_ShouldThrowArgumentException()
         {
             options.WorkingDir = "";
 
@@ -53,7 +55,7 @@ namespace TagsCloudContainerTests
         }
 
         [Test]
-        public void ValidateConfig_AddConfigWithEmptyWordsFileName_ShouldThrowArgumentException()
+        public void ValidateConfig_AddEmptyWordsFileName_ShouldThrowArgumentException()
         {
             options.WordsFileName = "";
 
@@ -63,7 +65,7 @@ namespace TagsCloudContainerTests
         }
 
         [Test]
-        public void ValidateConfig_AddConfigWithEmptyBoringWordsFileName_ShouldThrowArgumentException()
+        public void ValidateConfig_AddEmptyBoringWordsFileName_ShouldThrowArgumentException()
         {
             options.BoringWordsName = "";
 
@@ -74,7 +76,7 @@ namespace TagsCloudContainerTests
 
         [TestCase("")]
         [TestCase("NonExistingFont")]
-        public void ValidateConfig_AddConfigWithIncorectFontName_ShouldThrowArgumentException(string font)
+        public void ValidateConfig_AddIncorectFontName_ShouldThrowArgumentException(string font)
         {
             options.Font = font;
 
@@ -85,7 +87,7 @@ namespace TagsCloudContainerTests
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidateConfig_AddConfigWithPictureSizeLessThanOne_ShouldThrowArgumentException(int size)
+        public void ValidateConfig_AddPictureSizeLessThanOne_ShouldThrowArgumentException(int size)
         {
             options.PictureSize = size;
 
@@ -96,7 +98,7 @@ namespace TagsCloudContainerTests
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidateConfig_AddConfigWithFontSizeLessThanOne_ShouldThrowArgumentException(int size)
+        public void ValidateConfig_AddMaxFontMoreThamPictureSize_ShouldThrowArgumentException(int size)
         {
             options.MinTagSize = size;
 
@@ -107,7 +109,7 @@ namespace TagsCloudContainerTests
 
         [TestCase("")]
         [TestCase("NonExistingColor")]
-        public void ValidateConfig_AddConfigWithIncorrectFontColorName_ShouldThrowArgumentException(string font)
+        public void ValidateConfig_AddIncorrectFontColorName_ShouldThrowArgumentException(string font)
         {
             options.FontColor = font;
 
@@ -118,7 +120,7 @@ namespace TagsCloudContainerTests
 
         [TestCase("")]
         [TestCase("NonExistingColor")]
-        public void ValidateConfig_AddConfigWithIncorrectBackgroundColorName_ShouldThrowArgumentException(string font)
+        public void ValidateConfig_AddIncorrectBackgroundColorName_ShouldThrowArgumentException(string font)
         {
             options.BackgroundColor = font;
 
@@ -129,7 +131,7 @@ namespace TagsCloudContainerTests
 
         [TestCase(600)]
         [TestCase(601)]
-        public void ValidateConfig_AddConfigWithFontSizeMoreOrEqualThanPictureSize_ShouldThrowArgumentException(
+        public void ValidateConfig_AddFontSizeMoreOrEqualThanPictureSize_ShouldThrowArgumentException(
             int size)
         {
             options.MaxTagSize = size;
@@ -137,6 +139,27 @@ namespace TagsCloudContainerTests
             var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Font size should be less than picture size");
+        }
+
+        [TestCase("png")]
+        [TestCase("PNG")]
+        public void ValidateConfig_AddSupportedFormat_ShouldNotThrowExceptions(string format)
+        {
+            options.ImageFormat = format;
+
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
+
+            act.Should().NotThrow();
+        }
+
+        [Test]
+        public void ValidateConfig_AddUsupportedFormat_ShouldNotThrowExceptions()
+        {
+            options.ImageFormat = "ping";
+
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
+
+            act.Should().Throw<ArgumentException>().WithMessage("Unsupported image format");
         }
     }
 }
