@@ -27,7 +27,7 @@ namespace TagsCloudContainer.App
             builder.RegisterType<TagsLayouter>().AsSelf();
             builder.RegisterType<CloudLayouterSettings>().AsSelf().SingleInstance();
             builder.RegisterType<TagsExtractor>().As<ITagsExtractor>().SingleInstance();
-            builder.RegisterType<TwoColorsTagsPainter>().As<ITagsPainter>();
+            builder.RegisterType<TwoColorsSizeTagsPainter>().As<ITagsPainter>();
             builder.RegisterType<TextReaderFromTxt>().As<ITextReader>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<FontText>().AsSelf().SingleInstance();

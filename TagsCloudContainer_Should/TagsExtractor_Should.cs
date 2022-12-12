@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.App.Layouter;
 
-
-namespace TagsCloudContainer_Should
+namespace TagsCloudContainerTests
 
 {
-    public class SimpleTagsExtractor_Should
+    public class TagsExtractor_Should
     {
         private TagsExtractor simpleTagsExtractor;
 
@@ -23,8 +21,7 @@ namespace TagsCloudContainer_Should
         public void FindAllTagsInText_ShouldReturnLowerСase()
         {
             var expectedWord = "мама";
-            simpleTagsExtractor.FindAllTagsInText("Мама");
-            var actual = simpleTagsExtractor.Text;
+            var actual = simpleTagsExtractor.FindAllTagsInText("Мама");
 
             actual.Should().ContainKey(expectedWord);
         }
@@ -36,8 +33,7 @@ namespace TagsCloudContainer_Should
         [TestCase("не")]
         public void FindAllTagsInText_ShouldNotReturnNotBoringWords(string input)
         {
-            simpleTagsExtractor.FindAllTagsInText(input);
-            var actual = simpleTagsExtractor.Text;
+            var actual = simpleTagsExtractor.FindAllTagsInText(input);
 
             actual.Should().HaveCount(0);
         }
@@ -47,8 +43,7 @@ namespace TagsCloudContainer_Should
         [TestCase("читал", "читать")]
         public void FindAllTagsInText_ShouldReturnWordWithSimpleForm(string input, string expectedWord)
         {
-            simpleTagsExtractor.FindAllTagsInText(input);
-            var actual = simpleTagsExtractor.Text;
+            var actual = simpleTagsExtractor.FindAllTagsInText(input);
 
             actual.Should().ContainKey(expectedWord);
         }
@@ -57,8 +52,7 @@ namespace TagsCloudContainer_Should
         public void FindAllTagsInText_ShouldReturnOneWord_WithSameWords()
         {
             var expected = new Dictionary<string, int> { { "мама", 2 } };
-            simpleTagsExtractor.FindAllTagsInText("мама"+ Environment.NewLine+ "мама");
-            var actual = simpleTagsExtractor.Text;
+            var actual = simpleTagsExtractor.FindAllTagsInText("мама"+ Environment.NewLine+ "мама");
 
             actual.Should().HaveCount(1);
             actual.Should().BeEquivalentTo(expected);

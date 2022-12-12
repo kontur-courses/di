@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.App.Layouter;
 
-namespace TagsCloudContainer_Should
+namespace TagsCloudContainerTests
 {
     public class RectangleExtensions_Should
     {
