@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Algorithm;
+using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer.Actions
@@ -12,11 +13,13 @@ namespace TagsCloudContainer.Actions
     {
         private IPainter painter;
         private ICloudLayouter cloudLayouter;
+        private ImageSettings imageSettings;
 
-        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter)
+        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings)
         {
             this.cloudLayouter = cloudLayouter;
             this.painter = painter;
+            this.imageSettings = imageSettings;
         }
 
         public string Category => "Изображение";
@@ -25,7 +28,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            painter.Paint(cloudLayouter.FindRectanglesPositions());
+            painter.Paint(cloudLayouter.FindRectanglesPositions(imageSettings.Width, imageSettings.Height));
         }
     }
 }

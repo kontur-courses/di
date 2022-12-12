@@ -8,6 +8,6 @@ namespace TagsCloudContainer.Algorithm
 {
     public interface ICloudLayouter
     {
-        public List<(Rectangle rectangle, string text)> FindRectanglesPositions();
+        public List<(Rectangle rectangle, string text)> FindRectanglesPositions(int imgWidth, int imgHeight);
     }
 }

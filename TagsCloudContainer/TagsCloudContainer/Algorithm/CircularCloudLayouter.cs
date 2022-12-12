@@ -15,29 +15,27 @@ namespace TagsCloudContainer.Algorithm
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        
-
-        private readonly ImageSettings imageSettings;
         private readonly List<(Rectangle rectangle, string text)> rectangles;
         private readonly IParser parser;
         private Func<int, Point> pointFinderFunc;
+        private AlgorithmSettings algoSettings;
 
-        public Point Center => new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+        public Point Center;
 
-        public CircularCloudLayouter(ImageSettings imageSettings, AlgorithmSettings algoSettings, IParser parser)
+        public CircularCloudLayouter(AlgorithmSettings algoSettings, IParser parser)
         {
             algoSettings.ThrowExcIfNonPositiveArgs();
-            imageSettings.ThrowExcIfNonPositiveArgs();
 
-            this.imageSettings = imageSettings;
-            this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
+            this.algoSettings = algoSettings;
             rectangles = new List<(Rectangle rectangle, string text)>();
             this.parser = parser;
         }
 
-        public List<(Rectangle rectangle, string text)> FindRectanglesPositions()
+        public List<(Rectangle rectangle, string text)> FindRectanglesPositions(int imgWidth, int imgHeight)
         {
             rectangles.Clear();
+            Center = new Point(imgWidth / 2, imgHeight / 2);
+            this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
             var wordsCount = parser.GetWordsCountWithoutBoring();
             var sumWords = wordsCount.Sum(e => e.Value);
             foreach (var pair in wordsCount)
@@ -52,8 +50,8 @@ namespace TagsCloudContainer.Algorithm
         private Size CalculateRectangleSize(int wordCount, int totalWordsCount)
         {
             var proc = (double)wordCount / (double)totalWordsCount;
-            return new Size((int)(imageSettings.Width * 0.7 * proc),
-                (int)(imageSettings.Width * 0.7 * proc * 0.5));
+            return new Size((int)(Center.X * 2 * 0.7 * proc),
+                (int)(Center.X * 2 * 0.7 * proc * 0.5));
         }
 
         private Rectangle GetNextRectangle(Size rectangleSize)
