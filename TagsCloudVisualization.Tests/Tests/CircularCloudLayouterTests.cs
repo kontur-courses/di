@@ -25,7 +25,7 @@ namespace TagsCloudVisualization.Tests.Tests
         {
             center = new Point(500, 500);
             rectangles = new List<Rectangle>();
-            cloudLayouter = new CircularCloudLayouter(center, DistributionConfiguration.Default);
+            cloudLayouter = new CircularCloudLayouter(DistributionConfiguration.Default);
         }
         
         [Test]
@@ -34,7 +34,7 @@ namespace TagsCloudVisualization.Tests.Tests
         {
             var rectangleSize = new Size(100, 100);
 
-            rectangles.Add(cloudLayouter.GetNextRectangle(rectangles, rectangleSize));
+            rectangles.Add(cloudLayouter.GetNextRectangle(center, rectangles, rectangleSize));
             
             Assert.IsNotEmpty(rectangles);
         }
@@ -45,7 +45,7 @@ namespace TagsCloudVisualization.Tests.Tests
         {
             var rectangleSize = new Size(100, 100);
 
-            rectangles.Add(cloudLayouter.GetNextRectangle(rectangles, rectangleSize));
+            rectangles.Add(cloudLayouter.GetNextRectangle(center, rectangles, rectangleSize));
             
             Assert.AreEqual(center.X - rectangleSize.Width / 2, rectangles[^1].X);
             Assert.AreEqual(center.Y - rectangleSize.Height / 2, rectangles[^1].Y);
@@ -58,7 +58,7 @@ namespace TagsCloudVisualization.Tests.Tests
             var amount = 100;
             var listSize = TagCloudHelper.GenerateRectangleSizesRandom(amount);
             
-            rectangles = cloudLayouter.GenerateCloud(listSize);
+            rectangles = cloudLayouter.GenerateCloud(center, listSize);
             
             Assert.AreEqual(amount, rectangles.Count);
         }
@@ -68,7 +68,7 @@ namespace TagsCloudVisualization.Tests.Tests
         public void IsRectanglesIntersect_AllRectanglesNotIntersect_ShouldReturnTrue()
         {
             rectangles = cloudLayouter
-                .GenerateCloud(TagCloudHelper.GenerateRectangleSizesRandom(50));
+                .GenerateCloud(center, TagCloudHelper.GenerateRectangleSizesRandom(50));
 
             for (var i = 1; i < rectangles.Count; i++)
                 for (var j = 0; j < i; j++)
@@ -80,7 +80,7 @@ namespace TagsCloudVisualization.Tests.Tests
         public void CloseLocationRectangles_AllRectangleShiftToCenter_ShouldReturnTrue()
         {
             rectangles = cloudLayouter
-                .GenerateCloud(TagCloudHelper.GenerateRectangleSizesRandom(150));
+                .GenerateCloud(center, TagCloudHelper.GenerateRectangleSizesRandom(150));
 
             var radius = Math.Max(rectangles.Sum(x => x.Width), rectangles.Sum(x => x.Height)) / 2;
 
