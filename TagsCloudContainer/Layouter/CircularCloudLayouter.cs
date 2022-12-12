@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Layouter
 {
     public class CircularCloudLayouter
     {
-        private Spiral _spiral;
+        private Spiral.Spiral _spiral;
         private List<Rectangle> _rectangles;
         private Point _center;
 
         public CircularCloudLayouter(Point center)
         {
             _center = center;
-            _spiral = new Spiral(center, 2);
+            _spiral = new Spiral.Spiral(center, 2);
             _rectangles = new List<Rectangle>();
         }
 

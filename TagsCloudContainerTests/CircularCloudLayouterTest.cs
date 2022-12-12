@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
 using TagsCloudContainer;
+using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainerTests
 {

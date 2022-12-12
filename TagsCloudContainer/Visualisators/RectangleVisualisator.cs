@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Layouter;
 using TagsCloudContainer.WorkWithWords;
 
 namespace TagsCloudContainer.Visualisators

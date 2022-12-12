@@ -62,12 +62,10 @@ namespace TagsCloudContainerTests
         {
             _settings.FileName = $"{_projectDirectory}\\TextFiles\\{fileName}";
             var fileText = GetText(_settings.FileName);
-            var lowerText = GetText($"{_projectDirectory}\\TextFiles\\LowerCase.txt");
             var handler = new WordHandler(_settings);
             var words = handler.ProcessWords(fileText);
-            var lowerWords = handler.ProcessWords(lowerText);
             for (int i = 0; i < words.Count; i++)
-                words[i].Value.Should().Be(lowerWords[i].Value);
+                words[i].Value.Should().Be(words[i].Value.ToLower());
         }
 
         [TestCase("UpperCase.txt")]

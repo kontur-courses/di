@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Application;
+using TagsCloudContainer.Layouter;
 using TagsCloudContainer.TextReaders;
 using TagsCloudContainer.Visualisators;
 using TagsCloudContainer.WorkWithWords;
