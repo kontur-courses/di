@@ -27,13 +27,15 @@ namespace TagsCloudContainer.App
             builder.RegisterType<TagsLayouter>().AsSelf();
             builder.RegisterType<CloudLayouterSettings>().AsSelf().SingleInstance();
             builder.RegisterType<TagsExtractor>().As<ITagsExtractor>().SingleInstance();
+            builder.RegisterType<TagsPainter>().As<ITagsPainter>();
+            builder.RegisterType<TwoColorsTagsPainter>().As<ITagsPainter>();
             builder.RegisterType<TwoColorsSizeTagsPainter>().As<ITagsPainter>();
             builder.RegisterType<TextReaderFromTxt>().As<ITextReader>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<FontText>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
                 .SingleInstance();
-            builder.RegisterType<ImageSettings>().AsSelf();
+            builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ImageDirectoryProvider>().As<IImageDirectoryProvider>();
 
             builder.RegisterType<MainForm>().AsSelf();

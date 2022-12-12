@@ -7,5 +7,7 @@ namespace TagsCloudContainer.App.Layouter
     public interface ITagsPainter
     {
         public void Paint(List<TagInfo> tags);
+
+        public bool CanPaint(PainterType painterType);
     }
 }

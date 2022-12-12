@@ -9,19 +9,19 @@ namespace TagsCloudContainerTests
 {
     public class TagsExtractor_Should
     {
-        private TagsExtractor simpleTagsExtractor;
+        private TagsExtractor tagsExtractor;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            simpleTagsExtractor = new TagsExtractor();
+            tagsExtractor = new TagsExtractor();
         }
 
         [Test]
         public void FindAllTagsInText_ShouldReturnLowerСase()
         {
             var expectedWord = "мама";
-            var actual = simpleTagsExtractor.FindAllTagsInText("Мама");
+            var actual = tagsExtractor.FindAllTagsInText("Мама");
 
             actual.Should().ContainKey(expectedWord);
         }
@@ -33,7 +33,7 @@ namespace TagsCloudContainerTests
         [TestCase("не")]
         public void FindAllTagsInText_ShouldNotReturnNotBoringWords(string input)
         {
-            var actual = simpleTagsExtractor.FindAllTagsInText(input);
+            var actual = tagsExtractor.FindAllTagsInText(input);
 
             actual.Should().HaveCount(0);
         }
@@ -43,7 +43,7 @@ namespace TagsCloudContainerTests
         [TestCase("читал", "читать")]
         public void FindAllTagsInText_ShouldReturnWordWithSimpleForm(string input, string expectedWord)
         {
-            var actual = simpleTagsExtractor.FindAllTagsInText(input);
+            var actual = tagsExtractor.FindAllTagsInText(input);
 
             actual.Should().ContainKey(expectedWord);
         }
@@ -52,7 +52,7 @@ namespace TagsCloudContainerTests
         public void FindAllTagsInText_ShouldReturnOneWord_WithSameWords()
         {
             var expected = new Dictionary<string, int> { { "мама", 2 } };
-            var actual = simpleTagsExtractor.FindAllTagsInText("мама"+ Environment.NewLine+ "мама");
+            var actual = tagsExtractor.FindAllTagsInText("мама"+ Environment.NewLine+ "мама");
 
             actual.Should().HaveCount(1);
             actual.Should().BeEquivalentTo(expected);

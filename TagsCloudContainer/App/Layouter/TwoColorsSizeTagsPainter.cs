@@ -18,6 +18,11 @@ namespace TagsCloudContainer.App.Layouter
             this.palette = palette;
         }
 
+        public bool CanPaint(PainterType painterType)
+        {
+            return painterType == PainterType.TwoColorDependOnSize;
+        }
+
         public void Paint(List<TagInfo> tags)
         {
             var imageSize = imageHolder.GetImageSize();
