@@ -7,8 +7,8 @@ using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.Infrastructure
 {
-    public class WordDynamicFontSizeProviderFactory : IWordFontSizeProviderFactory
+    public class WordLinearFontSizeProviderFactory : IWordFontSizeProviderFactory
     {
-        public IWordFontSizeProvider CreateDefault(WordFontSizeSettings settings) => new WordDynamicFontSizeProvider(settings);
+        public IWordFontSizeProvider CreateDefault(WordFontSizeSettings settings) => new WordLinearFontSizeProvider(settings);
     }
 }
