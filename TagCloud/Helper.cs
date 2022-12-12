@@ -19,18 +19,7 @@ public static class Helper
             _ => throw new ArgumentException($"This extension {extension} are not supported!")
         };
     }
-    
-    public static IFile GetFileByName(string fileName)
-    {
-        var extension = System.IO.Path.GetExtension(fileName);
-        return extension.ToLower() switch
-        {
-            TxtFile.Extension => new TxtFile(fileName),
-            DocFile.Extension => new DocFile(fileName),
-            _ => throw new ArgumentException($"This extension {extension} are not supported!")
-        };
-    }
-    
+
     public static ICurve GetCurveByName(string curveName)
     {
         return curveName.ToLower() switch

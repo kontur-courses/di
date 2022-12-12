@@ -14,6 +14,9 @@ public static class DiContainerConfiguration
     internal static ServiceProvider Build()
     {
         IServiceCollection services = new ServiceCollection();
+        services.AddSingleton<IFileReader, TxtFileReader>();
+        services.AddSingleton<IFileReader, DocFileReader>();
+        services.AddSingleton<FileReader>();
         services.AddSingleton<Random>();
         services.AddSingleton<CloudDrawer>();
         services.AddSingleton<CloudLayouter>();
