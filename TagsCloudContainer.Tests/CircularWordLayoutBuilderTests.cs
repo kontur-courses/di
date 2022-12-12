@@ -3,7 +3,7 @@ using System.Drawing;
 using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Infrastructure;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer.Tests.LayoutBuilderTests
 {
     public class CircularWordLayoutBuilderTests
     {
