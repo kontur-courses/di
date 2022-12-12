@@ -6,7 +6,7 @@ namespace TagsCloudContainer
     public class WordsFilter : IWordsFilter
     {
         public List<string> FilterWords(List<string> taggedWords, ICustomOptions options,
-            List<string>? boringWords = null)
+            HashSet<string>? boringWords = null)
         {
             //PoS - Part of Speech; grammemes - grammatical number etc, including PoS
             var excludedPoS =

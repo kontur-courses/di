@@ -58,7 +58,11 @@ namespace TagsCloudContainer
                 .Select(x => x.ToLower())
                 .ToList();
 
-            var filteredWords = filter.FilterWords(taggedWords, options, boringWords);
+            boringWords.Sort();
+
+            var boringWordsSet = boringWords.ToHashSet();
+
+            var filteredWords = filter.FilterWords(taggedWords, options, boringWordsSet);
 
             var result = new Dictionary<string, int>();
             filteredWords.ForEach(x =>

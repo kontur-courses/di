@@ -76,7 +76,7 @@ namespace TagsCloudContainerTests
         public void FilterWords_AddBoringWords_ShouldExcludeIt()
         {
             var taggedWords = new List<string> { "печь{печь=S,жен,неод=(вин,ед|им,ед)|печь=V,несов,пе=инф}" };
-            var boringWords = new List<string> { "печь" };
+            var boringWords = new HashSet<string> { "печь" };
 
             var result = sut.FilterWords(taggedWords, options, boringWords);
 

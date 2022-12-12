@@ -6,18 +6,18 @@ namespace TagsCloudContainer
     {
         private static readonly HashSet<string> acceptableFormats = new()
         {
-            "png",
-            "heif",
             "bmp",
             "emf",
             "exif",
             "gif",
+            "heif",
             "icon",
             "jpeg",
             "memorybmp",
             "tiff",
             "webp",
-            "wmf"
+            "wmf",
+            "png"
         };
         public static void ValidateOptions(CustomOptions options)
         {
