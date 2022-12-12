@@ -14,8 +14,8 @@ namespace TagsCloudContainer.TextReaders
                 var line = sr.ReadLine();
                 while (line != null)
                 {
-                    line = sr.ReadLine();
                     builder.Append(line + Environment.NewLine);
+                    line = sr.ReadLine();
                 }
             }
 
