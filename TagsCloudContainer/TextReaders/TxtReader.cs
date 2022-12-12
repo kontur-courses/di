@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace TagsCloudContainer
 {
-    public class TextReader
+    public class TxtReader : ITextReader
     {
-        public static string GetTextFromFile(string path)
+        public string GetTextFromFile(string path)
         {
             var builder = new StringBuilder();
             using (StreamReader sr = new StreamReader(path))

@@ -17,13 +17,16 @@ namespace TagsCloudContainer
                 {
                     WordColor = Color.FromName(options.ColorName),
                     WordFontName = options.FontName,
-                    WordFontSize = options.FontSize
+                    WordFontSize = options.FontSize,
+                    FileName = options.InputFile,
+                    BoringWordsFileName = options.BorringWordsFile
                 })
                 .As<Settings>();
-            builder.Register(x =>
-                    new WordHandler(
-                        options.InputFile, options.BorringWordsFile))
-                .As<WordHandler>();
+            if (options.InputFile.Contains("docx"))
+                builder.RegisterType<WordReader>().As<ITextReader>();
+            else
+                builder.RegisterType<TxtReader>().As<ITextReader>();
+            builder.RegisterType<WordHandler>().AsSelf();
             builder.Register(x =>
                     new CircularCloudLayouter(new Point(options.CenterX, options.CenterY)))
                 .As<CircularCloudLayouter>();

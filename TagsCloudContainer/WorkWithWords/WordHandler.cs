@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace TagsCloudContainer
 {
     public class WordHandler
     {
-        private readonly Dictionary<string, Word> _boringWords;
+        private Dictionary<string, Word> _boringWords;
+        private ITextReader _reader;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
         private string _fileName;
         private readonly string _projectDirectory;
-        public WordHandler(string fileName, string boringWordsFileName = "")
+
+        public WordHandler(ITextReader reader, Settings settings)
         {
-            _fileName = fileName;
+            _fileName = settings.FileName;
+            _reader = reader;
             _projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
                 .Parent.Parent.FullName;
-            var text = TextReader.GetTextFromFile(String.IsNullOrEmpty(boringWordsFileName)
+            SetUpBoringWords(settings.BoringWordsFileName);
+        }
+
+        public void SetUpBoringWords(string boringWordsFileName)
+        {
+            var text = _reader.GetTextFromFile(String.IsNullOrEmpty(boringWordsFileName)
                 ? $"{_projectDirectory}\\TextFiles\\BoringWords.txt"
                 : $"{_projectDirectory}\\TextFiles\\{boringWordsFileName}");
 
@@ -26,7 +33,7 @@ namespace TagsCloudContainer
 
         public List<Word> ProcessWords(Settings settings)
         {
-            var text = TextReader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_fileName}");
+            var text = _reader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_fileName}");
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)
