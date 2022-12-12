@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DeepMorphy;
-using TagsCloudVisualization.Infrastructure.Parsers;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Analyzer
@@ -26,19 +25,17 @@ namespace TagsCloudVisualization.Infrastructure.Analyzer
         };
 
         private readonly AnalyzerSettings settings;
-        private IParser parser;
-
 
         public Analyzer(AnalyzerSettings settings)
         {
             this.settings = settings;
         }
 
-        public Dictionary<string, int> CreateFrequencyDictionary()
+        public IEnumerable<IWeightedWord> CreateWordFrequenciesSequence(IEnumerable<string> words)
         {
             var result = new Dictionary<string, int>();
 
-            var remainingWords = Analyze(parser.WordParse());
+            var remainingWords = Analyze(words);
 
             foreach (var word in remainingWords)
             {
@@ -47,12 +44,7 @@ namespace TagsCloudVisualization.Infrastructure.Analyzer
                 result[word]++;
             }
 
-            return result;
-        }
-
-        public void SetParser(IParser parser)
-        {
-            this.parser = parser;
+            foreach (var pair in result) yield return new WeightedWord { Weight = pair.Value, Word = pair.Key };
         }
 
         private IEnumerable<string> Analyze(IEnumerable<string> words)
@@ -67,11 +59,10 @@ namespace TagsCloudVisualization.Infrastructure.Analyzer
 
             var parsedWords = analyzer
                 .Parse(words).Where(m => m.Tags.All(t => !excludedTags.Contains(t["чр"]))
-                            && (selectedTags.Count == 0 ||
-                                selectedTags.Contains(m.BestTag["чр"])))
+                                         && (selectedTags.Count == 0 ||
+                                             selectedTags.Contains(m.BestTag["чр"])))
                 .Where(m => !settings.Lemmatization || m.BestTag.HasLemma)
                 .Select(m => settings.Lemmatization ? m.BestTag.Lemma : m.Text);
-
 
             foreach (var word in parsedWords)
                 yield return word;

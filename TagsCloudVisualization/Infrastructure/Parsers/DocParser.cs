@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using Spire.Doc;
-using Spire.Doc.Interface;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public class DocParser : IParser
     {
-        private readonly ICurrentTextFileProvider fileProvider;
+        private readonly DocumentParserHelper helper;
         private readonly ParserSettings settings;
 
-        public DocParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public DocParser(ParserSettings settings)
         {
-            this.fileProvider = fileProvider;
+            helper = new DocumentParserHelper();
             this.settings = settings;
         }
 
         public string FileType => "doc";
 
-        public IEnumerable<string> WordParse()
+        public IEnumerable<string> WordParse(string path)
         {
-            var document = new Document(fileProvider.Path, FileFormat.Doc);
+            var document = new Document(path, FileFormat.Doc);
             return settings.TextType == TextType.OneWordOneLine
-                ? ParserHelper.GetTextParagraph(document)
-                : ParserHelper.GetAllWordInDocument(document);
+                ? helper.GetTextParagraph(document)
+                : helper.GetAllWordInDocument(document);
         }
     }
 }

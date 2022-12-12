@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
             this.settings = settings;
         }
 
-        public string Category => "Настройки";
+        public Category Category => Category.Settings;
         public string Name => "Шрифт...";
         public string Description => "";
 

@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.InfrastructureUI
 {
     public static class UiActionExtensions
     {
-        public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
+        public static ToolStripItem[] ToMenuItems(this IEnumerable<IUiAction> actions)
         {
             var items = actions.GroupBy(a => a.Category)
                 .Select(g => CreateTopLevelMenuItem(g.Key, g.ToList()))
@@ -15,10 +15,10 @@ namespace TagsCloudVisualization.InfrastructureUI
             return items;
         }
 
-        private static ToolStripMenuItem CreateTopLevelMenuItem(string name, IEnumerable<IUiAction> items)
+        private static ToolStripMenuItem CreateTopLevelMenuItem(Category name, IEnumerable<IUiAction> items)
         {
             var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
-            return new ToolStripMenuItem(name, null, menuItems);
+            return new ToolStripMenuItem(name.ToString(), null, menuItems);
         }
 
         public static ToolStripItem ToMenuItem(this IUiAction action)

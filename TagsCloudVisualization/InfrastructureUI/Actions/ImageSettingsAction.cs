@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
             this.settings = settings;
         }
 
-        public string Category => "Настройки";
+        public Category Category => Category.Settings;
         public string Name => "Изображение...";
         public string Description => "Размеры изображения";
 

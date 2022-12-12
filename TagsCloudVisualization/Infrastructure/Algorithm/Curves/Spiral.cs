@@ -10,7 +10,7 @@ namespace TagsCloudVisualization.Infrastructure.Algorithm.Curves
         private readonly float angleIncrement;
         private readonly float distanceBetweenLoops;
 
-        public Spiral(float distanceBetweenLoops, Point center, float angleIncrement = 0.02f)
+        public Spiral(Point center, float distanceBetweenLoops = 1, float angleIncrement = 0.02f)
         {
             if (distanceBetweenLoops == 0)
                 throw new ArgumentException(

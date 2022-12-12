@@ -2,23 +2,12 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloudVisualization.Infrastructure.Analyzer;
-using TagsCloudVisualization.Infrastructure.Parsers;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.InfrastructureUI
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
-        private readonly IAnalyzer analyzer;
-        private readonly TextFileProvider fileProvider;
-
-        public PictureBoxImageHolder(IAnalyzer analyzer, TextFileProvider fileProvider)
-        {
-            this.fileProvider = fileProvider;
-            this.analyzer = analyzer;
-        }
-
         public Size GetImageSize()
         {
             FailIfNotInitialized();
@@ -46,17 +35,6 @@ namespace TagsCloudVisualization.InfrastructureUI
         {
             FailIfNotInitialized();
             Image.Save(fileName);
-        }
-
-
-        public void SetFile(string path)
-        {
-            fileProvider.Path = path;
-        }
-
-        public void SetParser(IParser parser)
-        {
-            analyzer.SetParser(parser);
         }
 
         private void FailIfNotInitialized()

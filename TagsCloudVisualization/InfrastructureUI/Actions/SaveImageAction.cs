@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 
 namespace TagsCloudVisualization.InfrastructureUI.Actions
@@ -13,7 +12,7 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
             this.imageHolder = imageHolder;
         }
 
-        public string Category => "Файл";
+        public Category Category => Category.File;
         public string Name => "Сохранить...";
         public string Description => "Сохранить изображение в файл";
 

@@ -2,7 +2,7 @@
 {
     public interface IUiAction
     {
-        string Category { get; }
+        Category Category { get; }
         string Name { get; }
         string Description { get; }
         void Perform();

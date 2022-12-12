@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudVisualization.DefinerFontSize;
+using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Algorithm;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 using TagsCloudVisualization.Infrastructure.Analyzer;
@@ -11,45 +13,46 @@ namespace TagsCloudVisualization.InfrastructureUI.Painters
     public class CloudPainter
     {
         private readonly IAnalyzer analyzer;
-        private readonly ICurve curve;
-        private readonly DefinerSize definer;
+        private readonly IDefinerFontSize definerFont;
         private readonly IImageHolder imageHolder;
-        private readonly PaletteSettings paletteSettings;
+        private readonly IPaletteSettings paletteSettings;
+        private readonly IWordsProvider wordsProvider;
 
         public CloudPainter(IImageHolder imageHolder,
-            IAnalyzer analyzer, DefinerSize definer,
-            ICurve curve
-            , PaletteSettings paletteSettings)
+            IWordsProvider wordsProvider,
+            IAnalyzer analyzer, IDefinerFontSize definerFont,
+            IPaletteSettings paletteSettings)
         {
+            this.wordsProvider = wordsProvider;
             this.imageHolder = imageHolder;
-            this.definer = definer;
+            this.definerFont = definerFont;
             this.analyzer = analyzer;
-            this.curve = curve;
             this.paletteSettings = paletteSettings;
         }
 
-        public void Paint()
+        public void Paint(string textFilePath, ICurve curve)
         {
             var imageSize = imageHolder.GetImageSize();
             var cloud = new Cloud(curve);
-            var frequency = analyzer.CreateFrequencyDictionary();
-            var words = definer.DefineFontSize(frequency);
+            var words = wordsProvider.GetWords(textFilePath);
+            var analyzedWords = analyzer.CreateWordFrequenciesSequence(words);
+            var wordsWithFont = definerFont.DefineFontSize(analyzedWords);
             var counter = 0;
             using (var graphics = imageHolder.StartDrawing())
             {
                 graphics.FillRectangle(new SolidBrush(paletteSettings.BackgroundColor), 0, 0,
                     imageSize.Width, imageSize.Height);
 
-                foreach (var word in words.Keys.OrderBy(w => frequency[w]).Reverse())
+                foreach (var word in wordsWithFont.OrderBy(w => w.Font.Size).Reverse())
                 {
-                    var color = paletteSettings.GetColorAccordingSize(words[word].Size);
+                    var color = paletteSettings.GetColorAccordingSize(word.Font.Size);
                     using var brush = new SolidBrush(color);
-                    var sizeRectangle = TextRenderer.MeasureText(word, words[word]);
+                    var sizeRectangle = TextRenderer.MeasureText(word.Word, word.Font);
                     sizeRectangle.Width++;
                     sizeRectangle.Height++;
                     var r = cloud.PutNextRectangle(sizeRectangle);
                     var drawFormat = new StringFormat { Alignment = StringAlignment.Center };
-                    graphics.DrawString(word, words[word], brush, r, drawFormat);
+                    graphics.DrawString(word.Word, word.Font, brush, r, drawFormat);
                     if (++counter % 10 == 0)
                         imageHolder.UpdateUi();
                 }

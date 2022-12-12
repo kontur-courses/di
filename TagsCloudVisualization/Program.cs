@@ -1,8 +1,8 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
+using TagsCloudVisualization.DefinerFontSize;
 using TagsCloudVisualization.Infrastructure;
-using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 using TagsCloudVisualization.Infrastructure.Analyzer;
 using TagsCloudVisualization.Infrastructure.Parsers;
 using TagsCloudVisualization.InfrastructureUI;
@@ -18,9 +18,11 @@ namespace TagsCloudVisualization
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<CloudForm>();
+            containerBuilder.RegisterType<CloudPainter>().AsSelf().SingleInstance();
+
+            containerBuilder.RegisterType<SetTextAction>().AsSelf().SingleInstance();
 
             containerBuilder.RegisterType<SaveImageAction>().As<IUiAction>().SingleInstance();
-            containerBuilder.RegisterType<SetTextAction>().As<IUiAction>().SingleInstance();
             containerBuilder.RegisterType<ButterflyCloudAction>().As<IUiAction>().SingleInstance();
             containerBuilder.RegisterType<CircleCloudAction>().As<IUiAction>().SingleInstance();
 
@@ -34,30 +36,20 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterType<TxtParser>().As<IParser>().SingleInstance();
             containerBuilder.RegisterType<DocParser>().As<IParser>().SingleInstance();
 
+            containerBuilder.RegisterType<PaletteSettings>().As<IPaletteSettings>().SingleInstance();
             containerBuilder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<PaletteSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<ParserSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<AnalyzerSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<FontSettings>().AsSelf().SingleInstance();
 
-            containerBuilder.RegisterType<TextFileProvider>()
-                .As<TextFileProvider, ICurrentTextFileProvider>()
-                .SingleInstance();
+            containerBuilder.RegisterType<WordsProvider>().As<IWordsProvider>().SingleInstance();
+            containerBuilder.RegisterType<DefinerFontSize.DefinerFontSize>().As<IDefinerFontSize>().SingleInstance();
+
             containerBuilder.RegisterType<PictureBoxImageHolder>()
                 .As<PictureBoxImageHolder, IImageHolder>()
                 .SingleInstance();
 
-            containerBuilder.Register<Func<DefinerSize, ICurve, CloudPainter>>(c =>
-            {
-                var holder = c.Resolve<IImageHolder>();
-                var analyzer = c.Resolve<IAnalyzer>();
-                var palette = c.Resolve<PaletteSettings>();
-                return (size, curve) => new CloudPainter(holder, analyzer, size, curve, palette);
-            }).SingleInstance();
-
-
             containerBuilder.RegisterType<Analyzer>().As<IAnalyzer>().SingleInstance();
-
 
             return containerBuilder.Build();
         }

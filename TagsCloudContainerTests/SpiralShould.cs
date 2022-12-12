@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
@@ -15,13 +12,14 @@ namespace TagsCloudContainerTests
         [Test]
         public void ThrowException_IncorrectDistanceBetweenLoops()
         {
-            Action action = () => new Spiral(0, Point.Empty);
+            Action action = () => new Spiral(Point.Empty, 0);
             action.Should().Throw<ArgumentException>();
         }
+
         [Test]
         public void ThrowException_IncorrectIncrement()
         {
-            Action action = () => new Spiral(1, Point.Empty, 0);
+            Action action = () => new Spiral(Point.Empty, 1, 0);
             action.Should().Throw<ArgumentException>();
         }
 
@@ -32,7 +30,7 @@ namespace TagsCloudContainerTests
         public void ReturnCenter_MustMatchEstablished(int expectedCenterX, int expectedCenterY)
         {
             var expectedCenter = new Point(expectedCenterX, expectedCenterY);
-            var spiral = new Spiral(1, expectedCenter);
+            var spiral = new Spiral(expectedCenter);
 
             spiral.Center.Should().Be(expectedCenter);
         }
@@ -43,9 +41,8 @@ namespace TagsCloudContainerTests
         {
             var center = new Point(0, 0);
             var spiral = new Spiral(
-                1,
                 center,
-                (float)Math.PI * 2);
+                angleIncrement: (float)Math.PI * 2);
 
 
             var previsionPoint = spiral.First();

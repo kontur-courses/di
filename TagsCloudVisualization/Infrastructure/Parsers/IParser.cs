@@ -6,6 +6,6 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
     {
         public string FileType { get; }
 
-        public IEnumerable<string> WordParse();
+        public IEnumerable<string> WordParse(string path);
     }
 }

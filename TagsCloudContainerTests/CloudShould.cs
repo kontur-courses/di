@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Infrastructure.Algorithm;
@@ -13,24 +9,24 @@ namespace TagsCloudContainerTests
 {
     public class CloudShould
     {
-        private Cloud cloud;
         private Point center;
+        private Cloud cloud;
         private Spiral spiral;
 
         [SetUp]
         public void SetUp()
         {
             center = new Point(100, 100);
-            spiral = new Spiral(1, center);
+            spiral = new Spiral(center);
             cloud = new Cloud(spiral);
         }
 
         public static bool AreThereAnyIntersections(Rectangle[] rectangles)
         {
             for (var i = 0; i < rectangles.Length; i++)
-                for (var j = i + 1; j < rectangles.Length; j++)
-                    if (rectangles[i].AreIntersected(rectangles[j]))
-                        return true;
+            for (var j = i + 1; j < rectangles.Length; j++)
+                if (rectangles[i].AreIntersected(rectangles[j]))
+                    return true;
 
             return false;
         }

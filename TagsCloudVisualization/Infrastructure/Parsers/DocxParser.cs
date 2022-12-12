@@ -6,24 +6,24 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public class DocxParser : IParser
     {
-        private readonly ICurrentTextFileProvider fileProvider;
+        private readonly DocumentParserHelper helper;
         private readonly ParserSettings settings;
 
-        public DocxParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public DocxParser(ParserSettings settings)
         {
-            this.fileProvider = fileProvider;
+            helper = new DocumentParserHelper();
             this.settings = settings;
         }
 
         public string FileType => "docx";
 
-        public IEnumerable<string> WordParse()
+        public IEnumerable<string> WordParse(string path)
         {
-            var document = new Document(fileProvider.Path, FileFormat.Docx);
+            var document = new Document(path, FileFormat.Docx);
 
             if (settings.TextType == TextType.OneWordOneLine)
-                return ParserHelper.GetTextParagraph(document);
-            return ParserHelper.GetAllWordInDocument(document);
+                return helper.GetTextParagraph(document);
+            return helper.GetAllWordInDocument(document);
         }
     }
 }

@@ -6,30 +6,28 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public class TxtParser : IParser
     {
-        private readonly ICurrentTextFileProvider fileProvider;
+        private readonly TxtParserHelper helper;
         private readonly ParserSettings settings;
 
-        public TxtParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public TxtParser(ParserSettings settings)
         {
-            this.fileProvider = fileProvider;
+            helper = new TxtParserHelper();
             this.settings = settings;
         }
 
         public string FileType => "txt";
 
-        public IEnumerable<string> WordParse()
+        public IEnumerable<string> WordParse(string path)
         {
-            var encoding = ParserHelper.Encodings[settings.Encoding];
-            var path = fileProvider.Path;
+            var encoding = helper.Encodings[settings.Encoding];
             if (settings.TextType == TextType.OneWordOneLine)
-                foreach (var line in File.ReadAllLines(path, encoding))
+                foreach (var line in File.ReadLines(path, encoding))
                     yield return line;
             else
-            {
-                foreach (var word in ParserHelper.AllWordRegex.Matches(File.ReadAllText(path, encoding)))
+                foreach (var word in helper
+                             .SelectAllWordsRegex
+                             .Matches(File.ReadAllText(path, encoding)))
                     yield return word.ToString();
-            }
-
         }
     }
 }

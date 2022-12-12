@@ -4,15 +4,15 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private readonly PaletteSettings settings;
+        private readonly IPaletteSettings settings;
 
-        public PaletteSettingsAction(PaletteSettings settings)
+        public PaletteSettingsAction(IPaletteSettings settings)
         {
             this.settings = settings;
         }
 
-        public string Category => "Настройки";
-        public string Name => "палитры...";
+        public Category Category => Category.Settings;
+        public string Name => "палитра...";
         public string Description => "";
 
         public void Perform()
