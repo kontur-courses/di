@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DryIoc" Version="5.3.1"/>
-        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.2"/>
+        <PackageReference Include="DryIoc" Version="5.3.1" />
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj"/>
+        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj" />
     </ItemGroup>
 
     <ItemGroup>

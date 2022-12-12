@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using TagsCloudContainer.Interfaces;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.Cli;
 
 public class CliGraphicsProvider : IGraphicsProvider
 {
@@ -20,13 +20,6 @@ public class CliGraphicsProvider : IGraphicsProvider
         Commit();
         bitmapImage = new(cliGraphicsProviderSettings.Width, cliGraphicsProviderSettings.Height);
         graphics = Graphics.FromImage(bitmapImage);
-        return graphics;
-    }
-
-    public Graphics Get()
-    {
-        if (bitmapImage is null || graphics is null)
-            throw new ApplicationException("Call create before get");
         return graphics;
     }
 

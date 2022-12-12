@@ -1,6 +1,6 @@
 ﻿using TagsCloudContainer.Interfaces;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.Cli;
 
 public class CliGraphicsProviderSettings : GraphicsProviderSettings
 {

@@ -6,7 +6,7 @@ using System.Text.Json.Serialization.Metadata;
 using System.Text.RegularExpressions;
 using TagsCloudContainer.Interfaces;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.Cli;
 
 public class JsonColorConverter : JsonConverter<Color>
 {
@@ -91,16 +91,28 @@ public class JsonSettingsFactory : ISettingsFactory
 
         static SettingsTypeResolver()
         {
+            var tagCloudAssemblies = new[]
+            {
+                Assembly.Load("TagsCloudContainer"),
+                Assembly.Load("TagsCloudContainer.Interfaces"),
+                Assembly.Load("TagsCloudContainer.Cli")
+            };
             JsonDerivedTypes = new()
             {
-                [typeof(GraphicsProviderSettings)] =
-                    GetJsonDerivedTypes(typeof(GraphicsProviderSettings), Assembly.GetExecutingAssembly()),
-                [typeof(DrawerSettings)] = GetJsonDerivedTypes(typeof(DrawerSettings), Assembly.GetExecutingAssembly()),
-                [typeof(Brush)] = GetJsonDerivedTypes(typeof(Brush), typeof(Brush).Assembly),
-                // [typeof(Pen)] = GetJsonDerivedTypes(typeof(Pen), typeof(Pen).Assembly),
-                [typeof(FontFamily)] = GetJsonDerivedTypes(typeof(FontFamily), typeof(FontFamily).Assembly),
-                [typeof(LayouterAlgorithmSettings)] = GetJsonDerivedTypes(typeof(LayouterAlgorithmSettings),
-                    Assembly.GetExecutingAssembly())
+                {
+                    typeof(GraphicsProviderSettings),
+                    GetJsonDerivedTypes(typeof(GraphicsProviderSettings), tagCloudAssemblies)
+                },
+                {
+                    typeof(DrawerSettings), GetJsonDerivedTypes(typeof(DrawerSettings),
+                        tagCloudAssemblies)
+                },
+                {
+                    typeof(LayouterAlgorithmSettings), GetJsonDerivedTypes(typeof(LayouterAlgorithmSettings),
+                        tagCloudAssemblies)
+                },
+                { typeof(Brush), GetJsonDerivedTypes(typeof(Brush), typeof(Brush).Assembly) },
+                { typeof(FontFamily), GetJsonDerivedTypes(typeof(FontFamily), typeof(FontFamily).Assembly) },
             };
         }
 
@@ -121,9 +133,10 @@ public class JsonSettingsFactory : ISettingsFactory
             return jsonTypeInfo;
         }
 
-        private static JsonDerivedType[] GetJsonDerivedTypes(Type targetType, Assembly assembly)
+        private static JsonDerivedType[] GetJsonDerivedTypes(Type targetType, params Assembly[] assemblies)
         {
-            return assembly.GetTypes()
+            return assemblies
+                .SelectMany(assembly => assembly.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(t => t.IsAssignableTo(targetType))
                 .Select(t => new JsonDerivedType(t, t.Name)).ToArray();
