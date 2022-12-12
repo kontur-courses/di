@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Spirals;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly List<Rectangle> rectangles;
-        private readonly Spiral spiral;
+        public List<Rectangle> Rectangles { get; }
+        public ISpiral Spiral { get; }
+      
         private const int NumberOfPoints = 10_000;
 
-        public CircularCloudLayouter(Spiral spiral)
+        public CircularCloudLayouter(ISpiral spiral)
         {
-            rectangles = new List<Rectangle>();
-            this.spiral = spiral;
+            Rectangles = new List<Rectangle>();
+            Spiral = spiral;
         }
-
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("Sides of the rectangle should not be non-positive");
 
-            var points = spiral.GetPoints(NumberOfPoints);
+            var points = Spiral.GetPoints(NumberOfPoints);
             var rectanglePosition = points[0];
 
             foreach (var point in points)
@@ -32,21 +33,14 @@ namespace TagsCloudVisualization
             }
 
             var rectangle = new Rectangle(rectanglePosition, rectangleSize);
+            Rectangles.Add(rectangle);
             return rectangle;
-        }
-
-        public List<Rectangle> GetRectangles(IEnumerable<Size> rectangleSizes)
-        {
-            foreach (var size in rectangleSizes)
-                rectangles.Add(PutNextRectangle(size));
-
-            return rectangles;
         }
 
         private bool RectangleCanBePlaced(Point position, Size rectangleSize)
         {
             var rect = new Rectangle(position, rectangleSize);
-            return !rectangles.Any(rectangle => rectangle.IntersectsWith(rect));
+            return !Rectangles.Any(rectangle => rectangle.IntersectsWith(rect));
         }
     }
 }
