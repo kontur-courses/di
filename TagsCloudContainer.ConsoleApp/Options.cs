@@ -25,10 +25,10 @@ namespace TagsCloudContainer.ConsoleApp
         [Option("font", Required = false, Default = "Consolas", HelpText = "Set word font family")]
         public string FontFamily { get; set; }
 
-        [Option("minColor", Required = false, Default = "FF000000", HelpText = "Set minimum frequency word plate color (ARGB without '#')")]
+        [Option("minColor", Required = false, Default = "#FFFFAA00", HelpText = "Set minimum frequency word plate color (ARGB with '#')")]
         public string MinFrequencyColorString { get; set; }
 
-        [Option("maxColor", Required = false, Default = "FFFF0000", HelpText = "Set maximum frequency word plate color (ARGB without '#')")]
+        [Option("maxColor", Required = false, Default = "#FFFF0000", HelpText = "Set maximum frequency word plate color (ARGB with '#')")]
         public string MaxFrequencyColorString { get; set; }
 
         [Option("minFontSize", Required = false, Default = 5F, HelpText = "Set minimum frequency word font size")]

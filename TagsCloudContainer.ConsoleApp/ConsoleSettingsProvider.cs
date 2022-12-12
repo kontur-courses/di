@@ -2,6 +2,7 @@
 using CommandLine.Text;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -28,9 +29,17 @@ namespace TagsCloudContainer.ConsoleApp
             }
 
             var options = parserResult.Value;
+
             textReaderSettings = new TextReaderSettings() { Filename = options.InputWordFilename };
             outputImageSettings = new OutputImageSettings() { Filename = options.OutputImageFilename, Width = options.OutputImageWidth, Height = options.OutputImageWidth };
-            wordColorSettings = new WordColorSettings() { MinFrequencyColor = Color.Black, MaxFrequencyColor = Color.Blue };
+            
+            var colorTypeConverter = TypeDescriptor.GetConverter(typeof(Color));
+            wordColorSettings = new WordColorSettings() 
+            {
+                MinFrequencyColor = (Color)colorTypeConverter.ConvertFromString(options.MinFrequencyColorString)!,
+                MaxFrequencyColor = (Color)colorTypeConverter.ConvertFromString(options.MaxFrequencyColorString)!
+            };
+
             wordFontSizeSettings = new WordFontSettings() 
             {
                 FontFamily = options.FontFamily,
