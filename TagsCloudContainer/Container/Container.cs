@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Application;
+using TagsCloudContainer.TextReaders;
 using TagsCloudContainer.Visualisators;
 using TagsCloudContainer.WorkWithWords;
 
@@ -20,6 +21,7 @@ namespace TagsCloudContainer.Container
                     BoringWordsFileName = options.PathToBoringWordsFile
                 })
                 .As<Settings>();
+            builder.RegisterType<TextReaderGenerator>().AsSelf();
             builder.RegisterType<WordHandler>().AsSelf();
             builder.Register(x =>
                     new CircularCloudLayouter(new Point(options.CenterX, options.CenterY)))

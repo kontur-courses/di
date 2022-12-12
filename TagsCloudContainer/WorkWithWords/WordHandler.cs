@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.TextReaders;
 
 namespace TagsCloudContainer.WorkWithWords
 {
@@ -14,23 +13,15 @@ namespace TagsCloudContainer.WorkWithWords
         public WordHandler(Settings settings)
         {
             _settings = settings;
-            if (settings.BoringWordsFileName != String.Empty)
-                SetUpBoringWords();
         }
 
-        private void SetUpBoringWords()
+        public void SetUpBoringWords(string text)
         {
-            var reader = TextReaderGenerator.GetReader(_settings.BoringWordsFileName);
-            var text = reader.GetTextFromFile(_settings.BoringWordsFileName);
-
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
-        public List<Word> ProcessWords()
+        public List<Word> ProcessWords(string text)
         {
-            var reader = TextReaderGenerator.GetReader(_settings.FileName);
-            var text = reader.GetTextFromFile(_settings.FileName);
-
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)

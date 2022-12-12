@@ -1,10 +1,11 @@
-﻿using System.Drawing.Imaging;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using TagsCloudContainer.WorkWithWords;
 
 namespace TagsCloudContainer.Visualisators
 {
     public interface IVisualisator
     {
-        public void Paint();
-        public void Save(string path, string filename, ImageFormat format);
+        public Bitmap Paint(List<Word> words);
     }
 }

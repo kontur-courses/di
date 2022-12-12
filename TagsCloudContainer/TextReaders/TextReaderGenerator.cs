@@ -5,7 +5,7 @@ namespace TagsCloudContainer.TextReaders
 {
     public class TextReaderGenerator
     {
-        public static ITextReader GetReader(string pathToFile)
+        public ITextReader GetReader(string pathToFile)
         {
             var extension = Path.GetExtension(pathToFile);
             return extension switch
