@@ -1,8 +1,9 @@
-﻿using System.Drawing.Imaging;
+﻿using System.Drawing;
+using TagCloudPainter.Common;
 
 namespace TagCloudPainter.Interfaces;
 
 public interface ICloudPainter
 {
-    void PaintTagCloud(string inputPath, string outputPath, ImageFormat format);
+    Bitmap PaintTagCloud(IEnumerable<Tag> tags);
 }

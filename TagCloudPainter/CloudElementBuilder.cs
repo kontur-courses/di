@@ -20,11 +20,11 @@ public class CloudElementBuilder : ITagCloudElementsBuilder
     {
         var result = new List<Tag>();
         var dict = _tagParser.ParseTags(path);
-        foreach (var tag in dict.Keys)
+        foreach (var (word, count) in dict)
         {
-            var size = _wordSizer.GetTagSize(tag, dict[tag]);
+            var size = _wordSizer.GetTagSize(word, count);
             var rectangle = _cloudLayouter.PutNextRectangle(size);
-            result.Add(new Tag(tag, rectangle));
+            result.Add(new Tag(word, rectangle, count));
         }
 
         return result;

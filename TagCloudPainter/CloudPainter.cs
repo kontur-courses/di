@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 using TagCloudPainter.Common;
 using TagCloudPainter.Interfaces;
 
@@ -7,26 +7,35 @@ namespace TagCloudPainter;
 
 public class CloudPainter : ICloudPainter
 {
-    private readonly ITagCloudElementsBuilder tagCloudElementsBuilder;
-
-    public CloudPainter(ITagCloudElementsBuilder builder, IImageSettingsProvider imageSettingsProvider)
+    public CloudPainter(IImageSettingsProvider imageSettingsProvider)
     {
-        tagCloudElementsBuilder = builder;
         ImageSettings = imageSettingsProvider.ImageSettings;
     }
 
     private ImageSettings ImageSettings { get; }
 
-    public void PaintTagCloud(string inputPath, string outputPath, ImageFormat imageFormat)
+    public Bitmap PaintTagCloud(IEnumerable<Tag> tags)
     {
         var btm = new Bitmap(ImageSettings.Size.Width, ImageSettings.Size.Height);
         var g = Graphics.FromImage(btm);
+        g.SmoothingMode = SmoothingMode.AntiAlias;
+        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
         g.Clear(ImageSettings.Palette.BackgroundColor);
-        var tags = tagCloudElementsBuilder.GetTags(inputPath);
+        var format = new StringFormat
+        {
+            Alignment = StringAlignment.Far,
+            LineAlignment = StringAlignment.Center
+        };
 
         foreach (var tag in tags)
-            g.DrawString(tag.Value, ImageSettings.Font, new SolidBrush(ImageSettings.Palette.TagsColor), tag.Rectangle);
+        {
+            var font = tag.Count > 1
+                ? new Font(ImageSettings.Font.FontFamily, ImageSettings.Font.Size + (tag.Count - 1))
+                : ImageSettings.Font;
+            g.DrawString(tag.Value, font, new SolidBrush(ImageSettings.Palette.TagsColor), tag.Rectangle, format);
+        }
 
-        btm.Save(outputPath, imageFormat);
+        return btm;
     }
 }

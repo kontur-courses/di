@@ -7,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Blurhash.System.Drawing.Common" Version="2.2.0" />
+    <PackageReference Include="Mystem.Net" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
