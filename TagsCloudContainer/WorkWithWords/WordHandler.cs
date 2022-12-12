@@ -15,13 +15,15 @@ namespace TagsCloudContainer.WorkWithWords
             _settings = settings;
         }
 
-        public void SetUpBoringWords(string text)
+        private void SetUpBoringWords(string text)
         {
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
-        public List<Word> ProcessWords(string text)
+        public List<Word> ProcessWords(string text, string boringText = "")
         {
+            SetUpBoringWords(boringText);
+
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)

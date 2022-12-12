@@ -25,10 +25,9 @@ namespace TagsCloudContainer.Application
 
         public void Run()
         {
-            if (_settings.BoringWordsFileName != String.Empty)
-                _handler.SetUpBoringWords(GetText(_settings.BoringWordsFileName));
-
-            var words = _handler.ProcessWords(GetText(_settings.FileName));
+            var text = GetText(_settings.FileName);
+            var boringText = GetText(_settings.BoringWordsFileName);
+            var words = _handler.ProcessWords(text, boringText);
             var bitmap = _visualisator.Paint(words);
 
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
@@ -37,6 +36,8 @@ namespace TagsCloudContainer.Application
 
         private string GetText(string fileName)
         {
+            if (!File.Exists(fileName))
+                throw new ArgumentException($"File is not exists: {fileName}");
             var reader = _readerGenerator.GetReader(fileName);
             return reader.GetTextFromFile(fileName);
         }
