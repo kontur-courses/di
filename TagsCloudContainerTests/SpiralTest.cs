@@ -2,8 +2,7 @@
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer;
-using TagsCloudContainer.Spiral;
+using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainerTests
 {

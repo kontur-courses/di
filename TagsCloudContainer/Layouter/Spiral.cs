@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudContainer.Spiral
+namespace TagsCloudContainer.Layouter
 {
     public class Spiral
     {
