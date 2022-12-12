@@ -14,16 +14,6 @@ public class WordsHandlerWithFilter : DefaultWordsHandler, IWordsHandler
             select word.ToLower();
     }
 
-    public Dictionary<string, int> WordDistribution
-    {
-        get
-        {
-            if (wordDistribution == null) ProcessSequence();
-            return wordDistribution;
-        }
-        private set => wordDistribution = value;
-    }
-
     protected override void ProcessSequence()
     {
         base.ProcessSequence();

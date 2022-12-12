@@ -18,7 +18,7 @@ public class DefaultWordsHandler : IWordsHandler
             if (wordDistribution == null) ProcessSequence();
             return wordDistribution;
         }
-        private set => wordDistribution = value;
+        protected set => wordDistribution = value;
     }
 
     protected virtual void ProcessSequence()
