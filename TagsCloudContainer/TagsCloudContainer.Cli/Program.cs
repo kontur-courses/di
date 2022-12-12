@@ -44,7 +44,7 @@ public class Program
         container.Register<IGraphicsProvider, CliGraphicsProvider>(Reuse.Singleton);
         container.RegisterDelegate(r =>
             (CliGraphicsProviderSettings)r.Resolve<Settings>().GraphicsProviderSettings);
-        container.Register<IDrawerFactory, ClassicDriverFactory>(Reuse.Singleton);
+        container.Register<IDrawerFactory, ClassicDrawerFactory>(Reuse.Singleton);
         container.Register<ILayouterAlgorithmFactory, CircularCloudLayouterFactory>(Reuse.Singleton);
         container.RegisterDelegate(r => r.Resolve<ISettingsFactory>().Build(),
             Reuse.Singleton);

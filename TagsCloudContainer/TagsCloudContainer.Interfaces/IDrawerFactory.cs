@@ -1,9 +1,7 @@
-﻿using System.Drawing;
-
-namespace TagsCloudContainer.Interfaces;
+﻿namespace TagsCloudContainer.Interfaces;
 
 public interface IDrawerFactory
 {
-    (Func<Graphics, Func<ILayouterAlgorithm>, IDrawer>? drawer, bool success) Build(
+    IDrawerProvider Build(
         DrawerSettings drawerSettings);
 }

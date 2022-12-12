@@ -4,10 +4,23 @@ namespace TagsCloudContainer;
 
 public class CircularCloudLayouterFactory : ILayouterAlgorithmFactory
 {
-    public (Func<ILayouterAlgorithm>? provider, bool success) Build(LayouterAlgorithmSettings settings)
+    public ILayouterAlgorithmProvider Build(LayouterAlgorithmSettings settings)
     {
         if (settings is not CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings)
-            return default;
-        return (() => new CircularLayouterAlgorithm(circularLayouterAlgorithmSettings), true);
+            return new EmptyLayouterAlgorithmProvider();
+        return new CircularCloudLayouterProvider(circularLayouterAlgorithmSettings);
+    }
+
+    private class CircularCloudLayouterProvider : ILayouterAlgorithmProvider
+    {
+        private readonly CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings;
+
+        public CircularCloudLayouterProvider(CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings) =>
+            this.circularLayouterAlgorithmSettings = circularLayouterAlgorithmSettings;
+
+        public ILayouterAlgorithm Provide() =>
+            new CircularLayouterAlgorithm(circularLayouterAlgorithmSettings);
+
+        public bool CanProvide => true;
     }
 }

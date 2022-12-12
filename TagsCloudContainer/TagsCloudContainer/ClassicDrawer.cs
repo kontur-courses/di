@@ -5,12 +5,12 @@ namespace TagsCloudContainer;
 
 public class ClassicDrawer : IDrawer
 {
-    private readonly Func<ILayouterAlgorithm> algorithmProvider;
+    private readonly ILayouterAlgorithmProvider algorithmProvider;
     private readonly ClassicDrawerSettings classicDrawerSettings;
     private readonly Graphics graphics;
 
     public ClassicDrawer(ClassicDrawerSettings classicDrawerSettings, Graphics graphics,
-        Func<ILayouterAlgorithm> algorithmProvider)
+        ILayouterAlgorithmProvider algorithmProvider)
     {
         this.classicDrawerSettings = classicDrawerSettings;
         this.graphics = graphics;
@@ -87,7 +87,7 @@ public class ClassicDrawer : IDrawer
             .Select(x => (x.word, x.font,
                 size: graphics.MeasureString(x.word, x.font).ToSize() + bordersSizeAddition));
 
-        var algorithm = algorithmProvider();
+        var algorithm = algorithmProvider.Provide();
 
         var wordsAndRectanglesTuples = cloudWordAndBlockSizeTuples
             .Select(x => (x.word, x.font, rectangle: algorithm.PutNextRectangle(x.size)))

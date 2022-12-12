@@ -2,5 +2,5 @@
 
 public interface ILayouterAlgorithmFactory
 {
-    (Func<ILayouterAlgorithm>? provider, bool success) Build(LayouterAlgorithmSettings settings);
+    ILayouterAlgorithmProvider Build(LayouterAlgorithmSettings settings);
 }

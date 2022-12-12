@@ -21,27 +21,45 @@ public class MultiDrawer
 
     public void Draw(IReadOnlyCollection<CloudWord> cloudWords)
     {
-        var algorithms = layouterAlgorithmFactories
+        foreach (var (algorithmProvider, drawerProvider) in GetDrawers())
+        {
+            DrawCloudUsingCombination(cloudWords, drawerProvider, algorithmProvider);
+        }
+    }
+
+    private void DrawCloudUsingCombination(
+        IReadOnlyCollection<CloudWord> cloudWords,
+        IDrawerProvider drawerProvider,
+        ILayouterAlgorithmProvider algorithmProvider)
+    {
+        var graphics = graphicsProvider.Create();
+        var drawer = drawerProvider.Provide(algorithmProvider, graphics);
+        drawer.DrawCloud(cloudWords);
+        graphicsProvider.Commit();
+    }
+
+    private IEnumerable<(ILayouterAlgorithmProvider algorithmProvider, IDrawerProvider drawerProvider)> GetDrawers()
+    {
+        var (algorithmProviders, drawerProviders) = GetProviders();
+
+        return algorithmProviders
+            .SelectMany(_ => drawerProviders,
+                (algorithmProvider, drawerProvider) => (algorithmProvider, drawerProvider));
+    }
+
+    private (List<ILayouterAlgorithmProvider>, List<IDrawerProvider>) GetProviders()
+    {
+        var algorithmProviders = layouterAlgorithmFactories
             .SelectMany(_ => settings.LayouterAlgorithmSettings,
                 (factory, algorithmSettings) => factory.Build(algorithmSettings))
-            .Where(tuple => tuple.success)
-            .Select(tuple => tuple.provider!)
+            .Where(tuple => tuple.CanProvide)
             .ToList();
 
-        var drawers = drawerFactories
+        var drawerProviders = drawerFactories
             .SelectMany(_ => settings.DrawerSettings,
                 (factory, drawerSettings) => factory.Build(drawerSettings))
-            .Where(tuple => tuple.success)
-            .Select(tuple => tuple.drawer!)
+            .Where(drawerProvider => drawerProvider.CanProvide)
             .ToList();
-
-        foreach (var drawerInstance in from algorithm in algorithms
-                 from drawer in drawers
-                 let graphics = graphicsProvider.Create()
-                 select drawer(graphics, algorithm))
-        {
-            drawerInstance.DrawCloud(cloudWords);
-            graphicsProvider.Commit();
-        }
+        return (algorithmProviders, drawerProviders);
     }
 }

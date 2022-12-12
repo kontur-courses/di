@@ -83,7 +83,6 @@ public class JsonSettingsFactory : ISettingsFactory
 
         using var fileStream = File.OpenRead(jsonSettingsFileName);
         return JsonSerializer.Deserialize<Settings>(fileStream, options) ?? throw new InvalidOperationException();
-        return settings;
     }
 
     private class SettingsTypeResolver : DefaultJsonTypeInfoResolver
