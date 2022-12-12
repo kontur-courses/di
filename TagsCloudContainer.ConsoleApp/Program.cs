@@ -19,7 +19,7 @@ namespace TagsCloudContainer.ConsoleApp
                 }
 
                 var container = ConfigureAndBuildContainer(options!);
-                container.Resolve<Application>().Run();
+                container.Resolve<Application>().Run(Console.Out);
             }, e => Console.Write(e.Message));
         }
 

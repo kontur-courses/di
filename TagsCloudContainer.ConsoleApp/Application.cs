@@ -30,12 +30,12 @@ namespace TagsCloudContainer.ConsoleApp
             this.wordPlateVisualizer = wordPlateVisualizer;
         }
 
-        public void Run() 
+        public void Run(TextWriter outStream) 
         {
             Result result;
             if (!(result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename, out var words)).Success)
             {
-                Console.WriteLine(result.Message);
+                outStream.Write(result.Message);
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace TagsCloudContainer.ConsoleApp
             var wordPlates = tagsCloudGenerator.GeneratePlates(words, new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSettings);
             wordPlateVisualizer.DrawPlatesAndSave(wordPlates, pictureSize, settingsProvider.GetOutputImageSettings().Filename, wordColorSettings);
 
-            Console.WriteLine($"Generated and saved to '{ settingsProvider.GetOutputImageSettings().Filename }'");
+            outStream.Write($"Generated and saved to '{ settingsProvider.GetOutputImageSettings().Filename }'");
         }
 
         private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)
