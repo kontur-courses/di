@@ -3,8 +3,7 @@ using TagCloud.App.CloudCreatorDriver.CloudDrawers;
 using TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw;
 using TagCloud.App.CloudCreatorDriver.DrawingSettings;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
-using TagCloud.App.WordPreprocessorDriver.InputStream;
-using TagCloud.App.WordPreprocessorDriver.InputStream.TextSplitters;
+using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
 using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
@@ -13,8 +12,7 @@ namespace TagCloud.App.CloudCreatorDriver.CloudCreator;
 
 public class CloudCreator : ICloudCreator
 {
-    private readonly IInputWordsStream inputWordsStream;
-    private readonly ITextSplitter textSplitter;
+    private readonly FromFileInputWordsStream inputWordsStream;
     private readonly IWordsPreprocessor wordsPreprocessor;
     private readonly IReadOnlyCollection<IBoringWords> boringWords;
     private readonly ICloudLayouter cloudLayouter;
@@ -23,26 +21,25 @@ public class CloudCreator : ICloudCreator
     private readonly IDrawingSettings drawingSettings;
     
     public CloudCreator(
-        IInputWordsStream inputWordsStream, ITextSplitter textSplitter,
+        FromFileInputWordsStream inputWordsStream,
         IWordsPreprocessor wordsPreprocessor, IReadOnlyCollection<IBoringWords> boringWords,
         ICloudLayouter cloudLayouter, ICloudLayouterSettings cloudLayouterSettings,
         ICloudDrawer cloudDrawer, IDrawingSettings drawingSettings)
     {
-        this.inputWordsStream = inputWordsStream ?? throw new ArgumentNullException(nameof(inputWordsStream));
-        this.wordsPreprocessor = wordsPreprocessor ?? throw new ArgumentNullException(nameof(wordsPreprocessor));
-        this.textSplitter = textSplitter ?? throw new ArgumentNullException(nameof(textSplitter));
-        this.boringWords = boringWords ?? throw new ArgumentNullException(nameof(boringWords));
-        this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
-        this.cloudLayouterSettings = cloudLayouterSettings ?? throw new ArgumentNullException(nameof(cloudLayouterSettings));
-        this.cloudDrawer = cloudDrawer ?? throw new ArgumentNullException(nameof(cloudDrawer));
-        this.drawingSettings = drawingSettings ?? throw new ArgumentNullException(nameof(drawingSettings));
+        this.inputWordsStream = inputWordsStream;
+        this.wordsPreprocessor = wordsPreprocessor;
+        this.boringWords = boringWords;
+        this.cloudLayouter = cloudLayouter;
+        this.cloudLayouterSettings = cloudLayouterSettings;
+        this.cloudDrawer = cloudDrawer;
+        this.drawingSettings = drawingSettings;
     }
     
-    public Bitmap CreatePicture(IStreamContext streamContext)
+    public Bitmap CreatePicture(FromFileStreamContext streamContext)
     {
         if (streamContext == null) throw new ArgumentNullException(nameof(streamContext));
         
-        var allWords = inputWordsStream.GetAllWordsFromStream(streamContext, textSplitter);
+        var allWords = inputWordsStream.GetAllWordsFromStream(streamContext);
         var words = GetProcessedWordsOrderedByTf(allWords, wordsPreprocessor, boringWords);
         var sizes = GetWordsSizes(words, drawingSettings);
         var rectangles = cloudLayouter.GetLaidRectangles(sizes, cloudLayouterSettings);

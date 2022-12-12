@@ -5,11 +5,11 @@ namespace TagCloud.App.CloudCreatorDriver.ImageSaver;
 
 public class PngImageSaver : IImageSaver
 {
-    public bool TrySaveImage(Bitmap image, FullFileName fullFileName)
+    public bool TrySaveImage(Bitmap image, string fullFileName)
     {
         try
         {
-            image.Save(fullFileName.Path);
+            image.Save(fullFileName);
             return true;
         }
         catch

@@ -46,7 +46,7 @@ public class ConsoleClient : IClient
                 && TryGetBgColor(out bgColor)
                 && TryGetOutImagePath(out savePath))
             {
-                if (!TryGetFileEncoder(fileEncoders, new FullFileName(path), out var suitableFileEncoder))
+                if (!TryGetFileEncoder(fileEncoders, path, out var suitableFileEncoder))
                 {
                     Console.WriteLine("Не удалось обнаружить подходящий обработчик файла данных. " +
                                       "Попробуйте сменить тип файла и запустить программу заново.");
@@ -67,7 +67,7 @@ public class ConsoleClient : IClient
                 
                 var image = creator.CreatePicture(streamContext);
 
-                Console.WriteLine(imageSaver.TrySaveImage(image, new FullFileName(savePath!))
+                Console.WriteLine(imageSaver.TrySaveImage(image, savePath!)
                     ? $"Файл сохранён успешно в {savePath}"
                     : "Произошла ошибка при сохранении изображения. Запустите программу ещё раз");
             }
@@ -150,11 +150,11 @@ public class ConsoleClient : IClient
 
     private static bool TryGetFileEncoder(
         IEnumerable<IFileEncoder> fileEncoders,
-        FullFileName fileName,
+        string fileName,
         out IFileEncoder? fileEncoder)
     {
         fileEncoder = fileEncoders.FirstOrDefault(encoder =>
-            fileName.Path.EndsWith(encoder.GetExpectedFileType()));
+            fileName.EndsWith(encoder.GetExpectedFileType()));
         return fileEncoder != null;
     }
 

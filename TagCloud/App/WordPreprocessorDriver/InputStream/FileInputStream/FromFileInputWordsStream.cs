@@ -2,19 +2,22 @@
 
 namespace TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
 
-public class FromFileInputWordsStream : IInputWordsStream
+public class FromFileInputWordsStream
 {
-    public List<string> GetAllWordsFromStream(IStreamContext streamContext, ITextSplitter textSplitter)
+    private readonly ITextSplitter textSplitter;
+
+    public FromFileInputWordsStream(ITextSplitter textSplitter)
     {
-        if (textSplitter == null) throw new ArgumentNullException(nameof(textSplitter));
-        if (streamContext is not FromFileStreamContext fileStreamContext)
-            throw new Exception($"Incorrect type of settings. Expected {typeof(FromFileStreamContext)}, " +
-                                $"but was found {streamContext.GetType()}");
-        
-        CheckFile(fileStreamContext.Filename, fileStreamContext.FileEncoder);
-        return FillWordsFromFile(fileStreamContext.Filename, fileStreamContext.FileEncoder, textSplitter);
+        this.textSplitter = textSplitter;
     }
-    
+
+    public List<string> GetAllWordsFromStream(
+        FromFileStreamContext streamContext)
+    {
+        CheckFile(streamContext.Filename, streamContext.FileEncoder);
+        return FillWordsFromFile(streamContext.Filename, streamContext.FileEncoder, textSplitter);
+    }
+
     private static void CheckFile(string filename, IFileEncoder selectedFileEncoder)
     {
         if (!File.Exists(filename))
@@ -36,6 +39,7 @@ public class FromFileInputWordsStream : IInputWordsStream
         {
             throw new Exception("Can not get data from file", e);
         }
+
         return splitter.GetSplitWords(text).Where(s => s.Length > 0).ToList();
     }
 }

@@ -4,5 +4,5 @@ namespace TagCloud.App.CloudCreatorDriver.ImageSaver;
 
 public interface IImageSaver
 {
-    bool TrySaveImage(Bitmap image, FullFileName fullFileName);
+    bool TrySaveImage(Bitmap image, string fullFileName);
 }

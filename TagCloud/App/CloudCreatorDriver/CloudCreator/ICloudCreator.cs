@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
-using TagCloud.App.WordPreprocessorDriver.InputStream;
+using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
 
 namespace TagCloud.App.CloudCreatorDriver.CloudCreator;
 
 public interface ICloudCreator
 {
-    Bitmap CreatePicture(IStreamContext streamContext);
+    Bitmap CreatePicture(FromFileStreamContext streamContext);
 }

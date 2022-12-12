@@ -14,16 +14,6 @@ public class Word : IWord
         Count = count;
         Tf = tf;
     }
-    
-    public Size MeasureWord(Font font)
-    {
-        using var bitmap = new Bitmap(1, 1);
-        using var graphics = Graphics.FromImage(bitmap);
-        var result = graphics.MeasureString(Value, font);
-        if (result.Width < 1) result.Width = 1;
-        if (result.Height < 1) result.Height = 1;
-        return result.ToSize();
-    }
 
     public bool Equals(IWord? other)
     {

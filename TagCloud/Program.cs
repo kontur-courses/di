@@ -41,7 +41,6 @@ static class Program
         builder.RegisterType<DrawingSettings>().As<IDrawingSettings>().SingleInstance();
         builder.RegisterType<CloudCreator>().As<ICloudCreator>();
         builder.RegisterType<PngImageSaver>().As<IImageSaver>();
-        builder.RegisterType<FromFileInputWordsStream>().As<IInputWordsStream>();
         builder.RegisterType<NewLineTextSplitter>().As<ITextSplitter>();
         builder.RegisterType<DefaultWordsPreprocessor>().As<IWordsPreprocessor>();
         builder.RegisterInstance(CultureInfo.CurrentCulture).As<CultureInfo>();
