@@ -4,7 +4,8 @@ using TagCloud.App.CloudCreatorDriver.DrawingSettings;
 using TagCloud.App.CloudCreatorDriver.ImageSaver;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
-using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
+using TagCloud.App.WordPreprocessorDriver.InputStream;
+using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
 
 namespace TagCloud.Clients.ConsoleClient;
 
@@ -48,8 +49,7 @@ public class ConsoleClient : IClient
             {
                 if (!TryGetFileEncoder(fileEncoders, path, out var suitableFileEncoder))
                 {
-                    Console.WriteLine("Не удалось обнаружить подходящий обработчик файла данных. " +
-                                      "Попробуйте сменить тип файла и запустить программу заново.");
+                    Console.WriteLine(Phrases.FailGettingFileEncoder);
                     return;
                 }
 
@@ -59,24 +59,20 @@ public class ConsoleClient : IClient
                 ((SpiralCloudLayouterSettings)cloudLayouterSettings).Center =
                     new Point(imageSize.Width / 2, imageSize.Height / 2);
 
-                Console.WriteLine();
-                Console.WriteLine("Хотите задать настройки для рисования слов? [y/n]");
-                Console.Write("> ");
-                if (Console.ReadLine() == "y") 
+                Console.Write(Phrases.AskingAddingWordVisualisationRule);
+                if (Console.ReadLine() == Phrases.Yes) 
                     FillWordVisualisationSettings(drawingSettings);
                 
                 var image = creator.CreatePicture(streamContext);
 
                 Console.WriteLine(imageSaver.TrySaveImage(image, savePath!)
-                    ? $"Файл сохранён успешно в {savePath}"
-                    : "Произошла ошибка при сохранении изображения. Запустите программу ещё раз");
+                    ? Phrases.SuccessSaveImage + savePath
+                    : Phrases.FailImageSaving);
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine("Произошла непредвиденная ошибка " + Environment.NewLine +
-                              e + Environment.NewLine +
-                              "Попробуйте перезапустить программу");
+            Console.WriteLine(Phrases.UnexpectedError(e));
         }
 
         Stop();
@@ -84,30 +80,25 @@ public class ConsoleClient : IClient
 
     private static void FillWordVisualisationSettings(IDrawingSettings drawingSettings)
     {
-        Console.WriteLine();
-        Console.WriteLine("Создание нового правила оформления слов:");
-        if (!TryGetDoubleFromConsole("    Значение важности слова в тексте, с корого начинается данное оформление." +
-                                     Environment.NewLine + 
-                                     "    Дробное число от 0 до 1 ( 0 - совсем не важно, 1 - самое важное): ",
-                out var startValue))
+        Console.WriteLine(Phrases.StartCreatingNewWordVisualisation);
+        if (!TryGetDoubleFromConsole(Phrases.AskingWordImportance, out var startValue)
+            || !TryGetWordsColor(out var color)
+            || !TryGetIntFromConsole(Phrases.AskingFontSize, out var fontSize)
+            || !TryGetFont(Phrases.AskingFontName, out var font, fontSize))
             return;
-        if (!TryGetWordsColor(out var color))
-            return;
-        if (!TryGetIntFromConsole("    Размер шрифта: ", out var fontSize))
-            return;
-        if(!TryGetFont("    Название стиля шрфта на английском: ", out var font, fontSize))
-            return;
-        drawingSettings.AddWordVisualisation(new WordVisualisation(color, startValue, font));
-        Console.WriteLine("    Добавить ещё одно правило? [y/n]: ");
-        Console.Write("    > ");
-        if (Console.ReadLine() == "y")
+        
+        drawingSettings.AddWordVisualisation(new WordVisualisation(color, startValue, font!));
+        
+        Console.WriteLine(Phrases.EndCreatingNewWordVisualisation);
+        Console.Write(Phrases.AskingAddingWordVisualisationRule);
+        if (Console.ReadLine() == Phrases.Yes)
             FillWordVisualisationSettings(drawingSettings);
     }
 
     private static bool TryGetFont(string text, out Font? font, int fontSize)
     {
-        Console.WriteLine(text);
-        Console.Write("    > ");
+        Console.Write(text);
+        
         var value = Console.ReadLine();
         if (value != null)
         {
@@ -116,36 +107,30 @@ public class ConsoleClient : IClient
         }
 
         font = null;
-        Console.WriteLine("[ERROR] Неверно введено название шрифтв." + Environment.NewLine +
-                          "    Попробовать ещё раз? [y/n]: ");
-        Console.Write("    > ");
-        return Console.ReadLine() != "y" && TryGetFont(text, out font, fontSize);
+        Console.Write(Phrases.FailGettingFont + Phrases.TryAgain);
+        return Console.ReadLine() != Phrases.Yes && TryGetFont(text, out font, fontSize);
     }
         
     private static bool TryGetIntFromConsole(string text, out int result)
     {
-        Console.WriteLine(text);
-        Console.Write("    > ");
+        Console.Write(text);
+        
         var value = Console.ReadLine();
         if (int.TryParse(value, out result))
             return true;
-        Console.WriteLine("[ERROR] Неверно введено число. Введите целое число." + Environment.NewLine +
-                          "    Попробовать ещё раз? [y/n]: ");
-        Console.Write("    > ");
-        return Console.ReadLine() != "y" && TryGetIntFromConsole(text, out result);
+        
+        Console.Write(Phrases.FailGettingIntValue + Phrases.TryAgain);
+        return Console.ReadLine() != Phrases.Yes && TryGetIntFromConsole(text, out result);
     }
 
     private static bool TryGetDoubleFromConsole(string text, out double result)
     {
-        Console.WriteLine(text);
-        Console.Write("    > ");
+        Console.Write(text);
         var value = Console.ReadLine();
         if (double.TryParse(value, out result))
             return true;
-        Console.WriteLine("[ERROR] Неверно введено число. Введите десятичное число через запятую." + Environment.NewLine +
-                          "    Попробовать ещё раз? [y/n]: ");
-        Console.Write("    > ");
-        return Console.ReadLine() == "y" && TryGetDoubleFromConsole(text, out result);
+        Console.Write(Phrases.FailGettingDoubleValue + Phrases.TryAgain);
+        return Console.ReadLine() == Phrases.Yes && TryGetDoubleFromConsole(text, out result);
     }
 
     private static bool TryGetFileEncoder(
@@ -160,39 +145,33 @@ public class ConsoleClient : IClient
 
     private static void Start()
     {
-        Console.WriteLine("Вы запустили создателя облаков тегов." + Environment.NewLine +
-                          "Я умею получать слова из файла, в котором они все записаны в столбик");
+        Console.WriteLine(Phrases.Hello);
     }
         
     private static bool TryGetWordsColor(out Color color)
     {
-        Console.WriteLine("    Цвет слов на английском" + Environment.NewLine +
-                          "    Для выбора настроек по умолчанию введите black: ");
+        Console.Write(Phrases.AskingWordColor);
 
-        if (TryGetColorFromConsole(4, out color))
+        if (TryGetColorFromConsole(out color))
             return true;
             
-        Console.WriteLine("    Заданный цвет не определён. Повторите попытку? [y/n]: ");
-        Console.Write("    > ");
-        return Console.ReadLine() == "y" && TryGetWordsColor(out color);
+        Console.Write(Phrases.FailGettingColor + Phrases.TryAgain);
+        return Console.ReadLine() == Phrases.Yes && TryGetWordsColor(out color);
     }
 
     private static bool TryGetBgColor(out Color color)
     {
-        Console.WriteLine();
-        Console.WriteLine("Пожалуйста, введите цвет фона на английском" + Environment.NewLine +
-                          "Для выбора настроек по умолчанию введите white: ");
+        Console.Write(Phrases.AskingBgColor);
 
-        if (TryGetColorFromConsole(0, out color))
+        if (TryGetColorFromConsole(out color))
             return true;
             
-        Console.WriteLine("    Заданный цвет не определён. Повторите попытку? [y/n]: ");
-        return Console.ReadLine() == "y" && TryGetBgColor(out color);
+        Console.Write(Phrases.FailGettingColor + Phrases.TryAgain);
+        return Console.ReadLine() == Phrases.Yes && TryGetBgColor(out color);
     }
 
-    private static bool TryGetColorFromConsole(int indent, out Color color)
+    private static bool TryGetColorFromConsole(out Color color)
     {
-        Console.Write(new string(' ', indent) + "> ");
         var stringColor = Console.ReadLine();
         if (stringColor == null)
         {
@@ -206,23 +185,19 @@ public class ConsoleClient : IClient
 
     private static bool TryGetImageSize(out Size size)
     {
-        Console.WriteLine();
-        Console.WriteLine("Пожалуйста, введите размеры изображения, которое хотите получить Ш*В (в пикселях)" +
-                          Environment.NewLine +
-                          "Для выбора настроек по умолчанию введите 800*500: ");
+        Console.Write(Phrases.AskingImageSize);
 
         if (TryGetImageSizeFromConsole(out size))
             return true;
             
-        Console.WriteLine("    Неверный формат записи размеров. Повторите попытку? [y/n]: ");
-        Console.Write("    > ");
-        return Console.ReadLine() == "y" && TryGetImageSize(out size);
+        Console.Write(Phrases.FailGettingImageSize + Phrases.TryAgain);
+        return Console.ReadLine() == Phrases.Yes && TryGetImageSize(out size);
     }
 
     private static bool TryGetImageSizeFromConsole(out Size size)
     {
-        Console.Write("> ");
         var stringSize = Console.ReadLine();
+        
         if (stringSize == null)
         {
             size = new Size(0, 0);
@@ -252,33 +227,31 @@ public class ConsoleClient : IClient
 
     private static bool TryGetOutImagePath(out string? outPath)
     {
-        Console.WriteLine();
-        Console.WriteLine("Пожалуйста, введите полный путь к файлу, в который необходимо сохранить изображение: ");
-        Console.Write("> ");
+        Console.WriteLine(Phrases.AskingFullPathToOutImage);
+        Console.Write(Phrases.GetArrow(0));
         outPath = Console.ReadLine();
         return outPath != null;
     }
         
     private static bool TryGetFilePath(out string filePath)
     {
-        Console.WriteLine();
-        Console.WriteLine("Пожалуйста, введите полный путь к вашему файлу со словами");
-        Console.Write("> ");
+        Console.WriteLine(Phrases.AskingFullPathToText);
+        
         if (TryGetFilePathFromConsole(out var path) && path != null)
         {
             filePath = path;
             return true;
         }
             
-        Console.WriteLine("    Мне не удалось обнаружить указанный файл. Повторите попытку? [y/n]: ");
-        Console.Write("    > ");
-        if (Console.ReadLine() == "y") return TryGetFilePath(out filePath);
+        Console.Write(Phrases.FailGettingFullPath + Phrases.TryAgain);
+        if (Console.ReadLine() == Phrases.Yes) return TryGetFilePath(out filePath);
         filePath = "";
         return false;
     }
 
     private static bool TryGetFilePathFromConsole(out string? filePath)
     {
+        Console.Write(Phrases.GetArrow(0));
         var path = Console.ReadLine();
         filePath = path;
         return File.Exists(path);
@@ -286,8 +259,6 @@ public class ConsoleClient : IClient
 
     private static void Stop()
     {
-        Console.WriteLine();
-        Console.WriteLine("Спасибо за использование этой программы" +
-                          Environment.NewLine + "До свидания!");
+        Console.WriteLine(Phrases.GoodBy);
     }
 }
