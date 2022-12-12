@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using CloudLayout;
 using CloudLayout.Interfaces;
@@ -45,7 +44,7 @@ namespace TagsCloudContainer
 
         public void DrawCloud(ICustomOptions options)
         {
-            DrawCloud(Path.Combine(options.WorkingDir, string.Concat("Cloud.", options.ImageFormat.ToLower())), options);
+            DrawCloud(Path.Combine(options.WorkingDir, string.Concat(options.ImageName,".", options.ImageFormat.ToLower())), options);
         }
         private static ImageFormat GetImageFormat(string format)
         {
