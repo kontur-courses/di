@@ -4,9 +4,10 @@ namespace TagsCloudContainer.Colorers;
 
 public class RandomColorProvider : IColorProvider
 {
+    
+    Random random = new Random();
     public Color ProvideColorForWord(string word, int frequency)
     {
-        var r = new Random();
-        return Color.FromArgb(r.Next(0, 255), r.Next(0, 255), r.Next(0, 255));
+        return Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
     }
 }
