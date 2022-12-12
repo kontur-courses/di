@@ -2,17 +2,18 @@
 
 public class OpenFileButton : ControlWithDescription<Button>
 {
-    public event EventHandler? FileChanged;
-    
+    private readonly ToolTip toolTip = new();
+
+    private string file = string.Empty;
+
     public OpenFileButton() : base(new Button(), "File not opened")
     {
         Control.Text = "Open";
         Control.Click += OnClick;
     }
 
-    private string file = string.Empty;
-    public string File 
-    { 
+    public string File
+    {
         get => file;
         private set
         {
@@ -20,8 +21,10 @@ public class OpenFileButton : ControlWithDescription<Button>
             FileChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    
-    protected void OnClick(object? sender, EventArgs eventArgs)
+
+    public event EventHandler? FileChanged;
+
+    private void OnClick(object? sender, EventArgs eventArgs)
     {
         var fileDialog = new OpenFileDialog();
 
@@ -33,9 +36,7 @@ public class OpenFileButton : ControlWithDescription<Button>
 
         if (fileDialog.ShowDialog() != DialogResult.OK) return;
         File = fileDialog.FileName;
-        Description.Text = File.Split(new[]{Path.DirectorySeparatorChar}).Last();
+        Description.Text = File.Split(new[] { Path.DirectorySeparatorChar }).Last();
         toolTip.SetToolTip(Description, File);
     }
-
-    private ToolTip toolTip = new();
 }

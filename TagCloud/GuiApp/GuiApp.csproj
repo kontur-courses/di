@@ -9,11 +9,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
+        <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.5.0" />
+        <PackageReference Include="Autofac" Version="6.5.0" />
     </ItemGroup>
 
 </Project>

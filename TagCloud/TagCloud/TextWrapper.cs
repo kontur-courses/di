@@ -2,12 +2,12 @@
 
 public class TextWrapper
 {
-    private FontProperties FontProperties { get; set; }
-    
     public TextWrapper(FontProperties fontProperties)
     {
         FontProperties = fontProperties;
     }
+
+    private FontProperties FontProperties { get; }
 
     public IEnumerable<Label> Wrap(Dictionary<string, int> wordsWithSize)
     {
@@ -23,9 +23,12 @@ public class TextWrapper
             text.AutoSize = true;
             texts.Add(text);
         }
+
         return texts;
     }
-    
-    private static float ComputeFontSize(float count, float maxCount, float minSize, float maxSize) =>
-        minSize + count / maxCount * (maxSize - minSize);
+
+    private static float ComputeFontSize(float count, float maxCount, float minSize, float maxSize)
+    {
+        return minSize + count / maxCount * (maxSize - minSize);
+    }
 }

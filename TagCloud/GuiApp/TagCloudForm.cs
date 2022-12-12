@@ -3,19 +3,19 @@ using TagCloud;
 
 namespace GuiApp;
 
-public class TagCloudForm : Form
+public sealed class TagCloudForm : Form
 {
-    private ApplicationProperties ApplicationProperties { get; }
-    
+    private readonly Ui ui;
+
     public TagCloudForm(ApplicationProperties appProperties)
     {
         Size = new Size(960, 540);
         MinimumSize = Size;
         ApplicationProperties = appProperties;
-        ui = new Ui(ApplicationProperties);
+        ui = new Ui(ApplicationProperties) { Dock = DockStyle.Fill };
         Controls.Add(ui);
         Show();
     }
 
-    private Ui ui;
+    private ApplicationProperties ApplicationProperties { get; }
 }

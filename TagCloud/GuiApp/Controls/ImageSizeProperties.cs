@@ -1,20 +1,22 @@
 ﻿namespace GuiApp.Controls;
 
-public class ImageSizeProperties : TableLayoutPanel
+public sealed class ImageSizeProperties : TableLayoutPanel
 {
-    public event EventHandler? ValueChanged;
-    
+    private readonly ControlWithDescription<NumericUpDown> height = new(new NumericUpDown(), "Height");
+
+    private readonly ControlWithDescription<NumericUpDown> width = new(new NumericUpDown(), "Width");
+
     public ImageSizeProperties(Size size)
     {
         SetUpNumeric(width.Control, size.Width);
         SetUpNumeric(height.Control, size.Height);
-        
+
         RowStyles.Add(new RowStyle(SizeType.AutoSize));
         RowStyles.Add(new RowStyle(SizeType.AutoSize));
         ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         Controls.Add(width);
         Controls.Add(height);
-        
+
         Padding = Padding.Empty;
         Margin = Padding.Empty;
         AutoSize = true;
@@ -23,20 +25,19 @@ public class ImageSizeProperties : TableLayoutPanel
         Dock = DockStyle.Top;
     }
 
-    public int Width
+    public int ImageWidth
     {
         get => (int)width.Control.Value;
         set => width.Control.Value = value;
     }
-    
-    public int Height
+
+    public int ImageHeight
     {
         get => (int)height.Control.Value;
         set => height.Control.Value = value;
     }
-    
-    private ControlWithDescription<NumericUpDown> width = new (new NumericUpDown(), "Width");
-    private ControlWithDescription<NumericUpDown> height = new (new NumericUpDown(), "Height");
+
+    public event EventHandler? ValueChanged;
 
     private void SetUpNumeric(NumericUpDown numeric, int value)
     {

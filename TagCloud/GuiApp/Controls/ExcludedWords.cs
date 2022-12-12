@@ -1,14 +1,14 @@
 ﻿namespace GuiApp.Controls;
 
-public class ExcludedWords : TextBox
+public sealed class ExcludedWords : TextBox
 {
-    public event EventHandler? ExcludedWordsChanged;
-    
     public ExcludedWords()
     {
         PlaceholderText = "Write a word here to exclude it";
         Dock = DockStyle.Fill;
     }
+
+    public event EventHandler? ExcludedWordsChanged;
 
     protected override void OnLostFocus(EventArgs e)
     {

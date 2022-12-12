@@ -4,12 +4,19 @@ namespace TagCloud;
 
 public class TagCloudConstructor
 {
+    private readonly ApplicationProperties applicationProperties;
+    private readonly ICloudDrawer drawer;
+    private readonly ICloudLayouter layouter;
+    private readonly IWordsParser parser;
+    private readonly IFileLoader textLoader;
+    private readonly TextWrapper wrapper;
+
     public TagCloudConstructor(
         ICloudDrawer drawer,
-        IFileLoader textLoader, 
-        ApplicationProperties applicationProperties, 
-        IWordsParser parser, 
-        TextWrapper wrapper, 
+        IFileLoader textLoader,
+        ApplicationProperties applicationProperties,
+        IWordsParser parser,
+        TextWrapper wrapper,
         ICloudLayouter layouter)
     {
         this.drawer = drawer;
@@ -27,17 +34,10 @@ public class TagCloudConstructor
         words = new WordPreprocessor().Process(words, applicationProperties.CloudProperties.ExcludedWords);
         var wordsFrequency = FrequencyDictionary.GetWordsFrequency(words);
         var texts = wrapper.Wrap(wordsFrequency);
-        
+
         layouter.PlaceTexts(texts);
         layouter.Clear();
-        
+
         return drawer.Draw(texts);
     }
-
-    private ICloudDrawer drawer;
-    private IFileLoader textLoader;
-    private ApplicationProperties applicationProperties;
-    private IWordsParser parser;
-    private TextWrapper wrapper;
-    private ICloudLayouter layouter;
 }

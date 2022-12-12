@@ -2,10 +2,32 @@
 
 namespace GuiApp.Controls;
 
-public class PropertyPanel : TableLayoutPanel
+public sealed class PropertyPanel : TableLayoutPanel
 {
-    private ApplicationProperties properties;
+    private readonly ColorProperties backgroundColor = new("Background color");
+
+    private readonly ControlWithDescription<NumericUpDown> density = new(new NumericUpDown(), "Density");
+
+    private readonly ExcludedWords excludedWords = new();
+
+    private readonly ControlWithDescription<FontComboBox> font = new(new FontComboBox(), "Font");
+
+    private readonly ColorProperties foregroundColor = new("Foreground color");
+
+    private readonly ImageSizeProperties imageSizeProperties = new(new Size(1280, 720));
+
+    private readonly ControlWithDescription<NumericUpDown> maxFontSize = new(new NumericUpDown(), "Maximum font size");
+
+    private readonly ControlWithDescription<NumericUpDown> minFontSize = new(new NumericUpDown(), "Minimum font size");
+
+    private readonly OpenFileButton openFileButton = new();
     
+    private readonly ApplicationProperties properties;
+
+    private readonly RenderButton renderButton = new();
+    
+    private readonly SaveButton saveButton = new();
+
     public PropertyPanel(ApplicationProperties properties)
     {
         this.properties = properties;
@@ -28,37 +50,37 @@ public class PropertyPanel : TableLayoutPanel
         maxFontSize.Control.Maximum = 1000;
         Controls.Add(maxFontSize);
         Controls.Add(imageSizeProperties);
-        
+
         Controls.Add(backgroundColor);
         Controls.Add(foregroundColor);
 
         density.Control.DecimalPlaces = 2;
         density.Control.Increment = (decimal)0.01;
         Controls.Add(density);
-        
+
         openFileButton.Anchor = AnchorStyles.Right;
         Controls.Add(openFileButton);
-        
+
         Controls.Add(excludedWords);
-        
+
         renderButton.Anchor = AnchorStyles.Bottom;
         renderButton.Dock = DockStyle.Bottom;
         Controls.Add(renderButton);
         Controls.Add(saveButton);
     }
-    
+
     private void SetDefaultSetAppProperties()
     {
         font.Control.SelectedText = properties.FontProperties.Family.Name;
         minFontSize.Control.Value = (decimal)properties.FontProperties.MinSize;
         maxFontSize.Control.Value = (decimal)properties.FontProperties.MaxSize;
-        imageSizeProperties.Width = properties.SizeProperties.ImageSize.Width;
-        imageSizeProperties.Height = properties.SizeProperties.ImageSize.Height;
+        imageSizeProperties.ImageWidth = properties.SizeProperties.ImageSize.Width;
+        imageSizeProperties.ImageHeight = properties.SizeProperties.ImageSize.Height;
         backgroundColor.Color = properties.Palette.Background;
         foregroundColor.Color = properties.Palette.Foreground;
         density.Control.Value = (decimal)properties.CloudProperties.Density;
     }
-    
+
     private void BindPropertiesToAppProperties()
     {
         font.Control.SelectedValueChanged += OnFontChanged;
@@ -71,7 +93,7 @@ public class PropertyPanel : TableLayoutPanel
         density.Control.ValueChanged += OnDensityChanged;
         excludedWords.ExcludedWordsChanged += OnExcludedExcludedWordsChanged;
     }
-    
+
     protected override void Dispose(bool disposing)
     {
         font.Control.SelectedValueChanged -= OnFontChanged;
@@ -86,59 +108,50 @@ public class PropertyPanel : TableLayoutPanel
         base.Dispose(disposing);
     }
 
-    private ControlWithDescription<FontComboBox> font = new (new FontComboBox(), "Font");
-
     private void OnFontChanged(object? sender, EventArgs args)
     {
         properties.FontProperties.Family = new FontFamily((string)font.Control.SelectedItem);
     }
 
-    private ControlWithDescription<NumericUpDown> minFontSize = new (new NumericUpDown(), "Minimum font size");
-    
     private void OnMinFontSizeChanged(object? sender, EventArgs args)
     {
         properties.FontProperties.MinSize = (float)minFontSize.Control.Value;
     }
-    
-    private ControlWithDescription<NumericUpDown> maxFontSize = new (new NumericUpDown(), "Maximum font size");
-    
+
     private void OnMaxFontSizeChanged(object? sender, EventArgs args)
     {
         properties.FontProperties.MaxSize = (float)maxFontSize.Control.Value;
     }
-    
-    private ImageSizeProperties imageSizeProperties = new(new Size(1280, 720));
-    
+
     private void OnImageSizePropertiesChanged(object? sender, EventArgs args)
     {
-        properties.SizeProperties.ImageSize = new Size(imageSizeProperties.Width, imageSizeProperties.Height);
+        properties.SizeProperties.ImageSize = new Size(imageSizeProperties.ImageWidth, imageSizeProperties.ImageHeight);
     }
-    
-    private ColorProperties backgroundColor = new ("Background color");
-    private void OnBackgroundColorChanged(object? sender, EventArgs args) => properties.Palette.Background = backgroundColor.Color;
-    
-    private ColorProperties foregroundColor = new ("Foreground color");
-    private void OnForegroundColorChanged(object? sender, EventArgs args) => properties.Palette.Foreground = foregroundColor.Color;
-    
-    private OpenFileButton openFileButton = new ();
+
+    private void OnBackgroundColorChanged(object? sender, EventArgs args)
+    {
+        properties.Palette.Background = backgroundColor.Color;
+    }
+
+    private void OnForegroundColorChanged(object? sender, EventArgs args)
+    {
+        properties.Palette.Foreground = foregroundColor.Color;
+    }
+
     private void OnFileChanged(object? sender, EventArgs args)
     {
         properties.Path = openFileButton.File;
         renderButton.IsRenderAvailable = true;
     }
 
-    private ExcludedWords excludedWords = new ();
     private void OnExcludedExcludedWordsChanged(object? sender, EventArgs args)
     {
-        properties.CloudProperties.ExcludedWords = excludedWords.Text.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+        properties.CloudProperties.ExcludedWords =
+            excludedWords.Text.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
     }
-    
-    private ControlWithDescription<NumericUpDown> density = new (new NumericUpDown(), "Density");
+
     private void OnDensityChanged(object? sender, EventArgs args)
     {
         properties.CloudProperties.Density = (double)density.Control.Value;
     }
-    
-    private RenderButton renderButton = new ();
-    private SaveButton saveButton = new ();
 }

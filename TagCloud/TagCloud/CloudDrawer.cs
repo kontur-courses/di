@@ -2,14 +2,14 @@
 
 public class CloudDrawer : ICloudDrawer
 {
-    private Palette Palette { get; set; }
-    private SizeProperties Size { get; set; }
-    
     public CloudDrawer(SizeProperties size, Palette palette)
     {
         Palette = palette;
         Size = size;
     }
+
+    private Palette Palette { get; }
+    private SizeProperties Size { get; }
 
     public Bitmap Draw(IEnumerable<Label> texts)
     {

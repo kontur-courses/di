@@ -16,7 +16,7 @@ public class SaveButton : Button
             MessageBox.Show("Image not rendered to save", "Operation is unavailable", MessageBoxButtons.OK);
             return;
         }
-        
+
         var fileDialog = new SaveFileDialog();
 
         fileDialog.Filter = "PNG image|*.png|JPG image|*.jpg;*.jpeg;";

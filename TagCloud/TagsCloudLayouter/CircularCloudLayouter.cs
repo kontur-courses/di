@@ -99,13 +99,7 @@ public class CircularCloudLayouter : ICloudLayouter
 
     public bool HasOverlapWith(Rectangle rectangle)
     {
-        foreach (var existingRectangle in rectangles)
-        {
-            if (existingRectangle.IntersectsWith(rectangle))
-                return true;
-        }
-
-        return false;
+        return rectangles.Any(r => r.IntersectsWith(rectangle));
     }
 
     private static IEnumerable<PolarPoint> GenerateArchimedeanSpiralRadius(

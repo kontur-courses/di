@@ -76,7 +76,7 @@ public class CircularCloudLayouterTests
         var size = new Size(43, 45);
         layouter.PutNextRectangle(size);
         layouter.Rectangles.Count.Should().Be(1);
-        layouter.Rectangles[0].Location
+        layouter.Rectangles[^1].Location
             .Should()
             .Be(new Point(center.X - size.Width / 2, center.Y - size.Height / 2));
     }
@@ -87,7 +87,7 @@ public class CircularCloudLayouterTests
     {
         var size = new Size(width, height);
         layouter.PutNextRectangle(size);
-        layouter.Rectangles[^1].Size.Should().Be(size);
+        layouter.Rectangles.Should().Contain(x => x.Size == size);
     }
 
     [TestCase(-8, -8, 6, 6, ExpectedResult = true, TestName = "Left Top overlap")]

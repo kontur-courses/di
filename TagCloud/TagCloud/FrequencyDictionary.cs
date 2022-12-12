@@ -6,12 +6,10 @@ public class FrequencyDictionary
     {
         var dictionary = new Dictionary<string, int>();
         foreach (var word in text)
-        {
             if (!dictionary.ContainsKey(word))
                 dictionary.Add(word, 1);
             else
                 dictionary[word]++;
-        }
 
         return dictionary;
     }

@@ -14,9 +14,9 @@ public static class DiContainerBuilder
         builder.RegisterType<WordsParser>().As<IWordsParser>();
         builder.RegisterType<FrequencyDictionary>().AsSelf();
         builder.Register(context => new CircularCloudLayouter(
-            context.Resolve<SizeProperties>().ImageCenter, 
-            context.Resolve<CloudProperties>().Density, 
-            0.1))
+                context.Resolve<SizeProperties>().ImageCenter,
+                context.Resolve<CloudProperties>().Density,
+                0.1))
             .As<ICloudLayouter>()
             .InstancePerDependency();
         builder.RegisterType<TextWrapper>().AsSelf();
