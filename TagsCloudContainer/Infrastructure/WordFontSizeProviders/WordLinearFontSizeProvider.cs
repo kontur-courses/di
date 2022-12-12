@@ -7,7 +7,7 @@ using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.Infrastructure
 {
-    public class WordDynamicFontSizeProvider : IWordFontSizeProvider
+    public class WordLinearFontSizeProvider : IWordFontSizeProvider
     {
         private readonly WordFontSizeSettings settings;
 
@@ -17,7 +17,7 @@ namespace TagsCloudContainer.Infrastructure
 
         private readonly float fontSizeDelta;
 
-        public WordDynamicFontSizeProvider(WordFontSizeSettings settings) 
+        public WordLinearFontSizeProvider(WordFontSizeSettings settings) 
         {
             this.settings = settings;
             fontSizeDelta = settings.MaxFrequencyFontSize - settings.MinFrequencyFontSize;
