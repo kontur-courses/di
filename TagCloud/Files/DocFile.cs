@@ -9,7 +9,7 @@ public class DocFile : IFile
         Path = path;
     }
 
-    public string Path { get; }
+    public string Path { get; set; }
     public const string Extension = ".docx";
 
     public string ReadAll()

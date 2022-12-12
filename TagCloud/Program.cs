@@ -16,18 +16,14 @@ internal static class Program
     {
         var parsedArguments = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
         var serviceProvider = DiContainerConfiguration.Build();
-        var file = IFile.GetByFilename(parsedArguments.InputFile);
-        var curve = ICurve.GetByName(parsedArguments.Curve);
+        var file = Helper.GetFileByName(parsedArguments.InputFile);
+        var curve = Helper.GetCurveByName(parsedArguments.Curve);
         var font = new Font(parsedArguments.FontName, parsedArguments.FontSize);
         var size = new Size(parsedArguments.Width, parsedArguments.Height);
-        var words = new TextFormatter().Format(file.ReadAll());
-        
+        var textFormatter = serviceProvider.GetRequiredService<TextFormatter>();
+        var words = textFormatter.Format(file.ReadAll());
         var client = serviceProvider.GetRequiredService<Client>();
         var image = client.Draw(words, curve, size, font, parsedArguments.Colors);
-        foreach (var outputFile in parsedArguments.OutputFiles)
-        {
-            var format = ImageFormatHelper.GetImageFormat(outputFile);
-            client.Save(image, outputFile, format);
-        }
+        client.Save(image, parsedArguments.OutputFiles);
     }
 }

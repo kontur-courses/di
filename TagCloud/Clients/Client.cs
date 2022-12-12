@@ -25,7 +25,7 @@ public class Client
     {
         var wordRectangles = new List<WordRectangle>();
         var fontSize = font.Size;
-        foreach (var word in words.OrderByDescending(word => word.Amount))
+        foreach (var word in words.OrderByDescending(word => word.Frequency))
         {
             font = font.ChangeSize(fontSize * word.Frequency);
             var rectangleSize = word.MeasureWord(font);
@@ -36,9 +36,16 @@ public class Client
         var image = _drawer.CreateImage(wordRectangles, size, font, colors);
         return image;
     }
-
-    public void Save(Bitmap image, string destinationPath, ImageFormat format)
+    
+    public void Save(Bitmap image, IEnumerable<string> destinationPaths)
     {
+        foreach (var destinationPath in destinationPaths)
+            Save(image, destinationPath);
+    }
+
+    public void Save(Bitmap image, string destinationPath)
+    {
+        var format = Helper.GetImageFormat(destinationPath);
         _saver.Save(image, destinationPath, format);
     }
 }

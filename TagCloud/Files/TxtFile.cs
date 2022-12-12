@@ -7,7 +7,7 @@ public class TxtFile : IFile
         Path = path;
     }
 
-    public string Path { get; }
+    public string Path { get; set; }
     public const string Extension = ".txt";
 
     public string ReadAll()
