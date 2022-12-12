@@ -20,7 +20,7 @@ namespace TagsCloudContainer.ConsoleApp
             builder.RegisterType<WordPreparer>().As<IWordPreparer>().SingleInstance();
             
             builder.RegisterType<WordConstColorProviderFactory>().As<IWordColorProviderFactory>().SingleInstance();
-            builder.RegisterType<WordConstFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();
+            builder.RegisterType<WordDynamicFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();
 
             builder.RegisterType<CircularWordLayoutBuilder>().As<IWordLayoutBuilder>();
             builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
