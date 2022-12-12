@@ -2,11 +2,11 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Colorers;
 
-public class TransparencyOverFrequencyColorer : IColorer
+public class TransparencyOverFrequencyColorProvider : IColorProvider
 {
     private readonly Color Color;
 
-    public TransparencyOverFrequencyColorer(ISettingsProvider settingsProvider)
+    public TransparencyOverFrequencyColorProvider(ISettingsProvider settingsProvider)
     {
         Color = settingsProvider.Settings.FontColor;
     }

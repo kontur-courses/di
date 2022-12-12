@@ -5,18 +5,18 @@ namespace TagsCloudContainer;
 
 public class DefaultImageDrawer : IImageDrawer
 {
-    private readonly IColorer colorer;
+    private readonly IColorProvider _colorProvider;
     private readonly IRectanglesDistributor rectanglesDistributor;
     private readonly Settings settings;
     private readonly IWordsHandler wordsHandler;
 
     public DefaultImageDrawer(IRectanglesDistributor rectanglesDistributor, IWordsHandler wordsHandler,
-        ISettingsProvider settingProvider, IColorer colorer)
+        ISettingsProvider settingProvider, IColorProvider colorProvider)
     {
         settings = settingProvider.Settings;
         this.rectanglesDistributor = rectanglesDistributor;
         this.wordsHandler = wordsHandler;
-        this.colorer = colorer;
+        this._colorProvider = colorProvider;
     }
 
     public Bitmap DrawnBitmap { get; private set; }
@@ -38,7 +38,7 @@ public class DefaultImageDrawer : IImageDrawer
             var ratio = MathF.Pow(settings.FrequencyRatio, freq - 1);
             rect.Offset(offset);
             font = new Font(font.FontFamily, font.Size * ratio, font.Style);
-            graphics.DrawString(pair.Key, font, new SolidBrush(colorer.ProvideColorForWord(pair.Key, freq)),
+            graphics.DrawString(pair.Key, font, new SolidBrush(_colorProvider.ProvideColorForWord(pair.Key, freq)),
                 rect);
         }
 

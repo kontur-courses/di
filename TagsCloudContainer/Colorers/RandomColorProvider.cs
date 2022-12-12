@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Colorers;
 
-public class RandomColorer : IColorer
+public class RandomColorProvider : IColorProvider
 {
     public Color ProvideColorForWord(string word, int frequency)
     {

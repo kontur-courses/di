@@ -2,11 +2,11 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Colorers;
 
-public class SimpleColorer : IColorer
+public class SimpleColorProvider : IColorProvider
 {
     private readonly Color Color;
 
-    public SimpleColorer(ISettingsProvider settingsProvider)
+    public SimpleColorProvider(ISettingsProvider settingsProvider)
     {
         Color = settingsProvider.Settings.FontColor;
     }
