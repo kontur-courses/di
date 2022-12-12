@@ -6,6 +6,7 @@ using Autofac;
 using Autofac.Extras.Moq;
 using NUnit.Framework;
 using TagsCloudContainer;
+using TagsCloudContainer.Colorers;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainerTests;
@@ -20,6 +21,8 @@ public class ImageDrawerTests
         builder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>();
         builder.RegisterType<DefaultRectanglesDistributor>().As<IRectanglesDistributor>();
         builder.RegisterType<DefaultWordsHandler>().As<IWordsHandler>();
+        builder.RegisterType<SimpleColorProvider>().As<IColorProvider>();
+        builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>();
     }
 
     private ContainerBuilder builder;
@@ -39,8 +42,7 @@ public class ImageDrawerTests
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                BackgroundColor = Color.Black,
-                Layouter = LayouterType.Spiral
+                BackgroundColor = Color.Black
             });
             var settings = mock.Create<ISettingsProvider>();
             builder.RegisterInstance(settings).As<ISettingsProvider>();
@@ -65,8 +67,7 @@ public class ImageDrawerTests
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                BackgroundColor = Color.Aquamarine,
-                Layouter = LayouterType.Spiral
+                BackgroundColor = Color.Aquamarine
             });
             var settings = mock.Create<ISettingsProvider>();
             
@@ -90,8 +91,7 @@ public class ImageDrawerTests
                 Font = new Font("Arial", 24, FontStyle.Italic),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                BackgroundColor = Color.Black,
-                Layouter = LayouterType.Spiral
+                BackgroundColor = Color.Black
             });
             var settings = mock.Create<ISettingsProvider>();
             
@@ -116,8 +116,7 @@ public class ImageDrawerTests
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(6000, 6000),
-                BackgroundColor = Color.Black,
-                Layouter = LayouterType.Block
+                BackgroundColor = Color.Black
             });
             var settings = mock.Create<ISettingsProvider>();
             
@@ -125,7 +124,8 @@ public class ImageDrawerTests
         }
         var testFileReader = new TestFileReader(inputPath, null);
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
-
+        builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>();
+        
         var container = builder.Build();
         ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
@@ -143,8 +143,7 @@ public class ImageDrawerTests
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.6f,
                 ImageSize = new Size(5000, 5000),
-                BackgroundColor = Color.Black,
-                Layouter = LayouterType.Spiral
+                BackgroundColor = Color.Black
             });
             var settings = mock.Create<ISettingsProvider>();
             builder.RegisterInstance(settings).As<ISettingsProvider>();
@@ -153,7 +152,6 @@ public class ImageDrawerTests
         builder.RegisterInstance(testFileReader).As<IWordFilterProvider>();
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         builder.RegisterType<WordsHandlerWithFilter>().As<IWordsHandler>();
-        
         var container = builder.Build();
         ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
