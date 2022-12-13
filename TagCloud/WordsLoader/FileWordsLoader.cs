@@ -4,18 +4,18 @@ namespace TagCloud;
 
 public class FileWordsLoader : IWordsLoader
 {
-    private readonly string filename;
+    private readonly string filepath;
 
-    public FileWordsLoader(string filename)
+    public FileWordsLoader(string filepath)
     {
-        if (!File.Exists(filename))
-            throw new ArgumentException($"File {filename} don't exists");
+        if (!File.Exists(filepath))
+            throw new FileNotFoundException($"Could not find file '{Path.GetFullPath(filepath)}'.");
         
-        this.filename = filename;
+        this.filepath = filepath;
     }
     
     public IEnumerable<string> Load()
     {
-        return File.ReadAllLines(filename);
+        return File.ReadAllLines(filepath);
     }
 }
