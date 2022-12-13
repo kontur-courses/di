@@ -20,7 +20,8 @@ public class TagCloudCreator
 
     public void CreateCloud(VisualizationOptions visualizationOptions)
     {
-        var words = filter.FilterAllWords(visualizationOptions.PathToTextFile,
+        var lines = File.ReadAllLines(visualizationOptions.PathToTextFile);
+        var words = filter.FilterAllWords(lines,
             visualizationOptions.BoringWordsThreshold);
         var tags = converter.ConvertToTags(words, visualizationOptions);
         drawer.DrawCloud(tags, visualizationOptions);

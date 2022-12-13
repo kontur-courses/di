@@ -2,5 +2,5 @@
 
 public interface ITextFilter
 {
-    public IEnumerable<string> FilterAllWords(string pathToFile, int boringWordsLength);
+    public IEnumerable<string> FilterAllWords(IEnumerable<string> lines, int boringWordsLength);
 }

@@ -4,11 +4,13 @@ namespace TagCloud.Common.TextFilter;
 
 public class SimpleTextFilter : ITextFilter
 {
-
-    public IEnumerable<string> FilterAllWords(string pathToFile, int boringWordsLength)
+    public IEnumerable<string> FilterAllWords(IEnumerable<string> lines, int boringWordsLength)
     {
+        if (lines == null)
+        {
+            throw new ArgumentNullException(nameof(lines));
+        }
         var words = new List<string>();
-        var lines = File.ReadAllLines(pathToFile);
         foreach (var line in lines)
         {
             words.AddRange(GetWords(line).Where(word => word.Length > boringWordsLength));
@@ -16,7 +18,7 @@ public class SimpleTextFilter : ITextFilter
 
         return words;
     }
-    
+
     private IEnumerable<string> GetWords(string input)
     {
         var matches = Regex.Matches(input, @"\b[\w']*\b");
