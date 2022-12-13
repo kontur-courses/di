@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TagsCloudContainer
+namespace TagsCloudGUI
 {
     partial class ExludedWordsForm
     {

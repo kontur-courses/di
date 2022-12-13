@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         public int StepSize { set; get; }
         public List<Rectangle> GenerateCloud(Point center, List<Size> rectangleSizes)
@@ -22,7 +22,7 @@ namespace TagsCloudContainer
         public Rectangle GetNextRectangle(Point center, List<Rectangle> rectangles, Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
-                throw new ArgumentException("Height and Width much be positive");
+                throw new ArgumentException("Height and Width must be positive");
             Rectangle newRectangle;
             if (!GetNewRectanglePostition(center, rectangles, rectangleSize, out newRectangle))
                 throw new ArgumentException("Rectangle size so much");

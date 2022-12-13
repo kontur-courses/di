@@ -10,7 +10,7 @@ namespace TagsCloudContainer
             var fakeImage = new Bitmap(1, 1);
             var graphics = Graphics.FromImage(fakeImage);
             var sizeF = graphics.MeasureString(s, font);
-            var size = new Size(Convert.ToInt32(sizeF.Width), Convert.ToInt32(sizeF.Height));
+            var size = Size.Ceiling(sizeF);
             return size;
         }
         

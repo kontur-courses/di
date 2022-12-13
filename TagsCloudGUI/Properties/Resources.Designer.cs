@@ -45,7 +45,7 @@ namespace TagsCloudContainer.Properties
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp =
-                        new global::System.Resources.ResourceManager("TagsCloudContainer.Properties.Resources",
+                        new global::System.Resources.ResourceManager("TagsCloudGUI.Properties.Resources",
                             typeof(Resources).Assembly);
                     resourceMan = temp;
                 }

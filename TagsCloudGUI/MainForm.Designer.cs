@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudGUI
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace TagsCloudContainer
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.but_openFile = new System.Windows.Forms.Button();
             this.box_stepSize = new System.Windows.Forms.TextBox();
             this.but_generate = new System.Windows.Forms.Button();
@@ -86,11 +86,11 @@ namespace TagsCloudContainer
             // pic_main
             // 
             this.pic_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.pic_main.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pic_main.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pic_main.InitialImage = ((System.Drawing.Image)(resources.GetObject("pic_main.InitialImage")));
             this.pic_main.Location = new System.Drawing.Point(0, 71);
             this.pic_main.Name = "pic_main";
-            this.pic_main.Size = new System.Drawing.Size(931, 327);
+            this.pic_main.Size = new System.Drawing.Size(931, 507);
             this.pic_main.TabIndex = 4;
             this.pic_main.TabStop = false;
             // 
@@ -193,7 +193,7 @@ namespace TagsCloudContainer
             // but_save
             // 
             this.but_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.but_save.Location = new System.Drawing.Point(769, 404);
+            this.but_save.Location = new System.Drawing.Point(769, 584);
             this.but_save.Name = "but_save";
             this.but_save.Size = new System.Drawing.Size(150, 23);
             this.but_save.TabIndex = 10;
@@ -203,8 +203,9 @@ namespace TagsCloudContainer
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 412);
+            this.label5.Location = new System.Drawing.Point(6, 592);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(119, 13);
             this.label5.TabIndex = 11;
@@ -212,8 +213,9 @@ namespace TagsCloudContainer
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(237, 412);
+            this.label6.Location = new System.Drawing.Point(237, 592);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(120, 13);
             this.label6.TabIndex = 12;
@@ -221,7 +223,8 @@ namespace TagsCloudContainer
             // 
             // box_heightPic
             // 
-            this.box_heightPic.Location = new System.Drawing.Point(131, 409);
+            this.box_heightPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.box_heightPic.Location = new System.Drawing.Point(131, 589);
             this.box_heightPic.Name = "box_heightPic";
             this.box_heightPic.Size = new System.Drawing.Size(100, 20);
             this.box_heightPic.TabIndex = 13;
@@ -230,7 +233,7 @@ namespace TagsCloudContainer
             // box_widthPic
             // 
             this.box_widthPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.box_widthPic.Location = new System.Drawing.Point(363, 409);
+            this.box_widthPic.Location = new System.Drawing.Point(363, 589);
             this.box_widthPic.Name = "box_widthPic";
             this.box_widthPic.Size = new System.Drawing.Size(100, 20);
             this.box_widthPic.TabIndex = 13;
@@ -240,7 +243,7 @@ namespace TagsCloudContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 434);
+            this.ClientSize = new System.Drawing.Size(931, 614);
             this.Controls.Add(this.box_widthPic);
             this.Controls.Add(this.box_heightPic);
             this.Controls.Add(this.label6);
@@ -248,7 +251,7 @@ namespace TagsCloudContainer
             this.Controls.Add(this.but_save);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pic_main);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pic_main)).EndInit();
             this.groupBox1.ResumeLayout(false);
