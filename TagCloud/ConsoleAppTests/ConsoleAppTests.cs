@@ -21,7 +21,7 @@ public class ConsoleAppTests
         var sw = new StringWriter();
         Console.SetError(sw);
         
-        new ArgumentsParser().ParseArgs(args);
+        ArgumentsParser.ParseArgs(args);
         var result = sw.ToString();
         
         result.Should().Contain(info);

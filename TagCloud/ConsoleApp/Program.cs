@@ -10,8 +10,7 @@ internal static class Program
     {
         var container = DiContainerBuilder.Build();
 
-        var argsParser = new ArgumentsParser();
-        var options = argsParser.ParseArgs(args);
+        var options = ArgumentsParser.ParseArgs(args);
         options.Apply(container.Resolve<ApplicationProperties>(), container.Resolve<IWordsParser>());
         if (options.OutputPath is null)
         {
