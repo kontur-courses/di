@@ -110,7 +110,9 @@
         <Compile Include="Spiral.cs" />
         <Compile Include="UI\ConsoleUi.cs" />
         <Compile Include="UI\IUi.cs" />
+        <Compile Include="WordsColoringAlgorithms\GradientDependsOnSizePainter.cs" />
         <Compile Include="WordsColoringAlgorithms\DefaultWordsPainter.cs" />
+        <Compile Include="WordsColoringAlgorithms\GradientWordsPainter.cs" />
         <Compile Include="WordsColoringAlgorithms\IWordsPainter.cs" />
     </ItemGroup>
     <ItemGroup>

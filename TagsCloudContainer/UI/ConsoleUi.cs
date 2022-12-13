@@ -10,7 +10,7 @@ namespace TagsCloudContainer.UI
         [Option('g', "backgroundcolor", Required = false, Default = "White", HelpText = "Background color")]
         public string BackGroundColor { get; set; }
 
-        [Option('c', "brushcolor", Required = false, Default = "Yellow", HelpText = "Brush color")]
+        [Option('c', "brushcolor", Required = false, Default = "Black", HelpText = "Brush color")]
         public string BrushColor { get; set; }
 
         [Option('s',
@@ -30,7 +30,7 @@ namespace TagsCloudContainer.UI
         [Option('f',
             "saveformat",
             Required = false,
-            Default = "bmp",
+            Default = "png",
             HelpText = "Format to result picture")]
         public string FormatToSave { get; set; }
 

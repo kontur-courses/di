@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagsCloudContainer.WordsColoringAlgorithms
 {
-    public interface IWordStainer
+    public interface IWordsPainter
     {
-        public Color[] GetColorsSequence(int wordsCount, string startColor);
+        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, string startColor);
     }
 }

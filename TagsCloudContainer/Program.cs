@@ -25,8 +25,8 @@ namespace TagsCloudContainer
             var container = builder.Build();
             var frequencyDictionary = container.Resolve<InputFileHandler>()
                 .FormFrequencyDictionary(parsedArguments.PathToOpen);
-            var colorSequence = container.Resolve<IWordStainer>()
-                .GetColorsSequence(frequencyDictionary.Count, parsedArguments.BrushColor);
+            var colorSequence = container.Resolve<IWordsPainter>()
+                .GetColorsSequence(frequencyDictionary, parsedArguments.BrushColor);
             var coefficient = ScaleCoefficientCalculator.CalculateScaleCoefficient(parsedArguments.CanvasWidth,
                 parsedArguments.CanvasHeight, parsedArguments.CanvasBorder);
             CircularCloudDrawer.DrawWords(colorSequence,
@@ -58,7 +58,7 @@ namespace TagsCloudContainer
             RegisterFileSaverDependency(builder, parsedArguments.FormatToSave);
             builder.RegisterInstance(parsedArguments).As<IUi>();
             builder.RegisterType<InputFileHandler>().AsSelf();
-            builder.RegisterType<DefaultWordPainter>().As<IWordStainer>();
+            builder.RegisterType<GradientDependsOnSizePainter>().As<IWordsPainter>();
             builder.RegisterType<Spiral>().AsSelf();
             builder.RegisterType<Spiral>().AsSelf();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouterAlgorithm>();

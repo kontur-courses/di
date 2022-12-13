@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.FileOpeners;
+using TagsCloudContainer.FileReaders;
 
 namespace TagCloudContainerTests
 {
