@@ -6,16 +6,15 @@ using TagCloud.Abstractions;
 
 namespace TagCloud;
 
-public class CircularCloudLayouter : ICloudLayouter
+public class BaseCloudLayouter : ICloudLayouter
 {
     private readonly QuadTreeRect<QuadTreeRectWrapper> rectanglesQuadTree;
-    private readonly IEnumerator<Point> spiralEnumerator;
+    private readonly IEnumerator<Point> pointEnumerator;
 
-    public CircularCloudLayouter(Point center)
+    public BaseCloudLayouter(Point center, IPointGenerator pointGenerator)
     {
         Center = center;
-        spiralEnumerator = new SpiralPointGenerator(0.01, 0.01)
-            .Generate(center).GetEnumerator();
+        pointEnumerator = pointGenerator.Generate(center).GetEnumerator();
         rectanglesQuadTree = new QuadTreeRect<QuadTreeRectWrapper>(
             int.MinValue / 2 + center.X, int.MinValue / 2 + center.Y,
             int.MaxValue, int.MaxValue);
@@ -43,9 +42,11 @@ public class CircularCloudLayouter : ICloudLayouter
 
     private Rectangle CreateNewRectangle(Size size)
     {
-        spiralEnumerator.MoveNext();
-        var point = new Point(spiralEnumerator.Current.X - size.Width / 2,
-            spiralEnumerator.Current.Y - size.Height / 2);
+        if (!pointEnumerator.MoveNext())
+            throw new InvalidOperationException("You are trying to put a new rectangle, but the points sequence has ended");
+        
+        var point = new Point(pointEnumerator.Current.X - size.Width / 2,
+            pointEnumerator.Current.Y - size.Height / 2);
         return new Rectangle(point, size);
     }
 }

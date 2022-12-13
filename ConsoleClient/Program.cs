@@ -42,7 +42,8 @@ IContainer ConfigureContainer(string sourceFilepath)
     var drawer = new BaseCloudDrawer(new FontFamily("Arial"), 50, 10, new Size(800, 600), Color.Black);
     builder.RegisterInstance(drawer)
         .As<ICloudDrawer>();
-    builder.RegisterInstance(new CircularCloudLayouter(new Point(400, 300)))
+    var pointGenerator = new SpiralPointGenerator(0.1, 0.1);
+    builder.RegisterInstance(new BaseCloudLayouter(new Point(400, 300), pointGenerator))
         .As<ICloudLayouter>();
     builder.RegisterType<DrawingCloudCreator>()
         .As<ICloudCreator>();

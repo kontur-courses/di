@@ -1,9 +1,8 @@
 using System.Collections.Concurrent;
 using System.Drawing;
-using System.Numerics;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagCloud;
 using TagCloud.Abstractions;
 
@@ -11,31 +10,26 @@ namespace TagCloudTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
-public class CircularCloudLayouterTests
+public class BaseCloudLayouterTests
 {
     [SetUp]
     public void SetUp()
     {
-        var layouter = new CircularCloudLayouter(new Point(0, 0));
-        var testId = TestContext.CurrentContext.Test.ID;
-        layouterByTestId[testId] = layouter;
+        var layouter = new BaseCloudLayouter(new Point(0, 0), fakePointGenerator);
+        layouterByTestId[TestContext.CurrentContext.Test.ID] = layouter;
     }
 
-    [TearDown]
-    public void TearDown()
+    private readonly IPointGenerator fakePointGenerator = CreateFakePointGenerator();
+
+    private static IPointGenerator CreateFakePointGenerator()
     {
-        if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure) return;
-
-        var testId = TestContext.CurrentContext.Test.ID;
-        if (!layouterByTestId.ContainsKey(testId)) return;
-
-        var filename = $"{TestContext.CurrentContext.Test.Name}.jpg";
-        var directory = new DirectoryInfo("../../../FallingTestsImages");
-        if (!directory.Exists) directory.Create();
-        Console.WriteLine($"Tag cloud visualization saved to file {directory.FullName}\\{filename}");
+        var fakeGenerator = A.Fake<IPointGenerator>();
+        A.CallTo(() => fakeGenerator.Generate(A<Point>.Ignored))
+            .Returns(Enumerable.Range(0, int.MaxValue).Select(n => new Point(n, n)));
+        return fakeGenerator;
     }
 
-    private readonly ConcurrentDictionary<string, CircularCloudLayouter> layouterByTestId = new();
+    private readonly ConcurrentDictionary<string, BaseCloudLayouter> layouterByTestId = new();
 
     [TestCase(0, 0)]
     [TestCase(10, 10)]
@@ -46,7 +40,7 @@ public class CircularCloudLayouterTests
     {
         var point = new Point(x, y);
 
-        var act = () => new CircularCloudLayouter(point);
+        var act = () => new BaseCloudLayouter(point, fakePointGenerator);
 
         act.Should().NotThrow<Exception>();
     }
@@ -113,52 +107,23 @@ public class CircularCloudLayouterTests
         foreach (var rect2 in layouter.Rectangles.Where(r => r != rect1))
             rect1.IntersectsWith(rect2).Should().BeFalse();
     }
-
-    [TestCase(1, 20)]
-    [TestCase(100, 50)]
-    [TestCase(250, 65)]
-    [TestCase(500, 75)]
-    [TestCase(1000, 80)]
-    public void ResultRectanglesSet_LooksLikeCircle(int rectanglesCount, int expectedMinPercent)
+    
+    [Test]
+    public void PutNextRectangle_ThrowInvalidOperationException_OnFinishedPointGenerator()
     {
-        var layouter = layouterByTestId[TestContext.CurrentContext.Test.ID];
-        var random = new Random();
-        var sizes = Enumerable.Range(1, rectanglesCount)
-            .Select(_ => new Size(random.Next(10, 31), random.Next(10, 31)));
-        foreach (var size in sizes)
-            layouter.PutNextRectangle(size);
+        var center = new Point(0, 0);
+        var finiteGenerator = A.Fake<IPointGenerator>();
+        A.CallTo(() => finiteGenerator.Generate(A<Point>.Ignored)).Returns(new[] { center });
+        var layouter = new BaseCloudLayouter(center, finiteGenerator);
+        var size = new Size(10, 10);
+        layouter.PutNextRectangle(size);
 
-        var result = GetRadiusLengthRatioPercent(layouter);
+        var act1 = () => layouter.PutNextRectangle(size);
+        var act2 = () => layouter.PutNextRectangle(size);
 
-        result.Should().BeGreaterOrEqualTo(expectedMinPercent);
-    }
-
-    private static int GetRadiusLengthRatioPercent(ICloudLayouter layouter)
-    {
-        var radiusLengths = layouter.Rectangles
-            .SelectMany(AllPerimeterPoints)
-            .GroupBy(Angle)
-            .Select(g => g.Max(p => Distance(p, layouter.Center)))
-            .ToArray();
-        var minLength = radiusLengths.Min();
-        var maxLength = radiusLengths.Max();
-        return (int)Math.Round(minLength / maxLength * 100);
-    }
-
-    private static IEnumerable<Point> AllPerimeterPoints(Rectangle rect)
-    {
-        for (var i = Math.Min(rect.Left, rect.Right); i <= Math.Max(rect.Left, rect.Right); i++)
-        for (var j = Math.Min(rect.Bottom, rect.Top); j <= Math.Max(rect.Bottom, rect.Top); j++)
-            yield return new Point(i, j);
-    }
-
-    private static int Angle(Point point)
-    {
-        return (int)Math.Round(Math.Atan2(point.Y, point.X) * 180 / Math.PI);
-    }
-
-    private static double Distance(Point a, Point b)
-    {
-        return Vector2.Distance(new Vector2(a.X, a.Y), new Vector2(b.X, b.Y));
+        act1.Should().Throw<InvalidOperationException>()
+            .WithMessage("You are trying to put a new rectangle, but the points sequence has ended");
+        act2.Should().Throw<InvalidOperationException>()
+            .WithMessage("You are trying to put a new rectangle, but the points sequence has ended");
     }
 }
