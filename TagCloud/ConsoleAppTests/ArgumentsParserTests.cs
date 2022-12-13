@@ -26,4 +26,13 @@ public class ArgumentsParserTests
         
         result.Should().Contain(info);
     }
+
+    [TestCase("-W 720 -H wrongType -f Cloud.txt", TestName = "Wrong argument type")]
+    [TestCase("-W 720 -H 310", TestName = "No required argument")]
+    public void Null_OnIncorrectArguments(string argumentsLine)
+    {
+        var arguments = argumentsLine.Split().ToArray();
+        
+        ArgumentsParser.ParseArgs(arguments).Should().BeNull();
+    }
 }
