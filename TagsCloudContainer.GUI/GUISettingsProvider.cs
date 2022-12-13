@@ -11,17 +11,11 @@ namespace TagsCloudContainer.GUI
 {
     internal class GUISettingsProvider : ISettingsProvider
     {
-        private readonly TextReaderSettings textReaderSettings;
-        private readonly WordColorSettings wordColorSettings;
-        private readonly WordFontSettings wordFontSettings;
-        private readonly OutputImageSettings outputImageSettings;
+        private readonly Options options;
 
         public GUISettingsProvider(Options options)
         {
-            textReaderSettings = ParseTextReaderSettings(options);
-            wordColorSettings = ParseWordColorSettings(options);
-            wordFontSettings = ParseWordFontSettings(options);
-            outputImageSettings = ParseOutputImageSettings(options);
+            this.options = options;
         }
 
         private static TextReaderSettings ParseTextReaderSettings(Options options)
@@ -59,9 +53,9 @@ namespace TagsCloudContainer.GUI
             };
         }
 
-        public TextReaderSettings GetTextReaderSettings() => textReaderSettings;
-        public WordColorSettings GetWordColorSettings() => wordColorSettings;
-        public WordFontSettings GetWordFontSettings() => wordFontSettings;
-        public OutputImageSettings GetOutputImageSettings() => outputImageSettings;
+        public TextReaderSettings GetTextReaderSettings() => ParseTextReaderSettings(options);
+        public WordColorSettings GetWordColorSettings() => ParseWordColorSettings(options);
+        public WordFontSettings GetWordFontSettings() => ParseWordFontSettings(options);
+        public OutputImageSettings GetOutputImageSettings() => ParseOutputImageSettings(options);
     }
 }
