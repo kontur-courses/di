@@ -127,11 +127,4 @@ public class CircularCloudLayouter : ICloudLayouter
             nextAngle += angleStep;
         }
     }
-
-    public void Clear()
-    {
-        rectangles.Clear();
-        unusedRanges.Clear();
-        CurrentPosition = new PolarPoint();
-    }
 }

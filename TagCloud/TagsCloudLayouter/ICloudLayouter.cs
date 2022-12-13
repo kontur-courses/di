@@ -6,5 +6,4 @@ public interface ICloudLayouter
 {
     public IReadOnlyList<Rectangle> Rectangles { get; }
     public Rectangle PutNextRectangle(Size rectangleSize);
-    public void Clear();
 }

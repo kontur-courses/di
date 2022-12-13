@@ -160,15 +160,4 @@ public class CircularCloudLayouterTests
             Math.Sqrt(Math.Pow(p.X - center.X, 2) + Math.Pow(p.Y - center.Y, 2));
         centers.All(center => distance(center) < Math.Max(horizontalRadius, verticalRadius)).Should().BeTrue();
     }
-
-    [Test]
-    public void Clear_Empty_AfterClear()
-    {
-        for (var i = 0; i < 5; i++)
-            layouter.PutNextRectangle(new Size(50, 50));
-
-        layouter.Clear();
-
-        layouter.Rectangles.Should().BeEmpty();
-    }
 }
