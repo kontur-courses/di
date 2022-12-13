@@ -9,6 +9,7 @@ using FluentAssertions.Execution;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
+using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualizationTests;
