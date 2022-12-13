@@ -10,4 +10,9 @@ public class Tag
 
     public string Word { get; }
     public int Count { get; }
+
+    public override string ToString()
+    {
+	    return $"{Word}:{{{Count}}}";
+    }
 }
