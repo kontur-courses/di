@@ -1,7 +1,7 @@
 ﻿using TagsCloud.Core.WordFilters;
 using TagsCloud.Core.WordReaders;
 
-namespace TagsCloud.Core.TagContainersCreators.TagsPreproessors;
+namespace TagsCloud.Core.TagContainersCreators.TagsPreprocessors;
 
 public class TempPreprocessor : ITagsPreprocessor
 {

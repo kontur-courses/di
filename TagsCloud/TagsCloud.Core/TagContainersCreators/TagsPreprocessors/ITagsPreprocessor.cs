@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.Core.TagContainersCreators.TagsPreproessors;
+﻿namespace TagsCloud.Core.TagContainersCreators.TagsPreprocessors;
 
 public interface ITagsPreprocessor
 {
