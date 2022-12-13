@@ -8,7 +8,7 @@ public class ConsoleOptions
     public string? File { get; set; }
 
     [Option('F', "font", Required = false, HelpText = "Font name", Default = "Arial")]
-    public string? FontName { get; set; }
+    public string FontName { get; set; }
 
     [Option("minfont", Required = false, Default = 11, HelpText = "Minimum font size")]
     public int MinFont { get; set; }
@@ -26,14 +26,14 @@ public class ConsoleOptions
     public double Density { get; set; }
 
     [Option("background", Required = false, Default = "#000000", HelpText = "Background color")]
-    public string? BackgroundColor { get; set; }
+    public string BackgroundColor { get; set; }
 
     [Option("foreground", Required = false, Default = "#ffffff", HelpText = "Foreground color")]
-    public string? ForegroundColor { get; set; }
+    public string ForegroundColor { get; set; }
 
     [Option('o', "out", Required = false, Default = "Cloud.png",
         HelpText = "Output image path(including name). Supported formats: .jpg, .jpeg, .png")]
-    public string? OutputPath { get; set; }
+    public string OutputPath { get; set; }
 
     [Option("exclude", Required = false, HelpText = "Words to exclude")]
     public string? ExcludedWords { get; set; }

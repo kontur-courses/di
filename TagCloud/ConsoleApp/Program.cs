@@ -23,12 +23,6 @@ internal static class Program
                 container.Resolve<ApplicationProperties>(),
                 container.Resolve<IWordsParser>());
 
-        if (options.OutputPath is null)
-        {
-            Console.WriteLine("Output path not set");
-            return;
-        }
-
         container.Resolve<TagCloudConstructor>().Construct().Save(options.OutputPath);
         Console.WriteLine($"Tag cloud saved to file {options.OutputPath}");
     }

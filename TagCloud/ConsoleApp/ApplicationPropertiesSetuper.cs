@@ -22,10 +22,8 @@ public class ApplicationPropertiesSetuper
         if (consoleOptions.ExcludedWords is not null)
             cloudProperties.ExcludedWords = wordsParser.Parse(consoleOptions.ExcludedWords);
         var palette = properties.Palette;
-        if (consoleOptions.BackgroundColor is not null)
-            palette.Background = ColorTranslator.FromHtml(consoleOptions.BackgroundColor);
-        if (consoleOptions.ForegroundColor is not null)
-            palette.Foreground = ColorTranslator.FromHtml(consoleOptions.ForegroundColor);
+        palette.Background = ColorTranslator.FromHtml(consoleOptions.BackgroundColor);
+        palette.Foreground = ColorTranslator.FromHtml(consoleOptions.ForegroundColor);
     }
 
     private void SetupApplySizeOption(SizeProperties sizeProperties, CloudProperties cloudProperties)
@@ -36,8 +34,7 @@ public class ApplicationPropertiesSetuper
 
     private void SetupFontOption(FontProperties fontProperties)
     {
-        if (consoleOptions.FontName != null)
-            fontProperties.Family = new FontFamily(consoleOptions.FontName);
+        fontProperties.Family = new FontFamily(consoleOptions.FontName);
         fontProperties.MinSize = consoleOptions.MinFont;
         fontProperties.MaxSize = consoleOptions.MaxFont;
     }
