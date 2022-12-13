@@ -8,9 +8,8 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        var container = DiContainerBuilder.Build();
-
         var options = ArgumentsParser.ParseArgs(args);
+        var container = DiContainerBuilder.Build();
         options.Apply(container.Resolve<ApplicationProperties>(), container.Resolve<IWordsParser>());
         if (options.OutputPath is null)
         {
