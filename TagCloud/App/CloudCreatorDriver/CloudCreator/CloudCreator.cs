@@ -18,7 +18,7 @@ public class CloudCreator : ICloudCreator
     private readonly ICloudLayouterSettings cloudLayouterSettings;
     private readonly ICloudDrawer cloudDrawer;
     private readonly IDrawingSettings drawingSettings;
-    
+
     public CloudCreator(
         FromFileInputWordsStream inputWordsStream,
         IWordsPreprocessor wordsPreprocessor, IEnumerable<IBoringWords> boringWords,
@@ -45,10 +45,18 @@ public class CloudCreator : ICloudCreator
         
         var allWords = inputWordsStream.GetAllWordsFromStream(streamContext);
         var words = GetProcessedWordsOrderedByTf(allWords, wordsPreprocessor, boringWords);
+
+        if (drawingSettings.HasWordVisualisationSelector())
+        {
+            var selector = drawingSettings.GetSelector();
+            var minTf = words.Min(word => word.Tf);
+            var maxTf = words.Max(word => word.Tf);
+            selector.SetMinAndMaxRealWordTfIndex(minTf, maxTf);
+        }
+        
         var sizes = GetWordsSizes(words, drawingSettings);
         var rectangles = cloudLayouter.GetLaidRectangles(sizes, cloudLayouterSettings);
-        var drawingWords =
-            CreateDrawingWords(words, rectangles, drawingSettings);
+        var drawingWords = CreateDrawingWords(words, rectangles, drawingSettings);
 
         return cloudDrawer.DrawWords(drawingWords, drawingSettings);
     }
@@ -57,7 +65,10 @@ public class CloudCreator : ICloudCreator
         IEnumerable<IWord> words,
         IDrawingSettings drawingSettings)
     {
-        return words.Select(word => word.MeasureWord(GetVisualisation(word, drawingSettings).Font));
+        return drawingSettings.HasWordVisualisationSelector()
+            ? words.Select(word => word.MeasureWord(
+                drawingSettings.GetDrawingWordFromSelector(word, Rectangle.Empty).Font))
+            : words.Select(word => word.MeasureWord(GetVisualisation(word, drawingSettings).Font));
     }
 
     private static List<IWord> GetProcessedWordsOrderedByTf(
@@ -79,8 +90,15 @@ public class CloudCreator : ICloudCreator
         foreach (var word in words)
         {
             if (!enumerator.MoveNext()) break;
-            var stile = GetVisualisation(word, drawingSettings);
-            result.Add(new DrawingWord(word, stile.Font, stile.Color, enumerator.Current));
+            IDrawingWord drawingWord;
+            if (drawingSettings.HasWordVisualisationSelector())
+                drawingWord = drawingSettings.GetDrawingWordFromSelector(word, enumerator.Current);
+            else
+            {
+                var stile = GetVisualisation(word, drawingSettings);
+                drawingWord = new DrawingWord(word, stile.Font, stile.Color, enumerator.Current);
+            }
+            result.Add(drawingWord);
         }
 
         return result;

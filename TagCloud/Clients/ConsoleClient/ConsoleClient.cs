@@ -22,13 +22,15 @@ public class ConsoleClient : IClient
     private readonly IDrawingSettings drawingSettings;
     private readonly IImageSaver imageSaver;
     private readonly FromFileInputWordsStream inputWordsStream;
-        
+    private readonly IWordsVisualisationSelector wordsVisualisationSelector;
+
     public ConsoleClient(
         IReadOnlyCollection<IFileEncoder> fileEncoders,
         ICloudLayouterSettings cloudLayouterSettings,
         IDrawingSettings drawingSettings,
         ICloudCreator cloudCreator,
-        IImageSaver imageSaver, FromFileInputWordsStream inputWordsStream)
+        IImageSaver imageSaver, FromFileInputWordsStream inputWordsStream,
+        IWordsVisualisationSelector wordsVisualisationSelector)
     {
         this.fileEncoders = fileEncoders;
         this.cloudLayouterSettings = cloudLayouterSettings;
@@ -36,6 +38,7 @@ public class ConsoleClient : IClient
         creator = cloudCreator;
         this.imageSaver = imageSaver;
         this.inputWordsStream = inputWordsStream;
+        this.wordsVisualisationSelector = wordsVisualisationSelector;
     }
 
     public void Run()
@@ -44,37 +47,38 @@ public class ConsoleClient : IClient
 
         try
         {
-            if (TryGetFilePath(out path)
-                && TryGetImageSize(out imageSize)
-                && TryGetBgColor(out bgColor)
-                && TryGetOutImagePath(out savePath))
+            if (!TryGetFilePath(out path)
+                || !TryGetImageSize(out imageSize)
+                || !TryGetBgColor(out bgColor)
+                || !TryGetOutImagePath(out savePath))
+                return;
+
+            if (!TryGetFileEncoder(fileEncoders, path, out var suitableFileEncoder))
             {
-                if (!TryGetFileEncoder(fileEncoders, path, out var suitableFileEncoder))
-                {
-                    Console.WriteLine(Phrases.FailGettingFileEncoder);
-                    return;
-                }
-
-                var streamContext = new FromFileStreamContext(path, suitableFileEncoder!);
-                drawingSettings.BgColor = bgColor;
-                drawingSettings.PictureSize = imageSize;
-                ((SpiralCloudLayouterSettings)cloudLayouterSettings).Center =
-                    new Point(imageSize.Width / 2, imageSize.Height / 2);
-
-                Console.Write(Phrases.AskingAddingWordVisualisationRule);
-                if (Console.ReadLine() == Phrases.Yes) 
-                    FillWordVisualisationSettings(drawingSettings);
-                
-                Console.Write(Phrases.AskingAddingUsersBoringWords);
-                if (Console.ReadLine() == Phrases.Yes)
-                    creator.AddBoringWordManager(GetBoringWords());
-                
-                var image = creator.CreatePicture(streamContext);
-
-                Console.WriteLine(imageSaver.TrySaveImage(image, savePath!)
-                    ? Phrases.SuccessSaveImage + savePath
-                    : Phrases.FailImageSaving);
+                Console.WriteLine(Phrases.FailGettingFileEncoder);
+                return;
             }
+
+            var streamContext = new FromFileStreamContext(path, suitableFileEncoder!);
+            drawingSettings.BgColor = bgColor;
+            drawingSettings.PictureSize = imageSize;
+            ((SpiralCloudLayouterSettings)cloudLayouterSettings).Center =
+                new Point(imageSize.Width / 2, imageSize.Height / 2);
+
+            Console.Write(Phrases.AskingAddingUsersBoringWords);
+            if (Console.ReadLine() == Phrases.Yes)
+                creator.AddBoringWordManager(GetBoringWords());
+
+            if (!TryCollectWordsColors(wordsVisualisationSelector)
+                || !TryCollectFontSizes(wordsVisualisationSelector))
+                return;
+
+            var image = creator.CreatePicture(streamContext);
+
+            Console.WriteLine(imageSaver.TrySaveImage(image, savePath!)
+                ? Phrases.SuccessSaveImage + savePath
+                : Phrases.FailImageSaving);
+
         }
         catch (Exception e)
         {
@@ -82,6 +86,42 @@ public class ConsoleClient : IClient
         }
 
         Stop();
+    }
+
+    private static bool TryCollectFontSizes(IWordsVisualisationSelector selector)
+    {
+        Console.Write(Phrases.AskingFontSize);
+        try
+        {
+            var sizes = Console.ReadLine()!
+                .Split(' ')
+                .Select(int.Parse)
+                .Take(2).ToArray();
+            selector.SetWordsSizes(sizes[0], sizes[1]);
+            return true;
+        }
+        catch
+        {
+            Console.Write(Phrases.FailGettingFontSize + Phrases.TryAgain);
+            return Console.ReadLine() == Phrases.Yes && TryCollectFontSizes(selector);
+        }
+    }
+
+    private static bool TryCollectWordsColors(IWordsVisualisationSelector visualisationSelector)
+    {
+        Console.Write(Phrases.AskingWordsColors);
+        var colors = Console.ReadLine()!
+            .Split('-')
+            .Select(Color.FromName)
+            .Where(cColor => cColor.IsKnownColor)
+            .ToArray();
+        if (colors.Length > 0)
+        {
+            visualisationSelector.AddWordPossibleColors(colors);
+            return true;
+        }
+        Console.Write(Phrases.FailGettingWordsColors + Phrases.TryAgain);
+        return Console.ReadLine() == Phrases.Yes && TryCollectWordsColors(visualisationSelector);
     }
 
     private BoringWordsFromUser GetBoringWords()
@@ -95,16 +135,15 @@ public class ConsoleClient : IClient
             return Console.ReadLine() == Phrases.Yes
                 ? GetBoringWords()
                 : boringWords;
-
         }
         
-        if (!TryGetFileEncoder(fileEncoders, boringWordsPath!, out var suitableFileEncoder))
+        if (!TryGetFileEncoder(fileEncoders, boringWordsPath, out var suitableFileEncoder))
         {
             Console.WriteLine(Phrases.FailGettingFileEncoder);
             return boringWords;
         }
         
-        var streamContext = new FromFileStreamContext(boringWordsPath!, suitableFileEncoder!);
+        var streamContext = new FromFileStreamContext(boringWordsPath, suitableFileEncoder!);
         foreach (var word in inputWordsStream.GetAllWordsFromStream(streamContext))
         {
             boringWords.AddBoringWord(word);
@@ -112,61 +151,6 @@ public class ConsoleClient : IClient
         Console.WriteLine(Phrases.SuccessUploadBoringWords);
 
         return boringWords;
-    }
-
-    private static void FillWordVisualisationSettings(IDrawingSettings drawingSettings)
-    {
-        Console.WriteLine(Phrases.StartCreatingNewWordVisualisation);
-        if (!TryGetDoubleFromConsole(Phrases.AskingWordImportance, out var startValue)
-            || !TryGetWordsColor(out var color)
-            || !TryGetIntFromConsole(Phrases.AskingFontSize, out var fontSize)
-            || !TryGetFont(Phrases.AskingFontName, out var font, fontSize))
-            return;
-        
-        drawingSettings.AddWordVisualisation(new WordVisualisation(color, startValue, font!));
-        
-        Console.WriteLine(Phrases.EndCreatingNewWordVisualisation);
-        Console.Write(Phrases.AskingAddingWordVisualisationRule);
-        if (Console.ReadLine() == Phrases.Yes)
-            FillWordVisualisationSettings(drawingSettings);
-    }
-
-    private static bool TryGetFont(string text, out Font? font, int fontSize)
-    {
-        Console.Write(text);
-        
-        var value = Console.ReadLine();
-        if (value != null)
-        {
-            font = new Font(value, fontSize);
-            return true;
-        }
-
-        font = null;
-        Console.Write(Phrases.FailGettingFont + Phrases.TryAgain);
-        return Console.ReadLine() != Phrases.Yes && TryGetFont(text, out font, fontSize);
-    }
-        
-    private static bool TryGetIntFromConsole(string text, out int result)
-    {
-        Console.Write(text);
-        
-        var value = Console.ReadLine();
-        if (int.TryParse(value, out result))
-            return true;
-        
-        Console.Write(Phrases.FailGettingIntValue + Phrases.TryAgain);
-        return Console.ReadLine() != Phrases.Yes && TryGetIntFromConsole(text, out result);
-    }
-
-    private static bool TryGetDoubleFromConsole(string text, out double result)
-    {
-        Console.Write(text);
-        var value = Console.ReadLine();
-        if (double.TryParse(value, out result))
-            return true;
-        Console.Write(Phrases.FailGettingDoubleValue + Phrases.TryAgain);
-        return Console.ReadLine() == Phrases.Yes && TryGetDoubleFromConsole(text, out result);
     }
 
     private static bool TryGetFileEncoder(
@@ -182,17 +166,6 @@ public class ConsoleClient : IClient
     private static void Start()
     {
         Console.WriteLine(Phrases.Hello);
-    }
-        
-    private static bool TryGetWordsColor(out Color color)
-    {
-        Console.Write(Phrases.AskingWordColor);
-
-        if (TryGetColorFromConsole(out color))
-            return true;
-            
-        Console.Write(Phrases.FailGettingColor + Phrases.TryAgain);
-        return Console.ReadLine() == Phrases.Yes && TryGetWordsColor(out color);
     }
 
     private static bool TryGetBgColor(out Color color)

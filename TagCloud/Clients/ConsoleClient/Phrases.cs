@@ -44,37 +44,25 @@ public class Phrases
         Environment.NewLine +
         "Пожалуйста, введите цвет фона на английском. Например white: ";
     public static readonly string FailGettingColor = "    Заданный цвет не определён. ";
-    public static readonly string AskingWordColor = "    Цвет слов на английском. Например black: ";
 
-    public static readonly string FailGettingFont = "    Неверно введено название шрифта. ";
-    public static readonly string FailGettingIntValue = "    Неверно введено число. Введите целое число. ";
-    public static readonly string FailGettingDoubleValue =
-        "    Неверно введено число. Введите десятичное число через запятую. ";
+    public static readonly string AskingFontSize =
+        "Введите минимальный и максимальный размеры шрифта, которые хотите видеть, через пробел: ";
 
-    public static readonly string StartCreatingNewWordVisualisation =
+    public static readonly string FailGettingFontSize = "Не удалось обработать введённые числа. ";
+
+    public static readonly string AskingWordsColors =
         Environment.NewLine +
-        new string('-', 10) + 
-        Environment.NewLine +
-        "Создание нового правила оформления слов";
+        "Пожалуйста, введите цвета, в которые необходимо раскрасить слова. Вводите цвета " +
+        "от самого редко используемого, к самому часто встречающемуся."
+        + Environment.NewLine +
+        "Например white-gray-black: ";
 
-    public static readonly string AskingWordImportance =
-        "    Значение важности слова в тексте, с корого начинается данное оформление." +
-        Environment.NewLine +
-        "    Дробное число через запятую от 0 до 1 ( 0 - совсем не важно, 1 - самое важное): ";
-
-    public static readonly string AskingFontSize = "    Размер шрифта: ";
-    public static readonly string AskingFontName = "    Название стиля шрфта на английском: ";
-
-    public static readonly string EndCreatingNewWordVisualisation = new string('-', 10);
-
-    public static readonly string AskingAddingWordVisualisationRule =
-        Environment.NewLine +
-        "Хотите задать настройки для рисования слов? [y/n]: ";
-
+    public static readonly string FailGettingWordsColors = "Не удалось прочитать цвета. ";
+    
     public static readonly string AskingAddingUsersBoringWords =
         Environment.NewLine +
         "Хотите указать файл со скучными словами, которые следует исключить при формировании облака? [y/n]: ";
-
+    
     public static readonly string FailGettingFileEncoder =
         "Не удалось обнаружить подходящий обработчик файла данных. " +
         Environment.NewLine +

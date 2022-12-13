@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
+﻿namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
 public class Word : IWord
 {

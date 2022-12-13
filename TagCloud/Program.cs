@@ -43,6 +43,8 @@ static class Program
         
         builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
         builder.RegisterType<DrawingSettings>().As<IDrawingSettings>().SingleInstance();
+        builder.RegisterInstance(new LinearWordVisualisationSelector("arial", 13, 30))
+            .As<IWordsVisualisationSelector>().SingleInstance();
         
         builder.RegisterType<CloudCreator>().As<ICloudCreator>();
         builder.RegisterType<PngImageSaver>().As<IImageSaver>();

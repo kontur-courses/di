@@ -17,12 +17,12 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
 
     public ISet<IWord> GetProcessedWords(List<string> words, IReadOnlyCollection<IBoringWords> boringWords)
     {
-        wordsSet = CreateWordsSet(words);
-        CalculateTfIndexes(wordsSet, words.Count);
-        return wordsSet
-            .Where(word => 
+        wordsSet = CreateWordsSet(words)
+            .Where(word =>
                 boringWords.All(checker => !checker.IsBoring(word)))
             .ToHashSet();
+        CalculateTfIndexes(wordsSet, words.Count);
+        return wordsSet;
     }
 
     private static double GetTfIndex(int wordCount, int totalWordsCount)
