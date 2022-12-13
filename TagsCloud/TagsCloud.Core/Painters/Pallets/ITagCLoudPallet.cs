@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.Core.BitmapPainters.Pallets;
+namespace TagsCloud.Core.Painters.Pallets;
 
 public interface ITagCLoudPallet
 {

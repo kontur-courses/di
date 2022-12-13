@@ -4,7 +4,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloud.Core;
-using TagsCloud.Core.BitmapPainters;
 using TagsCloud.Core.Helpers;
 using TagsCloud.Core.Layouters;
 

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloud.Core.TagContainersCreators;
 
-namespace TagsCloud.Core.BitmapPainters;
+namespace TagsCloud.Core.Painters;
 
 public interface ITagPainter
 {
