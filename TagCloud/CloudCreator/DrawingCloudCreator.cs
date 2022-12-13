@@ -8,10 +8,10 @@ public class DrawingCloudCreator : ICloudCreator
     private readonly ICloudDrawer drawer;
     private readonly ICloudLayouter layouter;
 
-    public DrawingCloudCreator(ICloudDrawer drawer, ICloudLayouter layouter)
+    public DrawingCloudCreator(ICloudLayouter layouter, ICloudDrawer drawer)
     {
-        this.drawer = drawer;
         this.layouter = layouter;
+        this.drawer = drawer;
     }
 
     public Bitmap CreateTagCloud(IEnumerable<ITag> tags)
@@ -37,7 +37,7 @@ public class DrawingCloudCreator : ICloudCreator
     {
         var maxSize = drawer.MaxFontSize;
         var minSize = drawer.MinFontSize;
-        return - (int)((double)(minSize * maxCount - minSize * count + maxSize * count - maxSize * minCount) /
-                     (minCount - maxCount));
+        return -(int)((double)(minSize * maxCount - minSize * count + maxSize * count - maxSize * minCount) /
+                      (minCount - maxCount));
     }
 }

@@ -3,32 +3,66 @@ using TagCloud.Abstractions;
 
 namespace TagCloud;
 
-public class BaseCloudDrawer: ICloudDrawer
+public class BaseCloudDrawer : ICloudDrawer
 {
-    public BaseCloudDrawer(FontFamily fontFamily, int maxFontSize, int minFontSize, Size imageSize, Color color)
+    private readonly Size imageSize;
+    private Bitmap bitmap;
+
+    private int maxFontSize = 50;
+    private int minFontSize = 10;
+
+    public BaseCloudDrawer(Size imageSize)
     {
-        FontFamily = fontFamily;
-        MaxFontSize = maxFontSize;
-        MinFontSize = minFontSize;
-        bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+        if (!imageSize.IsPositive())
+            throw new ArgumentException($"Width and height of the image must be positive, but {imageSize}");
+        this.imageSize = imageSize;
+        bitmap = new Bitmap(this.imageSize.Width, this.imageSize.Height);
         Graphics = Graphics.FromImage(bitmap);
-        brush = new SolidBrush(color);
     }
 
-    private readonly Bitmap bitmap;
-    private readonly SolidBrush brush;
+    public Color TextColor { get; set; } = Color.Black;
+    public Color BackgroundColor { get; set; } = Color.White;
 
-    public Graphics Graphics { get; }
-    public FontFamily FontFamily { get; }
-    public int MaxFontSize { get; }
-    public int MinFontSize { get; }
+    public Graphics Graphics { get; private set; }
+    public FontFamily FontFamily { get; set; } = new("Arial");
+
+    public int MaxFontSize
+    {
+        get => maxFontSize;
+        set
+        {
+            if (value <= 0 || value < minFontSize)
+                throw new ArgumentException("MaxFontSize should be greater than 0 and MinFontSize");
+
+            maxFontSize = value;
+        }
+    }
+
+    public int MinFontSize
+    {
+        get => minFontSize;
+        set
+        {
+            if (value <= 0 || value > maxFontSize)
+                throw new ArgumentException("MinFonSize should be greater than 0 and less than MaxFontSize");
+
+            minFontSize = value;
+        }
+    }
+
     public Bitmap Draw(IEnumerable<IDrawableTag> tags)
     {
+        Graphics.Clear(BackgroundColor);
         foreach (var tag in tags)
         {
             using var font = new Font(FontFamily, tag.FontSize);
+            using var brush = new SolidBrush(TextColor);
             Graphics.DrawString(tag.Tag.Text, font, brush, tag.Location);
         }
-        return bitmap;
+
+        var result = bitmap;
+        bitmap = new Bitmap(imageSize.Height, imageSize.Width);
+        Graphics = Graphics.FromImage(bitmap);
+        return result;
     }
 }

@@ -39,7 +39,14 @@ IContainer ConfigureContainer(string sourceFilepath)
 
     builder.RegisterType<CountWordsTagger>().As<IWordsTagger>();
 
-    var drawer = new BaseCloudDrawer(new FontFamily("Arial"), 50, 10, new Size(800, 600), Color.Black);
+    var drawer = new BaseCloudDrawer(new Size(800, 600))
+    {
+        FontFamily = new FontFamily("Arial"),
+        MaxFontSize = 50,
+        MinFontSize = 10,
+        TextColor = Color.Black,
+        BackgroundColor = Color.White
+    };
     builder.RegisterInstance(drawer)
         .As<ICloudDrawer>();
     var pointGenerator = new SpiralPointGenerator(0.1, 0.1);
