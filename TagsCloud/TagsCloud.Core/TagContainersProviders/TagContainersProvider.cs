@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using TagsCloud.Core.Layouters;
 using TagsCloud.Core.Settings;
-using TagsCloud.Core.TagContainersCreators.TagsPreprocessors;
+using TagsCloud.Core.TagContainersProviders.TagsPreprocessors;
 
-namespace TagsCloud.Core.TagContainersCreators;
+namespace TagsCloud.Core.TagContainersProviders;
 
 public class TagContainersProvider : ITagContainersProvider
 {

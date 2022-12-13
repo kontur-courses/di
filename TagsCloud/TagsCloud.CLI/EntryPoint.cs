@@ -6,8 +6,8 @@ using TagsCloud.Core;
 using TagsCloud.Core.Layouters;
 using TagsCloud.Core.Painters;
 using TagsCloud.Core.Settings;
-using TagsCloud.Core.TagContainersCreators;
-using TagsCloud.Core.TagContainersCreators.TagsPreprocessors;
+using TagsCloud.Core.TagContainersProviders;
+using TagsCloud.Core.TagContainersProviders.TagsPreprocessors;
 using TagsCloud.Core.WordFilters;
 using TagsCloud.Core.WordReaders;
 

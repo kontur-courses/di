@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.Core.TagContainersCreators;
+﻿namespace TagsCloud.Core.TagContainersProviders;
 
 public interface ITagContainersProvider
 {

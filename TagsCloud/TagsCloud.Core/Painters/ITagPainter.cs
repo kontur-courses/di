@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloud.Core.TagContainersCreators;
+using TagsCloud.Core.TagContainersProviders;
 
 namespace TagsCloud.Core.Painters;
 

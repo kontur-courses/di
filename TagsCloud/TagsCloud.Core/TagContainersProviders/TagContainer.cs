@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.Core.TagContainersCreators;
+namespace TagsCloud.Core.TagContainersProviders;
 
 public class TagContainer
 {
