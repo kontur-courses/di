@@ -7,9 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.ConsoleApp", "TagsCloudContainer.ConsoleApp\TagsCloudContainer.ConsoleApp.csproj", "{ECFE8EBA-DD95-4183-B278-71389C286052}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer.ConsoleApp", "TagsCloudContainer.ConsoleApp\TagsCloudContainer.ConsoleApp.csproj", "{ECFE8EBA-DD95-4183-B278-71389C286052}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.GUI", "TagsCloudContainer.GUI\TagsCloudContainer.GUI.csproj", "{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}"
 EndProject
 Global
@@ -30,6 +31,14 @@ Global
 		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECFE8EBA-DD95-4183-B278-71389C286052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECFE8EBA-DD95-4183-B278-71389C286052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECFE8EBA-DD95-4183-B278-71389C286052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECFE8EBA-DD95-4183-B278-71389C286052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
