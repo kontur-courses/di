@@ -9,7 +9,7 @@ using TagsCloudContainer.Infrastructure;
 namespace TagsCloudContainer.Tests.TextFileReaderTests
 {
     [TestFixture]
-    internal class TextFileReader_Should
+    internal class TextFileReaderShould
     {
         private IWordReader wordReader;
 

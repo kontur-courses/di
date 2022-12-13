@@ -9,7 +9,7 @@ using TagsCloudContainer.Infrastructure;
 namespace TagsCloudContainer.Tests.WordPreparerTests
 {
     [TestFixture]
-    internal class WordPreparer_Should
+    internal class WordPreparerShould
     {
         private IWordPreparer wordPreparer;
 
