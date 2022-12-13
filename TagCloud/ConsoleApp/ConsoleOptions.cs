@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using CommandLine;
-using TagCloud;
+﻿using CommandLine;
 
 namespace ConsoleApp;
 
@@ -39,43 +37,4 @@ public class ConsoleOptions
 
     [Option("exclude", Required = false, HelpText = "Words to exclude")]
     public string? ExcludedWords { get; set; }
-
-    public void Apply(ApplicationProperties properties, IWordsParser wordsParser)
-    {
-        ApplySizeOption(properties.SizeProperties, properties.CloudProperties);
-        ApplyFontOption(properties.FontProperties);
-        ApplyFileOption(properties);
-        var cloudProperties = properties.CloudProperties;
-        cloudProperties.Density = Density;
-        if (ExcludedWords is not null)
-            cloudProperties.ExcludedWords = wordsParser.Parse(ExcludedWords);
-        var palette = properties.Palette;
-        if (BackgroundColor is not null)
-            palette.Background = ColorTranslator.FromHtml(BackgroundColor);
-        if (ForegroundColor is not null)
-            palette.Foreground = ColorTranslator.FromHtml(ForegroundColor);
-    }
-
-    private void ApplySizeOption(SizeProperties sizeProperties, CloudProperties cloudProperties)
-    {
-        sizeProperties.ImageSize = new Size(Width, Height);
-        cloudProperties.Center = sizeProperties.ImageCenter;
-    }
-
-    private void ApplyFontOption(FontProperties fontProperties)
-    {
-        if (FontName != null)
-            fontProperties.Family = new FontFamily(FontName);
-        fontProperties.MinSize = MinFont;
-        fontProperties.MaxSize = MaxFont;
-    }
-
-    private void ApplyFileOption(ApplicationProperties properties)
-    {
-        if (File is not null)
-            properties.Path = File;
-
-        if (Path.GetExtension(OutputPath) is not (".jpg" or ".jpeg" or ".png"))
-            throw new ArgumentException("Unsupported image format in path");
-    }
 }

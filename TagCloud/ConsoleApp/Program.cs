@@ -9,15 +9,20 @@ internal static class Program
     private static void Main(string[] args)
     {
         var options = ArgumentsParser.ParseArgs(args);
-        
+
         if (args.Contains("--help"))
             return;
-        
+
         if (options is null)
             throw new ArgumentException("Incorrect parsing result");
-        
+
         var container = DiContainerBuilder.Build();
-        options.Apply(container.Resolve<ApplicationProperties>(), container.Resolve<IWordsParser>());
+        
+        new ApplicationPropertiesSetuper(options)
+            .Setup(
+                container.Resolve<ApplicationProperties>(),
+                container.Resolve<IWordsParser>());
+
         if (options.OutputPath is null)
         {
             Console.WriteLine("Output path not set");
