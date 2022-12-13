@@ -19,7 +19,7 @@ namespace TagsCloudContainer.Core.Layouter
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
-                throw new ArgumentException("Rectangle size should be positive.");
+                throw new ArgumentException("Rectangle size is not positive.");
 
             Rectangle rectangle;
             if (_rectangles.Count == 0)
