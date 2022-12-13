@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.Core.Drawer.Interfaces
 {
-    internal interface IRectangleLayout
+    public interface IRectangleLayout
     {
         public void DrawLayout();
 

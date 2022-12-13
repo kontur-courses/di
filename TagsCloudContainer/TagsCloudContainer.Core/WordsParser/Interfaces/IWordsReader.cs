@@ -2,6 +2,6 @@
 {
     public interface IWordsReader
     {
-        public string ReadWord();
+        public string? ReadWord();
     }
 }

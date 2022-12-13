@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.Core.TagsClouds.Interfaces
 {
-    public interface ITagCloudContainer
+    public interface ITagsCloud
     {
         public void CreateTagCloud();
 

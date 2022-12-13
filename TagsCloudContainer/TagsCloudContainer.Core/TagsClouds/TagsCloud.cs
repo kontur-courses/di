@@ -4,24 +4,26 @@ using TagsCloudContainer.Core.WordsParser.Interfaces;
 
 namespace TagsCloudContainer.Core.TagsClouds
 {
-    internal class TagsCloudContainer : ITagCloudContainer
+    public class TagsCloud : ITagsCloud
     {
-        private readonly IRectangleLayout _rectangleLayout;
         private readonly IWordsAnalyzer _wordsAnalyzer;
+        private readonly IRectangleLayout _rectangleLayout;
 
-        public TagsCloudContainer(IWordsAnalyzer wordsAnalyzer, IRectangleLayout rectangleLayout)
+        public TagsCloud(IWordsAnalyzer wordsAnalyzer, IRectangleLayout rectangleLayout)
         {
             _wordsAnalyzer = wordsAnalyzer;
             _rectangleLayout = rectangleLayout;
         }
+
         public void CreateTagCloud()
         {
-            throw new NotImplementedException();
+            _rectangleLayout.PlaceWords(_wordsAnalyzer.AnalyzeWords());
+            _rectangleLayout.DrawLayout();
         }
 
         public void SaveTagCloud()
         {
-            throw new NotImplementedException();
+            _rectangleLayout.SaveLayout();
         }
     }
 }

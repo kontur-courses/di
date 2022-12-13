@@ -2,7 +2,7 @@
 {
     public interface IFilterOptions
     {
-        public string MyStemLocation { get; set; }
+        public string? MyStemLocation { get; set; }
 
         public IEnumerable<string> BoringWords { get; set; }
     }
