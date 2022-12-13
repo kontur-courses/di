@@ -5,5 +5,5 @@ namespace TagsCloud.Core.BitmapPainters;
 
 public interface ITagPainter
 {
-    public Bitmap Draw(IEnumerable<TagContainer> tagContainers, Size imageSize);
+    public Bitmap Draw(IEnumerable<TagContainer> tagContainers);
 }
