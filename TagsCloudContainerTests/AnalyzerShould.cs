@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -44,6 +45,29 @@ namespace TagsCloudContainerTests
 
             result.First().Should().BeEquivalentTo(new WeightedWord { Weight = 3, Word = "привет" });
         }
+
+
+        [Test]
+        public void NotThrowExceptionWhenEmptyLinesExist()
+        {
+            var words = Enumerable.Repeat("", 100);
+
+            Action action = () => analyzer.CreateWordFrequenciesSequence(words);
+
+            action.Should().NotThrow();
+        }
+
+
+        [Test]
+        public void SkipEmpty()
+        {
+            var words = Enumerable.Repeat("", 100);
+
+            var result = analyzer.CreateWordFrequenciesSequence(words);
+
+            result.Should().BeEmpty();
+        }
+
 
         [Test]
         public void ExcludeBoringWords()

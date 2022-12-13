@@ -24,7 +24,7 @@ namespace TagsCloudContainerTests
         [TearDown]
         public void TearDown()
         {
-            fileStream.Dispose();
+            fileStream.Close();
             File.Delete(FileName);
         }
 
@@ -42,7 +42,7 @@ namespace TagsCloudContainerTests
             settings.TextType = TextType.OneWordOneLine;
             var parser = new TxtParser(settings);
 
-            var result = parser.WordParse(Path.GetFullPath(FileName)).ToArray();
+            var result = parser.WordParse(FileName).ToArray();
 
             result.Should().BeEquivalentTo(words.Split(Environment.NewLine));
         }

@@ -58,9 +58,10 @@ namespace TagsCloudVisualization.Infrastructure.Analyzer
                 .ToHashSet();
 
             var parsedWords = analyzer
-                .Parse(words).Where(m => m.Tags.All(t => !excludedTags.Contains(t["чр"]))
-                                         && (selectedTags.Count == 0 ||
-                                             selectedTags.Contains(m.BestTag["чр"])))
+                .Parse(words.Where(s => s.Length > 0))
+                .Where(m => m.Tags.All(t => !excludedTags.Contains(t["чр"]))
+                            && (selectedTags.Count == 0 ||
+                                selectedTags.Contains(m.BestTag["чр"])))
                 .Where(m => !settings.Lemmatization || m.BestTag.HasLemma)
                 .Select(m => settings.Lemmatization ? m.BestTag.Lemma : m.Text);
 
