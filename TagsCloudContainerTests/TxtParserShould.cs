@@ -35,7 +35,7 @@ namespace TagsCloudContainerTests
         public void ReadOneWordOneLineText(EncodingEnum encoding)
         {
             var words = string.Join(Environment.NewLine, "привет", "привет");
-            var buffer = TxtParserHelper.Encodings[encoding].GetBytes(words);
+            var buffer = new TxtParserHelper().Encodings[encoding].GetBytes(words);
             fileStream.Write(buffer, 0, buffer.Length);
             fileStream.Close();
             settings.Encoding = encoding;
@@ -56,7 +56,7 @@ namespace TagsCloudContainerTests
             Москва
             ";
             var expected = new[] { "Скажи", "ка", "дядя", "ведь", "не", "даром", "Москва" };
-            var buffer = TxtParserHelper.Encodings[encoding].GetBytes(words);
+            var buffer = new TxtParserHelper().Encodings[encoding].GetBytes(words);
             fileStream.Write(buffer, 0, buffer.Length);
             fileStream.Close();
             settings.Encoding = encoding;
