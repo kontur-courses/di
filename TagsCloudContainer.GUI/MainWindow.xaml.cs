@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,15 @@ namespace TagsCloudContainer.GUI
                 frequencies[word]++;
             }
             return frequencies;
+        }
+
+        private void SaveTagsCloudButton_Click(object sender, RoutedEventArgs e)
+        {
+            var jpgEncoder = new JpegBitmapEncoder();
+            jpgEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)TagsCloudImage.Source));
+            using var stream = File.Create(settingsProvider.GetOutputImageSettings().Filename);
+            jpgEncoder.Save(stream);
+            MessageBox.Show("Saved");
         }
     }
 }
