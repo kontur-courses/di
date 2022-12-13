@@ -7,6 +7,8 @@ namespace TagsCloudContainer.UI
         public string BrushColor { get; set; }
         public string PathToSave { get; set; }
         public string PathToOpen { get; set; }
+        
+        public string FormatToSave { get; set; }
         public int CanvasWidth { get; set; }
         public int CanvasHeight { get; set; }
         public int CanvasBorder { get; set; }

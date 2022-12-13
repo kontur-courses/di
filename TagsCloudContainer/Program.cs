@@ -2,6 +2,7 @@
 using Autofac;
 using CommandLine;
 using TagsCloudContainer.FileOpeners;
+using TagsCloudContainer.FileReaders;
 using TagsCloudContainer.FileSavers;
 using TagsCloudContainer.LayouterAlgorithms;
 using TagsCloudContainer.UI;
@@ -54,8 +55,8 @@ namespace TagsCloudContainer
         private static void RegisterDependencies(ContainerBuilder builder, IUi parsedArguments)
         {
             RegisterFileReaderDependency(builder, parsedArguments.PathToOpen);
+            RegisterFileSaverDependency(builder, parsedArguments.FormatToSave);
             builder.RegisterInstance(parsedArguments).As<IUi>();
-            builder.RegisterType<PngSaver>().As<IFileSaver>();
             builder.RegisterType<InputFileHandler>().AsSelf();
             builder.RegisterType<DefaultWordPainter>().As<IWordStainer>();
             builder.RegisterType<Spiral>().AsSelf();
@@ -63,18 +64,35 @@ namespace TagsCloudContainer
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouterAlgorithm>();
         }
 
+        private static void RegisterFileSaverDependency(ContainerBuilder builder, string formatToSave)
+        {
+            switch (formatToSave)
+            {
+                case "bmp":
+                    builder.RegisterType<BmpSaver>().As<IFileSaver>();
+                    break;
+                case "gif":
+                    builder.RegisterType<GifSaver>().As<IFileSaver>();
+                    break;
+                case "jpeg":
+                    builder.RegisterType<JpegSaver>().As<IFileSaver>();
+                    break;
+                case "png":
+                    builder.RegisterType<PngSaver>().As<IFileSaver>();
+                    break;
+                default:
+                    throw new ArgumentException("Unknown picture format");
+            }
+        }
+
         private static void RegisterFileReaderDependency(ContainerBuilder builder, string pathToOpen)
         {
             var index = pathToOpen.LastIndexOf('.');
             var format = pathToOpen.Substring(index + 1);
-            switch (format)
-            {
-                case "txt":
-                    builder.RegisterType<TxtReader>().As<IFileReader>();
-                    break;
-                default:
-                    throw new ArgumentException("Unknown file format");
-            }
+            if (format == "txt")
+                builder.RegisterType<TxtReader>().As<IFileReader>();
+            else
+                throw new ArgumentException("Unknown file format");
         }
     }
 }

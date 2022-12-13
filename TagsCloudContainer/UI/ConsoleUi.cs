@@ -13,14 +13,26 @@ namespace TagsCloudContainer.UI
         [Option('c', "brushcolor", Required = false, Default = "Yellow", HelpText = "Brush color")]
         public string BrushColor { get; set; }
 
-        [Option('s', "savepath", Required = false, Default = "../visualization",
+        [Option('s',
+            "savepath",
+            Required = false,
+            Default = "../visualization",
             HelpText = "Path to directory to save image")]
         public string PathToSave { get; set; }
 
-        [Option('o', "openpath", Required = false,
+        [Option('o',
+            "openpath", 
+            Required = false,
             Default = "../testfile.txt",
             HelpText = "Path to file with words")]
         public string PathToOpen { get; set; }
+
+        [Option('f',
+            "saveformat",
+            Required = false,
+            Default = "bmp",
+            HelpText = "Format to result picture")]
+        public string FormatToSave { get; set; }
 
         [Option('w', "width", Required = false, Default = 1000, HelpText = "Width of canvas")]
         public int CanvasWidth { get; set; }
