@@ -32,10 +32,6 @@ public class CircularCloudLayouterTests
         var filename = $"{TestContext.CurrentContext.Test.Name}.jpg";
         var directory = new DirectoryInfo("../../../FallingTestsImages");
         if (!directory.Exists) directory.Create();
-
-        var layouter = layouterByTestId[testId];
-        new TagCloudDrawer().Draw(layouter).Save(Path.Join(directory.FullName, filename));
-
         Console.WriteLine($"Tag cloud visualization saved to file {directory.FullName}\\{filename}");
     }
 
