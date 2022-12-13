@@ -22,12 +22,12 @@ public class BaseCloudDrawer: ICloudDrawer
     public FontFamily FontFamily { get; }
     public int MaxFontSize { get; }
     public int MinFontSize { get; }
-    public Bitmap Draw(IEnumerable<(string, int, Point)> words)
+    public Bitmap Draw(IEnumerable<IDrawableTag> tags)
     {
-        foreach (var tuple in words)
+        foreach (var tag in tags)
         {
-            using var font = new Font(FontFamily, tuple.Item2);
-            Graphics.DrawString(tuple.Item1, font, brush, tuple.Item3);
+            using var font = new Font(FontFamily, tag.FontSize);
+            Graphics.DrawString(tag.Tag.Text, font, brush, tag.Location);
         }
         return bitmap;
     }

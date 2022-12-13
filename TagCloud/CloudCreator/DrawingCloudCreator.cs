@@ -19,12 +19,12 @@ public class DrawingCloudCreator : ICloudCreator
         var tagsArray = tags.ToArray();
         var maxCount = tagsArray.Max(t => t.Weight);
         var minCount = tagsArray.Min(t => t.Weight);
-        var wordFontSizeAndLocation = tagsArray.Select(t =>
+        var drawableTags = tagsArray.Select(t =>
         {
             var fontsize = GetFontSize(t.Weight, minCount, maxCount);
-            return (t.Text, fontsize, GetPoint(t.Text, fontsize));
+            return new DrawableTag(t, fontsize, GetPoint(t.Text, fontsize));
         });
-        return drawer.Draw(wordFontSizeAndLocation);
+        return drawer.Draw(drawableTags);
     }
 
     private Point GetPoint(string word, int fontsize)
