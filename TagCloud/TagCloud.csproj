@@ -96,6 +96,7 @@
     <Compile Include="ImageProcessing\ImageSettings.cs" />
     <Compile Include="CloudLayouter\Vector.cs" />
     <Compile Include="PointGenerator\IPointGenerator.cs" />
+    <Compile Include="PointGenerator\PointGeneratorProvider.cs" />
     <Compile Include="WordColoring\BlackColoring.cs" />
     <Compile Include="WordColoring\GradientColoring.cs" />
     <Compile Include="WordColoring\IWordColoring.cs" />

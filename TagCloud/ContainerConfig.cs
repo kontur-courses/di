@@ -34,6 +34,8 @@ namespace TagCloud
 
             ConfigureImageSettings(appConfig, builder);
 
+            ConfigurePointGenerator(appConfig, builder);
+
             ConfigureCloudImageGenerator(builder);
 
             ConfigureApp(builder);
@@ -79,9 +81,14 @@ namespace TagCloud
             builder.RegisterType<WordsFrequencyAnalyzer>().As<IWordsFrequencyAnalyzer>();
         }
 
+        private static void ConfigurePointGenerator(IAppConfig appConfig, ContainerBuilder builder)
+        {
+            builder.Register(c => appConfig.pointGenerator).As<IPointGenerator>();
+        }
+
         private static void ConfigureCloudLayouter(ContainerBuilder builder)
         {
-            builder.Register(c => new CircularCloudLayouter(new EllipsePointGenerator(new Point(0, 0)))).As<ICloudLayouter>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
         }
 
         private static void ConfigureImageSettings(IAppConfig appConfig, ContainerBuilder builder)

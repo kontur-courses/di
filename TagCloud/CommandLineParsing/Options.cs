@@ -32,7 +32,7 @@ namespace TagCloud.CommandLineParsing
         [Option('k', "word coloring", Required = false, HelpText = "Tags coloring algorithm (default is random)")]
         public string WordColoring { get; set; }
 
-        [Option('z', "cloud form", Required = false, HelpText = "Tags coloring algorithm (default is circle)")]
+        [Option('z', "cloud form", Required = false, Default = "circle", HelpText = "Tags coloring algorithm (default is circle)")]
         public string CloudForm { get; set; }
     }
 }

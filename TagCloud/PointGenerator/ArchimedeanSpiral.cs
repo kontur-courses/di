@@ -28,6 +28,11 @@ namespace TagCloud.PointGenerator
             this.scaleFactor = scaleFactor;
         }
 
+        public ArchimedeanSpiral()
+           : this(new Point(0, 0))
+        {
+        }
+
         public Point GetNextPoint()
         {
             angle += DeltaAngle;

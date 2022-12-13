@@ -16,7 +16,7 @@ namespace TagCloud
             var inputfile = GetSolutionDirectory().FullName + "\\TestText.txt";
             var outputfile = GetSolutionSubDirectory("TagCloudImages").FullName + "\\WordCloud.png";
 
-            var argsssss = $"-i {inputfile} -o {outputfile} -h 600 -w 600 -b White -f Arial -l 5 -p 40 -k random -z elipse".Split(' ');
+            var argsssss = $"-i {inputfile} -o {outputfile} -h 400 -w 800 -b White -f Arial -l 5 -p 40 -k random -z ellipse".Split(' ');
 
             var appConfig = new ConsoleAppConfigProvider(argsssss).GetAppConfig();
             var container = ContainerConfig.Configure(appConfig);

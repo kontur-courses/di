@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagCloud.ImageProcessing;
+﻿using TagCloud.ImageProcessing;
+using TagCloud.PointGenerator;
 
 namespace TagCloud.AppConfig
 {
     internal class AppConfig : IAppConfig
     {
+        public IPointGenerator pointGenerator { get; set; }
         public string inputTextFilePath { get; set; }
         public string outputImageFilePath { get; set; }
         public IImageSettings imageSettings { get; set; }
 
-        public AppConfig(string inputTextFileFullPath, string outputImageFileFullPath, IImageSettings imageSettings)
+        public AppConfig(IPointGenerator pointGenerator,
+                         string inputTextFilePath, 
+                         string outputImageFilePath, 
+                         IImageSettings imageSettings)
         {
-            this.inputTextFilePath = inputTextFileFullPath;
-            this.outputImageFilePath = outputImageFileFullPath;
+            this.pointGenerator = pointGenerator;
+            this.inputTextFilePath = inputTextFilePath;
+            this.outputImageFilePath = outputImageFilePath;
             this.imageSettings = imageSettings;
         }
     }
