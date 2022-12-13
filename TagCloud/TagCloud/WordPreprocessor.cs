@@ -2,14 +2,15 @@
 
 public class WordPreprocessor : IWordPreprocessor
 {
-    public IEnumerable<string> Process(IEnumerable<string> words, IEnumerable<string>? excludedWords = null)
+    public List<string> Process(List<string> words, List<string>? excludedWords = null)
     {
-        excludedWords ??= Array.Empty<string>();
+        excludedWords ??= new List<string>();
         var except = excludedWords
             .Select(word => word.ToLower().Trim())
             .ToHashSet();
         return words
             .Select(word => word.ToLower().Trim())
-            .Where(x => !except.Contains(x));
+            .Where(x => !except.Contains(x))
+            .ToList();
     }
 }

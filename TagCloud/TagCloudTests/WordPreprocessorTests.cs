@@ -10,7 +10,7 @@ public class WordPreprocessorTests
     [Test]
     public void Process_MakeLowerCased()
     {
-        var words = new[] { "APPLE", "Blueberries", "ApplE", "wAtermelOn", "blueberries", "lemoN", "lEMOn" };
+        var words = new List<string> { "APPLE", "Blueberries", "ApplE", "wAtermelOn", "blueberries", "lemoN", "lEMOn" };
 
         var wordPreprocessor = new WordPreprocessor();
 

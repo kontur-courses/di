@@ -9,7 +9,7 @@ public class SizeByFrequency
 
     private FontProperties FontProperties { get; }
 
-    public IEnumerable<Label> ResizeAll(Dictionary<string, int> wordsWithSize)
+    public List<Label> ResizeAll(Dictionary<string, int> wordsWithSize)
     {
         var maxCount = wordsWithSize.Values.Max();
         var texts = new List<Label>();
