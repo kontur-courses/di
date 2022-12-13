@@ -31,7 +31,7 @@ public class CircularCloudLayouterTests
 		var width = (int)Math.Ceiling(occupiedSpace.Width * 1.3);
 		var height = (int)Math.Ceiling(occupiedSpace.Height * 1.3);
 
-		var image = TagCloudVisualizator.GetTagCloudImage(
+		var image = RectanglePainter.GetTagCloudImage(
 			placedRectangles
 			, new Size(width, height)
 			, new Point(width / 2, height / 2));
