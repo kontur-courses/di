@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using TagsCloudVisualization.Curves;
 using TagsCloudVisualization.FileReaders;
 using TagsCloudVisualization.TextFormatters;
 
@@ -13,24 +15,31 @@ namespace TagsCloudVisualization
 {
     public class Client
     {
-        private readonly Painter painter;
-        private readonly IFileReader fileReader;
-        private readonly TextFormatter formatter;
-        private readonly CircularCloudLayouter layouter;
+        private readonly IPainter painter;
+        private readonly ITextFormatter formatter;
+        private readonly ICloudLayouter layouter;
 
-        public Client(CircularCloudLayouter layouter, Painter painter, TextFormatter formatter, IFileReader fileReader)
+        public Client(ICloudLayouter layouter, IPainter painter, ITextFormatter formatter)
         {
             this.layouter = layouter;
             this.painter = painter;
             this.formatter = formatter;
-            this.fileReader = fileReader;
         }
 
         public void Draw(string destinationPath, FontFamily font)
         {
-            var text = fileReader.ReadAllText();
-            var words = MakeRectangles(formatter.Format(text), font);
-            painter.DrawWordsToFile(words, destinationPath);
+            var services = Program.Container.GetServices<IFileReader>();
+            foreach (var service in services)
+            {
+                if (service.TryReadAllText(out var text))
+                {
+                    var words = MakeRectangles(formatter.Format(text), font);
+                    painter.DrawWordsToFile(words, destinationPath);
+                    return;
+                }
+            }
+
+            throw new Exception("IFileReader not found!");
         }
 
 

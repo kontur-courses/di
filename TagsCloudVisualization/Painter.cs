@@ -2,19 +2,42 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using TagsCloudVisualization.TextFormatters;
 
 namespace TagsCloudVisualization
 {
-    public class Painter
+    public class Painter : IPainter
     {
         private readonly Size size;
+        private IEnumerable<Color> colors;
+        private readonly IList<Color> defaultColors = new List<Color> { Color.Aqua };
+        private Random rnd;
 
-        public Painter(Size size)
+        private Color RandomColor
+        {
+            get
+            {
+                var colorsList = colors.ToList();
+                return colorsList.Count == 0
+                    ? defaultColors[rnd.Next(defaultColors.Count)]
+                    : colorsList[rnd.Next(colorsList.Count)];
+            }
+        }
+
+        public Painter(Size size) : this(size, new List<Color>())
+        {
+
+        }
+
+        public Painter(Size size, IEnumerable<Color> colors)
         {
             this.size = size;
+            this.colors = colors;
+            rnd = new Random();
         }
 
         public List<Word> TransformWords(List<Word> rectangles, Size newCanvas)
@@ -52,7 +75,7 @@ namespace TagsCloudVisualization
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center,
                     };
-                    g.DrawString(word.Value, word.Font, new SolidBrush(Color.Aqua), word.Rectangle, stringFormat);
+                    g.DrawString(word.Value, word.Font, new SolidBrush(RandomColor), word.Rectangle, stringFormat);
                 }
             }
             b.Save(path);
@@ -67,7 +90,22 @@ namespace TagsCloudVisualization
             {
                 rectangles.ForEach(t => g.DrawRectangle(new Pen(Brushes.DeepSkyBlue), t));
             }
-            b.Save(path);
+            b.Save(path, GetImageFormat(path));
+        }
+
+        public static ImageFormat GetImageFormat(string fileName)
+        {
+            var extension = Path.GetExtension(fileName);
+            return extension.ToLower() switch
+            {
+                ".png" => ImageFormat.Png,
+                ".bmp" => ImageFormat.Bmp,
+                ".ico" => ImageFormat.Icon,
+                ".ic" => ImageFormat.Icon,
+                ".jpg" => ImageFormat.Jpeg,
+                ".jpeg" => ImageFormat.Jpeg,
+                _ => throw new ArgumentException($"Extension {extension} are not supported!")
+            };
         }
     }
 }

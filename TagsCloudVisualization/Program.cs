@@ -9,21 +9,24 @@ namespace TagsCloudVisualization
 {
     internal class Program
     {
+        public static ServiceProvider Container;
+
         private static void Main(string[] args)
         {
             var parsedArgs = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
             IServiceCollection services = new ServiceCollection();
+            services.AddSingleton<IFileReader>(new DocFileReader(parsedArgs.InputFile));
             services.AddSingleton<IFileReader>(new TxtFileReader(parsedArgs.InputFile));
             services.AddSingleton(new Spiral(new Point(parsedArgs.X, parsedArgs.Y)));
-            services.AddSingleton(new Painter(new Size(parsedArgs.Width, parsedArgs.Height)));
-            services.AddSingleton(new CircularCloudLayouter(new Point(parsedArgs.X, parsedArgs.Y)));
+            services.AddSingleton<IPainter>(new Painter(new Size(parsedArgs.Width, parsedArgs.Height), parsedArgs.Colors));
+            services.AddSingleton<ICloudLayouter>(new CircularCloudLayouter(new Point(parsedArgs.X, parsedArgs.Y)));
             services.AddSingleton<IWordFilter>(new SmallWordFilter());
-            services.AddSingleton<TextFormatter>();
+            services.AddSingleton<ITextFormatter, TextFormatter>();
             services.AddSingleton<Client>();
-            var container = services.BuildServiceProvider();
-
+            Container = services.BuildServiceProvider();
             var font = new FontFamily(parsedArgs.FontName);
-            var client = container.GetRequiredService<Client>();
+            var client = Container.GetRequiredService<Client>();
+
             client.Draw(parsedArgs.OutputFile, font);
         }
     }

@@ -6,6 +6,6 @@ namespace TagsCloudVisualization.FileReaders
     {
         public string FilePath { get; }
 
-        string ReadAllText();
+        public bool TryReadAllText(out string text);
     }
 }

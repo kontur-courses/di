@@ -6,7 +6,7 @@ using TagsCloudVisualization.Structures;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly Rectangle maxCanvas;
         public readonly Size MaxCanvasSize = new(90000, 90000);

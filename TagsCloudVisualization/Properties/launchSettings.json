@@ -2,7 +2,7 @@
   "profiles": {
     "TagsCloudVisualization": {
       "commandName": "Project",
-      "commandLineArgs": "-i \"../../../input.txt\""
+      "commandLineArgs": "-i \"../../../input.txt\" -c red green blue"
     }
   }
 }

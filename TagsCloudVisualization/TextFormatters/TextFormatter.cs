@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization.TextFormatters
 {
-    public class TextFormatter
+    public class TextFormatter : ITextFormatter
     {
         public IWordFilter Filter;
 

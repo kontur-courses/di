@@ -30,7 +30,7 @@ namespace TagsCloudVisualizationTests
             generator = new RectangleGenerator(MinRectangle, MaxRectangle);
             layouter = new CircularCloudLayouter(CanvasCenter);
             rectangles = new List<Rectangle>();
-            painter = new Painter(new Size(1920, 1080), new List<Color>());
+            painter = new Painter(new Size(1920, 1080));
         }
 
         [Test, Category("DrawImageWhenFail")]
