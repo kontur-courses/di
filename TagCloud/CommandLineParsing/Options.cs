@@ -20,16 +20,16 @@ namespace TagCloud.CommandLineParsing
         [Option('b', "background color", Required = false, Default = "White", HelpText = "Background color (default is White)")]
         public string BackgroundColor { get; set; }
 
-        [Option('f', "font family", Required = false, HelpText = "Cloud tags font family (default is Times New Roman)")]
+        [Option('f', "font family", Required = false, Default = "times new roman", HelpText = "Cloud tags font family (default is Times New Roman)")]
         public string FontFamily { get; set; }
 
-        [Option('l', "min font size", Required = false, HelpText = "Cloud tags MIN font size (default is 12)")]
+        [Option('l', "min font size", Required = false, Default = 12, HelpText = "Cloud tags MIN font size (default is 12)")]
         public int MinFontSize { get; set; }
 
-        [Option('p', "max font size", Required = false, HelpText = "Cloud tags MAX font size (default is 36)")]
+        [Option('p', "max font size", Required = false, Default = 36, HelpText = "Cloud tags MAX font size (default is 36)")]
         public int MaxFontSize { get; set; }
 
-        [Option('k', "word coloring", Required = false, HelpText = "Tags coloring algorithm (default is random)")]
+        [Option('k', "word coloring", Required = false, Default = "black", HelpText = "Tags coloring algorithm (default is black)")]
         public string WordColoring { get; set; }
 
         [Option('z', "cloud form", Required = false, Default = "circle", HelpText = "Tags coloring algorithm (default is circle)")]
