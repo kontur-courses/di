@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ConsoleAppTests;
 
 [TestFixture]
-public class ConsoleAppTests
+public class ArgumentsParserTests
 {
     [TestCase("--help", TestName = "Help contains information about itself")]
     [TestCase("-W, --width", TestName = "Help contains information about width option")]
@@ -15,7 +15,7 @@ public class ConsoleAppTests
     [TestCase("-d, --density", TestName = "Help contains information about density option")]
     [TestCase("--exclude", TestName = "Help contains information about exclusion option")]
     [TestCase("-o", TestName = "Help contains information about output option")]
-    public void Execute_Help_ContainsInformation(string info)
+    public void Help_ContainsInformation(string info)
     {
         var args = new[] { "--help" };
         var sw = new StringWriter();
