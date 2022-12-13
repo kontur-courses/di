@@ -2,7 +2,7 @@
 
 public class WordPreprocessor : IWordPreprocessor
 {
-    public List<string> Process(List<string> words, List<string>? excludedWords = null)
+    public List<string> Process(List<string> words, IReadOnlyList<string>? excludedWords = null)
     {
         excludedWords ??= new List<string>();
         var except = excludedWords
