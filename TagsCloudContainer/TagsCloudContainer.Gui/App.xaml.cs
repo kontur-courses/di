@@ -26,8 +26,10 @@ public partial class App : Application
             .Register<ISettingsCreator<CircularLayouterAlgorithmSettings>,
                 CircularLayouterAlgorithmSettingsCreator>();
         container.Register<ISettingsCreator<ClassicDrawerSettings>, ClassicDrawerSettingsCreator>();
+        container.Register<ISettingsCreator<RandomColoredDrawerSettings>, RandomColoredDrawerSettingsCreator>();
         container.Register<ISettingsEditor<GuiGraphicsProviderSettings>, GuiGraphicsProviderSettingsEditor>();
         container.Register<IDrawerFactory, ClassicDrawerFactory>(Reuse.Singleton);
+        container.Register<IDrawerFactory, RandomColoredDrawerFactory>(Reuse.Singleton);
         container.Register<ILayouterAlgorithmFactory, CircularCloudLayouterFactory>(Reuse.Singleton);
         container.RegisterDelegate(r => r.Resolve<ISettingsFactory>().Build(),
             Reuse.Transient);

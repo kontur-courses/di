@@ -36,7 +36,8 @@
                     <TextBox DockPanel.Dock="Top">Drawer settings</TextBox>
                     <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom">
                         <Button Click="RemoveSelectedDrawerSettings">Remove selected</Button>
-                        <Button Click="NewClassicDrawerSettings">New</Button>
+                        <Button Click="NewClassicDrawerSettings">New Classic Drawer</Button>
+                        <Button Click="NewRandomColoredDrawerSettings">New Random Colored</Button>
                     </StackPanel>
                     <ListBox
                         SelectedItem="{Binding SelectedDrawerSettings}"
@@ -65,16 +66,21 @@
                               HorizontalAlignment="Center" VerticalAlignment="Stretch" />
                 <DockPanel Grid.Column="8">
                     <TextBox DockPanel.Dock="Top">Images</TextBox>
-                    <ListBox Name="ImagesListBox">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                                              ScrollViewer.VerticalScrollBarVisibility="Visible">
-                                    <Image Source="{Binding }" Stretch="Fill" />
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ItemsControl ItemsSource="{Binding ImageBytes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                                                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                        <Viewbox StretchDirection="Both" Stretch="Uniform">
+                                            <Image Source="{Binding }" />
+                                        </Viewbox>
+                                    </ScrollViewer>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </DockPanel>
             </Grid>
         </DockPanel>

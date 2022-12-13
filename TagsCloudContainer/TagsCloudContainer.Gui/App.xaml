@@ -2,19 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TagsCloudContainer.Gui"
-             xmlns:System="clr-namespace:System;assembly=System.Runtime"
-             xmlns:FontStylesNS="clr-namespace:System.Drawing;assembly=System.Drawing.Common"
              Startup="App_OnStartup">
     <Application.Resources>
         <local:BrushConverter x:Key="BrushConverter" />
         <local:RectangleConverter x:Key="RectangleConverter" />
         <local:EnumConverter x:Key="EnumConverter" />
         <local:PointConverter x:Key="PointConverter" />
-        <ObjectDataProvider x:Key="FontStyles" MethodName="GetNames"
-                            ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="FontStylesNS:FontStyles" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
     </Application.Resources>
 </Application>

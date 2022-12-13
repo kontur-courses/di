@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -21,6 +22,7 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
     private readonly IFunnyWordsSelector funnyWordsSelector;
 
     private readonly Func<ISettingsEditor<GuiGraphicsProviderSettings>> guiGraphicsProviderSettingsEditorFactory;
+    private readonly Func<ISettingsCreator<RandomColoredDrawerSettings>> randomColoredDrawerSettingsCreator;
 
     private readonly Func<MultiDrawer> multiDrawerFactory;
 
@@ -30,12 +32,14 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
         Func<ISettingsCreator<CircularLayouterAlgorithmSettings>> circularLayouterSettingsEditorFactory,
         Func<ISettingsCreator<ClassicDrawerSettings>> classicDrawerSettingsEditorFactory,
         Func<ISettingsEditor<GuiGraphicsProviderSettings>> guiGraphicsProviderSettingsEditorFactory,
+        Func<ISettingsCreator<RandomColoredDrawerSettings>> randomColoredDrawerSettingsCreator,
         Func<MultiDrawer> multiDrawerFactory,
         IFunnyWordsSelector funnyWordsSelector)
     {
         this.circularLayouterSettingsEditorFactory = circularLayouterSettingsEditorFactory;
         this.classicDrawerSettingsEditorFactory = classicDrawerSettingsEditorFactory;
         this.guiGraphicsProviderSettingsEditorFactory = guiGraphicsProviderSettingsEditorFactory;
+        this.randomColoredDrawerSettingsCreator = randomColoredDrawerSettingsCreator;
         this.multiDrawerFactory = multiDrawerFactory;
         this.funnyWordsSelector = funnyWordsSelector;
         InitializeComponent();
@@ -64,7 +68,7 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
     public void AddImageBits(byte[] imageBytes)
     {
         ImageBytes.Add(imageBytes);
-        ImagesListBox.ItemsSource = ImageBytes;
+        // ImagesListBox.ItemsSource = ImageBytes;
     }
 
     public Settings Build()
@@ -99,12 +103,7 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
     private void NewClassicDrawerSettings(object sender, RoutedEventArgs e)
     {
         var editor = classicDrawerSettingsEditorFactory();
-        Hide();
-        var drawerSettings = editor.ShowCreate();
-        if (drawerSettings is null) return;
-        DrawerSettingsList.Add(drawerSettings);
-        Show();
-        StartingThrottlingOnWork();
+        CallCreator(editor, DrawerSettingsList);
     }
 
     private void RemoveSelectedLayouterAlgorithmSettings(object sender, RoutedEventArgs e)
@@ -117,12 +116,7 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
     private void NewCircularLayouterAlgorithmSettings(object sender, RoutedEventArgs e)
     {
         var editor = circularLayouterSettingsEditorFactory();
-        Hide();
-        var layouterAlgorithmSettings = editor.ShowCreate();
-        if (layouterAlgorithmSettings is null) return;
-        LayouterAlgorithmSettingsList.Add(layouterAlgorithmSettings);
-        Show();
-        StartingThrottlingOnWork();
+        CallCreator(editor, LayouterAlgorithmSettingsList);
     }
 
     private void AutoDrawIsChanged(object sender, RoutedEventArgs e)
@@ -161,6 +155,22 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
         var editor = guiGraphicsProviderSettingsEditorFactory();
         Hide();
         GraphicsSettings = editor.ShowEdit(GraphicsSettings);
+        Show();
+        StartingThrottlingOnWork();
+    }
+
+    private void NewRandomColoredDrawerSettings(object sender, RoutedEventArgs e)
+    {
+        var editor = randomColoredDrawerSettingsCreator();
+        CallCreator(editor, DrawerSettingsList);
+    }
+
+    private void CallCreator<T, TBase>(ISettingsCreator<T> editor, ICollection<TBase> collection) where T : TBase
+    {
+        Hide();
+        var settings = editor.ShowCreate();
+        if (settings is null) return;
+        collection.Add(settings);
         Show();
         StartingThrottlingOnWork();
     }

@@ -48,9 +48,10 @@ public partial class BrushConverter : IValueConverter
     {
         var match = RgbRegex().Match(stringValue);
         a = r = g = b = 0;
-        return match.Success && byte.TryParse(match.Groups["r"].Value, out r) &&
-            byte.TryParse(match.Groups["g"].Value, out g) &&
-            byte.TryParse(match.Groups["b"].Value, out b) &&
-            (!match.Groups.ContainsKey("a") || byte.TryParse(match.Groups["a"].Value, out a));
+        return match.Success && byte.TryParse(match.Groups["r"].Value, NumberStyles.HexNumber, null, out r) &&
+            byte.TryParse(match.Groups["g"].Value, NumberStyles.HexNumber, null, out g) &&
+            byte.TryParse(match.Groups["b"].Value, NumberStyles.HexNumber, null, out b) &&
+            (!match.Groups.ContainsKey("a") ||
+                byte.TryParse(match.Groups["a"].Value, NumberStyles.HexNumber, null, out a));
     }
 }

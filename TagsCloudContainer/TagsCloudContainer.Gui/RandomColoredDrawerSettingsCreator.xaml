@@ -1,0 +1,29 @@
+﻿<Window x:Class="TagsCloudContainer.Gui.RandomColoredDrawerSettingsCreator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TagsCloudContainer.Gui"
+        mc:Ignorable="d"
+        Title="Random Colored Drawer" MinHeight="450" MinWidth="200"
+        d:DataContext="{d:DesignInstance Type=local:RandomColoredDrawerSettingsCreator, IsDesignTimeCreatable=False}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <StackPanel>
+            <Label>ImageRectangle</Label>
+            <TextBox Text="{Binding DrawerSettings.ImageRectangle, Converter={StaticResource RectangleConverter}}" />
+            <Label>NumbersSize</Label>
+            <TextBox Text="{Binding DrawerSettings.NumbersSize}" />
+            <Label>MinimumTextFontSize</Label>
+            <TextBox Text="{Binding DrawerSettings.MinimumTextFontSize}" />
+            <Label>MaximumTextFontSize</Label>
+            <TextBox Text="{Binding DrawerSettings.MaximumTextFontSize}" />
+            <Label>RectangleBorderSize</Label>
+            <TextBox Text="{Binding DrawerSettings.RectangleBorderSize}" />
+            <Label>FillRectangles</Label>
+            <TextBox Text="{Binding DrawerSettings.FillRectangles}" />
+            <Button Click="Cancel">Cancel</Button>
+            <Button Click="Submit">Submit</Button>
+        </StackPanel>
+    </Grid>
+</Window>
