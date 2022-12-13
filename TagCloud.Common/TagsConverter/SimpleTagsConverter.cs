@@ -17,14 +17,14 @@ public class SimpleTagsConverter : ITagsConverter
         this.weightCounter = weightCounter;
     }
 
-    public IEnumerable<Tag> ConvertToTags(IEnumerable<string> words, VisualizationOptions options)
+    public IEnumerable<Tag> ConvertToTags(IEnumerable<string> words, int minFontSize)
     {
         var tags = new List<Tag>();
         var wordsWithWeights = weightCounter.CountWeights(words);
         var maxWeight = wordsWithWeights.Values.Max();
         foreach (var (word, weight) in wordsWithWeights)
         {
-            var font = new Font("Arial", maxWeight/(maxWeight-weight + 1) + options.MinFontSize);
+            var font = new Font("Arial", maxWeight/(maxWeight-weight + 1) + minFontSize);
             var size = CalculateSize(word, font);
             var tag = new Tag(layouter.PutNextRectangle(size), word, font);
             tags.Add(tag);

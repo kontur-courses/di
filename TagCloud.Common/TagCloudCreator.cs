@@ -23,7 +23,7 @@ public class TagCloudCreator
         var lines = File.ReadAllLines(visualizationOptions.PathToTextFile);
         var words = filter.FilterAllWords(lines,
             visualizationOptions.BoringWordsThreshold);
-        var tags = converter.ConvertToTags(words, visualizationOptions);
+        var tags = converter.ConvertToTags(words, visualizationOptions.MinFontSize);
         drawer.DrawCloud(tags, visualizationOptions);
     }
 }
