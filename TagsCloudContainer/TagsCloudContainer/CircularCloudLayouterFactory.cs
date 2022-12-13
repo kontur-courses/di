@@ -15,11 +15,15 @@ public class CircularCloudLayouterFactory : ILayouterAlgorithmFactory
     {
         private readonly CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings;
 
-        public CircularCloudLayouterProvider(CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings) =>
+        public CircularCloudLayouterProvider(CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings)
+        {
             this.circularLayouterAlgorithmSettings = circularLayouterAlgorithmSettings;
+        }
 
-        public ILayouterAlgorithm Provide() =>
-            new CircularLayouterAlgorithm(circularLayouterAlgorithmSettings);
+        public ILayouterAlgorithm Provide()
+        {
+            return new CircularLayouterAlgorithm(circularLayouterAlgorithmSettings);
+        }
 
         public bool CanProvide => true;
     }

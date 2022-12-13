@@ -1,0 +1,27 @@
+﻿<Window x:Class="TagsCloudContainer.Gui.GuiGraphicsProviderSettingsEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TagsCloudContainer.Gui"
+        mc:Ignorable="d"
+        Title="Graphics Provider" MinHeight="450" MinWidth="200"
+        d:DataContext="{d:DesignInstance Type=local:GuiGraphicsProviderSettingsEditor, IsDesignTimeCreatable=False}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel Orientation="Vertical">
+        <Label>Height</Label>
+        <Slider AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" SmallChange="100" LargeChange="1000"
+                Minimum="100" Maximum="10000"
+                Value="{Binding GraphicsProviderSettings.Height}" />
+        <Label>Width</Label>
+        <Slider AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" SmallChange="100" LargeChange="1000"
+                Minimum="100" Maximum="10000"
+                Value="{Binding GraphicsProviderSettings.Width}" />
+        <Label>Save</Label>
+        <CheckBox IsChecked="{Binding GraphicsProviderSettings.Save}" />
+        <Label>Save path</Label>
+        <TextBox Text="{Binding GraphicsProviderSettings.SavePath}" />
+        <Button Click="Cancel">Cancel</Button>
+        <Button Click="Submit">Submit</Button>
+    </StackPanel>
+</Window>

@@ -2,7 +2,6 @@
 
 public interface ILayouterAlgorithmProvider
 {
-    ILayouterAlgorithm Provide();
-    
     bool CanProvide { get; }
+    ILayouterAlgorithm Provide();
 }

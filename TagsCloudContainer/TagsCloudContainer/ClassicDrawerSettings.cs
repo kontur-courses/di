@@ -17,7 +17,7 @@ public class ClassicDrawerSettings : DrawerSettings
 
     public string TextFontFamily { get; set; } = "Comic Sans MS";
 
-    public FontStyle TextFontStyle { get; set; } = FontStyle.Italic | FontStyle.Underline;
+    public FontStyle TextFontStyle { get; set; } = FontStyle.Italic;
 
     public float MinimumTextFontSize { get; set; } = 16;
 

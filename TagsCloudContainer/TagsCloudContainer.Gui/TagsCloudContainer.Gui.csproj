@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TagsCloudContainer.Interfaces\TagsCloudContainer.Interfaces.csproj"/>
+        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DryIoc" Version="5.3.1"/>
+        <PackageReference Include="Fody" Version="6.6.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0"/>
+    </ItemGroup>
+
+</Project>

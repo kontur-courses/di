@@ -112,7 +112,7 @@ public class JsonSettingsFactory : ISettingsFactory
                         tagCloudAssemblies)
                 },
                 { typeof(Brush), GetJsonDerivedTypes(typeof(Brush), typeof(Brush).Assembly) },
-                { typeof(FontFamily), GetJsonDerivedTypes(typeof(FontFamily), typeof(FontFamily).Assembly) },
+                { typeof(FontFamily), GetJsonDerivedTypes(typeof(FontFamily), typeof(FontFamily).Assembly) }
             };
         }
 

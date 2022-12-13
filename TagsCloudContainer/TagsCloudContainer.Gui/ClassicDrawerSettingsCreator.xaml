@@ -1,0 +1,48 @@
+﻿<Window x:Class="TagsCloudContainer.Gui.ClassicDrawerSettingsCreator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TagsCloudContainer.Gui"
+        mc:Ignorable="d"
+        Title="Classic Drawer" MinHeight="450" MinWidth="200"
+        d:DataContext="{d:DesignInstance Type=local:ClassicDrawerSettingsCreator, IsDesignTimeCreatable=False}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <StackPanel>
+            <Label>ImageRectangle</Label>
+            <TextBox Text="{Binding DrawerSettings.ImageRectangle, Converter={StaticResource RectangleConverter}}" />
+            <Label>NumbersSize</Label>
+            <TextBox Text="{Binding DrawerSettings.NumbersSize}" />
+            <Label>NumbersFamily</Label>
+            <TextBox Text="{Binding DrawerSettings.NumbersFamily}" />
+            <Label>NumbersBrush</Label>
+            <TextBox Text="{Binding DrawerSettings.NumbersBrush, Converter={StaticResource BrushConverter}}" />
+            <Label>TextBrush</Label>
+            <TextBox Text="{Binding DrawerSettings.TextBrush, Converter={StaticResource BrushConverter}}" />
+            <Label>TextFontFamily</Label>
+            <TextBox Text="{Binding DrawerSettings.TextFontFamily}" />
+            <Label>TextFontStyle</Label>
+            <TextBox Text="{Binding DrawerSettings.TextFontStyle, Converter={StaticResource EnumConverter}}" />
+            <Label>MinimumTextFontSize</Label>
+            <TextBox Text="{Binding DrawerSettings.MinimumTextFontSize}" />
+            <Label>MaximumTextFontSize</Label>
+            <TextBox Text="{Binding DrawerSettings.MaximumTextFontSize}" />
+            <Label>WriteNumbers</Label>
+            <TextBox Text="{Binding DrawerSettings.WriteNumbers}" />
+            <Label>RectangleBorderBrush</Label>
+            <TextBox
+                Text="{Binding DrawerSettings.RectangleBorderBrush, Converter={StaticResource BrushConverter}}" />
+            <Label>RectangleBorderSize</Label>
+            <TextBox Text="{Binding DrawerSettings.RectangleBorderSize}" />
+            <Label>RectangleFillBrush</Label>
+            <TextBox Text="{Binding DrawerSettings.RectangleFillBrush, Converter={StaticResource BrushConverter}}" />
+            <Label>FillRectangles</Label>
+            <TextBox Text="{Binding DrawerSettings.FillRectangles}" />
+            <Label>BackgroundBrush</Label>
+            <TextBox Text="{Binding DrawerSettings.BackgroundBrush, Converter={StaticResource BrushConverter}}" />
+            <Button Click="Cancel">Cancel</Button>
+            <Button Click="Submit">Submit</Button>
+        </StackPanel>
+    </Grid>
+</Window>

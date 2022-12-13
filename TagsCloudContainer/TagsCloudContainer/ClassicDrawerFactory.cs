@@ -15,13 +15,17 @@ public class ClassicDrawerFactory : IDrawerFactory
 
     private class ClassicDrawerProvider : IDrawerProvider
     {
-        private readonly ClassicDrawerSettings cliGraphicsProviderSettings;
+        private readonly ClassicDrawerSettings settings;
 
-        public ClassicDrawerProvider(ClassicDrawerSettings cliGraphicsProviderSettings) =>
-            this.cliGraphicsProviderSettings = cliGraphicsProviderSettings;
+        public ClassicDrawerProvider(ClassicDrawerSettings settings)
+        {
+            this.settings = settings;
+        }
 
-        public IDrawer Provide(ILayouterAlgorithmProvider layouterAlgorithmProvider, Graphics graphics) =>
-            new ClassicDrawer(cliGraphicsProviderSettings, graphics, layouterAlgorithmProvider);
+        public IDrawer Provide(ILayouterAlgorithmProvider layouterAlgorithmProvider, Graphics graphics)
+        {
+            return new ClassicDrawer(settings, graphics, layouterAlgorithmProvider);
+        }
 
         public bool CanProvide => true;
     }

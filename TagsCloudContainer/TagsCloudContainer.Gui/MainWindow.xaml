@@ -1,0 +1,82 @@
+﻿<Window x:Class="TagsCloudContainer.Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TagsCloudContainer.Gui"
+        mc:Ignorable="d"
+        Title="TagsCloudContainer" Height="Auto" Width="Auto" MinHeight="1000" MinWidth="1800"
+        d:DataContext="{d:DesignInstance Type=local:MainWindow, IsDesignTimeCreatable=False}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Left">
+                <CheckBox Click="AutoDrawIsChanged">Auto draw mode</CheckBox>
+                <Button Click="StartDrawing">Start drawing</Button>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0">
+                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" MinWidth="200" MaxLines="200" Name="Words"
+                             TextChanged="WordsChanged" />
+                </DockPanel>
+                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
+                              HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                <DockPanel Grid.Column="2">
+                    <TextBox DockPanel.Dock="Top">Drawer settings</TextBox>
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom">
+                        <Button Click="RemoveSelectedDrawerSettings">Remove selected</Button>
+                        <Button Click="NewClassicDrawerSettings">New</Button>
+                    </StackPanel>
+                    <ListBox
+                        SelectedItem="{Binding SelectedDrawerSettings}"
+                        ItemsSource="{Binding DrawerSettingsList}" />
+                </DockPanel>
+                <GridSplitter Grid.Column="3" ShowsPreview="False" Width="3"
+                              HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                <DockPanel Grid.Column="4">
+                    <TextBox DockPanel.Dock="Top">Layouter algorithm settings</TextBox>
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom">
+                        <Button Click="RemoveSelectedLayouterAlgorithmSettings">Remove selected</Button>
+                        <Button Click="NewCircularLayouterAlgorithmSettings">New</Button>
+                    </StackPanel>
+                    <ListBox SelectedItem="{Binding SelectedLayouterAlgorithmSettings}"
+                             ItemsSource="{Binding LayouterAlgorithmSettingsList}" />
+                </DockPanel>
+                <GridSplitter Grid.Column="5" ShowsPreview="False" Width="3"
+                              HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                <DockPanel Grid.Column="6">
+                    <TextBox DockPanel.Dock="Top">Graphics provider</TextBox>
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom">
+                        <Button Click="EditGraphicsProviderSettings">Edit</Button>
+                    </StackPanel>
+                </DockPanel>
+                <GridSplitter Grid.Column="7" ShowsPreview="False" Width="3"
+                              HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                <DockPanel Grid.Column="8">
+                    <TextBox DockPanel.Dock="Top">Images</TextBox>
+                    <ListBox Name="ImagesListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                                              ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                    <Image Source="{Binding }" Stretch="Fill" />
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

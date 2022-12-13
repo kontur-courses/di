@@ -9,7 +9,9 @@ public class MultiDrawer
     private readonly IEnumerable<ILayouterAlgorithmFactory> layouterAlgorithmFactories;
     private readonly Settings settings;
 
-    public MultiDrawer(Settings settings, IEnumerable<IDrawerFactory> drawerFactories,
+    public MultiDrawer(
+        Settings settings,
+        IEnumerable<IDrawerFactory> drawerFactories,
         IEnumerable<ILayouterAlgorithmFactory> layouterAlgorithmFactories,
         IGraphicsProvider graphicsProvider)
     {
@@ -22,9 +24,7 @@ public class MultiDrawer
     public void Draw(IReadOnlyCollection<CloudWord> cloudWords)
     {
         foreach (var (algorithmProvider, drawerProvider) in GetDrawers())
-        {
             DrawCloudUsingCombination(cloudWords, drawerProvider, algorithmProvider);
-        }
     }
 
     private void DrawCloudUsingCombination(

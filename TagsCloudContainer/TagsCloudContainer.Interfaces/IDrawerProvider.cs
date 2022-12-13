@@ -4,7 +4,6 @@ namespace TagsCloudContainer.Interfaces;
 
 public interface IDrawerProvider
 {
-    IDrawer Provide(ILayouterAlgorithmProvider layouterAlgorithmProvider, Graphics graphics);
-    
     bool CanProvide { get; }
+    IDrawer Provide(ILayouterAlgorithmProvider layouterAlgorithmProvider, Graphics graphics);
 }
