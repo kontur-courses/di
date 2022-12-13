@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using System.Drawing;
 
-namespace TagCloud.CommandLineParser
+namespace TagCloud.CommandLineParsing
 {
     public class Options
     {
@@ -11,13 +11,13 @@ namespace TagCloud.CommandLineParser
         [Option('o', "output image", Required = true, HelpText = "Output image full path")]
         public string OutputImageFullPath { get; set; }
 
-        [Option('w', "image width", Required = false, HelpText = "Output image width (default is 1000)")]
+        [Option('w', "image width", Required = false, Default = 1000, HelpText = "Output image width (default is 1000)")]
         public int ImageWidth { get; set; }
 
-        [Option('h', "image height", Required = false, HelpText = "Output image height (default is 1000)")]
+        [Option('h', "image height", Required = false, Default = 1000, HelpText = "Output image height (default is 1000)")]
         public int ImageHeight { get; set; }
 
-        [Option('b', "background color", Required = false, HelpText = "Background color (default is white)")]
+        [Option('b', "background color", Required = false, Default = "White", HelpText = "Background color (default is White)")]
         public string BackgroundColor { get; set; }
 
         [Option('f', "font family", Required = false, HelpText = "Cloud tags font family (default is Times New Roman)")]

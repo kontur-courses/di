@@ -5,20 +5,52 @@ using System.IO;
 using Autofac;
 using TagCloud.AppConfig;
 using TagCloud.App;
-using CommandLine;
-using TagCloud.CommandLineParser;
+using System.Linq;
 
 namespace TagCloud
 {
     public class Program
     {
-
         static void Main(string[] args)
         {
-            var appConfig = new AppConfigProvider(args).GetAppConfig();
+            var inputfile = GetSolutionDirectory().FullName + "\\TestText.txt";
+            var outputfile = GetSolutionSubDirectory("TagCloudImages").FullName + "\\WordCloud.png";
+
+            var argsssss = $"-i {inputfile} -o {outputfile} -h 600 -w 600 -b White -f Arial -l 5 -p 40 -k random -z elipse".Split(' ');
+
+            var appConfig = new ConsoleAppConfigProvider(argsssss).GetAppConfig();
             var container = ContainerConfig.Configure(appConfig);
             var app = container.Resolve<IApp>();
             app.Run(appConfig);
+        }
+
+        private static DirectoryInfo GetSolutionSubDirectory(string subDirectoryName)
+        {
+            var solutionDirectory = GetSolutionDirectory();
+
+            return GetSubDirectory(solutionDirectory, subDirectoryName);
+        }
+
+        private static DirectoryInfo GetSolutionDirectory()
+        {
+            var currentDirectory = new DirectoryInfo(Environment.CurrentDirectory);
+
+            while (currentDirectory != null && !currentDirectory.GetFiles("*.sln").Any())
+            {
+                currentDirectory = currentDirectory.Parent;
+            }
+
+            return currentDirectory;
+        }
+
+        private static DirectoryInfo GetSubDirectory(DirectoryInfo parentDirectory, string subDirectoryName)
+        {
+            var subDirectoryFullName = Path.Combine(parentDirectory.FullName, subDirectoryName);
+
+            if (!Directory.Exists(subDirectoryFullName))
+                return Directory.CreateDirectory(subDirectoryFullName);
+
+            return new DirectoryInfo(subDirectoryFullName);
         }
 
         private static void CreateTestText()
