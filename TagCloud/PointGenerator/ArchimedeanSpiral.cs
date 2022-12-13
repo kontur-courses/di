@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.CloudLayouter
+namespace TagCloud.PointGenerator
 {
     public class ArchimedeanSpiral : IPointGenerator
     {

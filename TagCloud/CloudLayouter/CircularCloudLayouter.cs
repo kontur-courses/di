@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.PointGenerator;
 
 namespace TagCloud.CloudLayouter
 {
@@ -13,11 +14,11 @@ namespace TagCloud.CloudLayouter
 
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
-        public CircularCloudLayouter(Point cloudCenter)
-        {
-            CloudCenter = cloudCenter;
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
+        {          
+            this.pointGenerator = pointGenerator;
 
-            pointGenerator = new ArchimedeanSpiral(CloudCenter);
+            CloudCenter = pointGenerator.CentralPoint;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

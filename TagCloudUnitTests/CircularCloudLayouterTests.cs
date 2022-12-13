@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud.CloudLayouter;
 using TagCloud.ImageProcessing;
+using TagCloud.PointGenerator;
 
 namespace TagCloudUnitTests
 {
@@ -20,7 +21,7 @@ namespace TagCloudUnitTests
         [SetUp]
         public void Setup()
         {
-            layouter = new CircularCloudLayouter(new Point(0, 0));
+            layouter = new CircularCloudLayouter(new CirclePointGenerator(new Point(0, 0)));
 
             layout = new List<Rectangle>();
         }

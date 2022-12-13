@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.CloudLayouter
+namespace TagCloud.PointGenerator
 {
     public interface IPointGenerator
     {
+        Point CentralPoint { get; }
         Point GetNextPoint();
     }
 }

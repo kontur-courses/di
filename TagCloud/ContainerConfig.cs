@@ -4,12 +4,13 @@ using TagCloud.FileReader;
 using TagCloud.FrequencyAnalyzer;
 using TagCloud.WordColoring;
 using TagCloud.ImageProcessing;
-using TagCloud.CloudLayouter;
+using TagCloud.PointGenerator;
 using TagCloud.TextParsing;
 using Autofac;
 using TagCloud.AppConfig;
 using TagCloud.App;
 using System.Reflection;
+using TagCloud.CloudLayouter;
 
 namespace TagCloud
 {
@@ -80,7 +81,7 @@ namespace TagCloud
 
         private static void ConfigureCloudLayouter(ContainerBuilder builder)
         {
-            builder.Register(c => new CircularCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
+            builder.Register(c => new CircularCloudLayouter(new EllipsePointGenerator(new Point(0, 0)))).As<ICloudLayouter>();
         }
 
         private static void ConfigureImageSettings(IAppConfig appConfig, ContainerBuilder builder)
