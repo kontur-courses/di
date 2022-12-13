@@ -19,9 +19,9 @@ public class EntryPoint
 
 	private static void Main(string[] args)
 	{
-		var imageSettings = ImageSettings.GetDefaultSettings();
-
 		Build();
+
+		var imageSettings = ImageSettings.GetDefaultSettings();
 
 		var settingsProvider = container.GetInstance<ISettingsSetter<ImageSettings>>();
 		settingsProvider.Set(imageSettings);
@@ -62,7 +62,6 @@ public class EntryPoint
 		container = new Container();
 
 		container.Register<ITagPainter, DebugPainter>();
-		container.Register<IWordFilter, TempFilter>();
 		container.Register<ITagsPreprocessor, TempPreprocessor>();
 		container.Register<ITagContainersProvider, TagContainersProvider>();
 
@@ -70,6 +69,9 @@ public class EntryPoint
 		container.RegisterInstance(typeof(ISettingsSetter<ImageSettings>), imageSettingsProvider);
 		container.RegisterInstance(typeof(ISettingsGetter<ImageSettings>), imageSettingsProvider);
 		
+		container.Collection.Register<IWordFilter>(typeof(LengthFilter));
+
+		container.Register<IWordFiltersComposer, WordFilterComposer>();
 
 		container.RegisterInstance(typeof(IWordReader), new WordReaderFromTxt($"{Environment.CurrentDirectory}\\Numb.txt"));
 		container.RegisterInstance(typeof(ICloudLayouter), new CircularCloudLayouter(new Point(0, 0)));

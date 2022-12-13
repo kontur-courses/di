@@ -1,9 +1,9 @@
 ﻿namespace TagsCloud.Core.WordFilters;
 
-public class TempFilter : IWordFilter
+public class LengthFilter : IWordFilter
 {
-	public IEnumerable<string> Filter(IEnumerable<string> words)
+	public bool WordIsValid(string words)
 	{
-		return words.Select(word => word.ToLower());
+		return words.Length > 3;
 	}
 }

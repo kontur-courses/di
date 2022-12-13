@@ -6,18 +6,18 @@ namespace TagsCloud.Core.TagContainersProviders.TagsPreprocessors;
 public class TempPreprocessor : ITagsPreprocessor
 {
     private readonly IWordReader wordReader;
-    private readonly IWordFilter wordFilter;
+    private readonly IWordFiltersComposer wordFiltersComposer;
 
-    public TempPreprocessor(IWordReader wordReader, IWordFilter wordFilter)
+    public TempPreprocessor(IWordReader wordReader, IWordFiltersComposer wordFiltersComposer)
     {
         this.wordReader = wordReader;
-        this.wordFilter = wordFilter;
+        this.wordFiltersComposer = wordFiltersComposer;
     }
 
     public IEnumerable<Tag> GetTags(int? count = null)
     {
         var tags = new Dictionary<string, int>();
-        var words = wordFilter.Filter(wordReader.ReadWords());
+        var words = wordFiltersComposer.Filter(wordReader.ReadWords());
 
         foreach (var word in words)
         {

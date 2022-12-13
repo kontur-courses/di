@@ -2,5 +2,5 @@
 
 public interface IWordFilter
 {
-    public IEnumerable<string> Filter(IEnumerable<string> words);
+    public bool WordIsValid(string words);
 }
