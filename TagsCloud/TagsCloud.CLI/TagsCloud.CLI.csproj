@@ -15,4 +15,10 @@
     <ProjectReference Include="..\TagsCloud.Core\TagsCloud.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Numb.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

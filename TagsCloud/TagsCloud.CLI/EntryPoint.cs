@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text;
 using SimpleInjector;
 using TagsCloud.Core;
 using TagsCloud.Core.BitmapPainters;
 using TagsCloud.Core.Layouters;
+using TagsCloud.Core.Settings;
 using TagsCloud.Core.TagContainersCreators;
-using TagsCloud.Core.TagContainersCreators.TagsPreproessors;
+using TagsCloud.Core.TagContainersCreators.TagsPreprocessors;
 using TagsCloud.Core.WordFilters;
 using TagsCloud.Core.WordReaders;
 
@@ -17,32 +19,61 @@ public class EntryPoint
 
 	private static void Main(string[] args)
 	{
-		var width = 1600;
-		var height = 1600;
+		var imageSettings = ImageSettings.GetDefaultSettings();
 
-		Build(new Point(width / 2, height / 2));
+		Build();
 
-		var containerCreator = container.GetInstance<ITagContainersCreator>();
+		var settingsProvider = container.GetInstance<ISettingsSetter<ImageSettings>>();
+		settingsProvider.Set(imageSettings);
+
+		var containerCreator = container.GetInstance<ITagContainersProvider>();
 		var painter = container.GetInstance<ITagPainter>();
 		var saver = container.GetInstance<ImageSaver>();
 
-		var tags = containerCreator.Create();
-		var bitmap = painter.Draw(tags, new Size(width, height));
-		saver.Save(bitmap, "TEST");
+		var tags = containerCreator.GetContainers();
+		var bitmap = painter.Draw(tags);
+		saver.Save(bitmap, "Numb");
 
-		Console.WriteLine($"Image save in folder: {saver.Directory}");
+		Console.WriteLine($"OK> Image save in folder: {saver.Directory}");
+
+
+		//var words = SplitTextOnWors($"{Environment.CurrentDirectory}\\Numb.txt");
+		//Console.WriteLine($"{words}");
 	}
 
-	private static void Build(Point imageCenter)
+	private static string SplitTextOnWors(string path)
+	{
+		var numb = File.ReadAllLines(path);
+		var sb = new StringBuilder();
+		foreach (var numbLine in numb)
+		{
+			var words = numbLine.Split(' ', StringSplitOptions.TrimEntries);
+			foreach (var word in words)
+			{
+				sb.AppendLine(word);
+			}
+		}
+
+		return sb.ToString();
+	}
+
+	private static void Build()
 	{
 		container = new Container();
 
-		container.Register<ITagPainter, TempPainter>();
-		container.Register<IWordReader, TempReader>();
+		container.Register<ITagPainter, DebugPainter>();
 		container.Register<IWordFilter, TempFilter>();
 		container.Register<ITagsPreprocessor, TempPreprocessor>();
-		container.Register<ITagContainersCreator, TempCreator>();
-		container.RegisterInstance(typeof(ICloudLayouter), new CircularCloudLayouter(imageCenter));
+		container.Register<ITagContainersProvider, TagContainersProvider>();
+
+		var imageSettingsProvider = new SettingsProvider<ImageSettings>();
+		container.RegisterInstance(typeof(ISettingsSetter<ImageSettings>), imageSettingsProvider);
+		container.RegisterInstance(typeof(ISettingsGetter<ImageSettings>), imageSettingsProvider);
+		
+
+		container.RegisterInstance(typeof(IWordReader), new WordReaderFromTxt($"{Environment.CurrentDirectory}\\Numb.txt"));
+		container.RegisterInstance(typeof(ICloudLayouter), new CircularCloudLayouter(new Point(0, 0)));
+		//container.RegisterInstance(typeof(ICloudLayouter), new SpiralCloudLayouter(new Point(0, 0), 100, 10));
 		container.RegisterInstance(typeof(ImageSaver), new ImageSaver(Environment.CurrentDirectory, ImageFormat.Png));
 
 		container.Verify();
