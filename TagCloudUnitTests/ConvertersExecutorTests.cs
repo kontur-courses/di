@@ -5,6 +5,7 @@ using TagCloud.WordConverter;
 
 namespace TagCloudUnitTests
 {
+    [TestFixture]
     internal class ConvertersExecutorTests
     {
         private ConvertersExecutor convertersExecutor;

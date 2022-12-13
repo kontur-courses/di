@@ -6,6 +6,7 @@ using TagCloud.FrequencyAnalyzer;
 
 namespace TagCloudUnitTests
 {
+    [TestFixture]
     internal class WordsFrequencyAnalyzerTests
     {
         private WordsFrequencyAnalyzer analyzer;

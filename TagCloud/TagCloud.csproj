@@ -80,14 +80,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig\AppConfig.cs" />
-    <Compile Include="AppConfig\AppConfigProvider.cs" />
+    <Compile Include="AppConfig\ConsoleAppConfigProvider.cs" />
     <Compile Include="AppConfig\IAppConfig.cs" />
     <Compile Include="AppConfig\IAppConfigProvider.cs" />
     <Compile Include="App\ConsoleApp.cs" />
     <Compile Include="App\IApp.cs" />
     <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
-    <Compile Include="CommandLineParser\Options.cs" />
+    <Compile Include="CommandLineParsing\Options.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="FileReader\DocxFileReader.cs" />
     <Compile Include="ImageProcessing\ICloudImageGenerator.cs" />
@@ -110,7 +110,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CloudLayouter\RectangleExtensions.cs" />
     <Compile Include="CloudLayouter\RectangleSizeGenerator.cs" />
+    <Compile Include="WordColoring\IWordColoringProvider.cs" />
     <Compile Include="WordColoring\RandomColoring.cs" />
+    <Compile Include="WordColoring\WordColoringProvider.cs" />
     <Compile Include="WordConverter\ConvertersExecutor.cs" />
     <Compile Include="WordConverter\IConvertersExecutor.cs" />
     <Compile Include="WordFilter\BoringWordFilter.cs" />

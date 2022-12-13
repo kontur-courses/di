@@ -5,6 +5,7 @@ using TagCloud.WordFilter;
 
 namespace TagCloudUnitTests
 {
+    [TestFixture]
     internal class FiltersExecutorTests
     {
         private FiltersExecutor filtersExecutor;
