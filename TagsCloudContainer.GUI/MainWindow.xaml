@@ -5,26 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TagsCloudContainer.GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="667" Width="1199">
 
-	<Grid DataContext="{Binding Options}">
+	<Grid DataContext="{Binding OptionsViewModel}" Background="DarkGray">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
-
 		<Grid.RowDefinitions>
 			<RowDefinition Height="5*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 
-		<Grid>
+		<Grid MaxWidth="300">
 			<Grid.Resources>
 				<Style TargetType="TextBlock">
 					<Setter Property="Margin" Value="5"/>
+					<Setter Property="MaxHeight" Value="25"/>
 				</Style>
 				<Style TargetType="TextBox">
 					<Setter Property="Margin" Value="5"/>
+					<Setter Property="MaxHeight" Value="25"/>
+					<Setter Property="MaxWidth" Value="250"/>
 				</Style>
 			</Grid.Resources>
 
@@ -45,7 +47,7 @@
 			</Grid.RowDefinitions>
 
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="InputWordFilename"/>
-			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=InputWordFilename}"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=InputWordFilename, UpdateSourceTrigger=PropertyChanged}"/>
 
 			<TextBlock Grid.Row="1" Grid.Column="0" Text="OutputImageFilename"/>
 			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=OutputImageFilename}"/>
@@ -72,6 +74,12 @@
 			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Path=MaxFrequncyFontSize}"/>
 		</Grid>
 
-		<Button Margin="10" Grid.Row="1" Content="Generate"/>
+		<Border Grid.Column="1" BorderBrush="Black" BorderThickness="3">
+			<ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+				<Image x:Name="TagsCloudImage" Stretch="None"/>
+			</ScrollViewer>
+		</Border>
+
+		<Button Grid.Row="1" Margin="10" MaxWidth="200" MaxHeight="50" Content="Generate" Click="GenerateTagsCloudButton_Click"/>
 	</Grid>
 </Window>

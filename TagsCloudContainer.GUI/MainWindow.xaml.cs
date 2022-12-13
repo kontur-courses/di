@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -28,10 +30,10 @@ namespace TagsCloudContainer.GUI
         private readonly ITagsCloudGenerator tagsCloudGenerator;
         private readonly WordPlateVisualizer wordPlateVisualizer;
 
-        public static readonly DependencyProperty OptionsProperty = DependencyProperty.Register(nameof(Options), typeof(Options), typeof(MainWindow));
-        public Options Options
+        public static readonly DependencyProperty OptionsProperty = DependencyProperty.Register(nameof(OptionsViewModel), typeof(OptionsViewModel), typeof(MainWindow));
+        public OptionsViewModel OptionsViewModel
         {
-            get => (Options)GetValue(OptionsProperty);
+            get => (OptionsViewModel)GetValue(OptionsProperty);
             private set => SetValue(OptionsProperty, value);
         }
 
@@ -42,8 +44,6 @@ namespace TagsCloudContainer.GUI
                           ITagsCloudGenerator tagsCloudGenerator,
                           WordPlateVisualizer wordPlateVisualizer)
         {
-            Options = options;
-
             this.settingsProvider = settingsProvider;
             this.wordReader = wordReader;
             this.wordPreparer = wordPreparer;
@@ -52,6 +52,47 @@ namespace TagsCloudContainer.GUI
 
             InitializeComponent();
             DataContext = this;
+
+            OptionsViewModel = new OptionsViewModel();
+            OptionsViewModel.CurrentOptions = options;
+        }
+
+        private void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result result;
+            if (!(result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename, out var words)).Success)
+            {
+                MessageBox.Show("Can't read words from input file: " + result.Message, "File error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var wordFrequencies = GetWordFrequencies(wordPreparer.Prepare(words));
+
+            var wordFontSettings = settingsProvider.GetWordFontSettings();
+            wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
+
+            var wordColorSettings = settingsProvider.GetWordColorSettings();
+            wordColorSettings.WordFrequencies = wordFrequencies;
+
+            words = wordFrequencies.Keys.ToArray();
+            var outputImageSettings = settingsProvider.GetOutputImageSettings();
+            var pictureSize = new System.Drawing.Size(outputImageSettings.Width, outputImageSettings.Height);
+
+            var wordPlates = tagsCloudGenerator.GeneratePlates(words, new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSettings);
+            var bitmap = wordPlateVisualizer.DrawPlates(wordPlates, pictureSize, wordColorSettings);
+            TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)
+        {
+            var frequencies = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (!frequencies.ContainsKey(word))
+                    frequencies.Add(word, 0);
+                frequencies[word]++;
+            }
+            return frequencies;
         }
     }
 }
