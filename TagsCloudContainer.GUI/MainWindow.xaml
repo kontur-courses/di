@@ -1,0 +1,77 @@
+﻿<Window x:Class="TagsCloudContainer.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TagsCloudContainer.GUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+	<Grid DataContext="{Binding Options}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="3*"/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+
+		<Grid>
+			<Grid.Resources>
+				<Style TargetType="TextBlock">
+					<Setter Property="Margin" Value="5"/>
+				</Style>
+				<Style TargetType="TextBox">
+					<Setter Property="Margin" Value="5"/>
+				</Style>
+			</Grid.Resources>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="InputWordFilename"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=InputWordFilename}"/>
+
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="OutputImageFilename"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=OutputImageFilename}"/>
+
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="OutputImageWidth"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=OutputImageWidth}"/>
+
+			<TextBlock Grid.Row="3" Grid.Column="0" Text="OutputImageHeight"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=OutputImageHeight}"/>
+
+			<TextBlock Grid.Row="4" Grid.Column="0" Text="FontFamily"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=FontFamily}"/>
+
+			<TextBlock Grid.Row="5" Grid.Column="0" Text="MinFrequencyColor"/>
+			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=MinFrequencyColorString}"/>
+
+			<TextBlock Grid.Row="6" Grid.Column="0" Text="MaxFrequencyColor"/>
+			<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=MaxFrequencyColorString}"/>
+
+			<TextBlock Grid.Row="7" Grid.Column="0" Text="MinFrequncyFontSize"/>
+			<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Path=MinFrequncyFontSize}"/>
+
+			<TextBlock Grid.Row="8" Grid.Column="0" Text="MaxFrequncyFontSize"/>
+			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Path=MaxFrequncyFontSize}"/>
+		</Grid>
+
+		<Button Margin="10" Grid.Row="1" Content="Generate"/>
+	</Grid>
+</Window>

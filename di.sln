@@ -10,6 +10,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.ConsoleApp", "TagsCloudContainer.ConsoleApp\TagsCloudContainer.ConsoleApp.csproj", "{ECFE8EBA-DD95-4183-B278-71389C286052}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.GUI", "TagsCloudContainer.GUI\TagsCloudContainer.GUI.csproj", "{5589FF0C-A276-4AFD-8AD7-4A71A03A5E38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
