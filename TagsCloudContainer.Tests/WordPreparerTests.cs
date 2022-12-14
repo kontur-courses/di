@@ -13,8 +13,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
     {
         private IWordPreparer wordPreparer;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        [SetUp]
+        public void SetUp()
         {
             wordPreparer = WordPreparerFactory.CreateDefault();
         }
@@ -57,10 +57,35 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             actual.Should().BeEquivalentTo(expected);
         }
+
+        [Test]
+        public void ExcludeAll_ExceptVerbNounAndAdjective()
+        {
+            wordPreparer = WordPreparerFactory.CreateDefault(new WordType[] { WordType.Other });
+            var words = new string[] { "take", "noun", "this", "beautiful" };
+            var expected = new string[] { "take", "noun", "beautiful" };
+
+            var actual = wordPreparer.Prepare(words);
+
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void ExcludeVerbAndNoun()
+        {
+            wordPreparer = WordPreparerFactory.CreateDefault(new WordType[] { WordType.Verb, WordType.Noun });
+            var words = new string[] { "take", "noun", "this", "beautiful" };
+            var expected = new string[] { "this", "beautiful" };
+
+            var actual = wordPreparer.Prepare(words);
+
+            actual.Should().BeEquivalentTo(expected);
+        }
     }
 
     internal static class WordPreparerFactory
     {
-        public static IWordPreparer CreateDefault() => new WordPreparer();
+        public static IWordPreparer CreateDefault() => new WordPreparer(Array.Empty<WordType>());
+        public static IWordPreparer CreateDefault(WordType[] excludedTypes) => new WordPreparer(excludedTypes);
     }
 }
