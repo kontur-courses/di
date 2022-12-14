@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudContainer
 {
-    public static class Utility
+    public static class StringExtensions
     {
         public static Size MeasureString(this string s, Font font)
         {
@@ -12,12 +11,6 @@ namespace TagsCloudContainer
             var sizeF = graphics.MeasureString(s, font);
             var size = Size.Ceiling(sizeF);
             return size;
-        }
-
-        public static Point GetCenter(this Rectangle rectangle)
-        { 
-            var center = new Point((rectangle.X + rectangle.Right) / 2, (rectangle.Y + rectangle.Bottom) / 2);
-            return center;
         }
     }
 }
