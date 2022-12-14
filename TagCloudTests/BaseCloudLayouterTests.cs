@@ -107,7 +107,7 @@ public class BaseCloudLayouterTests
         foreach (var rect2 in layouter.Rectangles.Where(r => r != rect1))
             rect1.IntersectsWith(rect2).Should().BeFalse();
     }
-    
+
     [Test]
     public void PutNextRectangle_ThrowInvalidOperationException_OnFinishedPointGenerator()
     {

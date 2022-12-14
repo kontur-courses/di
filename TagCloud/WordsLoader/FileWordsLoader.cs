@@ -10,10 +10,10 @@ public class FileWordsLoader : IWordsLoader
     {
         if (!File.Exists(filepath))
             throw new FileNotFoundException($"Could not find file '{Path.GetFullPath(filepath)}'.");
-        
+
         this.filepath = filepath;
     }
-    
+
     public IEnumerable<string> Load()
     {
         return File.ReadAllLines(filepath);

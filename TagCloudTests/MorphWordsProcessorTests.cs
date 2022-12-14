@@ -43,11 +43,11 @@ public class MorphWordsProcessorTests
 
         result.Should().BeEmpty();
     }
-    
+
     [Test]
     public void Process_ShouldSkip_EnglishWords()
     {
-        var words = new[] {"me", "word", "and", "work"};
+        var words = new[] { "me", "word", "and", "work" };
 
         var result = processor.Process(words);
 

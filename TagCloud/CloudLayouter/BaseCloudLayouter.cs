@@ -8,8 +8,8 @@ namespace TagCloud;
 
 public class BaseCloudLayouter : ICloudLayouter
 {
-    private readonly QuadTreeRect<QuadTreeRectWrapper> rectanglesQuadTree;
     private readonly IEnumerator<Point> pointEnumerator;
+    private readonly QuadTreeRect<QuadTreeRectWrapper> rectanglesQuadTree;
 
     public BaseCloudLayouter(Point center, IPointGenerator pointGenerator)
     {
@@ -43,8 +43,9 @@ public class BaseCloudLayouter : ICloudLayouter
     private Rectangle CreateNewRectangle(Size size)
     {
         if (!pointEnumerator.MoveNext())
-            throw new InvalidOperationException("You are trying to put a new rectangle, but the points sequence has ended");
-        
+            throw new InvalidOperationException(
+                "You are trying to put a new rectangle, but the points sequence has ended");
+
         var point = new Point(pointEnumerator.Current.X - size.Width / 2,
             pointEnumerator.Current.Y - size.Height / 2);
         return new Rectangle(point, size);

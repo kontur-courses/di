@@ -32,7 +32,7 @@ public class CountWordsTaggerTests
 
         result.Should().ContainSingle().Subject.Should().BeEquivalentTo(new Tag(word, count));
     }
-    
+
     [Test]
     public void ToTags_OrderingTagsByCount()
     {
@@ -42,7 +42,7 @@ public class CountWordsTaggerTests
             .SelectMany(n => Enumerable.Range(1, random.Next(1, 50)).Select(_ => ((char)n).ToString()));
 
         var result = tagger.ToTags(words);
-        
+
         result.Should().BeInDescendingOrder(t => t.Weight);
     }
 }

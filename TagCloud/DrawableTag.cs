@@ -3,7 +3,7 @@ using TagCloud.Abstractions;
 
 namespace TagCloud;
 
-public class DrawableTag: IDrawableTag
+public class DrawableTag : IDrawableTag
 {
     public DrawableTag(ITag tag, int fontSize, Point location)
     {
