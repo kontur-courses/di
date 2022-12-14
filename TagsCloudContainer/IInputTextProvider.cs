@@ -4,6 +4,7 @@ namespace TagsCloudContainer
 {
     public interface IInputTextProvider
     {
-        Dictionary<string, int> GetWords();
+        IWordFilter WordsFilter { get; set; }
+        Dictionary<string, int> GetWords(string text);
     }
 }

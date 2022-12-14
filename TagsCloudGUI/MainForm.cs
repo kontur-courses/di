@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudContainer;
@@ -9,12 +10,15 @@ namespace TagsCloudGUI
 {
     public partial class MainForm : Form
     {
-        private InputFileHandler inputFileHandler;
-        private ISettingsProvider settingsProvider;
-        public MainForm(InputFileHandler inputTextProvider, ISettingsProvider settingsProvider)
+        private string fileText;
+        private readonly IDrawer drawer;
+        private readonly IInputTextProvider inputTextProvider;
+        private readonly ISettingsProvider settingsProvider;
+        public MainForm(IDrawer drawer, IInputTextProvider inputTextProvider, ISettingsProvider settingsProvider)
         {
             InitializeComponent();
-            inputFileHandler = inputTextProvider;
+            this.drawer = drawer;
+            this.inputTextProvider = inputTextProvider;
             this.settingsProvider = settingsProvider;
         }
 
@@ -25,16 +29,14 @@ namespace TagsCloudGUI
             if (openFileDialog.ShowDialog() == DialogResult.Cancel)
                 return;
             string filename = openFileDialog.FileName;
-            inputFileHandler.InputFilePath = filename;
+            fileText = File.ReadAllText(filename);
         }
 
         private void but_generate_Click(object sender, EventArgs e)
         {
             try
             {
-                var container = BuildContainer();
-                var imgDrawer = container.Resolve<IDrawer>();
-                var bitmap = imgDrawer.DrawImage();
+                var bitmap = drawer.DrawImage(fileText);
                 pic_main.BackgroundImage = bitmap;
             }
             catch (Exception ex)
@@ -105,19 +107,8 @@ namespace TagsCloudGUI
 
         private void but_openExludedWordForm_Click(object sender, EventArgs e)
         {
-            var form = new ExludedWordsForm(inputFileHandler.WordsFilter);
+            var form = new ExludedWordsForm(inputTextProvider.WordsFilter);
             form.Show();
-        }
-        private IContainer BuildContainer()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<DefaultDrawer>().As<IDrawer>();
-            builder.RegisterType<DefaultRectangleArranger>().As<IRectangleArranger>();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterInstance(inputFileHandler).As<IInputTextProvider>();
-            builder.RegisterInstance(settingsProvider).As<ISettingsProvider>();
-        
-            return builder.Build();
         }
     }
 }

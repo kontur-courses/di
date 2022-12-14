@@ -5,7 +5,7 @@ namespace TagsCloudContainer
 {
     public class DefaultRectangleArranger : IRectangleArranger
     {
-        private ICloudLayouter cloudLayouter;
+        private readonly ICloudLayouter cloudLayouter;
         public DefaultRectangleArranger(ICloudLayouter cloudLayouter)
         {
             this.cloudLayouter = cloudLayouter;

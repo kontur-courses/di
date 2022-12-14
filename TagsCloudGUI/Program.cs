@@ -18,9 +18,12 @@ namespace TagsCloudGUI
             
             var builder = new ContainerBuilder();
             builder.RegisterType<MainForm>().As<Form>();
-            builder.RegisterType<SettingsProvider>().As<ISettingsProvider>();
-            builder.RegisterType<InputFileHandler>().AsSelf();
-            builder.RegisterType<WordFilter>().AsSelf();
+            builder.RegisterType<DefaultDrawer>().As<IDrawer>();
+            builder.RegisterType<InputFileHandler>().As<IInputTextProvider>().SingleInstance();
+            builder.RegisterType<SettingsProvider>().As<ISettingsProvider>().SingleInstance();
+            builder.RegisterType<DefaultRectangleArranger>().As<IRectangleArranger>();
+            builder.RegisterType<WordFilter>().As<IWordFilter>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             var container = builder.Build();
             
             Application.Run(container.Resolve<Form>());

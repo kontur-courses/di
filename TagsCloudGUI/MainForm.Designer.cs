@@ -90,7 +90,7 @@ namespace TagsCloudGUI
             this.pic_main.InitialImage = ((System.Drawing.Image)(resources.GetObject("pic_main.InitialImage")));
             this.pic_main.Location = new System.Drawing.Point(0, 71);
             this.pic_main.Name = "pic_main";
-            this.pic_main.Size = new System.Drawing.Size(931, 507);
+            this.pic_main.Size = new System.Drawing.Size(931, 494);
             this.pic_main.TabIndex = 4;
             this.pic_main.TabStop = false;
             // 
@@ -193,7 +193,7 @@ namespace TagsCloudGUI
             // but_save
             // 
             this.but_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.but_save.Location = new System.Drawing.Point(769, 584);
+            this.but_save.Location = new System.Drawing.Point(769, 571);
             this.but_save.Name = "but_save";
             this.but_save.Size = new System.Drawing.Size(150, 23);
             this.but_save.TabIndex = 10;
@@ -205,7 +205,7 @@ namespace TagsCloudGUI
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 592);
+            this.label5.Location = new System.Drawing.Point(6, 579);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(119, 13);
             this.label5.TabIndex = 11;
@@ -215,7 +215,7 @@ namespace TagsCloudGUI
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(237, 592);
+            this.label6.Location = new System.Drawing.Point(237, 579);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(120, 13);
             this.label6.TabIndex = 12;
@@ -224,7 +224,7 @@ namespace TagsCloudGUI
             // box_heightPic
             // 
             this.box_heightPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.box_heightPic.Location = new System.Drawing.Point(131, 589);
+            this.box_heightPic.Location = new System.Drawing.Point(131, 576);
             this.box_heightPic.Name = "box_heightPic";
             this.box_heightPic.Size = new System.Drawing.Size(100, 20);
             this.box_heightPic.TabIndex = 13;
@@ -233,17 +233,17 @@ namespace TagsCloudGUI
             // box_widthPic
             // 
             this.box_widthPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.box_widthPic.Location = new System.Drawing.Point(363, 589);
+            this.box_widthPic.Location = new System.Drawing.Point(363, 576);
             this.box_widthPic.Name = "box_widthPic";
             this.box_widthPic.Size = new System.Drawing.Size(100, 20);
             this.box_widthPic.TabIndex = 13;
             this.box_widthPic.Text = "1920";
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 614);
+            this.ClientSize = new System.Drawing.Size(931, 601);
             this.Controls.Add(this.box_widthPic);
             this.Controls.Add(this.box_heightPic);
             this.Controls.Add(this.label6);

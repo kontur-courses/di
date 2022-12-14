@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using TagsCloudContainer;
 
 namespace TagsCloudGUI
 {
     public partial class ExludedWordsForm : Form
     {
-        private WordFilter wordsFilter;
-        public ExludedWordsForm(WordFilter wordsFilter)
+        private IWordFilter wordsFilter;
+        public ExludedWordsForm(IWordFilter wordsFilter)
         {
             this.wordsFilter = wordsFilter;
             InitializeComponent();

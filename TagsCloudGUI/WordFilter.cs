@@ -1,9 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using TagsCloudContainer;
 
 namespace TagsCloudGUI
 {
-    public class WordFilter
+    public class WordFilter : IWordFilter
     {
-        public List<string> WordsToFilter = new List<string>();
+        public HashSet<string> WordsToFilter { get; set; }
+
+        public WordFilter()
+        {
+            WordsToFilter = new HashSet<string>();
+        }
     }
 }

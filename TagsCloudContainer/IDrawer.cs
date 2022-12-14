@@ -4,6 +4,6 @@ namespace TagsCloudContainer
 {
     public interface IDrawer
     {
-        Bitmap DrawImage();
+        Bitmap DrawImage(string text);
     }
 }

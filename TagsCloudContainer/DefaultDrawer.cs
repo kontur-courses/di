@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudContainer
 {
     public class DefaultDrawer : IDrawer
     {
-        private IInputTextProvider inputTextProvider;
-        private Settings settings;
-        private IRectangleArranger rectangleArranger;
+        private readonly Settings settings;
+        private readonly IRectangleArranger rectangleArranger;
+        private readonly IInputTextProvider inputTextProvider;
 
         public DefaultDrawer(IInputTextProvider inputTextProvider, ISettingsProvider settingsProvider,
             IRectangleArranger rectangleArranger)
@@ -18,9 +19,9 @@ namespace TagsCloudContainer
             this.rectangleArranger = rectangleArranger;
         }
 
-        public Bitmap DrawImage()
+        public Bitmap DrawImage(string text)
         {
-            var textContainers = rectangleArranger.GetContainers(inputTextProvider.GetWords(), settings);
+            var textContainers = rectangleArranger.GetContainers(inputTextProvider.GetWords(text), settings);
             var radius = GetRadius(textContainers) + 100;
             var image = new Bitmap(radius * 2, radius * 2);
             var graphics = Graphics.FromImage(image);

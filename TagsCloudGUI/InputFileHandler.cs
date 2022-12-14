@@ -7,16 +7,14 @@ namespace TagsCloudGUI
 {
     public class InputFileHandler : IInputTextProvider
     {
-        public string InputFilePath;
-        public WordFilter WordsFilter;
+        public IWordFilter WordsFilter { get; set; }
 
-        public InputFileHandler(WordFilter wordFilter)
+        public InputFileHandler(IWordFilter wordFilter)
         {
             WordsFilter = wordFilter;
         }
-        public Dictionary<string, int> GetWords()
+        public Dictionary<string, int> GetWords(string text)
         {
-            string text = File.ReadAllText(InputFilePath);
             text = text.ToLower();
             Dictionary<string, int> words = new Dictionary<string, int>();
             foreach (var word in text.Split())
