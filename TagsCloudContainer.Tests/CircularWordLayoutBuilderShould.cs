@@ -5,7 +5,7 @@ using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Tests.LayoutBuilderTests
 {
-    public class CircularWordLayoutBuilderTests
+    public class CircularWordLayoutBuilderShould
     {
         private IWordLayoutBuilder layoutBuilder;
 
