@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using CommandLine;
 using CommandLine.Text;
+using Microsoft.Extensions.Configuration;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
 
@@ -55,7 +56,7 @@ namespace TagsCloudContainer.ConsoleApp
             builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetTextReaderSettings()).AsSelf();
 
             builder.RegisterType<TextFileReader>().As<IWordReader>().SingleInstance();
-            builder.RegisterType<WordPreparer>().As<IWordPreparer>().SingleInstance();
+            builder.Register(ctx => new WordPreparer(new[] { WordType.Other })).As<IWordPreparer>().SingleInstance();
 
             builder.RegisterType<WordLinearColorProviderFactory>().As<IWordColorProviderFactory>().SingleInstance();
             builder.RegisterType<WordLinearFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();

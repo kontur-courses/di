@@ -28,7 +28,7 @@ namespace TagsCloudContainer.GUI
             builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetTextReaderSettings()).AsSelf();
 
             builder.RegisterType<TextFileReader>().As<IWordReader>().SingleInstance();
-            builder.RegisterType<WordPreparer>().As<IWordPreparer>().SingleInstance();
+            builder.Register(ctx => new WordPreparer(new WordType[] { WordType.Other })).As<IWordPreparer>().SingleInstance();
 
             builder.RegisterType<WordLinearColorProviderFactory>().As<IWordColorProviderFactory>().SingleInstance();
             builder.RegisterType<WordLinearFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();
