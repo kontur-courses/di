@@ -2,11 +2,10 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization;
 
-public class BitmapTagsCloudVisualization : ITagsCloudVisualization
+public class BitmapTagsCloudVisualization 
 {
     public void SaveTagsCloud(CircularCloudLayouter layouter, string path)
     {
@@ -20,37 +19,33 @@ public class BitmapTagsCloudVisualization : ITagsCloudVisualization
 
     private static Bitmap DrawRectangles(CircularCloudLayouter layouter)
     {
-        // var maxWidthDiff = 200 + layouter.Rectangles.Max(rec => rec.Right) - layouter.Rectangles.Min(rec => rec.Left);
-        // var maxHeightDiff = 200 + layouter.Rectangles.Max(rec => rec.Top) - layouter.Rectangles.Min(rec => rec.Bottom);
-        //
-        // var squareWidth = Math.Max(maxWidthDiff, maxHeightDiff);
-        //
-        // var bitmap = new Bitmap(squareWidth, squareWidth);
-        //
-        // var graphics = Graphics.FromImage(bitmap);
-        //
-        // graphics.Clear(Color.White);
-        // var pen = new Pen(Brushes.Black);
-        // graphics.SmoothingMode = SmoothingMode.HighQuality;
-        // foreach (var rectangle in layouter.Rectangles)
-        // {
-        //     var offsetRectangle = GetRectangleOffsetToCenter(rectangle, bitmap);
-        //     graphics.DrawRectangle(pen, offsetRectangle);
-        //     graphics.DrawString("y", new Font("Tahoma",10, GraphicsUnit.Pixel), Brushes.Black, new PointF(offsetRectangle.X,offsetRectangle.Y));
-        //     graphics.MeasureString("y", new Font("Tahoma",10, GraphicsUnit.Pixel));
-        // }
+        var maxWidthDiff = 200 + layouter.Rectangles.Max(rec => rec.Right) - layouter.Rectangles.Min(rec => rec.Left);
+        var maxHeightDiff = 200 + layouter.Rectangles.Max(rec => rec.Top) - layouter.Rectangles.Min(rec => rec.Bottom);
 
-        // var asd =  Graphics.MeasureString("y", new Font("Tahoma", 10, GraphicsUnit.Pixel));
-        // return bitmap;
-        return null;
+        var squareWidth = Math.Max(maxWidthDiff, maxHeightDiff);
+
+        var bitmap = new Bitmap((int)squareWidth, (int)squareWidth);
+
+        var graphics = Graphics.FromImage(bitmap);
+
+        graphics.Clear(Color.White);
+        var pen = new Pen(Brushes.Black);
+        graphics.SmoothingMode = SmoothingMode.HighQuality;
+        foreach (var rectangle in layouter.Rectangles)
+        {
+            var offsetRectangle = GetRectangleOffsetToCenter(rectangle, bitmap);
+            graphics.DrawRectangle(pen, offsetRectangle);
+        }
+
+        return bitmap;
     }
 
-    private static Rectangle GetRectangleOffsetToCenter(Rectangle rectangle, Image bitmap)
+    private static RectangleF GetRectangleOffsetToCenter(RectangleF rectangle, Image bitmap)
     {
-        var widthShift = bitmap.Width / 2;
-        var heightShift = bitmap.Height / 2;
+        var widthShift = (float)bitmap.Width / 2;
+        var heightShift = (float)bitmap.Height / 2;
 
-        var rectanglePosition = new Point(rectangle.Location.X + widthShift, rectangle.Location.Y + heightShift);
-        return new Rectangle(rectanglePosition, rectangle.Size);
+        var rectanglePosition = new PointF(rectangle.Location.X + widthShift, rectangle.Location.Y + heightShift);
+        return new RectangleF(rectanglePosition, rectangle.Size);
     }
 }

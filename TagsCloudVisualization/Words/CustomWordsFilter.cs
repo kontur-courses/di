@@ -19,10 +19,8 @@ public class CustomWordsFilter : IWordsFilter
         var filteredWords = new Dictionary<string, int>();
         foreach (var wordCountPair in wordsAndCount)
         {
-  
             if (options.BoringWords.Contains(wordCountPair.Key))
                 continue;
-
 
             if (!options.ExcludedPartsOfSpeech.Any() || !speechInfo.TryGetValue(wordCountPair.Key, out var wordMorphInfo))
             {

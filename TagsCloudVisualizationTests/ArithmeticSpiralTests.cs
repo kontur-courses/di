@@ -15,7 +15,7 @@ public class ArithmeticSpiralTests
     [TestCase(-4)]
     public void Constructor_NotPositiveConstant_Throw(int constant)
     {
-        new Action(() => { new ArithmeticSpiral(new Point(0, 0), constant); })
+        new Action(() => { new ArithmeticSpiral(constant); })
             .Should()
             .Throw<ArgumentException>()
             .WithMessage("Negative or zero arithmetic spiral constant not allowed");
@@ -25,7 +25,7 @@ public class ArithmeticSpiralTests
     [Test]
     public void Constructor_RightParams_NotThrow()
     {
-        new Action(() => { new ArithmeticSpiral(new Point(0, 0), 1); })
+        new Action(() => { new ArithmeticSpiral(1); })
             .Should()
             .NotThrow();
     }
@@ -37,9 +37,9 @@ public class ArithmeticSpiralTests
         const int constant = 2;
         const int length = 5;
 
-        var arithmeticSpiral = new ArithmeticSpiral(center, constant);
+        var arithmeticSpiral = new ArithmeticSpiral(constant);
 
-        var point = arithmeticSpiral.GetPoint(length);
+        var point = arithmeticSpiral.GetPoint(center, length);
 
         var expectedX = (int)(center.X + Math.Cos(length) * length * constant);
         var expectedY = (int)(center.Y + Math.Sin(length) * length * constant);

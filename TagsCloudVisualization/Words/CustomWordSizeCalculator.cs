@@ -4,11 +4,17 @@ public class CustomWordSizeCalculator : IWordsSizeCalculator
 {
     public Dictionary<string, float> CalcSizeForWords(Dictionary<string, int> wordsAndCount, float minFontSize, float maxFontSize)
     {
+        if (minFontSize < 1)
+            throw new ArgumentException("MinFontSize should be greater than 1");
+
+        if (maxFontSize <= minFontSize)
+            throw new ArgumentException("maxFontSize should be greater than MinFontSize");
+
         var wordsFrequency = wordsAndCount.Values.ToList();
 
         var groupByUniqueCount = wordsFrequency.GroupBy(r => r)
             .Select(r => r.Key)
-            .OrderByDescending(r => r)
+            .OrderBy(r => r)
             .ToList();
 
         var sizesDiff = maxFontSize - minFontSize;

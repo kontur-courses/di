@@ -16,6 +16,9 @@ public class MyStemMorphAnalyzer : IMorphAnalyzer
     public MyStemMorphAnalyzer(string workingDirectory)
     {
         _workingDirectory = workingDirectory;
+
+        if (!File.Exists(Path.Combine(_workingDirectory, "mystem.exe")))
+            throw new FileNotFoundException($"File mystem.exe not found");
     }
 
     public Dictionary<string, WordMorphInfo> GetWordsMorphInfo(IEnumerable<string> words)
@@ -37,14 +40,20 @@ public class MyStemMorphAnalyzer : IMorphAnalyzer
         };
         var process = Process.Start(proc);
 
-        var wordsSpeechInfo = new Dictionary<string, WordMorphInfo>();
+
         var wordsFromMorphAnalyzer = process?.StandardOutput
             .ReadToEnd()
             .Split(Environment.NewLine)
-            .ToList();
+            .ToList()!;
 
         File.Delete(pathToTempFileName);
 
+        return ParseWordMorphInfoFromOutput(wordsFromMorphAnalyzer);
+    }
+
+    private static Dictionary<string, WordMorphInfo> ParseWordMorphInfoFromOutput(List<string> wordsFromMorphAnalyzer)
+    {
+        var wordsSpeechInfo = new Dictionary<string, WordMorphInfo>();
         foreach (var line in wordsFromMorphAnalyzer)
         {
             if (string.IsNullOrEmpty(line))
@@ -64,10 +73,5 @@ public class MyStemMorphAnalyzer : IMorphAnalyzer
         }
 
         return wordsSpeechInfo;
-    }
-
-    private static WordMorphInfo ParseMorphInfo(string line)
-    {
-        return new WordMorphInfo();
     }
 }

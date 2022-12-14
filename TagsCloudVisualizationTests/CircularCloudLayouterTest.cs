@@ -10,25 +10,30 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
 using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualizationTests;
 
 [TestFixture]
-public class CircularCloudLayouter_Test
+public class CircularCloudLayouterTest
 {
     private CircularCloudLayouter _layouter;
+    private PointF _center;
+
+    private LayoutOptions _options;
 
     [SetUp]
     public void Setup()
     {
-        _layouter = new CircularCloudLayouter(new Point(0, 0), 0.01);
+        var spiral = new ArithmeticSpiral();
+        _center = new Point(0, 0);
+        _layouter = new CircularCloudLayouter(spiral);
+        _options = new LayoutOptions(_center, 0.1f);
     }
 
     [Test]
     public void Constructor_NotPositiveSpiralStep_Throw()
     {
-        new Action(() => { new CircularCloudLayouter(new Point(0, 0), -1); })
+        new Action(() => { new CircularCloudLayouter(new ArithmeticSpiral(-1)); })
             .Should()
             .Throw<ArgumentException>();
     }
@@ -40,14 +45,14 @@ public class CircularCloudLayouter_Test
     [TestCase(5, -1, TestName = "Negative height")]
     public void PutNextRectangle_NotPositiveOrSingleSideSize_EmptyRectangle(int width, int height)
     {
-        var rectangle = _layouter.PutNextRectangle(new Size(0, 0));
+        var rectangle = _layouter.PutNextRectangle(new Size(0, 0), _options);
         rectangle.IsEmpty.Should().BeTrue();
     }
 
     [Test]
     public void PutNextRectangle_ZeroSize_EmptyRectangle()
     {
-        var rectangle = _layouter.PutNextRectangle(new Size(0, 0));
+        var rectangle = _layouter.PutNextRectangle(new Size(0, 0), _options);
         rectangle.IsEmpty.Should().BeTrue();
     }
 
@@ -58,7 +63,7 @@ public class CircularCloudLayouter_Test
         var width = random.Next(1, 100);
         var height = random.Next(1, 100);
 
-        var rectangle = _layouter.PutNextRectangle(new Size(width, height));
+        var rectangle = _layouter.PutNextRectangle(new Size(width, height), _options);
 
         using (new AssertionScope())
         {
@@ -76,11 +81,11 @@ public class CircularCloudLayouter_Test
         var width = 9;
         var height = 12;
 
-        _layouter = new CircularCloudLayouter(new Point(x, y));
-        var rectangle = _layouter.PutNextRectangle(new Size(width, height));
+        _options = new LayoutOptions(new PointF(x, y), 0.1f);
+        var rectangle = _layouter.PutNextRectangle(new Size(width, height), _options);
 
-        var expectedX = x - width / 2;
-        var expectedY = y - height / 2;
+        var expectedX = x - (float)width / 2;
+        var expectedY = y - (float)height / 2;
 
         using (new AssertionScope())
         {
@@ -95,8 +100,8 @@ public class CircularCloudLayouter_Test
     [TestCase(5, 7)]
     public void PutNextRectangle_TwoRectangles_NotIntersect(int width, int height)
     {
-        var firstRectangle = _layouter.PutNextRectangle(new Size(width, height));
-        var secondRectangle = _layouter.PutNextRectangle(new Size(width, height));
+        var firstRectangle = _layouter.PutNextRectangle(new Size(width, height), _options);
+        var secondRectangle = _layouter.PutNextRectangle(new Size(width, height), _options);
 
         firstRectangle
             .IntersectsWith(secondRectangle)
@@ -108,13 +113,14 @@ public class CircularCloudLayouter_Test
     public void PutNextRectangle_ManyRectangles_AllNotIntersect()
     {
         var random = new Random();
-        var rectangles = new List<Rectangle>();
+        var rectangles = new List<RectangleF>();
+
 
         for (int i = 0; i < 100; i++)
         {
             var newX = random.Next(40, 100);
             var newY = random.Next(40, 100);
-            rectangles.Add(_layouter.PutNextRectangle(new Size(newX, newY)));
+            rectangles.Add(_layouter.PutNextRectangle(new Size(newX, newY), _options));
         }
 
         foreach (var rectangle in rectangles)
@@ -129,32 +135,16 @@ public class CircularCloudLayouter_Test
     public void PutNextRectangle_ManyRectangles_AllPutInLayout()
     {
         var random = new Random();
-        var rectangles = new List<Rectangle>();
+        var rectangles = new List<RectangleF>();
 
         for (int i = 0; i < 100; i++)
         {
             var newX = random.Next(40, 100);
             var newY = random.Next(40, 100);
-            rectangles.Add(_layouter.PutNextRectangle(new Size(newX, newY)));
+            rectangles.Add(_layouter.PutNextRectangle(new Size(newX, newY), _options));
         }
 
         _layouter.Rectangles.Should().BeEquivalentTo(rectangles);
-    }
-
-    [Test, Description("Тест специально провальный для того, чтобы показать работу сохранения облака при падении")]
-    public void PutNextRectangle_ManyRectangles_FailTest()
-    {
-        var random = new Random();
-        var rectangles = new List<Rectangle>();
-
-        for (int i = 0; i < 100; i++)
-        {
-            var newY = random.Next(40, 70);
-            var newX = random.Next(newY, 100);
-            rectangles.Add(_layouter.PutNextRectangle(new Size(newX, newY)));
-        }
-
-        _layouter.Rectangles.Should().NotBeEquivalentTo(rectangles);
     }
 
 
@@ -164,7 +154,7 @@ public class CircularCloudLayouter_Test
         if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
             return;
 
-        ITagsCloudVisualization tagsCloudVisualization = new BitmapTagsCloudVisualization();
+        var tagsCloudVisualization = new BitmapTagsCloudVisualization();
 
         var filename = $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now:yy.MM.dd_HH.mm.ss}.bmp";
         var projectDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ("FailedTests"));

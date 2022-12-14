@@ -18,4 +18,10 @@ public class VisualizationOptions
     public float MaxFontSize { get; set; }
     
     public  string DirectoryToMyStemProgram { get; set; }
+
+    public VisualizationOptions()
+    {
+        BoringWords = new List<string>();
+        ExcludedPartsOfSpeech = new List<string>();
+    }
 }

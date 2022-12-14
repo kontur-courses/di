@@ -2,7 +2,7 @@ namespace TagsCloudVisualization.MorphAnalyzer;
 
 public class WordMorphInfo
 {
-    public List<string> PartsOfSpeech { get; private set; }
+    public List<string> PartsOfSpeech { get; set; }
 
 
     public WordMorphInfo()
