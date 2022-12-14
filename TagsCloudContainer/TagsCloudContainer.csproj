@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="OpenNLP.NET" Version="1.9.4.1" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-    <PackageReference Include="WeCantSpell.Hunspell" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,15 @@
     <Reference Include="OptimizationMethods">
       <HintPath>OptimizationMethods.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="OpenNLPBins\en-pos-maxent.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="OpenNLPBins\en-token.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
