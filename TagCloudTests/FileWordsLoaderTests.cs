@@ -45,7 +45,7 @@ public class FileWordsLoaderTests
         var filepath = filePaths[TestContext.CurrentContext.Test.ID];
         File.Delete(filepath);
 
-        var act = () => new FileWordsLoader(filepath);
+        var act = () => new TxtLinesWordsLoader(filepath);
 
         act.Should().Throw<FileNotFoundException>()
             .WithMessage($"Could not find file '{Path.GetFullPath(filepath)}'.");
@@ -55,7 +55,7 @@ public class FileWordsLoaderTests
     public void Constructor_ThrowFileNotFoundException_OnFileBeenDeletedAfterLoaderInit()
     {
         var filepath = filePaths[TestContext.CurrentContext.Test.ID];
-        var loader = new FileWordsLoader(filepath);
+        var loader = new TxtLinesWordsLoader(filepath);
         File.Delete(filepath);
 
         var act = () => loader.Load();
@@ -68,7 +68,7 @@ public class FileWordsLoaderTests
     public void Load_ReturnEmptyEnumerable_OnEmptyFile()
     {
         var filepath = filePaths[TestContext.CurrentContext.Test.ID];
-        var loader = new FileWordsLoader(filepath);
+        var loader = new TxtLinesWordsLoader(filepath);
 
         var result = loader.Load();
 
@@ -81,7 +81,7 @@ public class FileWordsLoaderTests
         var lines = new[] { "Карл", "у", "Клары", "украл", "кораллы", "а", "Клара", "у", "Карла", "украла", "кларнет" };
         var filepath = filePaths[TestContext.CurrentContext.Test.ID];
         File.WriteAllLines(filepath, lines);
-        var loader = new FileWordsLoader(filepath);
+        var loader = new TxtLinesWordsLoader(filepath);
 
         var result = loader.Load();
 
@@ -94,7 +94,7 @@ public class FileWordsLoaderTests
         var filepath = filePaths[TestContext.CurrentContext.Test.ID];
         var lines = new[] { "Карл", "у", "Клары", "украл", "кораллы", "а", "Клара", "у", "Карла", "украла", "кларнет" };
         File.WriteAllLines(filepath, lines);
-        var loader = new FileWordsLoader(filepath);
+        var loader = new TxtLinesWordsLoader(filepath);
         var resultBefore = loader.Load();
         var newLines = new[] { "От", "топота", "копыт", "пыль", "по", "полю", "летит" };
         File.WriteAllLines(filepath, newLines);

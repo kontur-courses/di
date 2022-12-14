@@ -2,11 +2,11 @@
 
 namespace TagCloud;
 
-public class FileWordsLoader : IWordsLoader
+public class TxtLinesWordsLoader : IWordsLoader
 {
     private readonly string filepath;
 
-    public FileWordsLoader(string filepath)
+    public TxtLinesWordsLoader(string filepath)
     {
         if (!File.Exists(filepath))
             throw new FileNotFoundException($"Could not find file '{Path.GetFullPath(filepath)}'.");
