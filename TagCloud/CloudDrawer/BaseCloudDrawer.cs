@@ -32,7 +32,8 @@ public class BaseCloudDrawer : ICloudDrawer
         set
         {
             if (value <= 0 || value < minFontSize)
-                throw new ArgumentException("MaxFontSize should be greater than 0 and MinFontSize");
+                throw new ArgumentException(
+                    $"MaxFontSize should be greater than 0 and MinFontSize, but {value}");
 
             maxFontSize = value;
         }
@@ -44,7 +45,8 @@ public class BaseCloudDrawer : ICloudDrawer
         set
         {
             if (value <= 0 || value > maxFontSize)
-                throw new ArgumentException("MinFonSize should be greater than 0 and less than MaxFontSize");
+                throw new ArgumentException(
+                    $"MinFonSize should be greater than 0 and less than MaxFontSize, but {value}");
 
             minFontSize = value;
         }
@@ -55,6 +57,9 @@ public class BaseCloudDrawer : ICloudDrawer
         Graphics.Clear(BackgroundColor);
         foreach (var tag in tags)
         {
+            if (tag.FontSize <= 0)
+                throw new ArgumentException($"Weight of Tag should be greater than 0, but {tag.FontSize}");
+
             using var font = new Font(FontFamily, tag.FontSize);
             using var brush = new SolidBrush(TextColor);
             Graphics.DrawString(tag.Tag.Text, font, brush, tag.Location);

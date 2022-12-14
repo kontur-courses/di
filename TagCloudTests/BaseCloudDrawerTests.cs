@@ -21,12 +21,12 @@ public class BaseCloudDrawerTests
             MinFontSize = 5
         };
 
-        var act = () => drawer.MinFontSize = 0;
+        var act = () => drawer.MinFontSize = minFontSize;
 
         act.Should().Throw<ArgumentException>()
-            .WithMessage("MinFonSize should be greater than 0 and less than MaxFontSize");
+            .WithMessage($"MinFonSize should be greater than 0 and less than MaxFontSize, but {minFontSize}");
     }
-    
+
     [TestCase(-1, TestName = "{m}IsNegative")]
     [TestCase(0, TestName = "{m}IsZero")]
     [TestCase(4, TestName = "{m}LessThanMinFontSize")]
@@ -41,7 +41,7 @@ public class BaseCloudDrawerTests
         var act = () => drawer.MaxFontSize = maxFontSize;
 
         act.Should().Throw<ArgumentException>()
-            .WithMessage("MaxFontSize should be greater than 0 and MinFontSize");
+            .WithMessage($"MaxFontSize should be greater than 0 and MinFontSize, but {maxFontSize}");
     }
 
     [Test]
@@ -65,6 +65,20 @@ public class BaseCloudDrawerTests
 
         AllPixels(bitmap).Should().OnlyContain(c => c == backgroundColor);
     }
+
+    [TestCase(0, TestName = "{m}ZeroFontSize")]
+    [TestCase(-1, TestName = "{m}NegativeFontSize")]
+    public void Draw_ThrowArgumentException_OnTagWith(int fontsize)
+    {
+        var drawer = new BaseCloudDrawer(new Size(100, 100));
+        var tags = new[] { new DrawableTag(new Tag("word", 0), fontsize, new Point(0, 0)) };
+
+        var act = () => drawer.Draw(tags);
+
+        act.Should().Throw<ArgumentException>()
+            .WithMessage($"Weight of Tag should be greater than 0, but {fontsize}");
+    }
+
 
     [Test]
     public void Draw_ShouldDrawSomeRectangles()
@@ -94,11 +108,11 @@ public class BaseCloudDrawerTests
             TextColor = textColor
         };
         var tags = Array.Empty<DrawableTag>();
-        
+
         var bitmap1 = drawer.Draw(tags);
-        tags = new [] { new DrawableTag(new Tag("word", 0), 10, new Point(0, 0)) };
+        tags = new[] { new DrawableTag(new Tag("word", 0), 10, new Point(0, 0)) };
         var bitmap2 = drawer.Draw(tags);
-        
+
         AllPixels(bitmap1).Should().NotEqual(AllPixels(bitmap2));
     }
 

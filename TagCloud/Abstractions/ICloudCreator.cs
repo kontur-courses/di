@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-
-namespace TagCloud.Abstractions;
+﻿namespace TagCloud.Abstractions;
 
 public interface ICloudCreator
 {
-    Bitmap CreateTagCloud(IEnumerable<ITag> tags);
+    IEnumerable<IDrawableTag> CreateTagCloud(IEnumerable<ITag> tags);
 }

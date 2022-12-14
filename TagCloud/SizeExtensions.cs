@@ -8,4 +8,9 @@ public static class SizeExtensions
     {
         return size is { Width: > 0, Height: > 0 };
     }
+
+    public static int Area(this Size size)
+    {
+        return size.Width * size.Height;
+    }
 }
