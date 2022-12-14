@@ -38,7 +38,7 @@ public class CircularCloudLayouterTests
 		var failedTestName = TestContext.CurrentContext.Test.Name;
 		var failedTestMethodName = TestContext.CurrentContext.Test.MethodName;
 
-		var path = imageSaver.Save(image, $"{failedTestMethodName} with {failedTestName}");
+		var path = directoryImageSaver.Save(image, $"{failedTestMethodName} with {failedTestName}");
 		var message = $"Tag cloud visualization saved to file {path}";
 
 		Console.WriteLine(message);
@@ -46,7 +46,7 @@ public class CircularCloudLayouterTests
 
 	private CircularCloudLayouter layouter;
 	private List<Rectangle> placedRectangles;
-	private readonly ImageSaver imageSaver = new($"{Environment.CurrentDirectory}\\FailedTestsLayouts", ImageFormat.Png);
+	private readonly DirectoryImageSaver directoryImageSaver = new($"{Environment.CurrentDirectory}\\FailedTestsLayouts", ImageFormat.Png);
 
 	[TestCaseSource(nameof(CentersSource))]
 	public void Constructor_WithCorrectCenter_ShouldNotThrow(Point center)

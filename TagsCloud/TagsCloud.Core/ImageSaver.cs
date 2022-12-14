@@ -5,21 +5,17 @@ namespace TagsCloud.Core;
 
 public class ImageSaver
 {
-	public ImageSaver(string directory, ImageFormat format)
-	{
-		Format = format;
-		Directory = directory;
+	private readonly ImageFormat format;
+	private readonly string path;
 
-		System.IO.Directory.CreateDirectory(directory);
+	public ImageSaver(string path, ImageFormat format)
+	{
+		this.path = path;
+		this.format = format;
 	}
 
-	public ImageFormat Format { get; }
-	public string Directory { get; }
-
-	public string Save(Image image, string name)
+	public void Save(Image image)
 	{
-		var path = $"{Directory}\\{name}.{Format.ToString().ToLower()}";
-		image.Save(path, Format);
-		return path;
+		image.Save(path, format);
 	}
 }
