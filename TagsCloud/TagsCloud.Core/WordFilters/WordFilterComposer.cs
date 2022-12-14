@@ -2,7 +2,7 @@
 
 public class WordFilterComposer : IWordFiltersComposer
 {
-	private IEnumerable<IWordFilter> filters;
+	private readonly IEnumerable<IWordFilter> filters;
 
 	public WordFilterComposer(IEnumerable<IWordFilter> filters)
 	{

@@ -10,10 +10,7 @@ public class BoringWordsFilter : IWordFilter
 	{
 		boringWords = new HashSet<string>();
 
-		foreach (var word in boringWordsReader.ReadWords())
-		{
-			boringWords.Add(word);
-		}
+		foreach (var word in boringWordsReader.ReadWords()) boringWords.Add(word);
 	}
 
 	public bool WordIsValid(string word)

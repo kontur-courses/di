@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagsCloud.Core;
+namespace TagsCloud.Tests;
 
 public class DirectoryImageSaver
 {
@@ -14,6 +14,7 @@ public class DirectoryImageSaver
 	}
 
 	public ImageFormat Format { get; }
+
 	public string Directory { get; }
 
 	public string Save(Image image, string name)

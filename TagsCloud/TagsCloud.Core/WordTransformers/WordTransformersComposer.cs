@@ -2,7 +2,7 @@
 
 public class WordTransformersComposer : IWordTransformersComposer
 {
-	private IOrderedEnumerable<IWordTransformer> transformers;
+	private readonly IOrderedEnumerable<IWordTransformer> transformers;
 
 	public WordTransformersComposer(IEnumerable<IWordTransformer> transformers)
 	{

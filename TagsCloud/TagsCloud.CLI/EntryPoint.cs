@@ -17,7 +17,7 @@ public class EntryPoint
 		{
 			args = new[] { "-wNumb.txt", "-sExample.png", "--excluding=BoringWords.txt" };
 			Console.WriteLine(
-				"Example with default options: \"-w Numb.txt -s CLINumbTest.png --excluding BoringWords.txt\"");
+				"Example with default options: \"-w Numb.txt -s Example.png --excluding BoringWords.txt\"");
 		}
 
 		Parser.Default.ParseArguments<Options>(args)
@@ -44,14 +44,14 @@ public class EntryPoint
 		Console.WriteLine($"OK> Image save as {options.PathToImage}");
 	}
 
-	public static ImageSettings GetImageSettings(Options options)
+	private static ImageSettings GetImageSettings(Options options)
 	{
 		var fontColor = options.FontColor is null ? Color.BlueViolet : Color.FromName(options.FontColor);
 		var backgroundColor =
 			options.BackgroundColor is null ? Color.AliceBlue : Color.FromName(options.BackgroundColor);
-		ITagCLoudPallet pallet = options.UseRandomColor ? 
-			new RandomPallet(backgroundColor) :
-			new MonocolorPallet(fontColor, backgroundColor);
+		ITagCLoudPallet pallet = options.UseRandomColor
+			? new RandomPallet(backgroundColor)
+			: new MonocolorPallet(fontColor, backgroundColor);
 
 		var fontFamily = options.FontName is null ? FontFamily.GenericMonospace : new FontFamily(options.FontName);
 		var fontSize = options.MinFontSize ?? 14;

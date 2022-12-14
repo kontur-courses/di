@@ -19,7 +19,6 @@ public static class Builder
 	{
 		var container = new Container();
 
-		//container.Options.AllowOverridingRegistrations = true;
 		RegisterWordsFilters(container, options);
 		RegisterTransformers(container);
 		RegisterPreprocessor(container, options.PathToWordsFile);
@@ -52,7 +51,6 @@ public static class Builder
 			var boringWordsReader = new WordReaderFromTxt(options.PathToExcludedWords);
 			filters.Add(new BoringWordsFilter(boringWordsReader));
 		}
-		//var boringWordsReader = new WordReaderFromTxt($"{Environment.CurrentDirectory}\\BoringWords.txt");
 
 		container.Collection.Register<IWordFilter>(filters);
 
