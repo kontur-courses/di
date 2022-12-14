@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using CommandLine;
 using CommandLine.Text;
-using Microsoft.Extensions.Configuration;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
 

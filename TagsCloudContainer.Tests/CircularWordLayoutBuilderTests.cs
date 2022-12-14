@@ -18,9 +18,6 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
         [Test]
         public void AddWord_Should_ThrowArgumentException_WhenSizeIsZero()
         {
-            var center = Point.Empty;
-            var size = Size.Empty;
-
             var action = () => layoutBuilder.AddWord("123", default);
 
             action.Should().Throw<ArgumentException>();
