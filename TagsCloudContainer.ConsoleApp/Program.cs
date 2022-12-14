@@ -3,6 +3,11 @@ using CommandLine;
 using CommandLine.Text;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
+using TagsCloudContainer.Infrastructure.WordColorProviders.Factories;
+using TagsCloudContainer.Infrastructure.WordFontSizeProviders.Factories;
+using TagsCloudContainer.Infrastructure.WordLayoutBuilders;
+using TagsCloudContainer.Infrastructure.WordPreparers;
+using TagsCloudContainer.Infrastructure.WordReaders;
 
 namespace TagsCloudContainer.ConsoleApp
 {

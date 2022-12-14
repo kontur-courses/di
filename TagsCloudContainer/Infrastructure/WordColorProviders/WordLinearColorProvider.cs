@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure.Settings;
 
-namespace TagsCloudContainer.Infrastructure
+namespace TagsCloudContainer.Infrastructure.WordColorProviders
 {
     public class WordLinearColorProvider : IWordColorProvider
     {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure.Settings;
+using TagsCloudContainer.Infrastructure.WordColorProviders.Factories;
 
 namespace TagsCloudContainer.Infrastructure
 {

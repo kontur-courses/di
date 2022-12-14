@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
+using TagsCloudContainer.Infrastructure.WordColorProviders.Factories;
+using TagsCloudContainer.Infrastructure.WordFontSizeProviders.Factories;
+using TagsCloudContainer.Infrastructure.WordLayoutBuilders;
+using TagsCloudContainer.Infrastructure.WordPreparers;
+using TagsCloudContainer.Infrastructure.WordReaders;
 
 namespace TagsCloudContainer.GUI
 {

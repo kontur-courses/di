@@ -6,6 +6,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure.Settings;
+using TagsCloudContainer.Infrastructure.WordFontSizeProviders.Factories;
+using TagsCloudContainer.Infrastructure.WordLayoutBuilders;
 
 namespace TagsCloudContainer.Infrastructure
 {

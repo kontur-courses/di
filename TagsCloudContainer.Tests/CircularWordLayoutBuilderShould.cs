@@ -2,6 +2,7 @@ using FluentAssertions;
 using System.Drawing;
 using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.WordLayoutBuilders;
 
 namespace TagsCloudContainer.Tests.LayoutBuilderTests
 {

@@ -17,6 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
+using TagsCloudContainer.Infrastructure.WordPreparers;
+using TagsCloudContainer.Infrastructure.WordReaders;
 
 namespace TagsCloudContainer.GUI
 {

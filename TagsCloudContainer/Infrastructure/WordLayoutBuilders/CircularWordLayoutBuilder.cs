@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudVisualization;
 
-namespace TagsCloudContainer.Infrastructure
+namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
 {
     public class CircularWordLayoutBuilder : IWordLayoutBuilder
     {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.WordReaders;
 
 namespace TagsCloudContainer.Tests.TextFileReaderTests
 {
