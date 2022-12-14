@@ -1,24 +1,27 @@
-﻿using TagCloud.ImageProcessing;
-using TagCloud.PointGenerator;
+﻿using System.Drawing;
+using TagCloud.ImageProcessing;
 
 namespace TagCloud.AppConfig
 {
     internal class AppConfig : IAppConfig
     {
-        public IPointGenerator pointGenerator { get; set; }
-        public string inputTextFilePath { get; set; }
-        public string outputImageFilePath { get; set; }
-        public IImageSettings imageSettings { get; set; }
+        public string InputTextFilePath { get; set; }
+        public string OutputImageFilePath { get; set; }
+        public string CloudForm { get; set; }
+        public Point CloudCentralPoint { get; set; }
+        public IImageSettings ImageSettings { get; set; }
 
-        public AppConfig(IPointGenerator pointGenerator,
-                         string inputTextFilePath, 
-                         string outputImageFilePath, 
+        public AppConfig(string inputTextFilePath, 
+                         string outputImageFilePath,
+                         string cloudForm,
+                         Point cloudCentralPoint,
                          IImageSettings imageSettings)
         {
-            this.pointGenerator = pointGenerator;
-            this.inputTextFilePath = inputTextFilePath;
-            this.outputImageFilePath = outputImageFilePath;
-            this.imageSettings = imageSettings;
+            InputTextFilePath = inputTextFilePath;
+            OutputImageFilePath = outputImageFilePath;
+            CloudForm = cloudForm;
+            CloudCentralPoint = cloudCentralPoint;
+            ImageSettings = imageSettings;
         }
     }
 }

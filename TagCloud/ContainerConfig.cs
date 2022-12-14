@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using TagCloud.FileReader;
 using TagCloud.FrequencyAnalyzer;
@@ -15,7 +16,7 @@ using TagCloud.CloudLayouter;
 namespace TagCloud
 {
     public static class ContainerConfig
-    {      
+    {
         public static IContainer Configure(IAppConfig appConfig)
         {
             var builder = new ContainerBuilder();
@@ -34,6 +35,8 @@ namespace TagCloud
 
             ConfigureImageSettings(appConfig, builder);
 
+            ConfigureWordColoring(appConfig, builder);
+
             ConfigurePointGenerator(appConfig, builder);
 
             ConfigureCloudImageGenerator(builder);
@@ -48,9 +51,14 @@ namespace TagCloud
             builder.Register<IFileReader>(
                (c, p) =>
                {
-                   var filePath = appConfig.inputTextFilePath;
+                   var filePath = appConfig.InputTextFilePath;
 
-                   if (filePath.Contains(".doc"))
+                   var formats = Enum.GetNames(typeof(ValidInputFileFormats));
+
+                   if (!formats.Any(t => filePath.Contains(t)))
+                       throw new ArgumentException($"Input file <{filePath}> has invalid format");
+
+                   if (filePath.Contains(".docx") && filePath.Contains(".doc"))
                        return new DocxFileReader();
 
                    return new TxtFileReader();
@@ -83,7 +91,19 @@ namespace TagCloud
 
         private static void ConfigurePointGenerator(IAppConfig appConfig, ContainerBuilder builder)
         {
-            builder.Register(c => appConfig.pointGenerator).As<IPointGenerator>();
+            builder.Register(c => appConfig.CloudCentralPoint).As<Point>();
+
+            switch (appConfig.CloudForm.ToLower())
+            {
+                case "circle":
+                    builder.RegisterType<CirclePointGenerator>().As<IPointGenerator>();
+                    break;
+                case "ellipse":
+                    builder.RegisterType<EllipsePointGenerator>().As<IPointGenerator>();
+                    break;
+                default:
+                    throw new ArgumentException($"Cloud form <{appConfig.CloudForm}> isn't supported");
+            }
         }
 
         private static void ConfigureCloudLayouter(ContainerBuilder builder)
@@ -93,15 +113,36 @@ namespace TagCloud
 
         private static void ConfigureImageSettings(IAppConfig appConfig, ContainerBuilder builder)
         {
-            builder.Register(с => appConfig.imageSettings).As<IImageSettings>();
-            builder.Register(с => appConfig.imageSettings.WordColoring).As<IWordColoring>();
-            builder.Register(с => appConfig.imageSettings.FontFamily).As<FontFamily>();
+            builder.Register(с => appConfig.ImageSettings).As<IImageSettings>();
+            builder.Register(с => appConfig.ImageSettings.FontFamily).As<FontFamily>();
+        }
+
+        private static void ConfigureWordColoring(IAppConfig appConfig, ContainerBuilder builder)
+        {
+            IWordColoring coloring;
+
+            switch (appConfig.ImageSettings.WordColoringAlgorithmName)
+            {
+                case "random":
+                    coloring = new RandomColoring();
+                    break;
+                case "gradient":
+                    coloring = new GradientColoring();
+                    break;
+                case "black":
+                    coloring = new BlackColoring();
+                    break;
+                default:
+                    throw new ArgumentException($"Word coloring <{appConfig.ImageSettings.WordColoringAlgorithmName}> isn't supported");
+            }
+
+            builder.Register(c => coloring).As<IWordColoring>();
         }
 
         private static void ConfigureCloudImageGenerator(ContainerBuilder builder)
         {
             builder.RegisterType<CloudImageGenerator>().
-                    UsingConstructor(typeof(ICloudLayouter), typeof(IImageSettings)).
+                    UsingConstructor(typeof(ICloudLayouter), typeof(IImageSettings), typeof(IWordColoring)).
                     As<ICloudImageGenerator>();
         }
 

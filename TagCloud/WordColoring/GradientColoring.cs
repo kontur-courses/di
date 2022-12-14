@@ -13,8 +13,6 @@ namespace TagCloud.WordColoring
 
         public double MaxValue { get; set; } = 1.0;
 
-        public string Name => "Gradient";
-
         public Color GetColor(double value = 0.0)
         {
             var r = GetGradientColorComponent(MinValueColor.R, MaxValueColor.R, value);

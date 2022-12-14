@@ -34,7 +34,7 @@ namespace TagCloud.App
 
         public void Run(IAppConfig appConfig)
         {
-            var text = fileReader.ReadAllText(appConfig.inputTextFilePath);
+            var text = fileReader.ReadAllText(appConfig.InputTextFilePath);
 
             var words = textParser.GetWords(text);
 
@@ -46,7 +46,7 @@ namespace TagCloud.App
 
             var bitmap = cloudImageGenerator.GenerateBitmap(frequencies);
 
-            ImageSaver.SaveBitmap(bitmap, appConfig.outputImageFilePath);
+            ImageSaver.SaveBitmap(bitmap, appConfig.OutputImageFilePath);
         }
     }
 }

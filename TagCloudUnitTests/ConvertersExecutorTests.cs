@@ -8,18 +8,10 @@ namespace TagCloudUnitTests
     [TestFixture]
     internal class ConvertersExecutorTests
     {
-        private ConvertersExecutor convertersExecutor;
-
-        [SetUp]
-        public void Setup()
-        {
-            convertersExecutor = new ConvertersExecutor( new IWordConverter[] { });
-        }
-
         [Test]
         public void Convert_ReturnsLowerCaseWords_WhenToLowerConverterRegistred()
         {
-            convertersExecutor.RegisterConverter(new ToLowerConverter());
+            var convertersExecutor = new ConvertersExecutor(new IWordConverter[] { new ToLowerConverter()});
 
             var inputWords = new List<string>() { "OnE", "tWo", "thrEE", "FOUR", "FiVE", "six" };
 

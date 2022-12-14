@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="TestTextFiles\**" />
-    <EmbeddedResource Remove="TestTextFiles\**" />
-    <None Remove="TestTextFiles\**" />
+    <None Remove="..\TestTextFiles\**" />
+    <Content Include="..\TestTextFiles\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

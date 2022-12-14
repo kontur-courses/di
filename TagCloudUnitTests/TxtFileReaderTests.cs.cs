@@ -6,7 +6,7 @@ using TagCloud.FileReader;
 
 namespace TagCloudUnitTests
 {
-    [TestFixture]
+
     public class TxtFileReaderTests
     {
         private TxtFileReader fileReader;
@@ -22,9 +22,7 @@ namespace TagCloudUnitTests
         {
             var expectedText = "This is txt file.";
 
-            var filePath = Path.Combine(Environment.CurrentDirectory, @"TestTextFiles\TestText.txt");
-
-            var actualText = fileReader.ReadAllText(filePath);
+            var actualText = fileReader.ReadAllText(@"TestTextFiles\TestText.txt");
 
             actualText.Should().BeEquivalentTo(expectedText);
         }

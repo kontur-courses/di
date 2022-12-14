@@ -5,6 +5,8 @@ namespace TagCloud.ImageProcessing
 {
     public class ImageSettings : IImageSettings
     {
+        public string WordColoringAlgorithmName { get; set; } = "Black";
+
         public Size Size { get; set; } = new Size(1000,1000);
 
         public Color BackgroundColor { get; set; } = Color.White;
@@ -15,6 +17,6 @@ namespace TagCloud.ImageProcessing
 
         public int MaxFontSize { get; set; } = 36;
 
-        public IWordColoring WordColoring { get; set; } = new BlackColoring();
+        
     }
 }

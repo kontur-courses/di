@@ -1,14 +1,14 @@
-﻿using TagCloud.ImageProcessing;
-using TagCloud.PointGenerator;
+﻿using System.Drawing;
+using TagCloud.ImageProcessing;
 
 namespace TagCloud.AppConfig
 {
     public interface IAppConfig
     {
-        IPointGenerator pointGenerator { get; set; }
-        string inputTextFilePath { get; set; }
-        string outputImageFilePath { get; set; }
-        IImageSettings imageSettings { get; set; }
-
+        string InputTextFilePath { get; set; }
+        string OutputImageFilePath { get; set; }
+        string CloudForm { get; set; }
+        Point CloudCentralPoint { get; set; }
+        IImageSettings ImageSettings { get; set; }
     }
 }

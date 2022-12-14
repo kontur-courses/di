@@ -26,15 +26,6 @@ namespace TagCloudUnitTests
             layout = new List<Rectangle>();
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            if (layout.Count > 0 && IsTestResultStateFailureOrError())
-            {
-                GenerateAndSaveCloudImage();
-            }
-        }
-
         [Test]
         public void PutNextRectangle_PutsRectangleInTheCenter_WhenFirstRectangleAdded()
         {
@@ -117,24 +108,6 @@ namespace TagCloudUnitTests
             var rectangles = rectanglesSizes.Select(size => layouter.PutNextRectangle(size)).ToList();
 
             return rectangles;
-        }
-
-        private bool IsTestResultStateFailureOrError()
-        {
-            var resultState = TestContext.CurrentContext.Result.Outcome;
-
-            return resultState == ResultState.Failure || resultState == ResultState.Error;
-        }
-
-        private void GenerateAndSaveCloudImage()
-        {
-            var imageCreator = new CloudImageGenerator(layouter, Color.Black);
-
-            var image = imageCreator.GenerateBitmap(layout);
-
-            ErrorTestImageSaver.SaveBitmap(image, out var fullFilePath);
-
-            TestContext.Out.WriteLine($"Tag cloud visualization saved to file {fullFilePath}");
         }
     }
 }

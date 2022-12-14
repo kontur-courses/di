@@ -20,11 +20,9 @@ namespace TagCloudUnitTests
         [Test]
         public void ReadAllText_ReturnsAllFileText_WhenFileExists()
         {
-            var expectedText = "This is docx file.";
+            var expectedText = "This is docx file."; 
 
-            var filePath = Path.Combine(Environment.CurrentDirectory, @"TestTextFiles\TestText.docx");
-
-            var actualText = fileReader.ReadAllText(filePath);
+            var actualText = fileReader.ReadAllText(@"TestTextFiles\TestText.docx");
 
             actualText.Should().BeEquivalentTo(expectedText);
         }

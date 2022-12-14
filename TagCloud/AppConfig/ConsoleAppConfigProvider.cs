@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.CommandLineParsing;
 using TagCloud.ImageProcessing;
-using TagCloud.PointGenerator;
-using TagCloud.WordColoring;
 
 namespace TagCloud.AppConfig
 {
@@ -21,21 +19,20 @@ namespace TagCloud.AppConfig
         {
             var arguments = Parser.Default.ParseArguments<Options>(args).Value;
 
-            var pointGenerator = new PointGeneratorProvider().GetPointGenerator(arguments.CloudForm);
-
             var imageSettings = new ImageSettings()
-            { 
+            {
                 Size = new Size(arguments.ImageWidth, arguments.ImageHeight),
                 BackgroundColor = Color.FromName(arguments.BackgroundColor),
                 FontFamily = new FontFamily(arguments.FontFamily),
                 MinFontSize = arguments.MinFontSize,
                 MaxFontSize = arguments.MaxFontSize,
-                WordColoring = new WordColoringProvider().GetWordColoringByName(arguments.WordColoring)
+                WordColoringAlgorithmName = arguments.WordColoring
             };
 
-            return new AppConfig(pointGenerator,
-                                 arguments.InputFileFullPath,
+            return new AppConfig(arguments.InputFileFullPath,
                                  arguments.OutputImageFullPath,
+                                 arguments.CloudForm,
+                                 new Point(arguments.CentralPointX, arguments.CentralPointY),
                                  imageSettings);
         }
     }

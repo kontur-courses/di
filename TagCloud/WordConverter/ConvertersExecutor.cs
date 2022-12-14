@@ -5,24 +5,17 @@ namespace TagCloud.WordConverter
 {
     public class ConvertersExecutor : IConvertersExecutor
     {
-        private readonly List<IWordConverter> Converters = new List<IWordConverter>();
+        private readonly IEnumerable<IWordConverter> Converters;
 
-        public ConvertersExecutor(IWordConverter[] converters)
+        public ConvertersExecutor(IEnumerable<IWordConverter> converters)
         {
-            foreach (var converter in converters)
-                RegisterConverter(converter);
-        }
-
-        public void RegisterConverter(IWordConverter converter)
-        {
-            Converters.Add(converter);
+            Converters = converters;
         }
 
         public IReadOnlyList<string> Convert(IEnumerable<string> words)
         {
-            return words
-                       .Select(word => Converters.Aggregate(word, (current, converter) => converter.Convert(current)))
-                       .ToList();
+            return words.Select(word => Converters.Aggregate(word, (current, converter) => converter.Convert(current)))
+                        .ToList();
         }
     }
 }

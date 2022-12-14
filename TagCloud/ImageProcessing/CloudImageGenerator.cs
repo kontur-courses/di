@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.CloudLayouter;
+using TagCloud.WordColoring;
 
 namespace TagCloud.ImageProcessing
 {
@@ -10,42 +11,17 @@ namespace TagCloud.ImageProcessing
     {
         private readonly ICloudLayouter layouter;
 
+        private readonly IWordColoring wordColoring;
+
         private readonly IImageSettings imageSettings;
 
         private Graphics graphics;
 
-        private readonly Color rectangleBorderColor;
-        public CloudImageGenerator(ICloudLayouter layouter, Color rectangleBorderColor)
-        {
-            this.layouter = layouter;
-            this.rectangleBorderColor = rectangleBorderColor;
-        }
-
-        public CloudImageGenerator(ICloudLayouter layouter, IImageSettings imageSettings)
-        {
+        public CloudImageGenerator(ICloudLayouter layouter, IImageSettings imageSettings, IWordColoring wordColoring)
+        {                    
             this.layouter = layouter;
             this.imageSettings = imageSettings;
-        }
-
-        public Bitmap GenerateBitmap(IEnumerable<Rectangle> layout)
-        {
-            var layoutArray = layout.ToArray();
-
-            var imageSize = GetImageSize(layoutArray);
-
-            var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
-
-            var graphics = Graphics.FromImage(bitmap);
-
-            graphics.TranslateTransform(imageSize.Width / 2f - layouter.CloudCenter.X, imageSize.Height / 2f - layouter.CloudCenter.Y);
-
-            var pen = new Pen(rectangleBorderColor, 1);
-
-            graphics.DrawRectangles(pen, layoutArray.ToArray());
-
-            graphics.Dispose();
-
-            return bitmap;
+            this.wordColoring = wordColoring;
         }
 
         public Bitmap GenerateBitmap(IReadOnlyDictionary<string, double> wordsFrequencies)
@@ -89,9 +65,7 @@ namespace TagCloud.ImageProcessing
                    LineAlignment = StringAlignment.Center,
                 };
 
-                //graphics.DrawRectangle(new Pen(Color.Black, 1), layoutRectangle);
-
-                graphics.DrawString(wordFreq.Key, font, new SolidBrush(imageSettings.WordColoring.GetColor(wordFreq.Value)), rectangle, stringFormat);
+                graphics.DrawString(wordFreq.Key, font, new SolidBrush(wordColoring.GetColor(wordFreq.Value)), rectangle, stringFormat);
             }
         }
 
@@ -109,35 +83,6 @@ namespace TagCloud.ImageProcessing
             var width = (int)Math.Ceiling(wordSize.Width);
 
             var height = (int)Math.Ceiling(wordSize.Height);
-
-            return new Size(width, height);
-        }
-
-        private Size GetImageSize(IEnumerable<Rectangle> layout)
-        {
-            var minTop = int.MaxValue;
-            var maxBottom = -int.MaxValue;
-            var minLeft = int.MaxValue;
-            var maxRight = -int.MaxValue;
-
-            foreach (var rectangle in layout)
-            {
-                if (rectangle.Top < minTop)
-                    minTop = rectangle.Top;
-
-                if (rectangle.Bottom > maxBottom)
-                    maxBottom = rectangle.Bottom;
-
-                if (rectangle.Left < minLeft)
-                    minLeft = rectangle.Left;
-
-                if (rectangle.Right > maxRight)
-                    maxRight = rectangle.Right;
-            }
-
-            var width = 2 * Math.Max(Math.Abs(minLeft), Math.Abs(maxRight)) + 5;
-
-            var height = 2 * Math.Max(Math.Abs(maxBottom), Math.Abs(minTop)) + 5;
 
             return new Size(width, height);
         }

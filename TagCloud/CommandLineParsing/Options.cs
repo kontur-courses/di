@@ -34,5 +34,11 @@ namespace TagCloud.CommandLineParsing
 
         [Option('z', "cloud form", Required = false, Default = "circle", HelpText = "Tags coloring algorithm (default is circle)")]
         public string CloudForm { get; set; }
+
+        [Option('x', "x coord", Required = false, Default = 0, HelpText = "Central point x coordinate (default is 0)")]
+        public int CentralPointX { get; set; }
+
+        [Option('y', "y coord", Required = false, Default = 0, HelpText = "Central point y coordinate (default is 0)")]
+        public int CentralPointY { get; set; }
     }
 }

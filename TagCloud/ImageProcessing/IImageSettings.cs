@@ -10,6 +10,6 @@ namespace TagCloud.ImageProcessing
         FontFamily FontFamily { get; }
         int MaxFontSize { get; }
         int MinFontSize { get; }
-        IWordColoring WordColoring { get; }
+        string WordColoringAlgorithmName { get; }
     }
 }

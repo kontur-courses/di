@@ -19,4 +19,4 @@ For command information check `--help`
 
 ![DefaultCloudImage](../TagCloudImages/DefaultWordCloud.png)
 
-![СustomizedCloudImage](../TagCloudImages/СustomizedWordCloud.png)
+![СustomizedCloudImage](../TagCloudImages/CustomizedWordCloud.png)
