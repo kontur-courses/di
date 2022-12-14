@@ -54,7 +54,7 @@ void ConfigureDrawer(ContainerBuilder builder, Options options)
 
 void ConfigureLayouter(ContainerBuilder builder, Options options)
 {
-    var pointGenerator = new SpiralPointGenerator(0.1, 0.1);
+    var pointGenerator = new SpiralPointGenerator(0.1, 0.1, options.XFlattening);
     var center = new Point(options.ImageWidth / 2, options.ImageHeight / 2);
     builder.RegisterInstance(new BaseCloudLayouter(center, pointGenerator)).As<ICloudLayouter>();
 }

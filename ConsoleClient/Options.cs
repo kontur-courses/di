@@ -37,4 +37,8 @@ public class Options
     [Option('m', "minFontSize", Default = 10, Required = false,
         HelpText = "Minimum font size", MetaValue = nameof(Int32))]
     public int MinFontSize { get; set; }
+    
+    [Option('x', "xFlattening", Default = 1, Required = false,
+        HelpText = "Cloud flattening along the X axis", MetaValue = nameof(Double))]
+    public double XFlattening { get; set; }
 }

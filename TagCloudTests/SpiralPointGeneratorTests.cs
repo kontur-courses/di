@@ -13,7 +13,7 @@ public class SpiralPointGeneratorTests
     public void Generate_FirstPoint_AtCentre()
     {
         var center = new Point(0, 0);
-        var generator = new SpiralPointGenerator(1, Math.PI / 3);
+        var generator = new SpiralPointGenerator(1, Math.PI / 3, 1);
 
         var firstPoint = generator.Generate(center).First();
 
@@ -23,7 +23,7 @@ public class SpiralPointGeneratorTests
     [Test]
     public void Generate_GeneratedLine_IntersectsCoordinateAxesAtCorrectPoints()
     {
-        var generator = new SpiralPointGenerator(1, 45 / (180 / Math.PI));
+        var generator = new SpiralPointGenerator(1, 45 / (180 / Math.PI), 1);
 
         var points = generator.Generate(new Point(0, 0)).Take(600).ToArray();
         var intersectXAxe = points
