@@ -46,7 +46,6 @@ public class TagCloudVisualizations
         }
 
         return bitmap;
-        // bitmap.Save(path, GetImageFormat(options.ImageFormat));
     }
 
     private static Brush GetNextFontColor(VisualizationOptions options, int wordIndex)

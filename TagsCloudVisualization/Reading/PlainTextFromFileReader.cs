@@ -14,7 +14,6 @@ public class PlainTextFromFileReader : ITextReader
         if (!File.Exists(_pathToFile))
             throw new FileNotFoundException($"File not exists {_pathToFile}");
 
-
         return File.ReadAllText(_pathToFile);
     }
 }

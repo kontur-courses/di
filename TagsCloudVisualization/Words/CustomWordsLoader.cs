@@ -27,7 +27,7 @@ public class CustomWordsLoader : IWordsLoader
         var wordsAndCount = rawWords.GroupBy(r => r.ToLowerInvariant())
             .ToDictionary(r => r.Key, r => r.Count());
 
-        var filteredWords = _wordsFilter.FilterWords(wordsAndCount);
+        var filteredWords = _wordsFilter.FilterWords(wordsAndCount, options);
         var takeWords = filteredWords;
 
         if (options.TakeMostPopularWords > 0)
@@ -47,6 +47,6 @@ public class CustomWordsLoader : IWordsLoader
             words.Add(word);
         }
 
-        return words.OrderByDescending(r => r.Size).ThenByDescending(r => r.Count).ToList();
+        return words.OrderByDescending(r => r.Size).ToList();
     }
 }

@@ -11,12 +11,11 @@ public class VisualizationOptions
     public FontFamily FontFamily { get; set; }
     public int TakeMostPopularWords { get; set; }
 
-    public string TextsPath { get; set; }
-    public string WordsFileName { get; set; }
-    public List<string> BoringWordsName { get; set; }
+    public List<string> BoringWords { get; set; }
 
-    // public Color FontColor { get; set; }
-    public string ExcludedPartsOfSpeech { get; set; }
+    public List<string> ExcludedPartsOfSpeech { get; set; }
     public float MinFontSize { get; set; }
     public float MaxFontSize { get; set; }
+    
+    public  string DirectoryToMyStemProgram { get; set; }
 }
