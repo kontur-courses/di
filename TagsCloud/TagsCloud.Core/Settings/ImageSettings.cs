@@ -11,16 +11,4 @@ public class ImageSettings
 	public FontFamily FontFamily { get; set; }
 	public int MinFontSize { get; set; }
 	public ImageFormat Format { get; set; }
-
-	public static ImageSettings GetDefaultSettings()
-	{
-		return new ImageSettings
-		{
-			ImageSize = new Size(1280, 720),
-			FontFamily = FontFamily.GenericMonospace,
-			MinFontSize = 14,
-			Format = ImageFormat.Png,
-			Pallet = new MonocolorPallet()
-		};
-	}
 }

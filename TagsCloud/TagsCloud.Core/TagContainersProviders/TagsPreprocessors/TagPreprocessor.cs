@@ -4,13 +4,13 @@ using TagsCloud.Core.WordTransformers;
 
 namespace TagsCloud.Core.TagContainersProviders.TagsPreprocessors;
 
-public class TempPreprocessor : ITagsPreprocessor
+public class TagPreprocessor : ITagsPreprocessor
 {
 	private readonly IWordFiltersComposer wordFiltersComposer;
 	private readonly IWordReader wordReader;
 	private readonly IWordTransformersComposer wordTransformersComposer;
 
-	public TempPreprocessor(IWordReader wordReader, IWordFiltersComposer wordFiltersComposer,
+	public TagPreprocessor(IWordReader wordReader, IWordFiltersComposer wordFiltersComposer,
 		IWordTransformersComposer wordTransformersComposer)
 	{
 		this.wordReader = wordReader;
