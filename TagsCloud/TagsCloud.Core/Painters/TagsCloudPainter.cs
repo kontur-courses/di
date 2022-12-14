@@ -4,10 +4,11 @@ using TagsCloud.Core.TagContainersProviders;
 
 namespace TagsCloud.Core.Painters;
 
-public class DebugPainter : ITagPainter
+public class TagsCloudPainter : ITagsCloudPainter
 {
 	private readonly ISettingsGetter<ImageSettings> settingsProvider;
-	public DebugPainter(ISettingsGetter<ImageSettings> settingsProvider)
+
+	public TagsCloudPainter(ISettingsGetter<ImageSettings> settingsProvider)
 	{
 		this.settingsProvider = settingsProvider;
 	}
@@ -15,20 +16,20 @@ public class DebugPainter : ITagPainter
 	public Bitmap Draw(IEnumerable<TagContainer> tagContainers)
 	{
 		var imageSettings = settingsProvider.Get();
-		var imageSize = GetMinImageSize(tagContainers.ToList(), 100);
-		var result = new Bitmap(imageSize.Width, imageSize.Height);
+		var cloudBorder = GetCloudBorder(tagContainers.ToList(), 100);
+		var cloud = new Bitmap(cloudBorder.Width, cloudBorder.Height);
 
 		using var backgroundBrush = new SolidBrush(imageSettings.Pallet.BackgroundColor);
 		using var fontBrush = new SolidBrush(imageSettings.Pallet.GetNextColor());
 		using var containerBorderPen = new Pen(Color.Crimson);
-		using var graphics = Graphics.FromImage(result);
+		using var graphics = Graphics.FromImage(cloud);
 
-		graphics.FillRectangle(backgroundBrush, imageSize);
+		graphics.FillRectangle(backgroundBrush, cloudBorder);
 
 		foreach (var tagContainer in tagContainers)
 		{
-			var place = new Rectangle(new Point(tagContainer.Border.X + imageSize.Width / 2,
-				tagContainer.Border.Y + imageSize.Height / 2), tagContainer.Border.Size);
+			var place = new Rectangle(new Point(tagContainer.Border.X + cloudBorder.Width / 2,
+				tagContainer.Border.Y + cloudBorder.Height / 2), tagContainer.Border.Size);
 			using var font = new Font(imageSettings.FontFamily, tagContainer.FontSize);
 
 			graphics.DrawString(
@@ -37,15 +38,13 @@ public class DebugPainter : ITagPainter
 				fontBrush,
 				place);
 
-			graphics.DrawRectangle(containerBorderPen, place);
-
 			fontBrush.Color = imageSettings.Pallet.GetNextColor();
 		}
 
-		return result;
+		return new Bitmap(cloud, imageSettings.ImageSize);
 	}
 
-	private static Rectangle GetMinImageSize(IReadOnlyCollection<TagContainer> tagContainers, int padding = 0)
+	private static Rectangle GetCloudBorder(IReadOnlyCollection<TagContainer> tagContainers, int padding = 0)
 	{
 		var minX = tagContainers.Min(t => t.Border.Left);
 		var minY = tagContainers.Min(t => t.Border.Top);

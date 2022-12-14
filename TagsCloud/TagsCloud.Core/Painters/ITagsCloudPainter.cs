@@ -3,7 +3,7 @@ using TagsCloud.Core.TagContainersProviders;
 
 namespace TagsCloud.Core.Painters;
 
-public interface ITagPainter
+public interface ITagsCloudPainter
 {
     public Bitmap Draw(IEnumerable<TagContainer> tagContainers);
 }
