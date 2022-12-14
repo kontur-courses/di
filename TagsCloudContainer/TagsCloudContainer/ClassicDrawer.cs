@@ -19,13 +19,39 @@ public class ClassicDrawer : IDrawer
 
     public void DrawCloud(IReadOnlyCollection<CloudWord> cloudWords)
     {
-        var tagPropertyItems = GetTagPropertyItems(cloudWords);
+        var algorithm = algorithmProvider.Provide();
+
+        var tagPropertyItems = cloudWords.GetTagDrawingItems(algorithm,
+            GetFont,
+            SizeResolver,
+            Filter);
 
         Draw(tagPropertyItems);
     }
 
+    private bool Filter(TagDrawingItem tag)
+    {
+        return classicDrawerSettings.ImageRectangle.Contains(tag.Rectangle);
+    }
+
+    private Size SizeResolver(TagDrawingItem tag)
+    {
+        var size = graphics.MeasureString(tag.Text, tag.Font).ToSize();
+        size.Width += classicDrawerSettings.RectangleBorderSize * 2;
+        size.Height += classicDrawerSettings.RectangleBorderSize * 2;
+        return size;
+    }
+
+    private Font GetFont(CloudWord cloudWord)
+    {
+        var fontSize = Math.Clamp(classicDrawerSettings.MinimumTextFontSize + cloudWord.Occurrences * 3 - 3,
+            classicDrawerSettings.MinimumTextFontSize, classicDrawerSettings.MaximumTextFontSize);
+        return new(new FontFamily(classicDrawerSettings.TextFontFamily), fontSize,
+            classicDrawerSettings.TextFontStyle);
+    }
+
     private void Draw(
-        IEnumerable<(string word, Font font, Rectangle rectangle)> tagPropertyItems)
+        IEnumerable<TagDrawingItem> tagPropertyItems)
     {
         var rectangleBorderPen = new Pen(classicDrawerSettings.RectangleBorderBrush,
             classicDrawerSettings.RectangleBorderSize);
@@ -35,64 +61,29 @@ public class ClassicDrawer : IDrawer
             classicDrawerSettings.RectangleBorderSize);
 
         graphics.FillRectangle(classicDrawerSettings.BackgroundBrush, classicDrawerSettings.ImageRectangle);
-        tagPropertyItems.Foreach((item, index) => DrawTag(item.rectangle,
+        tagPropertyItems.ForeachWithCounterFromZero((item, index) => DrawTag(
             withoutBordersLocationAddition,
             rectangleBorderPen,
             index + 1,
             numbersFont,
-            item.word,
-            item.font));
+            item));
     }
 
-    private void DrawTag(
-        Rectangle layoutRectangle,
-        Size withoutBordersLocationAddition,
-        Pen rectangleBorderPen,
-        int counter,
-        Font numbersFont,
-        string word,
-        Font textFont)
+    private void DrawTag(Size withoutBordersLocationAddition, Pen rectangleBorderPen, int index, Font numbersFont,
+        TagDrawingItem item)
     {
-        var textStartingPoint = layoutRectangle.Location + withoutBordersLocationAddition;
+        var textStartingPoint = item.Rectangle.Location + withoutBordersLocationAddition;
 
         if (classicDrawerSettings.FillRectangles)
-            graphics.FillRectangle(classicDrawerSettings.RectangleFillBrush, layoutRectangle);
+            graphics.FillRectangle(classicDrawerSettings.RectangleFillBrush, item.Rectangle);
 
         if (classicDrawerSettings.RectangleBorderSize != 0)
-            graphics.DrawRectangle(rectangleBorderPen, layoutRectangle);
+            graphics.DrawRectangle(rectangleBorderPen, item.Rectangle);
 
         if (classicDrawerSettings.WriteNumbers)
-            graphics.DrawString(counter.ToString(), numbersFont,
-                classicDrawerSettings.NumbersBrush, layoutRectangle);
+            graphics.DrawString(index.ToString(), numbersFont,
+                classicDrawerSettings.NumbersBrush, item.Rectangle);
 
-        graphics.DrawString(word, textFont, classicDrawerSettings.TextBrush, textStartingPoint);
-    }
-
-    private IEnumerable<(string word, Font font, Rectangle rectangle)> GetTagPropertyItems(
-        IEnumerable<CloudWord> cloudWords)
-    {
-        var cloudWordAndFontSizeTuples = cloudWords
-            .Select(x => (word: x.Text,
-                fontSize: Math.Clamp(classicDrawerSettings.MinimumTextFontSize + x.Occurrences * 3 - 3,
-                    classicDrawerSettings.MinimumTextFontSize, classicDrawerSettings.MaximumTextFontSize)));
-
-        var cloudWordAndFontTuples = cloudWordAndFontSizeTuples
-            .Select(x => (x.word,
-                font: new Font(new FontFamily(classicDrawerSettings.TextFontFamily), x.fontSize,
-                    classicDrawerSettings.TextFontStyle)));
-
-        var bordersSizeAddition =
-            new Size(classicDrawerSettings.RectangleBorderSize, classicDrawerSettings.RectangleBorderSize) * 2;
-        var cloudWordAndBlockSizeTuples = cloudWordAndFontTuples
-            .Select(x => (x.word, x.font,
-                size: graphics.MeasureString(x.word, x.font).ToSize() + bordersSizeAddition));
-
-        var algorithm = algorithmProvider.Provide();
-
-        var wordsAndRectanglesTuples = cloudWordAndBlockSizeTuples
-            .Select(x => (x.word, x.font, rectangle: algorithm.PutNextRectangle(x.size)))
-            .Where(x => classicDrawerSettings.ImageRectangle.Contains(x.rectangle));
-
-        return wordsAndRectanglesTuples;
+        graphics.DrawString(item.Text, item.Font, classicDrawerSettings.TextBrush, textStartingPoint);
     }
 }

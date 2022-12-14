@@ -22,9 +22,9 @@ public partial class MainWindow : IImageListProvider, ISettingsFactory
     private readonly IFunnyWordsSelector funnyWordsSelector;
 
     private readonly Func<ISettingsEditor<GuiGraphicsProviderSettings>> guiGraphicsProviderSettingsEditorFactory;
-    private readonly Func<ISettingsCreator<RandomColoredDrawerSettings>> randomColoredDrawerSettingsCreator;
 
     private readonly Func<MultiDrawer> multiDrawerFactory;
+    private readonly Func<ISettingsCreator<RandomColoredDrawerSettings>> randomColoredDrawerSettingsCreator;
 
     private readonly Timer timer;
 

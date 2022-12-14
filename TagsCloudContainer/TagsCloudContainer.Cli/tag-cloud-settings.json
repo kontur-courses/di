@@ -43,6 +43,23 @@
       }
     },
     {
+      "Type": "RandomColoredDrawerSettings",
+      "ImageRectangle": {
+        "Location": {
+          "X": 0,
+          "Y": 0
+        },
+        "Size": {
+          "Width": 10000,
+          "Height": 10000
+        }
+      },
+      "MinimumTextFontSize": 100,
+      "MaximumTextFontSize": 300,
+      "RectangleBorderSize": 10,
+      "FillRectangles": true
+    },
+    {
       "Type": "ClassicDrawerSettings",
       "ImageRectangle": {
         "Location": {
@@ -107,6 +124,6 @@
     "Type": "CliGraphicsProviderSettings",
     "Width": 10000,
     "Height": 10000,
-    "BasePath": "C:\\Users\\Admin\\repositories\\alex2021cyberhuman\\di\\TagsCloudContainer\\TagsCloudContainer.Cli\\bin\\Debug\\net7.0-windows\\images"
+    "BasePath": "./images"
   }
 }

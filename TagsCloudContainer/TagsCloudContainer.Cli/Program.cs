@@ -1,5 +1,4 @@
-﻿using DeepMorphy;
-using DryIoc;
+﻿using DryIoc;
 using McMaster.Extensions.CommandLineUtils;
 using TagsCloudContainer.Interfaces;
 
@@ -37,27 +36,26 @@ public class Program
             return 1;
         }
 
-        var container = new Container();
-        container.Register<MorphAnalyzer>(Reuse.Singleton);
-        container.Register<IFunnyWordsSelector, DeepMorphyFunnyWordsSelector>(Reuse.Singleton);
-        container.Register<MultiDrawer>(Reuse.Singleton);
-        container.Register<IGraphicsProvider, CliGraphicsProvider>(Reuse.Singleton);
-        container.RegisterDelegate(r =>
-            (CliGraphicsProviderSettings)r.Resolve<Settings>().GraphicsProviderSettings);
-        container.Register<IDrawerFactory, ClassicDrawerFactory>(Reuse.Singleton);
-        container.Register<IDrawerFactory, RandomColoredDrawerFactory>(Reuse.Singleton);
-        container.Register<ILayouterAlgorithmFactory, CircularCloudLayouterFactory>(Reuse.Singleton);
-        container.RegisterDelegate(r => r.Resolve<ISettingsFactory>().Build(),
-            Reuse.Singleton);
-        var jsonSettingsFactory = new JsonSettingsFactory(JsonSettingsFilename);
-        container.RegisterDelegate<ISettingsFactory>(r => jsonSettingsFactory,
-            Reuse.Singleton);
-        var selector = container.Resolve<IFunnyWordsSelector>();
+        var (selector, drawer) = GetServices();
 
-        var drawer = container.Resolve<MultiDrawer>();
         var words = File.ReadAllLines(WordsFileName);
         var cloudWords = selector.RecognizeFunnyCloudWords(words);
         drawer.Draw(cloudWords);
         return 0;
+    }
+
+    private (IFunnyWordsSelector selector, MultiDrawer drawer) GetServices()
+    {
+        var container = ContainerHelper.RegisterDefaultSingletonContainer();
+        container.Register<IGraphicsProvider, CliGraphicsProvider>(Reuse.Singleton);
+        container.RegisterDelegate(r =>
+            (CliGraphicsProviderSettings)r.Resolve<Settings>().GraphicsProviderSettings);
+        var jsonSettingsFactory = new JsonSettingsFactory(JsonSettingsFilename);
+        container.RegisterDelegate<ISettingsFactory>(r => jsonSettingsFactory,
+            Reuse.Singleton);
+
+        var selector = container.Resolve<IFunnyWordsSelector>();
+        var drawer = container.Resolve<MultiDrawer>();
+        return (selector, drawer);
     }
 }

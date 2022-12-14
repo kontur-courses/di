@@ -13,20 +13,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DryIoc" Version="5.3.1" />
-        <PackageReference Include="Fody" Version="6.6.4">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Page Update="RandomColoredDrawerSettingsCreator.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
+        <Page Update="RandomColoredDrawerSettingsCreator.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
 </Project>

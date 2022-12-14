@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Cli", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Gui", "TagsCloudContainer\TagsCloudContainer.Gui\TagsCloudContainer.Gui.csproj", "{8ADA289B-A82F-48EA-BF19-38360AD5D8AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Core", "TagsCloudContainer\TagsCloudContainer.Core\TagsCloudContainer.Core.csproj", "{748961C6-4144-45AF-BC67-10E2589D5F0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8ADA289B-A82F-48EA-BF19-38360AD5D8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ADA289B-A82F-48EA-BF19-38360AD5D8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ADA289B-A82F-48EA-BF19-38360AD5D8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748961C6-4144-45AF-BC67-10E2589D5F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748961C6-4144-45AF-BC67-10E2589D5F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748961C6-4144-45AF-BC67-10E2589D5F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748961C6-4144-45AF-BC67-10E2589D5F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{996FC1BD-4767-4CA4-8D64-FB58D72B7527} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
@@ -52,5 +58,6 @@ Global
 		{65515299-DAD7-45EC-BC06-6EC0610A6F33} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
 		{7892B21E-D0AB-4869-BD09-69C152BC0FBA} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
 		{8ADA289B-A82F-48EA-BF19-38360AD5D8AF} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
+		{748961C6-4144-45AF-BC67-10E2589D5F0A} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
 	EndGlobalSection
 EndGlobal
