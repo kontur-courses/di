@@ -4,8 +4,7 @@ namespace TagsCloudVisualization;
 
 public class ArchimedeanSpiral : ICurve
 {
-    private readonly double _density;
-
+    public readonly double _density;
     private readonly int _maxRadiusSize = int.MaxValue / 2;
     private readonly double _start;
     private readonly double _step;

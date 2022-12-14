@@ -1,32 +1,44 @@
 ﻿using System.Drawing;
+using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer;
-
+#pragma warning disable CA1416
 
 public class Program
 {
-
     public static void Main(string[] args)
     {
-        var cfg = new AppConfig();
-        var freqWords = cfg.InputParser.GetInputWordsFrequency();
-        var wordsToSizes = GetSizesForWords(cfg.FieldSize, freqWords);
-        var layoutDrawer = new LayoutDrawer(new Pen(Color.Black, 2));
-        layoutDrawer.Draw(wordsToSizes, "TagCloud.png");
-    }
-
-    private static Dictionary<string, Rectangle> GetSizesForWords(Size fieldSize, Dictionary<string, double> freqWords)
-    {
-        var result = new Dictionary<string, Rectangle>();
-        var circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), new ArchimedeanSpiral(1, 1, 0));
-        foreach (var key in freqWords.Keys)
+        try
         {
-            var rectSize = new Size((int)(freqWords[key] * fieldSize.Width), (int)(freqWords[key] * fieldSize.Height));
-            var rectangle = circularCloudLayouter.PutNextRectangle(rectSize);
-            result[key] = rectangle;
-        }
+            var parsedArgument = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
+            AppDIInitializer.CreateCurveInstance(parsedArgument.Step, parsedArgument.Density, parsedArgument.Start);
+            var checkedArguments = new ArgsChecker().Check(parsedArgument);
 
-        return result;
+            var collectedData = AppDIInitializer.Container
+                .GetService<WordsCollector>()
+                .Collect(checkedArguments.InputFile, checkedArguments.WordsToIgnore, checkedArguments.SpPartsToIgnore);
+
+            var rectangles = AppDIInitializer.Container
+                .GetService<ISizeManager>()
+                .GetSizesForWords(new Size(checkedArguments.Width, checkedArguments.Height), collectedData.Item1,
+                    collectedData.Item2);
+
+            AppDIInitializer.Container
+                .GetService<LayoutDrawer>()
+                .Draw(
+                    rectangles,
+                    checkedArguments.OutputFile,
+                    new Size(checkedArguments.Width, checkedArguments.Height),
+                    checkedArguments.ColorsParsed,
+                    checkedArguments.FontName
+                );
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
+#pragma warning restore CA1416

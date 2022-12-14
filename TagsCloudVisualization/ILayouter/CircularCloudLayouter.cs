@@ -9,9 +9,9 @@ public class CircularCloudLayouter : ILayouter
     private readonly ICurve _curve;
     private readonly List<Rectangle> _rectangles = new();
 
-    public CircularCloudLayouter(Point center, ICurve curve)
+    public CircularCloudLayouter(ICurve curve)
     {
-        _center = center;
+        _center = new Point(0, 0);
         _curve = curve;
     }
 
