@@ -19,32 +19,14 @@ var configuration = new ConfigurationBuilder()
 
 var appOptions = configuration.Get<ArgsOptions>();
 AppOptionsValidator.ValidatePathsInOptions(appOptions);
-var options2 = VisualizationOptionsConverter.ConvertOptions(appOptions!);
-
-var options = new VisualizationOptions
-{
-    MinFontSize = 10,
-    MaxFontSize = 35,
-    CanvasSize = new Size(1000, 1000),
-    BackgroundColor = Color.White,
-    SpiralStep = 0.01f,
-    FontFamily = new FontFamily("Arial"),
-    TakeMostPopularWords = 100,
-    Palette = new Palette(Brushes.Black)
-};
-options.Palette.AvailableBrushes.Add(Brushes.Blue);
-options.Palette.AvailableBrushes.Add(Brushes.Red);
-options.Palette.AvailableBrushes.Add(Brushes.Brown);
-options.Palette.AvailableBrushes.Add(Brushes.Chocolate);
-options.Palette.AvailableBrushes.Add(Brushes.Green);
-
+var options = VisualizationOptionsConverter.ConvertOptions(appOptions!);
 
 var container = new ServiceCollection()
     .AddTransient<ITextReader>(r => new PlainTextFromFileReader(appOptions!.PathToTextFile))
     .AddSingleton<ITextParser, SingleColumnTextParser>()
     .AddSingleton<IWordsLoader, CustomWordsLoader>()
     .AddTransient<IWordsFilter, CustomWordsFilter>()
-    .AddTransient<IMorphAnalyzer>(r=> new MyStemMorphAnalyzer(appOptions!.DirectoryToMyStemProgram))
+    .AddTransient<IMorphAnalyzer>(r => new MyStemMorphAnalyzer(appOptions!.DirectoryToMyStemProgram))
     .AddSingleton<IWordsSizeCalculator, CustomWordSizeCalculator>()
     .AddSingleton<ICloudLayouter, CircularCloudLayouter>()
     .AddSingleton<ISpiralFormula, ArithmeticSpiral>()
@@ -53,6 +35,6 @@ var container = new ServiceCollection()
 
 var visualizations = ActivatorUtilities.CreateInstance<TagCloudVisualizations>(container);
 
-var bitmap = visualizations.DrawCloud(options2);
+var bitmap = visualizations.DrawCloud(options);
 
-bitmap.Save(Path.Combine(appOptions!.DirectoryToSaveFile, appOptions.SaveFileName));
+bitmap.Save(Path.Combine(appOptions!.DirectoryToSaveFile, string.Concat(appOptions.SaveFileName, ".", appOptions.FileExtension.ToLower())), AppOptionsValidator.GetImageFormat(appOptions.FileExtension));

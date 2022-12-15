@@ -16,11 +16,12 @@ public class VisualizationOptions
     public List<string> ExcludedPartsOfSpeech { get; set; }
     public float MinFontSize { get; set; }
     public float MaxFontSize { get; set; }
-    
-    public  string DirectoryToMyStemProgram { get; set; }
+
+    public string DirectoryToMyStemProgram { get; set; }
 
     public VisualizationOptions()
     {
+        Palette = new Palette(Brushes.Black);
         BoringWords = new List<string>();
         ExcludedPartsOfSpeech = new List<string>();
     }

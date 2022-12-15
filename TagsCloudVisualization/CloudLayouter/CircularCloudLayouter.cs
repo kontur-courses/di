@@ -18,6 +18,9 @@ public class CircularCloudLayouter : ICloudLayouter
 
     public RectangleF PutNextRectangle(SizeF rectangleSize, LayoutOptions options)
     {
+        if (options.SpiralStep <= 0)
+            throw new ArgumentException("SpiralStep must be greater than 0");
+
         if (rectangleSize.IsEmpty)
             return new RectangleF(0, 0, 0, 0);
 

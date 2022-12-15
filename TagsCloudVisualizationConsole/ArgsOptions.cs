@@ -15,6 +15,7 @@ public class ArgsOptions
     public float MinFontSize { get; set; }
     public float MaxFontSize { get; set; }
     public string PaletteDefaultBrush { get; set; }
+    public string FileExtension { get; set; }
     public List<string> PaletteAvailableBrushes { get; set; }
     public List<string> BoringWords { get; set; }
     public List<string> ExcludedPartsOfSpeech { get; set; }

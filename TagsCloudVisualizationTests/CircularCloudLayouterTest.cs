@@ -151,19 +151,6 @@ public class CircularCloudLayouterTest
     [TearDown]
     public void TearDown()
     {
-        if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
-            return;
 
-        var tagsCloudVisualization = new BitmapTagsCloudVisualization();
-
-        var filename = $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now:yy.MM.dd_HH.mm.ss}.bmp";
-        var projectDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ("FailedTests"));
-        if (!Directory.Exists(projectDirectory))
-            Directory.CreateDirectory(projectDirectory);
-
-        var fullPath = Path.Join(projectDirectory, filename);
-        tagsCloudVisualization.SaveTagsCloud(_layouter, fullPath);
-
-        Console.WriteLine($"Tag cloud visualization saved to file {fullPath}");
     }
 }

@@ -20,6 +20,8 @@ public class TagCloudVisualizations
 
     public Bitmap DrawCloud(VisualizationOptions options)
     {
+        CheckOptions(options);
+
         _cloudLayouter.Reset();
         var center = new Point(options.CanvasSize.Width / 2, options.CanvasSize.Height / 2);
         var layoutOptions = new LayoutOptions(center, options.SpiralStep);
@@ -59,5 +61,27 @@ public class TagCloudVisualizations
         var brushesCount = options.Palette.AvailableBrushes.Count;
         var brushIndex = wordIndex % brushesCount;
         return options.Palette.AvailableBrushes[brushIndex];
+    }
+
+
+    private static void CheckOptions(VisualizationOptions options)
+    {
+        if (options.CanvasSize.Width < 1 || options.CanvasSize.Height < 1)
+            throw new ArgumentException("Canvas size must be greater than 1");
+
+        if (options.FontFamily == null)
+            throw new NullReferenceException("FontFamily null");
+
+        if (options.Palette == null)
+            throw new NullReferenceException("Palette null");
+
+        if (options.Palette.DefaultBrush == null)
+            throw new NullReferenceException("DefaultBrush null");
+
+        if (options.Palette.AvailableBrushes == null)
+            throw new NullReferenceException("AvailableBrushes null");
+
+        if (options.SpiralStep - 0 < 0.0001f)
+            throw new ArgumentException("SpiralStep must be greater than 0");
     }
 }
