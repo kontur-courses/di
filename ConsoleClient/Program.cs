@@ -15,7 +15,7 @@ IContainer ConfigureContainer(Options options)
 
     ConfigureLoader(builder, options);
 
-    ConfigureProcessors(builder);
+    ConfigureProcessors(builder, options);
 
     builder.RegisterType<CountWordsTagger>().As<IWordsTagger>().SingleInstance();
 
@@ -47,13 +47,12 @@ void ConfigureLoader(ContainerBuilder builder, Options options)
     }
 }
 
-void ConfigureProcessors(ContainerBuilder builder)
+void ConfigureProcessors(ContainerBuilder builder, Options options)
 {
     var trimToLowerProcessor = new FuncWordsProcessor(words => words.Select(w => w.Trim().ToLower()));
     builder.RegisterInstance(trimToLowerProcessor).As<IWordsProcessor>();
-
-    var bored = new[] { "мест", "предл", "союз", "част", "межд", "неизв" };
-    builder.RegisterInstance(new MorphWordsProcessor(bored)).As<IWordsProcessor>();
+    
+    builder.RegisterInstance(new MorphWordsProcessor(options.SelectedPartsOfSpeech)).As<IWordsProcessor>();
 }
 
 void ConfigureDrawer(ContainerBuilder builder, Options options)
