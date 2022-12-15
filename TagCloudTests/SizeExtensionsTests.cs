@@ -24,4 +24,17 @@ public class SizeExtensionsTests
 
         result.Should().Be(expected);
     }
+
+    [Test]
+    public void Area_ReturnMultiplyOfSizeSides(
+        [Values(-10, -5, -1, 0, 1, 5, 10)] int x,
+        [Values(-10, -5, -1, 0, 1, 5, 10)] int y)
+    {
+        var size = new Size(x, y);
+        var expected = x * y;
+
+        var result = size.Area();
+
+        result.Should().Be(expected);
+    }
 }
