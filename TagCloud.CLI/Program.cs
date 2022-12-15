@@ -20,7 +20,7 @@ namespace TagCloud.CLI
 
         private static void StartApp(Options cmdOptions)
         {
-            var visualizationOptions = cmdOptions.SwitchToVisualizationOptions();
+            var visualizationOptions = cmdOptions.MapToVisualizationOptions();
             try
             {
                 CloudGeneratorApplication.Run(visualizationOptions);

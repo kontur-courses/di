@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using TagCloud.Common.Extensions;
 using TagCloud.Common.Layouter;
-using TagCloud.Common.Options;
 using TagCloud.Common.WeightCounter;
 
 namespace TagCloud.Common.TagsConverter;
@@ -24,7 +23,7 @@ public class SimpleTagsConverter : ITagsConverter
         var maxWeight = wordsWithWeights.Values.Max();
         foreach (var (word, weight) in wordsWithWeights)
         {
-            var font = new Font("Arial", maxWeight/(maxWeight-weight + 1) + minFontSize);
+            var font = new Font("Arial", maxWeight / (maxWeight - weight + 1) + minFontSize);
             var size = CalculateSize(word, font);
             var tag = new Tag(layouter.PutNextRectangle(size), word, font);
             tags.Add(tag);
@@ -36,9 +35,8 @@ public class SimpleTagsConverter : ITagsConverter
 
     private Size CalculateSize(string word, Font font)
     {
-        var graphics =  Graphics.FromImage(new Bitmap(1, 1));
+        var graphics = Graphics.FromImage(new Bitmap(1, 1));
         var sizeF = graphics.MeasureString(word, font);
         return sizeF.ConvertToSize();
     }
-    
 }

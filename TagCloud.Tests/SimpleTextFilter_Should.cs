@@ -42,7 +42,7 @@ public class SimpleTextFilter_Should
         var words = filter.FilterAllWords(new List<string> { line }, 0);
         words.Count().Should().Be(wordsCount);
     }
-    
+
     [Test]
     public void FilterAllWords_ShouldWorkCorrect_WithManyLines()
     {

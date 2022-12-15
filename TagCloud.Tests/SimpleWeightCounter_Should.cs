@@ -40,7 +40,7 @@ public class SimpleWeightCounter_Should
         wordsWithWeights.Count.Should().Be(words.Length);
         wordsWithWeights.All(pair => pair.Value == 1).Should().BeTrue();
     }
-    
+
     [TestCase("повтор повтор слова повтор слова слова", 2)]
     [TestCase("повтор повтор слова слова слова повтор", 2)]
     [TestCase("день день день ночь ночь ночь утро утро утро", 3)]
@@ -51,7 +51,7 @@ public class SimpleWeightCounter_Should
         wordsWithWeights.Count.Should().Be(count);
         wordsWithWeights.All(pair => pair.Value == 3).Should().BeTrue();
     }
-    
+
     [TestCase("чай чайник чайка")]
     public void CountWeights_ShouldNotCount_WordsInsideWord(string line)
     {

@@ -1,6 +1,4 @@
-﻿using TagCloud.Common.Options;
-
-namespace TagCloud.Common.TagsConverter;
+﻿namespace TagCloud.Common.TagsConverter;
 
 public interface ITagsConverter
 {
