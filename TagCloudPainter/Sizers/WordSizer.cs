@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagCloudPainter.Interfaces;
+﻿using System.Drawing;
+using TagCloudPainter.Common;
 
-namespace TagCloudPainter.Sizers
+namespace TagCloudPainter.Sizers;
+
+public class WordSizer : IWordSizer
 {
-    public class WordSizer : IWordSizer
+    private readonly ImageSettings settings;
+
+    public WordSizer(IImageSettingsProvider provider)
     {
-        public Size GetTagSize(string word, int count)
-        {
-            var width = word.Length * 7;
-            var height = width / 3;
-            return new Size(width, height);
-        }
+        settings = provider.ImageSettings;
+    }
+
+    public Size GetTagSize(string word, int count)
+    {
+        if (String.IsNullOrWhiteSpace(word) || count < 1)
+            throw new ArgumentNullException();
+
+        var width = word.Length * (int)(settings.Font.Size + 1) + (3 * (count-1));
+        var height = (settings.Size.Height + settings.Size.Width) / 40 + (2 * (count - 1));
+        return new Size(width, height);
     }
 }
