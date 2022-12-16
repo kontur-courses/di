@@ -14,12 +14,12 @@ public static class AppDIInitializer
         _service.AddTransient<IWordsReader, WordsReader>();
         _service.AddTransient<IWordsAnalyzer, WordsAnalyzer>();
         _service.AddTransient<IWordsFrequencyCounter, WordsFrequencyCounter>();
-        _service.AddSingleton<WordsCollector>();
-
-
+        _service.AddTransient<IWordsCollector, WordsCollector>();
+        
         _service.AddTransient<ICurve, ArchimedeanSpiral>();
         _service.AddTransient<ILayouter, CircularCloudLayouter>();
         _service.AddTransient<ISizeManager, CircularLayouterSizeManager>();
+        _service.AddTransient<IDrawingModel, DrawingModel>();
         _service.AddSingleton<LayoutDrawer>();
 
         Container = _service.BuildServiceProvider();

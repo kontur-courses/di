@@ -6,28 +6,28 @@ namespace TagsCloudVisualization;
 
 public class LayoutDrawer
 {
-    public void Draw(Dictionary<string, Rectangle> wordsToSizes, string? filename, Size fieldSize,
-        HashSet<Brush> colors, string? fontName)
+    public void Draw(DrawingModel drawingModel)
     {
-        var rectangles = wordsToSizes.Values.ToList();
-        var bitmap = new Bitmap(fieldSize.Width, fieldSize.Height);
+        var rectangles = drawingModel.WordsToSizes.Values.ToList();
+        var bitmap = new Bitmap(drawingModel.FieldWidth, drawingModel.FieldHeight);
         var graphics = Graphics.FromImage(bitmap);
 
         var stringFormat = GetCentredStringFormat();
 
-        foreach (var key in wordsToSizes.Keys)
+        foreach (var key in drawingModel.WordsToSizes.Keys)
         {
-            var centredRectangle = GetCentredRectangle(wordsToSizes[key], rectangles[0].Location, fieldSize);
+            var centredRectangle = 
+                GetCentredRectangle(drawingModel.WordsToSizes[key], rectangles[0].Location, drawingModel.FieldWidth, drawingModel.FieldHeight);
 
             graphics.DrawString(
                 key,
-                GetResizedFont(graphics, fontName, key, centredRectangle),
-                GetRandomBrush(colors),
+                GetResizedFont(graphics, drawingModel.FontName, key, centredRectangle),
+                GetRandomBrush(drawingModel.Colors),
                 centredRectangle,
                 stringFormat);
         }
 
-        bitmap.Save(filename);
+        bitmap.Save(drawingModel.FilePath);
     }
 
     private Brush GetRandomBrush(HashSet<Brush> colors)
@@ -54,10 +54,10 @@ public class LayoutDrawer
     }
 
 
-    private Rectangle GetCentredRectangle(Rectangle rectangle, Point center, Size fieldSize)
+    private Rectangle GetCentredRectangle(Rectangle rectangle, Point center, int fieldWidth, int fieldHeight)
     {
-        var X = rectangle.Location.X - center.X + fieldSize.Width / 2;
-        var Y = rectangle.Location.Y - center.Y + fieldSize.Height / 2;
+        var X = rectangle.Location.X - center.X + fieldWidth / 2;
+        var Y = rectangle.Location.Y - center.Y + fieldHeight / 2;
         rectangle.Location = new Point(X, Y);
         return rectangle;
     }

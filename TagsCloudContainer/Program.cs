@@ -15,25 +15,14 @@ public class Program
             var parsedArgument = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
             AppDIInitializer.CreateCurveInstance(parsedArgument.Step, parsedArgument.Density, parsedArgument.Start);
             var checkedArguments = new ArgsChecker().Check(parsedArgument);
-
-            var collectedData = AppDIInitializer.Container
-                .GetService<WordsCollector>()
-                .Collect(checkedArguments.InputFile, checkedArguments.WordsToIgnore, checkedArguments.SpPartsToIgnore);
-
-            var rectangles = AppDIInitializer.Container
-                .GetService<ISizeManager>()
-                .GetSizesForWords(new Size(checkedArguments.Width, checkedArguments.Height), collectedData.Item1,
-                    collectedData.Item2);
-
+            
+            var drawingModel = AppDIInitializer.Container
+                .GetService<IDrawingModel>()
+                .GetDrawingModel(checkedArguments);
+            
             AppDIInitializer.Container
                 .GetService<LayoutDrawer>()
-                .Draw(
-                    rectangles,
-                    checkedArguments.OutputFile,
-                    new Size(checkedArguments.Width, checkedArguments.Height),
-                    checkedArguments.ColorsParsed,
-                    checkedArguments.FontName
-                );
+                .Draw(drawingModel);
         }
         catch (Exception e)
         {

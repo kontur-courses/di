@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer;
 
-public class WordsCollector
+public class WordsCollector : IWordsCollector
 {
     private readonly IWordsAnalyzer _wordsAnalyzer;
     private readonly IWordsFrequencyCounter _wordsFrequencyCounter;
