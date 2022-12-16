@@ -1,14 +1,13 @@
 ﻿using System.Drawing;
 using TagCloudPainter.Extensions;
-using TagCloudPainter.Interfaces;
 
 namespace TagCloudPainter.Layouters;
 
 public class CircularCloudLayouter : ICloudLayouter
 {
     private readonly Point center;
-    private readonly List<Rectangle> rectangles;
     private readonly HelixPointLayouter helixPointLayouter;
+    private readonly List<Rectangle> rectangles;
 
     public CircularCloudLayouter(Point center, double angleStep, double radiusStep)
     {
