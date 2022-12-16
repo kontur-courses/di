@@ -3,48 +3,50 @@ namespace TagCloudContainer;
 public partial class TagCloudForm : Form
 {
     private Graphics _graphics;
-    private MainFormConfig _mainFormConfig; 
+    private ITagCloudProvider _tagCloudProvider;
     
-    public TagCloudForm(MainFormConfig mainFormConfig)
+    public TagCloudForm(ITagCloudProvider tagCloudProvider)
     {
-        _mainFormConfig = mainFormConfig;
+        _tagCloudProvider = tagCloudProvider;
         InitializeComponent();
-        SetupApplication();
-    }
-
-    private void SetupApplication()
-    {
         SetupWindow();
     }
 
     private void SetupWindow()
     {
         Text = "Tag Cloud Container";
-        TopMost = true;
-        Size = _mainFormConfig.FormSize;
+        Size = MainFormConfig.FormSize;
+    }
+
+    public void ChangeSize(Size size)
+    {
+        Size = size;
     }
 
     private void Render(object sender, PaintEventArgs e)
     {
         _graphics = e.Graphics;
-        _graphics.Clear(_mainFormConfig.BackgroundColor);
+        _graphics.Clear(MainFormConfig.BackgroundColor);
     
-        var pen = new Pen(_mainFormConfig.Color);
+        var pen = new Pen(MainFormConfig.Color);
 
-        var center = new Point(Width / 2, Height / 2);
-        var standartSize = new Size(10, 10);
-        var tagCloudProvider = new TagCloudProvider("words.txt", center, standartSize, _mainFormConfig);
-        var words = tagCloudProvider.GetPreparedWords();
-
+        MainFormConfig.Center = new Point(Width / 2, Height / 2);
+        MainFormConfig.StandartSize = new Size(10, 10);
+        var words = _tagCloudProvider.GetPreparedWords();
+            
         foreach (var word in words)
         {
             _graphics.DrawString(
                 word.Value, 
-                new Font(_mainFormConfig.FontFamily, word.Weight * standartSize.Width), 
+                new Font(MainFormConfig.FontFamily, word.Weight * MainFormConfig.StandartSize.Width), 
                 pen.Brush, 
                 word.Position);
         }
-        
+        SaveImage(); 
+    }
+
+    private void SaveImage()
+    {
         var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
         ImageCreator.Save(this, Path.Combine(projectPath, "Images", "test.png"));
     }

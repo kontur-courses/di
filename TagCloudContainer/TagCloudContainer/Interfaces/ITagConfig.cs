@@ -2,5 +2,5 @@
 
 public interface ITagConfig
 {
-    public Word ConfigureWordTag(Word word, IMainFormConfig mainFormConfig);
+    public Word ConfigureWordTag(Word word);
 }

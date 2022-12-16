@@ -26,7 +26,7 @@ public class WordConfig_Should
     [Test]
     public void ShuffleWords_Null_ShouldThrowArgumentException()
     {
-        var action = () => _wordConfig.ShuffleWords(null);
+        var action = () => WordsShuffler.ShuffleWords(null);
         action
             .Should()
             .Throw<ArgumentException>()

@@ -1,4 +1,6 @@
-﻿namespace TagCloudContainer;
+﻿using Autofac;
+
+namespace TagCloudContainer;
 
 public class Program
 {
@@ -6,6 +8,7 @@ public class Program
     private static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new Settings());
+        using (var scope = Register.Registry().BeginLifetimeScope())
+            Application.Run(scope.Resolve<Settings>());
     }
 }

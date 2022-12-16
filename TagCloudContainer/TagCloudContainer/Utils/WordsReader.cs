@@ -1,42 +1,31 @@
 ﻿namespace TagCloudContainer;
 
-public class WordsReader
+public class WordsReader : IWordsReader
 {
     private readonly Dictionary<string, Word> _words = new Dictionary<string, Word>();
-    private IWordConfig _wordConfig = new WordConfig();
-    private IMainFormConfig _mainFormConfig;
-    
-    public IEnumerable<Word> GetWordsFromFile(string fileName, bool needValidate, IMainFormConfig mainFormConfig)
+    private IWordConfig _wordConfig;
+
+    public WordsReader(IWordConfig wordConfig)
     {
-        if (string.IsNullOrEmpty(fileName))
+        if (string.IsNullOrEmpty(MainFormConfig.FileName))
             throw new ArgumentException("File name can not be null or empty");
-
-        var filePath = Path.Combine(
-            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, fileName);
-
-        if (!File.Exists(filePath))
-            throw new ApplicationException("File does not exists");
-
-        _mainFormConfig = mainFormConfig;
-        Read(filePath, needValidate);
         
-        var wordsList = new List<Word>();
-        foreach (var w in _words)
-            wordsList.Add(w.Value);
-        
-        return _mainFormConfig.Random ? _wordConfig.ShuffleWords(wordsList)
-            : wordsList.OrderByDescending(w => w.Weight);
+        _wordConfig = wordConfig;
+    }
+    
+    public IEnumerable<Word> GetWordsFromFile(string filePath)
+    {
+        Read(filePath);
+        var wordsList = _words.Values.ToList();
+        return wordsList.OrderByDescending(w => w.Weight);
     }
 
-    private void Read(string filePath, bool needValidate)
+    private void Read(string filePath)
     {
-        if (!File.Exists(filePath))
-            throw new ApplicationException("File not found!");
-
         var lines = File
             .ReadLines(filePath)
             .Distinct();
-        lines = needValidate ? _wordConfig.Validate(lines) : lines;
+        lines = MainFormConfig.NeedValidate ? _wordConfig.Validate(lines) : lines;
 
         foreach (var word in lines)
             AddWord(word);

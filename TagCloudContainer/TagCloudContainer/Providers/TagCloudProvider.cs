@@ -1,27 +1,30 @@
 ﻿namespace TagCloudContainer;
 
-public class TagCloudProvider
+public class TagCloudProvider : ITagCloudProvider
 {
-    private WordsReader _wordsReader = new WordsReader();
-    private IMainFormConfig _mainFormConfig;
     private ITagConfig _tagConfig;
     private IEnumerable<Word> _words;
 
-    public TagCloudProvider(string fileName, Point center, Size standartSize, IMainFormConfig mainFormConfig)
+    public TagCloudProvider(ITagConfig tagConfig, IWordsReader wordsReader)
     {
-        IsValidArguments(fileName, center, standartSize);
-        _tagConfig = new TagConfig(center, standartSize, mainFormConfig);
-        _words = _wordsReader.GetWordsFromFile(fileName, true, mainFormConfig);
-        _mainFormConfig = mainFormConfig;
+        _tagConfig = tagConfig;
+        IsValidArguments();
+        var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+        var wordsFilePath = Path.Combine(projectPath, MainFormConfig.FileName);
+        _words = wordsReader.GetWordsFromFile(wordsFilePath);
     }
 
     public IEnumerable<Word> GetPreparedWords()
-        => _words.Select(w => _tagConfig.ConfigureWordTag(w, _mainFormConfig));
-
-    private void IsValidArguments(string fileName, Point center, Size standartSize)
     {
-        if (string.IsNullOrEmpty(fileName))
-            throw new ArgumentException("File name can not be null or empty");
+        var sortedWords = MainFormConfig.Random ? WordsShuffler.ShuffleWords(_words.ToList()) : _words;
+        return sortedWords.Select(w => _tagConfig.ConfigureWordTag(w));
+    }
+
+    private void IsValidArguments()
+    {
+        var center = MainFormConfig.Center;
+        var standartSize = MainFormConfig.StandartSize;
+        
         if (center.IsEmpty || center == null)
             throw new ArgumentException("Center point can not be empty or null");
         if (standartSize.IsEmpty || standartSize == null)

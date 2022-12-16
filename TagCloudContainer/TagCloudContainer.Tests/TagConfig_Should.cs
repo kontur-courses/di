@@ -4,15 +4,17 @@ using FluentAssertions;
 namespace TagCloudContainer.Tests;
 
 [TestFixture]
-public class Tests
+public class TagConfig_Should 
 {
     private TagConfig _tagConfig;
-    private MainFormConfig _mainFormConfig = new MainFormConfig() {};
 
     [Test]
     public void Constructor_ValidArguments_ShouldNotThrowException()
     {
-        var action = () => new TagConfig(new Point(10, 10), new Size(10, 10), _mainFormConfig);
+        MainFormConfig.Center = new Point(10, 10);
+        MainFormConfig.StandartSize = new Size(10, 10);
+        
+        var action = () => new TagConfig();
         action
             .Should()
             .NotThrow<ArgumentException>();
@@ -25,8 +27,9 @@ public class Tests
         var invalidPoint = new Point(x, y);
         if (x == 0 && y == 0)
             invalidPoint = new Point();
-        
-        var action = () => new TagConfig(invalidPoint, new Size(10, 10), _mainFormConfig);
+
+        MainFormConfig.Center = invalidPoint;
+        var action = () => new TagConfig();
         ShouldThrowException(action);
     }
    
@@ -37,8 +40,9 @@ public class Tests
         var invalidSize = new Size(width, height);
         if (width == 0 && height == 0)
             invalidSize = new Size();
-        
-        var action = () => new TagConfig(new Point(10, 10), invalidSize, _mainFormConfig);
+
+        MainFormConfig.StandartSize = invalidSize;
+        var action = () => new TagConfig();
         ShouldThrowException(action);
     }
 

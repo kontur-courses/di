@@ -2,10 +2,12 @@
 
 public partial class Settings : Form 
 {
-    private MainFormConfig _mainFormConfig;
-    
-    public Settings()
+    private readonly TagCloudForm _tagCloudForm;
+
+    public Settings(TagCloudForm tagCloudForm)
     {
+        _tagCloudForm = tagCloudForm;
+        
         InitializeComponent();
     }
 
@@ -19,22 +21,27 @@ public partial class Settings : Form
         RunTagCloudForm(false);
     }
 
-    private void AddConfigValues()
+    private void AddConfigValues(bool random)
     {
-        _mainFormConfig = new MainFormConfig()
+        MainFormConfig.Color = TagCloudContainer.Colors.Get(Colors.Text);
+        MainFormConfig.BackgroundColor = TagCloudContainer.Colors.Get(BackgroundColors.Text);
+        MainFormConfig.FontFamily = Fonts.Text;
+        MainFormConfig.Random = random;
+        MainFormConfig.FileName = "words.txt";
+        MainFormConfig.ExcludeWordsFileName = "boring_words.txt";
+        MainFormConfig.NearestToTheCenterPoints = new SortedList<float, Point>();
+        MainFormConfig.PutRectangles = new List<Rectangle>();
+
+        if (!MainFormConfig.FormSize.Equals(TagCloudContainer.Sizes.Get(Sizes.Text)))
         {
-            Color = TagCloudContainer.Colors.Get(Colors.Text), 
-            BackgroundColor = TagCloudContainer.Colors.Get(BackgroundColors.Text), 
-            FontFamily = Fonts.Text,
-            FormSize = TagCloudContainer.Sizes.Get(Sizes.Text)
-        };
+            _tagCloudForm.ChangeSize(TagCloudContainer.Sizes.Get(Sizes.Text));
+            MainFormConfig.FormSize = TagCloudContainer.Sizes.Get(Sizes.Text);
+        }
     }
 
-    private void RunTagCloudForm(bool Random)
+    private void RunTagCloudForm(bool random)
     {
-        AddConfigValues();
-        _mainFormConfig.Random = Random;
-        TagCloudForm tagCloudForm = new TagCloudForm(_mainFormConfig);
-        tagCloudForm.Show();
+        AddConfigValues(random);
+        _tagCloudForm.ShowDialog(this);
     }
 }

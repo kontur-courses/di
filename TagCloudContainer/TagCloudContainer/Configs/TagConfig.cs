@@ -4,36 +4,25 @@ namespace TagCloudContainer;
 
 public class TagConfig : ITagConfig
 {
-    private readonly Point _center;
-    private readonly Size _standartSize;
-    private IMainFormConfig _mainFormConfig;
-    private SortedList<float, Point> _nearestToTheCenterPoints;
-    private List<Rectangle> _putRectangles;
+    private SortedList<float, Point> _nearestToTheCenterPoints = new SortedList<float, Point>();
+    private List<Rectangle> _putRectangles = new List<Rectangle>();
 
-    public TagConfig(Point center, Size standartSize, IMainFormConfig mainFormConfig)
+    public TagConfig()
     {
-        IsValidArguments(center, standartSize);
-
-        _mainFormConfig = mainFormConfig;
-        _center = center;
-        _standartSize = standartSize;
-        _nearestToTheCenterPoints = new SortedList<float, Point>();
-        _putRectangles = new List<Rectangle>();
-        
-        AddFreePoint(center);
+        IsValidArguments();
     }
     
-    public Word ConfigureWordTag(Word word, IMainFormConfig mainFormConfig)
+    public Word ConfigureWordTag(Word word)
     {
-        word.Size = TextRenderer
-            .MeasureText(word.Value, new Font(_mainFormConfig.FontFamily, word.Weight * _standartSize.Width));
+        _nearestToTheCenterPoints = MainFormConfig.NearestToTheCenterPoints;
+        _putRectangles = MainFormConfig.PutRectangles;
         
-        if (word.Size.IsEmpty || word.Size == null)
-            throw new ArgumentException("Word size can't be empty or null");
-        if (word.Size.Width < 0 || word.Size.Height < 0) 
-            throw new ArgumentException("Word size can't have negative side value");
+        if (_nearestToTheCenterPoints.Count == 0)
+            AddFreePoint(MainFormConfig.Center);
+        
+        word.Size = TextRenderer
+            .MeasureText(word.Value, new Font(MainFormConfig.FontFamily, word.Weight * MainFormConfig.StandartSize.Width));
 
-        _mainFormConfig = mainFormConfig;
         var nearestFreePoint = GetNearestInsertionPoint(word.Size);
         var rectangle = new Rectangle(nearestFreePoint, word.Size);
         
@@ -96,12 +85,15 @@ public class TagConfig : ITagConfig
     
     private float CountDistanceFromCenter(Point point)
     {
-        var distanceFromCenter = new Vector2(point.X - _center.X, point.Y - _center.Y);
+        var distanceFromCenter = new Vector2(point.X - MainFormConfig.Center.X, point.Y - MainFormConfig.Center.Y);
         return distanceFromCenter.Length();
     }
 
-    private void IsValidArguments(Point center, Size standartSize)
+    private void IsValidArguments()
     {
+        var center = MainFormConfig.Center;
+        var standartSize = MainFormConfig.StandartSize;
+        
         if (center.IsEmpty || center == null)
             throw new ArgumentException("Center can't be empty or null");
         if (center.X < 0 || center.Y < 0)
