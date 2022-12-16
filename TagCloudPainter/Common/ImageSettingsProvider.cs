@@ -1,6 +1,4 @@
-﻿using TagCloudPainter.Interfaces;
-
-namespace TagCloudPainter.Common;
+﻿namespace TagCloudPainter.Common;
 
 public class ImageSettingsProvider : IImageSettingsProvider
 {
