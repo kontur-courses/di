@@ -1,16 +1,22 @@
-﻿using CommandLine;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CommandLine;
 
 namespace TagsCloudContainer
 {
     public class Options
     {
-        [Option('w', "width", Default = 1920)]
+        [Option('w', "width", Required = true)]
         public int Width { get; set; }
 
-        [Option('h', "height", Default = 1080)]
+        [Option('h', "height", Required = true)]
         public int Height { get; set; }
+
+        [Option('x', "centerX", Required = true)]
+        public int CenterX { get; set; }
+
+        [Option('y', "centerY", Required = true)]
+        public int CenterY { get; set; }
 
         [Option('o', "output", Default = "output.png")]
         public string OutputFile { get; set; }
@@ -18,28 +24,29 @@ namespace TagsCloudContainer
         [Option('i', "input", Default = "input.txt")]
         public string InputFile { get; set; }
 
-        [Option('c', "count", Default = -1)]
+        [Option('c', "count", Default = -1)] 
         public int Count { get; set; }
 
-        [Option('a', "astep", Default = Math.PI / 180)]
+        [Option("astep", Default = Math.PI / 180)]
         public double StepAngle { get; set; }
 
-        [Option('x', "xstep", Default = 2)]
-        public int StepX { get; set; }
+        [Option("xstep", Default = 2)] public int StepX { get; set; }
 
-        [Option('y', "ystep", Default = 1)]
-        public int StepY { get; set; }
+        [Option("ystep", Default = 1)] public int StepY { get; set; }
 
-        [Option('f', "fgcolor", Default = "black")]
+        [Option("fgcolor", Default = "black")]
         public string ForegroundColor { get; set; }
 
-        [Option('b', "bgcolor", Default = "white")]
+        [Option("bgcolor", Default = "white")] 
         public string BackgroundColor { get; set; }
 
-        [Option("minf", Default = 10)]
+        [Option("family", Default = "Arial")] 
+        public string FontFamily { get; set; }
+
+        [Option("minf", Default = 10)] 
         public int MinFontSize { get; set; }
 
-        [Option("maxf", Default = 50)]
+        [Option("maxf", Default = 50)] 
         public int MaxFontSize { get; set; }
 
         [Option("pspeech", Separator = ',', Default = new[] { "A", "V", "S" })]

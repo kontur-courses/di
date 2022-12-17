@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer
+﻿namespace TagsCloudContainer.MorphologicalAnalysis
 {
     public readonly struct Word
     {

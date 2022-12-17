@@ -1,5 +1,8 @@
-﻿namespace TagsCloudContainer
+﻿using System;
+
+namespace TagsCloudContainer.MorphologicalAnalysis
 {
+    [Flags]
     public enum PartSpeech
     {
         None = 0,

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Distribution
 {
     public interface IDistribution
     {
-        IEnumerable<Point> GetPoints();
+        public IEnumerable<Point> GetPoints();
     }
 }

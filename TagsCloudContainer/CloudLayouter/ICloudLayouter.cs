@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.CloudItem;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CloudLayouter
 {
     public interface ICloudLayouter
     {
-        ICloudItem PutNextCloudItem(string word, Size size, Font font);
-        IList<ICloudItem> Items { get; }
+        public IList<ICloudItem> Items { get; }
+        public ICloudItem PutNextCloudItem(string word, Size size, Font font);
     }
 }

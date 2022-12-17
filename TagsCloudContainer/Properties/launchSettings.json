@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudContainer": {
+      "commandName": "Project",
+      "commandLineArgs": "-w 800 -h 600 -x 400 -y 300 -c 30"
+    }
+  }
+}

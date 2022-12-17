@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.MorphologicalAnalysis
 {
-    public class MyStem
+    public class MorphologicalAnalyzer
     {
-        private readonly string executedFile = "MyStem\\mystem.exe";
-        private readonly string options = "-nli";
+        private const string ExecutedFile = "MorphologicalAnalysis\\mystem.exe";
+        private const string Options = "-nli";
         private readonly string inputPath;
         private readonly Process process;
 
-        public MyStem(string filename)
+        public MorphologicalAnalyzer(string filename)
         {
             inputPath = filename;
             process = InitProcess();
@@ -25,7 +25,7 @@ namespace TagsCloudContainer
         {
             foreach (var line in GetLines())
             {
-                var pattern = @"^([а-я-]*)\??=([A-Z]*)";
+                const string pattern = @"^([а-я-]*)\??=([A-Z]*)";
                 var regex = new Regex(pattern);
                 var match = regex.Match(line);
 
@@ -37,7 +37,7 @@ namespace TagsCloudContainer
             }
         }
 
-        public static PartSpeech IdentifyPartSpeech(string alias)
+        private static PartSpeech IdentifyPartSpeech(string alias)
         {
             return alias switch
             {
@@ -64,7 +64,7 @@ namespace TagsCloudContainer
             return partSpeeches
                 .Select(x => x.ToUpper())
                 .Aggregate(PartSpeech.None,
-                (acc, next) => acc |= MyStem.IdentifyPartSpeech(next));
+                    (acc, next) => acc |= IdentifyPartSpeech(next));
         }
 
         private IEnumerable<string> GetLines()
@@ -72,18 +72,16 @@ namespace TagsCloudContainer
             process.Start();
             using (var reader = process.StandardOutput)
             {
-                while (!reader.EndOfStream)
-                {
-                    yield return reader.ReadLine();
-                }
+                while (!reader.EndOfStream) yield return reader.ReadLine();
             }
+
             process.WaitForExit();
         }
 
         private Process InitProcess()
         {
-            var fileNamePath = Path.Combine(Utilities.GetProjectPath(), executedFile);
-            var arguments = options + ' ' + Path.Combine(Utilities.GetProjectPath(), inputPath);
+            var fileNamePath = Path.Combine(Program.ProjectPath, ExecutedFile);
+            var arguments = Options + ' ' + Path.Combine(Program.ProjectPath, inputPath);
 
             var process = new Process();
             process.StartInfo.UseShellExecute = false;
