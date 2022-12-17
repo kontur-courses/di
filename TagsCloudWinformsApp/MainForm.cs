@@ -38,7 +38,7 @@ public partial class MainForm : Form
                           settingsHandler.LocalSettings.Font.Name;
         backgroundColor_button.BackColor = settingsHandler.LocalSettings.BackgroundColor;
         fontColor_button.BackColor = settingsHandler.LocalSettings.FontColor;
-        growthPercent_numeric.Value = (decimal) ((settingsHandler.LocalSettings.FrequencyRatio - 1) * 100);
+        growth_numeric.Value = (decimal) settingsHandler.LocalSettings.FrequencyGrowth;
         imageWidth_numeric.Value = settingsHandler.LocalSettings.ImageSize.Width;
         imageHeight_numeric.Value = settingsHandler.LocalSettings.ImageSize.Height;
 
@@ -83,7 +83,7 @@ public partial class MainForm : Form
 
     private void growthPercent_numeric_ValueChanged(object sender, EventArgs e)
     {
-        settingsHandler.LocalSettings.FrequencyRatio = (float) (1 + growthPercent_numeric.Value / 100);
+        settingsHandler.LocalSettings.FrequencyGrowth = (int)growth_numeric.Value;
         UpdateSettingsView();
     }
 
@@ -114,6 +114,23 @@ public partial class MainForm : Form
             MessageBox.Show(ex.ToString());
         }
     }
+
+    private IContainer BuildContainer()
+    {
+        var builder = new ContainerBuilder();
+        builder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>();
+        builder.RegisterType<DefaultRectanglesDistributor>().As<IRectanglesDistributor>();
+        builder.RegisterType<WordsHandlerWithFilter>().As<IWordsHandler>();
+        builder.RegisterInstance(settingsHandler).As<ISettingsProvider>();
+        builder.RegisterInstance(inputFilesReader).As<IWordSequenceProvider>();
+        builder.RegisterInstance(inputFilesReader).As<IWordFilterProvider>();
+
+        SetColorProvider[wordColoring_comboBox.SelectedIndex](builder);
+        SetLayouter[layout_comboBox.SelectedIndex](builder);
+
+        return builder.Build();
+    }
+
 
     private void inputFile_button_Click(object sender, EventArgs e)
     {
@@ -157,33 +174,16 @@ public partial class MainForm : Form
         UpdateSettingsView();
     }
 
-    private IContainer BuildContainer()
-    {
-        var builder = new ContainerBuilder();
-        builder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>();
-        builder.RegisterType<DefaultRectanglesDistributor>().As<IRectanglesDistributor>();
-        builder.RegisterType<WordsHandlerWithFilter>().As<IWordsHandler>();
-        builder.RegisterInstance(settingsHandler).As<ISettingsProvider>();
-        builder.RegisterInstance(inputFilesReader).As<IWordSequenceProvider>();
-        builder.RegisterInstance(inputFilesReader).As<IWordFilterProvider>();
-
-        SetColorProvider[wordColoring_comboBox.SelectedIndex](builder);
-        SetLayouter[layout_comboBox.SelectedIndex](builder);
-        
-        return builder.Build();
-    }
-
-    private Action<ContainerBuilder>[] SetColorProvider = 
+    private Action<ContainerBuilder>[] SetColorProvider =
     {
         (builder) => builder.RegisterType<SimpleColorProvider>().As<IColorProvider>(),
         (builder) => builder.RegisterType<RandomColorProvider>().As<IColorProvider>(),
         (builder) => builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>()
     };
-    
-    private Action<ContainerBuilder>[] SetLayouter = 
+
+    private Action<ContainerBuilder>[] SetLayouter =
     {
         (builder) => builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>(),
         (builder) => builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>()
     };
-
 }

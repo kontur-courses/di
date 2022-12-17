@@ -31,7 +31,7 @@ public class DefaultRectangleDistributorTests
                 new Settings
                 {
                     Font = new Font(FontFamily.GenericMonospace, 20),
-                    FrequencyRatio = 2f
+                    FrequencyGrowth = 5
                 });
             var wordsHandler = mock.Create<IWordsHandler>();
             var settings = mock.Create<ISettingsProvider>();
@@ -58,7 +58,7 @@ public class DefaultRectangleDistributorTests
                 new Settings
                 {
                     Font = new Font(FontFamily.GenericMonospace, 20),
-                    FrequencyRatio = 2f
+                    FrequencyGrowth = 5
                 });
             var wordsHandler = mock.Create<IWordsHandler>();
             var settings = mock.Create<ISettingsProvider>();

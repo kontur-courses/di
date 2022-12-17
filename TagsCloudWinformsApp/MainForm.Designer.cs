@@ -39,8 +39,8 @@ partial class MainForm
             this.backgroundColor_button = new System.Windows.Forms.Button();
             this.layout_label = new System.Windows.Forms.Label();
             this.layout_comboBox = new System.Windows.Forms.ComboBox();
-            this.growthPercent_label = new System.Windows.Forms.Label();
-            this.growthPercent_numeric = new System.Windows.Forms.NumericUpDown();
+            this.growth_label = new System.Windows.Forms.Label();
+            this.growth_numeric = new System.Windows.Forms.NumericUpDown();
             this.imageWidth_label = new System.Windows.Forms.Label();
             this.imageWidth_numeric = new System.Windows.Forms.NumericUpDown();
             this.imageHeight_label = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@ partial class MainForm
             this.chooseFilterFile_button = new System.Windows.Forms.Button();
             this.inputFile_button = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.growthPercent_numeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.growth_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageWidth_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageHeight_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
@@ -75,8 +75,8 @@ partial class MainForm
             this.flowLayoutPanel1.Controls.Add(this.backgroundColor_button);
             this.flowLayoutPanel1.Controls.Add(this.layout_label);
             this.flowLayoutPanel1.Controls.Add(this.layout_comboBox);
-            this.flowLayoutPanel1.Controls.Add(this.growthPercent_label);
-            this.flowLayoutPanel1.Controls.Add(this.growthPercent_numeric);
+            this.flowLayoutPanel1.Controls.Add(this.growth_label);
+            this.flowLayoutPanel1.Controls.Add(this.growth_numeric);
             this.flowLayoutPanel1.Controls.Add(this.imageWidth_label);
             this.flowLayoutPanel1.Controls.Add(this.imageWidth_numeric);
             this.flowLayoutPanel1.Controls.Add(this.imageHeight_label);
@@ -190,33 +190,33 @@ partial class MainForm
             this.layout_comboBox.TabIndex = 2;
             this.layout_comboBox.SelectedIndexChanged += new System.EventHandler(this.layout_comboBox_SelectedIndexChanged);
             // 
-            // growthPercent_label
+            // growth_label
             // 
-            this.growthPercent_label.AutoSize = true;
-            this.growthPercent_label.Location = new System.Drawing.Point(2, 321);
-            this.growthPercent_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
-            this.growthPercent_label.Name = "growthPercent_label";
-            this.growthPercent_label.Size = new System.Drawing.Size(103, 40);
-            this.growthPercent_label.TabIndex = 7;
-            this.growthPercent_label.Text = "Growth % per frequency";
+            this.growth_label.AutoSize = true;
+            this.growth_label.Location = new System.Drawing.Point(2, 321);
+            this.growth_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.growth_label.Name = "growth_label";
+            this.growth_label.Size = new System.Drawing.Size(87, 40);
+            this.growth_label.TabIndex = 7;
+            this.growth_label.Text = "Growth per frequency";
             // 
-            // growthPercent_numeric
+            // growth_numeric
             // 
-            this.growthPercent_numeric.Location = new System.Drawing.Point(5, 364);
-            this.growthPercent_numeric.Maximum = new decimal(new int[] {
+            this.growth_numeric.Location = new System.Drawing.Point(5, 364);
+            this.growth_numeric.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.growthPercent_numeric.Name = "growthPercent_numeric";
-            this.growthPercent_numeric.Size = new System.Drawing.Size(128, 27);
-            this.growthPercent_numeric.TabIndex = 1;
-            this.growthPercent_numeric.Value = new decimal(new int[] {
+            this.growth_numeric.Name = "growth_numeric";
+            this.growth_numeric.Size = new System.Drawing.Size(128, 27);
+            this.growth_numeric.TabIndex = 1;
+            this.growth_numeric.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.growthPercent_numeric.ValueChanged += new System.EventHandler(this.growthPercent_numeric_ValueChanged);
+            this.growth_numeric.ValueChanged += new System.EventHandler(this.growthPercent_numeric_ValueChanged);
             // 
             // imageWidth_label
             // 
@@ -387,7 +387,7 @@ partial class MainForm
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.growthPercent_numeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.growth_numeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageWidth_numeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageHeight_numeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
@@ -408,8 +408,8 @@ partial class MainForm
     private Button fontColor_button;
     private Label layout_label;
     private ComboBox layout_comboBox;
-    private NumericUpDown growthPercent_numeric;
-    private Label growthPercent_label;
+    private NumericUpDown growth_numeric;
+    private Label growth_label;
     private Label imageWidth_label;
     private NumericUpDown imageWidth_numeric;
     private Label imageHeight_label;

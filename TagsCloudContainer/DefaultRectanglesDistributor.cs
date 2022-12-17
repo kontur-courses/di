@@ -38,10 +38,9 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
 
     private Size CalculateSizeForWord(string word, int frequency)
     {
-        var size = word.MeasureString(settings.Font);
-        var ratio = MathF.Pow(settings.FrequencyRatio, frequency - 1);
-        size.Height *= ratio;
-        size.Width *= ratio;
+        var sizeAdd = settings.FrequencyGrowth * (frequency - 1);
+        var font = new Font(settings.Font.FontFamily, settings.Font.Size + sizeAdd, settings.Font.Style);
+        var size = word.MeasureString(font);
         return Size.Ceiling(size);
     }
 }

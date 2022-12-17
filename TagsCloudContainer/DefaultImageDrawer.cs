@@ -35,9 +35,9 @@ public class DefaultImageDrawer : IImageDrawer
             var rect = pair.Value;
             var font = settings.Font;
             var freq = wordsHandler.WordDistribution[pair.Key];
-            var ratio = MathF.Pow(settings.FrequencyRatio, freq - 1);
+            var sizeAdd = settings.FrequencyGrowth * (wordsHandler.WordDistribution[pair.Key] - 1);
             rect.Offset(offset);
-            font = new Font(font.FontFamily, font.Size * ratio, font.Style);
+            font = new Font(font.FontFamily, font.Size + sizeAdd, font.Style);
             graphics.DrawString(pair.Key, font, new SolidBrush(_colorProvider.ProvideColorForWord(pair.Key, freq)),
                 rect);
         }

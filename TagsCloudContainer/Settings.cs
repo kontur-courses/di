@@ -7,6 +7,6 @@ public class Settings
     public Color BackgroundColor;
     public Font Font;
     public Color FontColor;
-    public float FrequencyRatio;
+    public int FrequencyGrowth;
     public Size ImageSize;
 }

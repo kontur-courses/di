@@ -40,7 +40,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Black
             });
@@ -65,7 +65,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Red,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Aquamarine
             });
@@ -89,7 +89,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font("Arial", 24, FontStyle.Italic),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Black
             });
@@ -114,7 +114,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(6000, 6000),
                 BackgroundColor = Color.Black
             });
@@ -141,7 +141,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.6f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Black
             });
@@ -167,7 +167,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Black
             });
@@ -194,7 +194,7 @@ public class ImageDrawerTests
             {
                 FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
-                FrequencyRatio = 1.3f,
+                FrequencyGrowth = 10,
                 ImageSize = new Size(5000, 5000),
                 BackgroundColor = Color.Black
             });
