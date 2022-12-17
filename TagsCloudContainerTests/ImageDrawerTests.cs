@@ -52,7 +52,7 @@ public class ImageDrawerTests
         var testFileReader = new TestFileReader(inputPath, null);
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
 
     [Test]
@@ -76,7 +76,7 @@ public class ImageDrawerTests
         var testFileReader = new TestFileReader(inputPath, null);
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
 
     [Test]
@@ -101,7 +101,7 @@ public class ImageDrawerTests
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
 
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
 
     [Test]
@@ -127,7 +127,7 @@ public class ImageDrawerTests
         builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>();
         
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class ImageDrawerTests
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         builder.RegisterType<WordsHandlerWithFilter>().As<IWordsHandler>();
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
     
     [Test]
@@ -180,7 +180,7 @@ public class ImageDrawerTests
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         builder.RegisterType<RandomColorProvider>().As<IColorProvider>();
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
     
     [Test]
@@ -207,6 +207,6 @@ public class ImageDrawerTests
         builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>();
         var container = builder.Build();
-        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage().Value, savePath);
     }
 }

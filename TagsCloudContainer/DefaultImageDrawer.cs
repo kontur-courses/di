@@ -21,27 +21,34 @@ public class DefaultImageDrawer : IImageDrawer
 
     public Bitmap DrawnBitmap { get; private set; }
 
-    public Bitmap DrawImage()
+    public Result<Bitmap> DrawImage()
     {
-        if (DrawnBitmap != null) return DrawnBitmap;
+        if (DrawnBitmap != null) return new Result<Bitmap>(DrawnBitmap);
 
-        DrawnBitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-        var offset = new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2);
-        var graphics = Graphics.FromImage(DrawnBitmap);
-        graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), 0, 0, DrawnBitmap.Width, DrawnBitmap.Height);
-
-        foreach (var pair in rectanglesDistributor.DistributedRectangles)
+        try
         {
-            var rect = pair.Value;
-            var font = settings.Font;
-            var freq = wordsHandler.WordDistribution[pair.Key];
-            var sizeAdd = settings.FrequencyGrowth * (wordsHandler.WordDistribution[pair.Key] - 1);
-            rect.Offset(offset);
-            font = new Font(font.FontFamily, font.Size + sizeAdd, font.Style);
-            graphics.DrawString(pair.Key, font, new SolidBrush(_colorProvider.ProvideColorForWord(pair.Key, freq)),
-                rect);
+            DrawnBitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            var offset = new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2);
+            var graphics = Graphics.FromImage(DrawnBitmap);
+            graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), 0, 0, DrawnBitmap.Width, DrawnBitmap.Height);
+
+            foreach (var pair in rectanglesDistributor.DistributedRectangles)
+            {
+                var rect = pair.Value;
+                var font = settings.Font;
+                var freq = wordsHandler.WordDistribution[pair.Key];
+                var sizeAdd = settings.FrequencyGrowth * (wordsHandler.WordDistribution[pair.Key] - 1);
+                rect.Offset(offset);
+                font = new Font(font.FontFamily, font.Size + sizeAdd, font.Style);
+                graphics.DrawString(pair.Key, font, new SolidBrush(_colorProvider.ProvideColorForWord(pair.Key, freq)),
+                    rect);
+            }
+        }
+        catch (Exception e)
+        {
+            return new Result<Bitmap>(e);
         }
 
-        return DrawnBitmap;
+        return new Result<Bitmap>(DrawnBitmap);
     }
 }

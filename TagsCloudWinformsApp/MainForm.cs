@@ -101,18 +101,23 @@ public partial class MainForm : Form
 
     private void generate_button_Click(object sender, EventArgs e)
     {
-        try
-        {
             var container = BuildContainer();
             var imgDrawer = container.Resolve<IImageDrawer>();
-            var bitmap = imgDrawer.DrawImage();
-            mainPictureBox.Image = bitmap;
-            UpdateSettingsView();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString());
-        }
+            var bitmapResult = imgDrawer.DrawImage();
+            if(!bitmapResult.Successful)
+            {
+                if (bitmapResult.Exception.Message.Contains("GUI"))
+                {
+                    MessageBox.Show(
+                        "Occured error while generating image, try using smaller input or smaller growth value");
+                }
+                MessageBox.Show(bitmapResult.Exception.ToString());
+            }
+            else
+            {
+                mainPictureBox.Image = bitmapResult.Value;
+                UpdateSettingsView();
+            }
     }
 
     private IContainer BuildContainer()
