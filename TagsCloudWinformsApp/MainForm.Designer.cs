@@ -232,7 +232,7 @@ partial class MainForm
             // 
             this.imageWidth_numeric.Location = new System.Drawing.Point(5, 423);
             this.imageWidth_numeric.Maximum = new decimal(new int[] {
-            10000,
+            20000,
             0,
             0,
             0});
@@ -265,7 +265,7 @@ partial class MainForm
             // 
             this.imageHeight_numeric.Location = new System.Drawing.Point(5, 482);
             this.imageHeight_numeric.Maximum = new decimal(new int[] {
-            10000,
+            20000,
             0,
             0,
             0});

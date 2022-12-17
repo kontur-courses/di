@@ -10,7 +10,7 @@ internal class SettingsHandler : ISettingsProvider
         FontColor = Color.Cyan,
         Font = new Font(FontFamily.GenericSerif, 26),
         FrequencyGrowth = 5,
-        ImageSize = new Size(1000, 1000)
+        ImageSize = new Size(4000, 4000)
     };
 
     public Settings Settings =>

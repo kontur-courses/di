@@ -83,7 +83,7 @@ public partial class MainForm : Form
 
     private void growthPercent_numeric_ValueChanged(object sender, EventArgs e)
     {
-        settingsHandler.LocalSettings.FrequencyGrowth = (int)growth_numeric.Value;
+        settingsHandler.LocalSettings.FrequencyGrowth = (int) growth_numeric.Value;
         UpdateSettingsView();
     }
 
