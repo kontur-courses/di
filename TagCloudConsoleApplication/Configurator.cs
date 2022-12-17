@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
 using Autofac;
 using Autofac.Core;
 using TagCloudConsoleApplication.Options;
@@ -47,7 +46,7 @@ public class Configurator
 
         builder.RegisterType<CloudPainter>().As<ICloudPainter>();
 
-        RegisterSaver(builder, o);
+        builder.RegisterType<TagCloudSaver>().As<ITagCloudSaver>();
 
         return builder.Build();
     }
@@ -84,19 +83,6 @@ public class Configurator
                 new NamedParameter("angleStep", o.Angle),
                 new NamedParameter("radiusStep", o.Radius)
             });
-    }
-
-    private void RegisterSaver(ContainerBuilder builder, TagCloudOptions options)
-    {
-        var output = options.OutputPath;
-        ImageFormat format;
-        if (output.Contains(".png"))
-            format = ImageFormat.Png;
-        else if (output.Contains(".jpg") || output.Contains(".jpeg"))
-            format = ImageFormat.Jpeg;
-        else
-            throw new ArgumentException("output is in not supported format", output);
-        builder.RegisterType<TagCloudSaver>().As<ITagCloudSaver>().WithProperty("Format", format);
     }
 
     private static ImageSettings GetImageSettings(TagCloudOptions options)
