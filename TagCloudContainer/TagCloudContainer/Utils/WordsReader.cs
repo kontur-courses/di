@@ -3,13 +3,15 @@
 public class WordsReader : IWordsReader
 {
     private readonly Dictionary<string, Word> _words = new Dictionary<string, Word>();
-    private IWordConfig _wordConfig;
+    private readonly IWordConfig _wordConfig;
+    private readonly IMainFormConfig _mainFormConfig;
 
-    public WordsReader(IWordConfig wordConfig)
+    public WordsReader(IWordConfig wordConfig, IMainFormConfig mainFormConfig)
     {
-        if (string.IsNullOrEmpty(MainFormConfig.FileName))
+        if (string.IsNullOrEmpty(mainFormConfig.FileName))
             throw new ArgumentException("File name can not be null or empty");
-        
+
+        _mainFormConfig = mainFormConfig;
         _wordConfig = wordConfig;
     }
     
@@ -25,7 +27,7 @@ public class WordsReader : IWordsReader
         var lines = File
             .ReadLines(filePath)
             .Distinct();
-        lines = MainFormConfig.NeedValidate ? _wordConfig.Validate(lines) : lines;
+        lines = _mainFormConfig.NeedValidate ? _wordConfig.Validate(lines) : lines;
 
         foreach (var word in lines)
             AddWord(word);

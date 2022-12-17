@@ -6,10 +6,17 @@ public class WordConfig : IWordConfig
 {
     private StringBuilder _word;
     private Dictionary<string, int> _boringWords;
+    
+    private readonly IMainFormConfig _mainFormConfig;
 
     public string Result
     {
         get => _word.ToString();
+    }
+
+    public WordConfig(IMainFormConfig mainFormConfig)
+    {
+        _mainFormConfig = mainFormConfig;
     }
     
     public IEnumerable<string> Validate(IEnumerable<string> lines)
@@ -32,7 +39,7 @@ public class WordConfig : IWordConfig
             throw new ArgumentException("Word can not be null or empty");
         
         var filePath = Path.Combine(
-            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, MainFormConfig.ExcludeWordsFileName);
+            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, _mainFormConfig.ExcludeWordsFileName);
 
         if (!File.Exists(filePath))
             throw new ApplicationException("File does not exists");

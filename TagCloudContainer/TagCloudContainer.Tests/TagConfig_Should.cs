@@ -7,14 +7,21 @@ namespace TagCloudContainer.Tests;
 public class TagConfig_Should 
 {
     private TagConfig _tagConfig;
+    private IMainFormConfig _mainFormConfig;
+    
+    [SetUp]
+    public void SetUp()
+    {
+        _mainFormConfig = new MainFormConfig();
+    }
 
     [Test]
     public void Constructor_ValidArguments_ShouldNotThrowException()
     {
-        MainFormConfig.Center = new Point(10, 10);
-        MainFormConfig.StandartSize = new Size(10, 10);
+        _mainFormConfig.Center = new Point(10, 10);
+        _mainFormConfig.StandartSize = new Size(10, 10);
         
-        var action = () => new TagConfig();
+        var action = () => new TagConfig(_mainFormConfig);
         action
             .Should()
             .NotThrow<ArgumentException>();
@@ -28,8 +35,8 @@ public class TagConfig_Should
         if (x == 0 && y == 0)
             invalidPoint = new Point();
 
-        MainFormConfig.Center = invalidPoint;
-        var action = () => new TagConfig();
+        _mainFormConfig.Center = invalidPoint;
+        var action = () => new TagConfig(_mainFormConfig);
         ShouldThrowException(action);
     }
    
@@ -41,8 +48,8 @@ public class TagConfig_Should
         if (width == 0 && height == 0)
             invalidSize = new Size();
 
-        MainFormConfig.StandartSize = invalidSize;
-        var action = () => new TagConfig();
+        _mainFormConfig.StandartSize = invalidSize;
+        var action = () => new TagConfig(_mainFormConfig);
         ShouldThrowException(action);
     }
 

@@ -10,7 +10,7 @@ public class WordConfig_Should
     [SetUp]
     public void SetUp()
     {
-        _wordConfig = new WordConfig();
+        _wordConfig = new WordConfig(new MainFormConfig());
     }
     
     [Test]

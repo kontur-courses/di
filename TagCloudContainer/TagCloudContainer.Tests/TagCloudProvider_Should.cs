@@ -6,11 +6,37 @@ namespace TagCloudContainer.Tests;
 [TestFixture]
 public class TagCloudProvider_Should
 {
+    private IMainFormConfig _mainFormConfig;
+    
+    [SetUp]
+    public void SetUp()
+    {
+        _mainFormConfig = new MainFormConfig();
+    }
+    
+    [Test]
+    public void Constructor_CorrectParameters_ShouldNotThrowArgumentException()
+    {
+        var action = () => new TagCloudProvider(
+            new TagConfig(_mainFormConfig), 
+            new WordsReader(new WordConfig(_mainFormConfig), _mainFormConfig),
+            _mainFormConfig
+            );
+
+        action
+            .Should()
+            .NotThrow();
+    }
+    
     [Test]
     public void Constructor_InvalidCenter_ShouldThrowArgumentException()
     {
-        MainFormConfig.Center = Point.Empty;
-        var action = () => new TagCloudProvider(new TagConfig(), new WordsReader(new WordConfig()));
+        _mainFormConfig.Center = Point.Empty;
+        var action = () => new TagCloudProvider(
+            new TagConfig(_mainFormConfig), 
+            new WordsReader(new WordConfig(_mainFormConfig), _mainFormConfig),
+            _mainFormConfig
+            );
 
         action
             .Should()
@@ -20,8 +46,12 @@ public class TagCloudProvider_Should
     [Test]
     public void Constructor_InvalidSize_ShouldThrowArgumentException()
     {
-        MainFormConfig.StandartSize = Size.Empty;
-        var action = () => new TagCloudProvider(new TagConfig(), new WordsReader(new WordConfig()));
+        _mainFormConfig.StandartSize = Size.Empty;
+        var action = () => new TagCloudProvider(
+            new TagConfig(_mainFormConfig), 
+            new WordsReader(new WordConfig(_mainFormConfig), _mainFormConfig),
+            _mainFormConfig
+            );
 
         action
             .Should()

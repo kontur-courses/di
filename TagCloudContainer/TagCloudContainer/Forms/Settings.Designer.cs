@@ -104,11 +104,11 @@ partial class Settings
         // 
         this.Sizes.FormattingEnabled = true;
         this.Sizes.Location = new System.Drawing.Point(544, 44);
-        this.Sizes.Items.AddRange(TagCloudContainer.Sizes.GetAll().Keys.ToArray());
+        this.Sizes.Items.AddRange(Screens.Sizes);
         this.Sizes.Name = "Sizes";
         this.Sizes.Size = new System.Drawing.Size(155, 28);
         this.Sizes.TabIndex = 9;
-        this.Sizes.Text = "1920x1080";
+        this.Sizes.Text = Screens.Sizes.First();
         // 
         // label3
         // 

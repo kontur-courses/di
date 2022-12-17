@@ -3,11 +3,16 @@ namespace TagCloudContainer;
 public partial class TagCloudForm : Form
 {
     private Graphics _graphics;
-    private ITagCloudProvider _tagCloudProvider;
+    private readonly ITagCloudProvider _tagCloudProvider;
+    private readonly IMainFormConfig _mainFormConfig;
+    private readonly IImageCreator _imageCreator;
     
-    public TagCloudForm(ITagCloudProvider tagCloudProvider)
+    public TagCloudForm(ITagCloudProvider tagCloudProvider, IMainFormConfig mainFormConfig, IImageCreator imageCreator)
     {
         _tagCloudProvider = tagCloudProvider;
+        _mainFormConfig = mainFormConfig;
+        _imageCreator = imageCreator;
+        
         InitializeComponent();
         SetupWindow();
     }
@@ -15,7 +20,7 @@ public partial class TagCloudForm : Form
     private void SetupWindow()
     {
         Text = "Tag Cloud Container";
-        Size = MainFormConfig.FormSize;
+        Size = _mainFormConfig.FormSize;
     }
 
     public void ChangeSize(Size size)
@@ -26,19 +31,19 @@ public partial class TagCloudForm : Form
     private void Render(object sender, PaintEventArgs e)
     {
         _graphics = e.Graphics;
-        _graphics.Clear(MainFormConfig.BackgroundColor);
+        _graphics.Clear(_mainFormConfig.BackgroundColor);
     
-        var pen = new Pen(MainFormConfig.Color);
+        var pen = new Pen(_mainFormConfig.Color);
 
-        MainFormConfig.Center = new Point(Width / 2, Height / 2);
-        MainFormConfig.StandartSize = new Size(10, 10);
+        _mainFormConfig.Center = new Point(Width / 2, Height / 2);
+        _mainFormConfig.StandartSize = new Size(10, 10);
         var words = _tagCloudProvider.GetPreparedWords();
             
         foreach (var word in words)
         {
             _graphics.DrawString(
                 word.Value, 
-                new Font(MainFormConfig.FontFamily, word.Weight * MainFormConfig.StandartSize.Width), 
+                new Font(_mainFormConfig.FontFamily, word.Weight * _mainFormConfig.StandartSize.Width), 
                 pen.Brush, 
                 word.Position);
         }
@@ -48,6 +53,6 @@ public partial class TagCloudForm : Form
     private void SaveImage()
     {
         var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-        ImageCreator.Save(this, Path.Combine(projectPath, "Images", "test.png"));
+        _imageCreator.Save(this, Path.Combine(projectPath, "Images", "test.png"));
     }
 }

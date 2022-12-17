@@ -6,22 +6,26 @@ public class TagConfig : ITagConfig
 {
     private SortedList<float, Point> _nearestToTheCenterPoints = new SortedList<float, Point>();
     private List<Rectangle> _putRectangles = new List<Rectangle>();
+    
+    private readonly IMainFormConfig _mainFormConfig;
 
-    public TagConfig()
+    public TagConfig(IMainFormConfig mainFormConfig)
     {
+        _mainFormConfig = mainFormConfig;
+        
         IsValidArguments();
     }
     
     public Word ConfigureWordTag(Word word)
     {
-        _nearestToTheCenterPoints = MainFormConfig.NearestToTheCenterPoints;
-        _putRectangles = MainFormConfig.PutRectangles;
+        _nearestToTheCenterPoints = _mainFormConfig.NearestToTheCenterPoints;
+        _putRectangles = _mainFormConfig.PutRectangles;
         
         if (_nearestToTheCenterPoints.Count == 0)
-            AddFreePoint(MainFormConfig.Center);
+            AddFreePoint(_mainFormConfig.Center);
         
         word.Size = TextRenderer
-            .MeasureText(word.Value, new Font(MainFormConfig.FontFamily, word.Weight * MainFormConfig.StandartSize.Width));
+            .MeasureText(word.Value, new Font(_mainFormConfig.FontFamily, word.Weight * _mainFormConfig.StandartSize.Width));
 
         var nearestFreePoint = GetNearestInsertionPoint(word.Size);
         var rectangle = new Rectangle(nearestFreePoint, word.Size);
@@ -85,14 +89,14 @@ public class TagConfig : ITagConfig
     
     private float CountDistanceFromCenter(Point point)
     {
-        var distanceFromCenter = new Vector2(point.X - MainFormConfig.Center.X, point.Y - MainFormConfig.Center.Y);
+        var distanceFromCenter = new Vector2(point.X - _mainFormConfig.Center.X, point.Y - _mainFormConfig.Center.Y);
         return distanceFromCenter.Length();
     }
 
     private void IsValidArguments()
     {
-        var center = MainFormConfig.Center;
-        var standartSize = MainFormConfig.StandartSize;
+        var center = _mainFormConfig.Center;
+        var standartSize = _mainFormConfig.StandartSize;
         
         if (center.IsEmpty || center == null)
             throw new ArgumentException("Center can't be empty or null");
