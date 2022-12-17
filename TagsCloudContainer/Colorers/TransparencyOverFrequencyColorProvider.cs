@@ -18,6 +18,6 @@ public class TransparencyOverFrequencyColorProvider : IColorProvider
 
     private int HTan(int x)
     {
-        return (int) ((2 / (1 + Math.Exp(-0.8 * x)) - 1) * 255);
+        return (int) ((2 / (1 + Math.Exp(-0.6 * (x - 0.5))) - 1) * 255);
     }
 }
