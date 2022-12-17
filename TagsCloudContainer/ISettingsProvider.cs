@@ -2,6 +2,5 @@
 {
     public interface ISettingsProvider
     {
-        Settings Settings { get; }
     }
 }

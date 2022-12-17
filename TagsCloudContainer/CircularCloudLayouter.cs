@@ -7,7 +7,12 @@ namespace TagsCloudContainer
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public int StepSize { set; get; }
+        private CircularCloudSettingsProvider settings;
+
+        public CircularCloudLayouter(CircularCloudSettingsProvider settings)
+        {
+            this.settings = settings;
+        }
         public List<Rectangle> GenerateCloud(Point center, List<Size> rectangleSizes)
         {
             var requestedList = new List<Rectangle>();
@@ -38,6 +43,7 @@ namespace TagsCloudContainer
                 y - rectangleSize.Height / 2 + center.Y);
             var rectangle = new Rectangle(rectPos, rectangleSize);
             newRectangle = rectangle;
+            int stepSize = settings.CircularCloudSettings.StepSize;
             while (true)
             {
                 newRectangle = rectangle;
@@ -51,8 +57,8 @@ namespace TagsCloudContainer
                 }
 
                 angle += Math.PI / 180;
-                x = (int)(angle * Math.Cos(angle) * StepSize);
-                y = (int)(angle * Math.Sin(angle) * StepSize);
+                x = (int)(angle * Math.Cos(angle) * stepSize);
+                y = (int)(angle * Math.Sin(angle) * stepSize);
                 rectPos = new Point(x - rectangleSize.Width / 2 + center.X,
                     y - rectangleSize.Height / 2 + center.Y);
                 rectangle = new Rectangle(rectPos, rectangleSize);

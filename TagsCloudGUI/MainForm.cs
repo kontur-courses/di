@@ -13,13 +13,18 @@ namespace TagsCloudGUI
         private string fileText;
         private readonly IDrawer drawer;
         private readonly IInputTextProvider inputTextProvider;
-        private readonly ISettingsProvider settingsProvider;
-        public MainForm(IDrawer drawer, IInputTextProvider inputTextProvider, ISettingsProvider settingsProvider)
+        private readonly DefaultDrawerSettingsProvider defaultDrawerSettingsProvider;
+        private readonly CircularCloudSettingsProvider circularCloudSettingsProvider;
+
+        public MainForm(IDrawer drawer, IInputTextProvider inputTextProvider,
+            DefaultDrawerSettingsProvider defaultDrawerSettingsProvider,
+            CircularCloudSettingsProvider circularCloudSettingsProvider)
         {
             InitializeComponent();
             this.drawer = drawer;
             this.inputTextProvider = inputTextProvider;
-            this.settingsProvider = settingsProvider;
+            this.defaultDrawerSettingsProvider = defaultDrawerSettingsProvider;
+            this.circularCloudSettingsProvider = circularCloudSettingsProvider;
         }
 
         private void but_fileOpen_Click(object sender, EventArgs e)
@@ -36,6 +41,11 @@ namespace TagsCloudGUI
         {
             try
             {
+                circularCloudSettingsProvider.CircularCloudSettings.StepSize = TryToParse(box_stepSize.Text);
+                circularCloudSettingsProvider.CircularCloudSettings.StepSize =
+                    circularCloudSettingsProvider.CircularCloudSettings.StepSize <= 0
+                        ? 1
+                        : circularCloudSettingsProvider.CircularCloudSettings.StepSize;
                 var bitmap = drawer.DrawImage(fileText);
                 pic_main.BackgroundImage = bitmap;
             }
@@ -44,6 +54,7 @@ namespace TagsCloudGUI
                 MessageBox.Show(ex.ToString());
             }
         }
+
         private void but_save_Click(object sender, EventArgs e)
         {
             int heigth = TryToParse(box_heightPic.Text);
@@ -58,6 +69,7 @@ namespace TagsCloudGUI
             {
                 image = new Bitmap(image, new Size(width, heigth));
             }
+
             image.Save(filename);
         }
 
@@ -65,29 +77,30 @@ namespace TagsCloudGUI
         {
             ColorDialog colorDialog = new ColorDialog();
             colorDialog.FullOpen = true;
-            colorDialog.Color = settingsProvider.Settings.BackgroundColor;
+            colorDialog.Color = defaultDrawerSettingsProvider.DefaultDrawerSettings.BackgroundColor;
             if (colorDialog.ShowDialog() == DialogResult.Cancel)
                 return;
-            settingsProvider.Settings.BackgroundColor = colorDialog.Color;
+            defaultDrawerSettingsProvider.DefaultDrawerSettings.BackgroundColor = colorDialog.Color;
         }
 
         private void but_fontColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
             colorDialog.FullOpen = true;
-            colorDialog.Color = settingsProvider.Settings.FontColor;
+            colorDialog.Color = defaultDrawerSettingsProvider.DefaultDrawerSettings.FontColor;
             if (colorDialog.ShowDialog() == DialogResult.Cancel)
                 return;
-            settingsProvider.Settings.FontColor = colorDialog.Color;
+            defaultDrawerSettingsProvider.DefaultDrawerSettings.FontColor = colorDialog.Color;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             FontDialog fontDialog = new FontDialog();
+            fontDialog.Font = defaultDrawerSettingsProvider.DefaultDrawerSettings.Font;
             if (fontDialog.ShowDialog() == DialogResult.Cancel)
                 return;
             Font font = fontDialog.Font;
-            settingsProvider.Settings.Font = font;
+            defaultDrawerSettingsProvider.DefaultDrawerSettings.Font = font;
         }
 
         private int TryToParse(string str)

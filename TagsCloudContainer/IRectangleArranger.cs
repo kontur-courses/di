@@ -5,6 +5,6 @@ namespace TagsCloudContainer
 {
     public interface IRectangleArranger
     {
-        List<TextContainer> GetContainers(Dictionary<string, int> words, Settings defaultFont);
+        List<TextContainer> GetContainers(Dictionary<string, int> words, Font baseFont);
     }
 }

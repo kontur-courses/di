@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer
 {
-    public class Settings
+    public class DefaultDrawerSettings
     {
         public Color BackgroundColor;
         public Color FontColor;

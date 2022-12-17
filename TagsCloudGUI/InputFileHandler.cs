@@ -17,9 +17,9 @@ namespace TagsCloudGUI
         {
             text = text.ToLower();
             Dictionary<string, int> words = new Dictionary<string, int>();
-            foreach (var word in text.Split())
+            foreach (var word in text.Split(' ', '\n', '\r'))
             {
-                if (WordsFilter.WordsToFilter.Contains(word)) continue;
+                if (WordsFilter.WordsToFilter.Contains(word) || word.Equals("")) continue;
                 if (!words.Keys.Contains(word)) words[word] = 0;
                 words[word]++;
             }

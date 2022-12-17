@@ -2,18 +2,17 @@
 
 namespace TagsCloudContainer
 {
-    public class SettingsProvider : ISettingsProvider
+    public class DefaultDrawerSettingsProvider : ISettingsProvider
     {
-        public Settings Settings { get; }
+        public DefaultDrawerSettings DefaultDrawerSettings { get; }
 
-        public SettingsProvider()
+        public DefaultDrawerSettingsProvider()
         {
-            Settings = new Settings()
+            DefaultDrawerSettings = new DefaultDrawerSettings()
             {
                 BackgroundColor = Color.Khaki,
                 FontColor = Color.Black,
                 Font = new Font(FontFamily.GenericMonospace, 15),
-                StepSize = 10
             };
         }
     }

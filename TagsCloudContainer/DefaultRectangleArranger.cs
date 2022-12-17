@@ -6,18 +6,15 @@ namespace TagsCloudContainer
     public class DefaultRectangleArranger : IRectangleArranger
     {
         private readonly ICloudLayouter cloudLayouter;
-
         public DefaultRectangleArranger(ICloudLayouter cloudLayouter)
         {
             this.cloudLayouter = cloudLayouter;
         }
 
-        public List<TextContainer> GetContainers(Dictionary<string, int> words, Settings settings)
+        public List<TextContainer> GetContainers(Dictionary<string, int> words, Font baseFont)
         {
             var textContainers = new List<TextContainer>();
             var rectangles = new List<Rectangle>();
-            var baseFont = settings.Font;
-            cloudLayouter.StepSize = settings.StepSize;
             foreach (var word in words.Keys)
             {
                 var font = new Font(baseFont.FontFamily, baseFont.Size + (words[word] - 1), baseFont.Style);
