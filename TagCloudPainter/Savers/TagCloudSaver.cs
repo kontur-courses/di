@@ -24,6 +24,8 @@ public class TagCloudSaver : ITagCloudSaver
 
     public void SaveTagCloud(string inputPath,string outputPath, ImageFormat format)
     {
+        if (!File.Exists(inputPath))
+            throw new FileNotFoundException();
         var words = _reader.ReadFile(inputPath);
         var dictionary = _wordPreprocessor.GetWordsCountDictionary(words);
         var tags = _builder.GetTags(dictionary);
