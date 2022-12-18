@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using TagCloudConsoleApplication.Options;
@@ -30,7 +31,7 @@ public class Configurator
             .WithProperty("ParseSettings", new ParseSettings()).SingleInstance();
 
         builder.RegisterType<Lemmaizer>().As<ILemmaizer>().SingleInstance()
-            .WithParameter("pathToMyStem", GetPathToMyStam());
+            .WithParameter("pathToMyStem", GetPathToMyStem());
 
         RegisterFileReader(builder, o);
 
@@ -51,27 +52,19 @@ public class Configurator
         return builder.Build();
     }
 
-    private void RegisterWordColoring(ContainerBuilder builder, TagCloudOptions options)
+    private void RegisterWordColoring(ContainerBuilder builder, TagCloudOptions o)
     {
-        var coloring = options.WordColoring.ToLower();
-        if (coloring == "white")
-            builder.RegisterType<WhiteWordColoring>().As<IWordColoring>();
-        else if (coloring == "rainbow")
-            builder.RegisterType<RainbowWordColoring>().As<IWordColoring>();
-        else
-            throw new ArgumentException();
+        builder.RegisterAssemblyTypes(Assembly.Load(nameof(TagCloudPainter)))
+            .Where(t => t.Name.ToLower().StartsWith(o.WordColoring.ToLower()) && t.Name.EndsWith("WordColoring"))
+            .As<IWordColoring>();
     }
 
-    private void RegisterFileReader(ContainerBuilder builder, TagCloudOptions options)
+    private void RegisterFileReader(ContainerBuilder builder, TagCloudOptions o)
     {
-        if (options.InputPath.Contains(".docx"))
-            builder.RegisterType<DocReader>().As<IFileReader>();
-        else if (options.InputPath.Contains(".txt"))
-            builder.RegisterType<TxtReader>().As<IFileReader>();
-        else if (options.InputPath.Contains(".pdf"))
-            builder.RegisterType<PdfFileReader>().As<IFileReader>();
-        else
-            throw new ArgumentException("input is in an unsupported format");
+        var format = GetInputFormat(o.InputPath);
+        builder.RegisterAssemblyTypes(Assembly.Load(nameof(TagCloudPainter)))
+            .Where(t => t.Name.ToLower().StartsWith(format) && t.Name.EndsWith("Reader"))
+            .As<IFileReader>();
     }
 
     private void RegisterLayouter(ContainerBuilder builder, TagCloudOptions o)
@@ -89,28 +82,20 @@ public class Configurator
     {
         return new ImageSettings
         {
-            BackgroundColor = FromColor(options.BackgroundColor),
+            BackgroundColor = options.BackgroundColor,
             Font = new Font(options.FontFamily, options.FontSize, FontStyle.Bold, GraphicsUnit.Point),
             Size = new Size(options.ImageWidth, options.ImageHeight)
         };
     }
 
-    private static Color FromColor(ConsoleColor c)
+    private static string GetPathToMyStem()
     {
-        var cInt = (int)c;
-
-        var brightnessCoefficient = (cInt & 8) > 0 ? 2 : 1;
-        var r = (cInt & 4) > 0 ? 64 * brightnessCoefficient : 0;
-        var g = (cInt & 2) > 0 ? 64 * brightnessCoefficient : 0;
-        var b = (cInt & 1) > 0 ? 64 * brightnessCoefficient : 0;
-
-        return Color.FromArgb(r, g, b);
+        return Path.Combine(Directory.GetCurrentDirectory(), "Lemmaizers", "mystem.exe");
     }
 
-    private static string GetPathToMyStam()
+    private static string GetInputFormat(string input)
     {
-        var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-        return Path.Combine(directoryInfo.Parent.Parent.Parent.Parent.FullName +
-                            "\\TagCloudPainter\\Lemmaizers\\mystem.exe");
+        var index = input.LastIndexOf('.');
+        return input.Substring(index + 1);
     }
 }

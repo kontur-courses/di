@@ -8,9 +8,7 @@ public static class RectangleExtensions
     {
         if (rectangles == null)
             throw new ArgumentNullException();
-        foreach (var rect in rectangles)
-            if (rect.IntersectsWith(rectangle))
-                return true;
-        return false;
+
+        return rectangles.Any(x => x.IntersectsWith(rectangle));
     }
 }

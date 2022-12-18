@@ -13,9 +13,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-        var path = Path.Combine(directoryInfo.Parent.Parent.Parent.Parent.FullName +
-                                @"\TagCloudPainter\Lemmaizers\mystem.exe");
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "Lemmaizers", "mystem.exe");
 
         Lemmaizer = new Lemmaizer(path);
     }

@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Drawing;
+using CommandLine;
 
 namespace TagCloudConsoleApplication.Options;
 
@@ -22,9 +23,8 @@ public class TagCloudOptions
     [Option("fontSize", Required = false, HelpText = "Set tags size to font", Default = 7)]
     public int FontSize { get; set; }
 
-    [Option("backgroundColor", Required = false, HelpText = "Set background color to image",
-        Default = ConsoleColor.Black)]
-    public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.DarkGray;
+    [Option("backgroundColor", Required = false, HelpText = "Set background color to image (Default = Black)")]
+    public Color BackgroundColor { get; set; } = Color.Black;
 
     [Option("ColorAlgorithm", HelpText = "Set algorithm to coloring words", Default = "White")]
     public string WordColoring { get; set; }

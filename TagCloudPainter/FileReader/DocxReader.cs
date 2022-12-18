@@ -3,18 +3,14 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace TagCloudPainter.FileReader;
 
-public class DocReader : IFileReader
+public class DocxReader : IFileReader
 {
     public IEnumerable<string> ReadFile(string path)
     {
-        var words = new List<string>();
         using (var wordDocument = WordprocessingDocument.Open(path, false))
         {
             var paragraphs = wordDocument.MainDocumentPart.Document.Body.Descendants<Paragraph>();
-            foreach (var paragraph in paragraphs) 
-                words.Add(paragraph.InnerText);
+            return paragraphs.Select(x => x.InnerText).ToList();
         }
-
-        return words;
     }
 }

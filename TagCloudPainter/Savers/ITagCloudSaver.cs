@@ -5,5 +5,5 @@ namespace TagCloudPainter.Savers;
 
 public interface ITagCloudSaver
 {
-    void SaveTagCloud(Bitmap bitmap,string outputPath, ImageFormat format);
+    void SaveTagCloud(string inputPath,string outputPath, ImageFormat format);
 }

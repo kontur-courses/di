@@ -1,5 +1,4 @@
 ﻿using MystemHandler;
-using String = System.String;
 
 namespace TagCloudPainter.Lemmaizers;
 
@@ -16,7 +15,7 @@ public class Lemmaizer : ILemmaizer
 
     public string GetMorph(string word)
     {
-        if (String.IsNullOrWhiteSpace(word))
+        if (string.IsNullOrWhiteSpace(word))
             throw new ArgumentNullException();
 
         return mystem.Mystem.Analyze(word).Result[0].AnalysisResults[0].Grammeme.Split(',', '=')[0];
@@ -24,7 +23,7 @@ public class Lemmaizer : ILemmaizer
 
     public string GetLemma(string word)
     {
-        if(String.IsNullOrWhiteSpace(word))
+        if (string.IsNullOrWhiteSpace(word))
             throw new ArgumentNullException();
 
         return mt.StemOneWord(word);

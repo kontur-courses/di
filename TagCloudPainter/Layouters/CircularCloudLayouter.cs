@@ -45,8 +45,8 @@ public class CircularCloudLayouter : ICloudLayouter
             return;
 
         var resultRectangle = rectangle;
-        var stepX = new Point(shiftPoint.X, 0);
-        var stepY = new Point(0, shiftPoint.Y);
+        var stepX = shiftPoint with { Y = 0 };
+        var stepY = shiftPoint with { X = 0 };
         while ((CanMoveRectangle(resultRectangle, stepX) || CanMoveRectangle(resultRectangle, stepY)) &&
                resultRectangle.X != center.X && resultRectangle.Y != center.Y)
         {
