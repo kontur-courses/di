@@ -29,15 +29,17 @@ public class WordsHandlerWithFilterTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                TestList));
             mock.Mock<IWordFilterProvider>().Setup(s => s.WordFilter).Returns(
-                TestFilter);
+                new Result<IEnumerable<string>>(
+                TestFilter));
             var words = mock.Create<IWordSequenceProvider>();
             var filter = mock.Create<IWordFilterProvider>();
             WordsHandler = new WordsHandlerWithFilter(words, filter);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 
     [Test]
@@ -59,15 +61,17 @@ public class WordsHandlerWithFilterTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                TestList));
             mock.Mock<IWordFilterProvider>().Setup(s => s.WordFilter).Returns(
-                TestFilter);
+                new Result<IEnumerable<string>>(
+                TestFilter));
             var words = mock.Create<IWordSequenceProvider>();
             var filter = mock.Create<IWordFilterProvider>();
             WordsHandler = new WordsHandlerWithFilter(words, filter);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 
     [Test]
@@ -89,14 +93,16 @@ public class WordsHandlerWithFilterTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                TestList));
             mock.Mock<IWordFilterProvider>().Setup(s => s.WordFilter).Returns(
-                TestFilter);
+                new Result<IEnumerable<string>>(
+                TestFilter));
             var words = mock.Create<IWordSequenceProvider>();
             var filter = mock.Create<IWordFilterProvider>();
             WordsHandler = new WordsHandlerWithFilter(words, filter);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 }

@@ -7,19 +7,21 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
 {
     private readonly ICloudLayouter layouter;
     private readonly Settings settings;
-    private readonly IWordsHandler wordsHandler;
+    private readonly Dictionary<string, int> wordDistribution;
 
-    private Dictionary<string, Rectangle> distrubutedRectangles;
+    private Result<Dictionary<string, Rectangle>> distrubutedRectangles;
 
-    public DefaultRectanglesDistributor(IWordsHandler wordsHandler,
+    public DefaultRectanglesDistributor(IWordsHandler wordDistribution,
         ISettingsProvider settingsProvider, ICloudLayouter cloudLayouter)
     {
         settings = settingsProvider.Settings;
-        this.wordsHandler = wordsHandler;
-        layouter = cloudLayouter;
+        var wordDistributionResult = wordDistribution.WordDistribution;
+        if (wordDistributionResult.Successful) this.wordDistribution = wordDistributionResult.Value;
+        else distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(wordDistributionResult.Exception);
+            layouter = cloudLayouter;
     }
 
-    public Dictionary<string, Rectangle> DistributedRectangles
+    public Result<Dictionary<string, Rectangle>> DistributedRectangles
     {
         get
         {
@@ -31,9 +33,10 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
 
     private void Distribute()
     {
-        DistributedRectangles = new Dictionary<string, Rectangle>();
-        foreach (var dist in wordsHandler.WordDistribution)
-            DistributedRectangles.Add(dist.Key, layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
+        var distributedRectangles = new Dictionary<string, Rectangle>();
+        foreach (var dist in wordDistribution)
+            distributedRectangles.Add(dist.Key, layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
+        this.distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(distributedRectangles);
     }
 
     private Size CalculateSizeForWord(string word, int frequency)

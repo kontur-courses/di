@@ -8,24 +8,24 @@ internal class InputFilesReader : IWordSequenceProvider, IWordFilterProvider
 
     public string? InputPath = null;
 
-    public IEnumerable<string> WordFilter
+    public Result<IEnumerable<string>> WordFilter
     {
         get
         {
-            if (FilterPath == null) return new List<string>();
+            if (FilterPath == null) return new(new List<string>());
             var wordSeq = new List<string>();
             foreach (var line in File.ReadAllLines(FilterPath)) wordSeq.AddRange(line.Split());
-            return wordSeq;
+            return new Result<IEnumerable<string>>(wordSeq);
         }
     }
 
-    public IEnumerable<string> WordSequence
+    public Result<IEnumerable<string>> WordSequence
     {
         get
         {
             var wordSeq = new List<string>();
             foreach (var line in File.ReadAllLines(InputPath)) wordSeq.AddRange(line.Split());
-            return wordSeq;
+            return new Result<IEnumerable<string>>(wordSeq);
         }
     }
 }

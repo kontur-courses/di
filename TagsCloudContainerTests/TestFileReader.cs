@@ -7,9 +7,9 @@ namespace TagsCloudContainerTests;
 
 public class TestFileReader : IWordSequenceProvider, IWordFilterProvider
 {
-    public IEnumerable<string> WordSequence => wordSeq;
+    public Result<IEnumerable<string>> WordSequence => new(wordSeq);
     private List<string> wordSeq;
-    public IEnumerable<string> WordFilter => wordFilt;
+    public Result<IEnumerable<string>> WordFilter => new(wordFilt);
     private List<string> wordFilt;
 
     public TestFileReader(string wordsSeqPath, string wordsFiltPath)

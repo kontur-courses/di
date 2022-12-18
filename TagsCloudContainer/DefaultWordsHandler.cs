@@ -4,14 +4,16 @@ public class DefaultWordsHandler : IWordsHandler
 {
     private readonly IEnumerable<string> WordSequence;
 
-    private Dictionary<string, int> wordDistribution;
+    private Result<Dictionary<string, int>> wordDistribution;
 
     public DefaultWordsHandler(IWordSequenceProvider wordSequenceProvider)
     {
-        WordSequence = wordSequenceProvider.WordSequence;
+        var wordSequenceResult = wordSequenceProvider.WordSequence;
+        if (wordSequenceProvider.WordSequence.Successful) WordSequence = wordSequenceResult.Value;
+        else WordDistribution = new Result<Dictionary<string, int>>(wordSequenceResult.Exception);
     }
 
-    public Dictionary<string, int> WordDistribution
+    public Result<Dictionary<string, int>> WordDistribution
     {
         get
         {
@@ -23,13 +25,15 @@ public class DefaultWordsHandler : IWordsHandler
 
     protected virtual void ProcessSequence()
     {
-        wordDistribution = new Dictionary<string, int>();
+        var wordD = new Dictionary<string, int>();
 
         foreach (var word in WordSequence)
         {
             var w = word.ToLower();
-            if (wordDistribution.ContainsKey(w)) wordDistribution[w] += 1;
-            else wordDistribution.Add(w, 1);
+            if (wordD.ContainsKey(w)) wordD[w] += 1;
+            else wordD.Add(w, 1);
         }
+
+        wordDistribution = new Result<Dictionary<string, int>>(wordD);
     }
 }

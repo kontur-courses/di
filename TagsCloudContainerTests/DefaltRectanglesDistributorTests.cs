@@ -21,12 +21,13 @@ public class DefaultRectangleDistributorTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordsHandler>().Setup(h => h.WordDistribution).Returns(
-                new Dictionary<string, int>
-                {
-                    {"Abc", 1},
-                    {"AAA", 1},
-                    {"DAb", 1}
-                });
+                new Result<Dictionary<string, int>>(
+                    new Dictionary<string, int>
+                    {
+                        {"Abc", 1},
+                        {"AAA", 1},
+                        {"DAb", 1}
+                    }));
             mock.Mock<ISettingsProvider>().Setup(h => h.Settings).Returns(
                 new Settings
                 {
@@ -39,7 +40,7 @@ public class DefaultRectangleDistributorTests
                 new DefaultRectanglesDistributor(wordsHandler, settings, new SpiralCloudLayouter(Point.Empty));
         }
 
-        Approvals.VerifyAll(rectangleDistributor.DistributedRectangles);
+        Approvals.VerifyAll(rectangleDistributor.DistributedRectangles.Value);
     }
 
     [Test]
@@ -48,12 +49,13 @@ public class DefaultRectangleDistributorTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordsHandler>().Setup(h => h.WordDistribution).Returns(
-                new Dictionary<string, int>
-                {
-                    {"Abc", 1},
-                    {"AAA", 2},
-                    {"DAb", 3}
-                });
+                new Result<Dictionary<string, int>>(
+                    new Dictionary<string, int>
+                    {
+                        {"Abc", 1},
+                        {"AAA", 2},
+                        {"DAb", 3}
+                    }));
             mock.Mock<ISettingsProvider>().Setup(h => h.Settings).Returns(
                 new Settings
                 {
@@ -66,6 +68,6 @@ public class DefaultRectangleDistributorTests
                 new DefaultRectanglesDistributor(wordsHandler, settings, new SpiralCloudLayouter(Point.Empty));
         }
 
-        Approvals.VerifyAll(rectangleDistributor.DistributedRectangles);
+        Approvals.VerifyAll(rectangleDistributor.DistributedRectangles.Value);
     }
 }

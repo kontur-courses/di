@@ -2,5 +2,5 @@ namespace TagsCloudContainer;
 
 public interface IWordSequenceProvider
 {
-    public IEnumerable<string> WordSequence { get; }
+    public Result<IEnumerable<string>> WordSequence { get; }
 }

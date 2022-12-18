@@ -2,5 +2,5 @@
 
 public interface IWordsHandler
 {
-    public Dictionary<string, int> WordDistribution { get; }
+    public Result<Dictionary<string, int>> WordDistribution { get; }
 }

@@ -9,17 +9,20 @@ public class WordsHandlerWithFilter : DefaultWordsHandler, IWordsHandler
     public WordsHandlerWithFilter(IWordSequenceProvider wordSequenceProvider, IWordFilterProvider wordsFilterProvider)
         : base(wordSequenceProvider)
     {
-        wordsToExclude =
-            from word in wordsFilterProvider.WordFilter
-            select word.ToLower();
+        if (wordsFilterProvider.WordFilter.Successful)
+            wordsToExclude =
+                from word in wordsFilterProvider.WordFilter.Value
+                select word.ToLower();
+        else WordDistribution = new Result<Dictionary<string, int>>(wordsFilterProvider.WordFilter.Exception);
     }
 
     protected override void ProcessSequence()
     {
         base.ProcessSequence();
-        WordDistribution = new Dictionary<string, int>(
-            from pair in base.WordDistribution
+        WordDistribution = new Result<Dictionary<string, int>>(
+            new Dictionary<string, int>(
+            from pair in base.WordDistribution.Value
             where !wordsToExclude.Contains(pair.Key)
-            select pair);
+            select pair));
     }
 }

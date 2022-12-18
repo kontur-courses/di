@@ -2,5 +2,5 @@ namespace TagsCloudContainer;
 
 public interface IWordFilterProvider
 {
-    public IEnumerable<string> WordFilter { get; }
+    public Result<IEnumerable<string>> WordFilter { get; }
 }

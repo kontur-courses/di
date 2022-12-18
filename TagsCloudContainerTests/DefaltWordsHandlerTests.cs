@@ -25,12 +25,13 @@ public class DefaltWordsHandlerTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                TestList));
             var mocks = mock.Create<IWordSequenceProvider>();
             WordsHandler = new DefaultWordsHandler(mocks);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 
     [Test]
@@ -45,12 +46,13 @@ public class DefaltWordsHandlerTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                TestList));
             var mocks = mock.Create<IWordSequenceProvider>();
             WordsHandler = new DefaultWordsHandler(mocks);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 
     [Test]
@@ -64,12 +66,12 @@ public class DefaltWordsHandlerTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(TestList));
             var mocks = mock.Create<IWordSequenceProvider>();
             WordsHandler = new DefaultWordsHandler(mocks);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 
     [Test]
@@ -79,11 +81,12 @@ public class DefaltWordsHandlerTests
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<IWordSequenceProvider>().Setup(s => s.WordSequence).Returns(
-                TestList);
+                new Result<IEnumerable<string>>(
+                    TestList));
             var mocks = mock.Create<IWordSequenceProvider>();
             WordsHandler = new DefaultWordsHandler(mocks);
         }
 
-        Approvals.VerifyAll(WordsHandler.WordDistribution);
+        Approvals.VerifyAll(WordsHandler.WordDistribution.Value);
     }
 }
