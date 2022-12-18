@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.Counter
+namespace TagsCloudContainer.CounterNamespace
 {
     public interface ICounter<T>
     {

@@ -3,7 +3,7 @@ using Autofac;
 using TagsCloudContainer.App;
 using TagsCloudContainer.CloudItem;
 using TagsCloudContainer.CloudLayouter;
-using TagsCloudContainer.Counter;
+using TagsCloudContainer.CounterNamespace;
 using TagsCloudContainer.Distribution;
 using TagsCloudContainer.MorphologicalAnalysis;
 using TagsCloudContainer.Visualizer;

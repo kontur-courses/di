@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Counter
+namespace TagsCloudContainer.CounterNamespace
 {
     public class Counter<T> : ICounter<T>
     {
@@ -15,10 +15,8 @@ namespace TagsCloudContainer.Counter
         private IEnumerable<T> Enumerable { get; }
         private Dictionary<T, int> Dictionary { get; }
 
-        public IEnumerable<T> GetMostPopular(int count = -1)
+        public IEnumerable<T> GetMostPopular(int count)
         {
-            if (count == -1)
-                count = Dictionary.Count;
             return Dictionary
                 .OrderByDescending(item => item.Value)
                 .Select(item => item.Key)

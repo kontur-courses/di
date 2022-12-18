@@ -18,14 +18,14 @@ namespace TagsCloudContainer
         [Option('y', "centerY", Required = true)]
         public int CenterY { get; set; }
 
+        [Option('c', "count", Required = true)]
+        public int Count { get; set; }
+
         [Option('o', "output", Default = "output.png")]
         public string OutputFile { get; set; }
 
         [Option('i', "input", Default = "input.txt")]
         public string InputFile { get; set; }
-
-        [Option('c', "count", Default = -1)] 
-        public int Count { get; set; }
 
         [Option("astep", Default = Math.PI / 180)]
         public double StepAngle { get; set; }

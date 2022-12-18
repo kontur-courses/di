@@ -10,13 +10,17 @@ namespace TagsCloudContainer.MorphologicalAnalysis
 {
     public class MorphologicalAnalyzer
     {
-        private const string ExecutedFile = "MorphologicalAnalysis\\mystem.exe";
+        private const string ExecutedFile = "mystem.exe";
         private const string Options = "-nli";
+        private readonly string executedFilePath;
         private readonly string inputPath;
         private readonly Process process;
 
         public MorphologicalAnalyzer(string filename)
         {
+            executedFilePath = Directory.GetFiles(
+                Directory.GetParent(Program.ProjectPath).FullName,
+                ExecutedFile, SearchOption.AllDirectories)[0];
             inputPath = filename;
             process = InitProcess();
         }
@@ -80,7 +84,6 @@ namespace TagsCloudContainer.MorphologicalAnalysis
 
         private Process InitProcess()
         {
-            var fileNamePath = Path.Combine(Program.ProjectPath, ExecutedFile);
             var arguments = Options + ' ' + Path.Combine(Program.ProjectPath, inputPath);
 
             var process = new Process();
@@ -89,7 +92,7 @@ namespace TagsCloudContainer.MorphologicalAnalysis
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.StandardInputEncoding = Encoding.UTF8;
             process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-            process.StartInfo.FileName = fileNamePath;
+            process.StartInfo.FileName = executedFilePath;
             process.StartInfo.Arguments = arguments;
             return process;
         }

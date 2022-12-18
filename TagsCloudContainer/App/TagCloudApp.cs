@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using TagsCloudContainer.CloudLayouter;
-using TagsCloudContainer.Counter;
+using TagsCloudContainer.CounterNamespace;
 using TagsCloudContainer.Extensions;
 using TagsCloudContainer.MorphologicalAnalysis;
 using TagsCloudContainer.Visualizer;
