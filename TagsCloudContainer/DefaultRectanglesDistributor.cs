@@ -18,14 +18,22 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
         var wordDistributionResult = wordDistribution.WordDistribution;
         if (wordDistributionResult.Successful) this.wordDistribution = wordDistributionResult.Value;
         else distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(wordDistributionResult.Exception);
-            layouter = cloudLayouter;
+        layouter = cloudLayouter;
     }
 
     public Result<Dictionary<string, Rectangle>> DistributedRectangles
     {
         get
         {
-            if (distrubutedRectangles == null) Distribute();
+            try
+            {
+                if (distrubutedRectangles == null) Distribute();
+            }
+            catch (Exception e)
+            {
+                distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(e);
+            }
+
             return distrubutedRectangles;
         }
         private set => distrubutedRectangles = value;
@@ -34,9 +42,11 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
     private void Distribute()
     {
         var distributedRectangles = new Dictionary<string, Rectangle>();
+
         foreach (var dist in wordDistribution)
-            distributedRectangles.Add(dist.Key, layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
-        this.distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(distributedRectangles);
+            distributedRectangles.Add(dist.Key,
+                layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
+        distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(distributedRectangles);
     }
 
     private Size CalculateSizeForWord(string word, int frequency)

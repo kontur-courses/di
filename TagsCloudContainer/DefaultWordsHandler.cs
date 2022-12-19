@@ -17,7 +17,15 @@ public class DefaultWordsHandler : IWordsHandler
     {
         get
         {
-            if (wordDistribution == null) ProcessSequence();
+            try
+            {
+                if (wordDistribution == null) ProcessSequence();
+            }
+            catch (Exception e)
+            {
+                wordDistribution = new Result<Dictionary<string, int>>(e);
+            }
+
             return wordDistribution;
         }
         protected set => wordDistribution = value;

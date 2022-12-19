@@ -14,7 +14,8 @@ public class DefaultImageDrawer : IImageDrawer
         ISettingsProvider settingProvider, IColorProvider colorProvider)
     {
         settings = settingProvider.Settings;
-        if (rectanglesDistributor.DistributedRectangles.Successful) rectanglesDistribution = rectanglesDistributor.DistributedRectangles.Value;
+        if (rectanglesDistributor.DistributedRectangles.Successful)
+            rectanglesDistribution = rectanglesDistributor.DistributedRectangles.Value;
         else DrawnBitmap = new Result<Bitmap>(wordsHandler.WordDistribution.Exception);
         if (wordsHandler.WordDistribution.Successful) wordsDistribution = wordsHandler.WordDistribution.Value;
         else DrawnBitmap = new Result<Bitmap>(wordsHandler.WordDistribution.Exception);
