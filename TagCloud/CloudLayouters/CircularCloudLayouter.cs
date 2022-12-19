@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.PointGenerators;
-using TagCloud.Tags;
 
 namespace TagCloud.CloudLayouters
 {
@@ -51,12 +50,5 @@ namespace TagCloud.CloudLayouters
 
         private Size GetCenterFor(Size rectangleSize) =>
             new Size(-rectangleSize.Width / 2, -rectangleSize.Height / 2);
-
-        public ITagCloud GetTagCloudOfLayout()
-        {
-            var tagCloud = new TagCloud(pointGenerator.GetCenterPoint());
-            tagCloud.Layouts.AddRange(rectangles.Select(rectangle => new Layout(rectangle)));
-            return tagCloud;
-        }
     }
 }

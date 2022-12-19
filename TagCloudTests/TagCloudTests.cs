@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -13,6 +12,16 @@ namespace TagCloudTests
     {
         private ICloudLayouter cloudLayouter;
         private TagCloud.TagCloud tagCloud;
+
+        public bool IsEquals(TagCloud.TagCloud firsTagCloud, TagCloud.TagCloud secondTagCloud)
+        {
+            return firsTagCloud != null &&
+                   secondTagCloud != null &&
+                   firsTagCloud.Center == secondTagCloud.Center &&
+                   firsTagCloud.Layouts.Count == secondTagCloud.Layouts.Count &&
+                   firsTagCloud.Layouts.TrueForAll(rectangle =>
+                       secondTagCloud.Layouts.Contains(rectangle));
+        }
 
         [SetUp]
         public void PrepareCircularCloudLayouter()
@@ -49,22 +58,13 @@ namespace TagCloudTests
         }
 
         [Test]
-        public void GetHashCode_Throw_NotImplementedException()
-        {
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Action getHashCode = () => tagCloud.GetHashCode();
-
-            getHashCode.Should().Throw<NotImplementedException>();
-        }
-
-        [Test]
         public void Equals_ReturnedTrue_ForEqualObjects()
         {
             var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
 
             otherTagCloud.Layouts.AddRange(tagCloud.Layouts);
 
-            tagCloud.Equals(otherTagCloud).Should().BeTrue();
+            IsEquals(tagCloud, otherTagCloud).Should().BeTrue();
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace TagCloudTests
         {
             var otherTagCloud = new TagCloud.TagCloud(new Point(tagCloud.Center.X -5, tagCloud.Center.Y - 7));
 
-            tagCloud.Equals(otherTagCloud).Should().BeFalse();
+            IsEquals(tagCloud, otherTagCloud).Should().BeFalse();
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace TagCloudTests
                     return new Layout(newRectangle);
                 }));
 
-            tagCloud.Equals(otherTagCloud).Should().BeFalse();
+            IsEquals(tagCloud, otherTagCloud).Should().BeFalse();
         }
 
 
@@ -100,13 +100,13 @@ namespace TagCloudTests
             otherTagCloud.Layouts.AddRange(tagCloud.Layouts);
 
             otherTagCloud.Layouts.Add(tagCloud.Layouts.Last());
-            tagCloud.Equals(otherTagCloud).Should().BeFalse();
+            IsEquals(tagCloud, otherTagCloud).Should().BeFalse();
 
             otherTagCloud.Layouts.Remove(otherTagCloud.Layouts.Last());
-            tagCloud.Equals(otherTagCloud).Should().BeTrue();
+            IsEquals(tagCloud, otherTagCloud).Should().BeTrue();
 
             tagCloud.Layouts.Add(otherTagCloud.Layouts.Last());
-            tagCloud.Equals(otherTagCloud).Should().BeFalse();
+            IsEquals(tagCloud, otherTagCloud).Should().BeFalse();
         }
     }
 }

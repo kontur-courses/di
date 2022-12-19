@@ -4,10 +4,10 @@ using System.IO;
 
 namespace TagCloud.Readers
 {
-    public class SingleWordInRowTextFileReader : IReader, IBoringWordsReader
+    public class SingleWordInRowTextFileReader : IBoringWordsReader
     {
         private string path;
-
+        private readonly string[] defaultWords = "У меня нет слов".Split();
         public string FileExtFilter => "txt files (*.txt)|*.txt";
 
         public void SetFile(string path)
@@ -23,7 +23,7 @@ namespace TagCloud.Readers
 
         public IEnumerable<string> ReadWords() =>
             path == null 
-                ? "У меня нет слов".Split()
+                ? defaultWords
                 : File.ReadAllLines(path);
     }
 }

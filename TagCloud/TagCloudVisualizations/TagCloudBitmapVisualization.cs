@@ -64,7 +64,7 @@ namespace TagCloud.TagCloudVisualizations
 
         protected virtual void DrawIn(Graphics graphics, ITag tag, Brush byBrush)
         {
-            throw new NotImplementedException();
+            graphics.DrawRectangle(new Pen(byBrush), tag.Frame);
         }
         
         private Brush GetRandomBrush(Color? excludingColor) =>

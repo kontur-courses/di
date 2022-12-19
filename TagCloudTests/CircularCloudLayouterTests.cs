@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -64,14 +65,14 @@ namespace TagCloudTests
         {
             var center = new Point(centerX, centerY);
             cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
-
+            var rectangles = new List<Rectangle>();
             do
             {
                 var rectSize = new Size(firstRectWidth, firstRectHeight);
                 var newRect = cloudLayouter.PutNextRectangle(rectSize);
-                cloudLayouter.GetTagCloudOfLayout().Layouts.Where(rect => rect.Frame != newRect).
-                    All(rect => rect.Frame.IntersectsWith(newRect) == false).Should().BeTrue();
 
+                rectangles.All(rect => rect.IntersectsWith(newRect) == false).Should().BeTrue();
+                rectangles.Add(newRect);
                 firstRectHeight /= 2;
                 firstRectWidth /= 2;
             } while (firstRectHeight > 1 && firstRectWidth > 1);

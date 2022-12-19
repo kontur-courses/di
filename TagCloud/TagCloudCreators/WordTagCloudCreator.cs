@@ -19,11 +19,6 @@ namespace TagCloud.TagCloudCreators
         private IOrderedEnumerable<KeyValuePair<string, int>> wordsWithRate;
         private ITagCloud tagCloud;
 
-        public delegate ITagCloudCreator Factory(
-            ICloudLayouter.Factory cloudLayouterFactory,
-            IWordPreprocessor wordPreprocessor,
-            ITagCloudVisualizationSettings settings);
-
         public WordTagCloudCreator(
             ICloudLayouter.Factory cloudLayouterFactory, 
             IWordPreprocessor wordPreprocessor,

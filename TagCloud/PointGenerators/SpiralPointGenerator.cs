@@ -6,8 +6,8 @@ namespace TagCloud.PointGenerators
 {
     public class SpiralPointGenerator : IPointGenerator
     {
-        private double theta = 0;
-        private double radius = 0;
+        private double theta;
+        private double radius;
         private readonly double thetaStep = Math.PI / 360;
         private readonly double radiusStep = 0.01;
 

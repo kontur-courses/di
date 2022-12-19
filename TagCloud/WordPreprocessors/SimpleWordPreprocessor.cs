@@ -20,16 +20,10 @@ namespace TagCloud.WordPreprocessors
         public IEnumerable<string> GetPreprocessedWords()
         {
             boringWords = boringWordsStorage.GetBoringWords();
-            var lowerCaseWords = СonvertToLowerCase(wordsReader.ReadWords());
-            var preprocessedWords = RemoveBoringWordsFrom(lowerCaseWords);
-            return preprocessedWords;
+            return wordsReader
+                .ReadWords()
+                .Select(word => word.ToLower())
+                .Where(word => !boringWords.Contains(word));
         }
-
-        private IEnumerable<string> СonvertToLowerCase(IEnumerable<string> words) =>
-            words.Select(word => word.ToLower());
-
-        private IEnumerable<string> RemoveBoringWordsFrom(IEnumerable<string> words) =>
-            words.Where(word => !boringWords.Contains(word));
-
     }
 }

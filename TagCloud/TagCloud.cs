@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Extensions;
 using TagCloud.Tags;
@@ -30,21 +29,5 @@ namespace TagCloud
         public int GetLeftBound() => Layouts.MinOrDefault(r => r.Frame.Left);
 
         public int GetTopBound() => Layouts.MinOrDefault(r => r.Frame.Top);
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Equals(object obj) => Equals(obj as ITagCloud);
-
-        public bool Equals(ITagCloud other)
-        {
-            return other != null &&
-                   other.Center == Center &&
-                   other.Layouts.Count == Layouts.Count &&
-                   other.Layouts.TrueForAll(rectangle => 
-                       this.Layouts.Contains(rectangle));
-        }
     }
 }
