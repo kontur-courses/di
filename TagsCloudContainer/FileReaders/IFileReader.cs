@@ -5,6 +5,6 @@ namespace TagsCloudContainer.FileOpeners
     /// </summary>
     public interface IFileReader
     {
-        public string ReadFile(string filePath);
+        public string[] FileToWordsArray(string filePath);
     }
 }

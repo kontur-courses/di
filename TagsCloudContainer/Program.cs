@@ -1,7 +1,6 @@
 ﻿using System;
 using Autofac;
 using CommandLine;
-using TagsCloudContainer.FileOpeners;
 using TagsCloudContainer.FileReaders;
 using TagsCloudContainer.FileSavers;
 using TagsCloudContainer.LayouterAlgorithms;
@@ -10,31 +9,33 @@ using TagsCloudContainer.WordsColoringAlgorithms;
 
 namespace TagsCloudContainer
 {
-    internal class Program
+    internal static class Program
     {
         public static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
-            var app = new ConsoleUi();
+            var app = new ConsoleUiSettings();
 
-            var parsedArguments = app.GetType() == new ConsoleUi().GetType()
-                ? Parser.Default.ParseArguments<ConsoleUi>(args).Value
+            var parsedArguments = app.GetType() == new ConsoleUiSettings().GetType()
+                ? Parser.Default.ParseArguments<ConsoleUiSettings>(args).Value
                 : app;
-            CheckArguments(parsedArguments);
-            RegisterDependencies(builder, parsedArguments);
-            var container = builder.Build();
-            var frequencyDictionary = container.Resolve<InputFileHandler>()
-                .FormFrequencyDictionary(parsedArguments.PathToOpen);
-            var colorSequence = container.Resolve<IWordsPainter>()
-                .GetColorsSequence(frequencyDictionary, parsedArguments.BrushColor);
-            var coefficient = ScaleCoefficientCalculator.CalculateScaleCoefficient(parsedArguments.CanvasWidth,
-                parsedArguments.CanvasHeight, parsedArguments.CanvasBorder);
-            CircularCloudDrawer.DrawWords(colorSequence,
-                frequencyDictionary,
-                container.Resolve<IFileSaver>(),
-                parsedArguments,
-                coefficient,
-                container.Resolve<ICloudLayouterAlgorithm>());
+            if (parsedArguments is null)
+                return;
+            try
+            {
+                CheckArguments(parsedArguments);
+                RegisterDependencies(builder, parsedArguments);
+                var container = builder.Build();
+                CircularCloudDrawer.DrawWords(container.Resolve<WordsColoringFactory>(),
+                    container.Resolve<FileSaverFactory>(),
+                    container.Resolve<FileReaderFactory>(),
+                    parsedArguments,
+                    container.Resolve<LayouterFactory>());
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static void CheckArguments(IUi parsedArguments)
@@ -54,45 +55,12 @@ namespace TagsCloudContainer
 
         private static void RegisterDependencies(ContainerBuilder builder, IUi parsedArguments)
         {
-            RegisterFileReaderDependency(builder, parsedArguments.PathToOpen);
-            RegisterFileSaverDependency(builder, parsedArguments.FormatToSave);
+            builder.RegisterInstance(new FileSaverFactory(() => parsedArguments)).As<FileSaverFactory>();
+            builder.RegisterInstance(new FileReaderFactory(() => parsedArguments)).As<FileReaderFactory>();
+            builder.RegisterInstance(new WordsColoringFactory(() => parsedArguments)).As<WordsColoringFactory>();
+            builder.RegisterInstance(new LayouterFactory(() => parsedArguments)).As<LayouterFactory>();
             builder.RegisterInstance(parsedArguments).As<IUi>();
-            builder.RegisterType<InputFileHandler>().AsSelf();
-            builder.RegisterType<GradientDependsOnSizePainter>().As<IWordsPainter>();
             builder.RegisterType<Spiral>().AsSelf();
-            builder.RegisterType<Spiral>().AsSelf();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouterAlgorithm>();
-        }
-
-        private static void RegisterFileSaverDependency(ContainerBuilder builder, string formatToSave)
-        {
-            switch (formatToSave)
-            {
-                case "bmp":
-                    builder.RegisterType<BmpSaver>().As<IFileSaver>();
-                    break;
-                case "gif":
-                    builder.RegisterType<GifSaver>().As<IFileSaver>();
-                    break;
-                case "jpeg":
-                    builder.RegisterType<JpegSaver>().As<IFileSaver>();
-                    break;
-                case "png":
-                    builder.RegisterType<PngSaver>().As<IFileSaver>();
-                    break;
-                default:
-                    throw new ArgumentException("Unknown picture format");
-            }
-        }
-
-        private static void RegisterFileReaderDependency(ContainerBuilder builder, string pathToOpen)
-        {
-            var index = pathToOpen.LastIndexOf('.');
-            var format = pathToOpen.Substring(index + 1);
-            if (format == "txt")
-                builder.RegisterType<TxtReader>().As<IFileReader>();
-            else
-                throw new ArgumentException("Unknown file format");
         }
     }
 }

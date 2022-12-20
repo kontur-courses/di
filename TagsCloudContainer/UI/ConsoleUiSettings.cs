@@ -2,7 +2,7 @@ using CommandLine;
 
 namespace TagsCloudContainer.UI
 {
-    public class ConsoleUi : IUi
+    public class ConsoleUiSettings : IUi
     {
         [Option('f', "font", Required = false, Default = "Arial", HelpText = "Font name")]
         public string FontName { get; set; }
@@ -21,13 +21,13 @@ namespace TagsCloudContainer.UI
         public string PathToSave { get; set; }
 
         [Option('o',
-            "openpath", 
+            "openpath",
             Required = false,
             Default = "../testfile.txt",
             HelpText = "Path to file with words")]
         public string PathToOpen { get; set; }
 
-        [Option('f',
+        [Option('q',
             "saveformat",
             Required = false,
             Default = "png",
@@ -48,5 +48,22 @@ namespace TagsCloudContainer.UI
 
         [Option('a', "angle", Required = false, Default = 0.1, HelpText = "Angle offset")]
         public double AngleOffset { get; set; }
+
+        [Option('e', "coloring", Required = false, Default = "d",
+            HelpText =
+                "Algorithm for coloring words. Variants: d (every word has the same color), gd (brightness of word depends on it's size), g (brightness of word depends on it's position)")]
+        public string WordsColoringAlgorithm { get; set; }
+
+        [Option('x', "except", Required = false, Default = "-котихах +как",
+            HelpText = "'-': Words that are not in the tag cloud\n '+': Words that are in the tag cloud")]
+        public string ExceptWords { get; set; }
+
+        [Option('p', "exceptpofs", Required = false, Default = "-сущ",
+            HelpText =
+                "'-': Parts of speech that are not in the tag cloud\n '+': Parts of speech that are in the tag cloud. Variants: 'сущ', 'прил', 'мест', 'предл', 'союз', 'част', 'числ', 'цифра', 'прич'")]
+        public string ExceptPartOfSpeech { get; set; }
+
+        [Option('u', "layouter", Required = false, Default = "d", HelpText = "Layoter algorithm")]
+        public string Layouter { get; set; }
     }
 }

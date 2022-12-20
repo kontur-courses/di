@@ -16,12 +16,12 @@ namespace TagCloudContainerTests
         private CircularCloudLayouter layouter;
         private Point center;
         private List<Rectangle> rectangles;
-        private ConsoleUi settings;
+        private ConsoleUiSettings settings;
 
         [SetUp]
         public void SetUp()
         {
-            settings = Parser.Default.ParseArguments<ConsoleUi>(new string[] { }).Value;
+            settings = Parser.Default.ParseArguments<ConsoleUiSettings>(new string[] { }).Value;
             settings.AngleOffset = 1;
             settings.RadiusOffset = 1;
             center = new Point(settings.CanvasWidth / 2, settings.CanvasHeight / 2);

@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer;
 using TagsCloudContainer.FileReaders;
+using TagsCloudContainer.UI;
 
 namespace TagCloudContainerTests
 {
@@ -12,22 +13,17 @@ namespace TagCloudContainerTests
     {
         private string path;
         private FileStream fs;
+        private string[] words;
 
         [SetUp]
         public void SetUp()
         {
-            path = "../testfile2.txt";
+            path = "../testfile.txt";
+            words = new TxtReader().FileToWordsArray(path);
             fs = new FileStream(path, FileMode.Create);
             fs.Dispose();
         }
 
-        [Test]
-        public void FormFrequencyDictionary_ShouldThrowArgumentException_OnEmptyFile()
-        {
-            var handler = new TagsCloudContainer.InputFileHandler(new TxtReader());
-            Action act = () => handler.FormFrequencyDictionary(path);
-            act.Should().Throw<ArgumentException>().WithMessage("Empty file");
-        }
 
         [Test]
         public void FormFrequencyDictionary_ShouldСorrectFormFrequencyDictionary()
@@ -38,8 +34,7 @@ namespace TagCloudContainerTests
             fs.Write(bytes, 0, bytes.Length);
             fs.Dispose();
 
-            var handler = new TagsCloudContainer.InputFileHandler(new TxtReader());
-            var result = handler.FormFrequencyDictionary(path);
+            var result = InputFileHandler.FormFrequencyDictionary(words, new ConsoleUiSettings());
             result.Should().BeEquivalentTo(new Dictionary<string, int> {{"mary", 2}, {"bloody", 1}, {"june", 1}});
         }
     }

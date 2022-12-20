@@ -6,22 +6,23 @@ namespace TagsCloudContainer.WordsColoringAlgorithms
 {
     public class GradientWordsPainter : IWordsPainter
     {
-        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, string startColor)
+        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, Color startColor)
         {
-            var color = Color.FromName(startColor);
-            if (!color.IsKnownColor)
-                throw new ArgumentException("Unknown brush color");
             var counter = 0;
+            if (frequencyDictionary.Count == 0)
+                return Array.Empty<Color>();
             var colors = new Color[frequencyDictionary.Count];
             while (counter < frequencyDictionary.Count)
             {
-                var resultA = color.A - 10 > 0 ? color.A - 10 : 0;
-                color = Color.FromArgb(resultA, color.R, color.G, color.B);
-                colors[counter] = color;
+                var resultA = startColor.A - 10 > 0 ? startColor.A - 10 : 0;
+                startColor = Color.FromArgb(resultA, startColor.R, startColor.G, startColor.B);
+                colors[counter] = startColor;
                 counter++;
             }
 
             return colors;
         }
+
+       
     }
 }

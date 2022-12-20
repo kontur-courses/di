@@ -11,12 +11,12 @@ namespace TagCloudContainerTests
 {
     public class SpiralTests
     {
-        private ConsoleUi settings;
+        private ConsoleUiSettings settings;
 
         [SetUp]
         public void SetUp()
         {
-            settings = Parser.Default.ParseArguments<ConsoleUi>(new string[] { }).Value;
+            settings = Parser.Default.ParseArguments<ConsoleUiSettings>(new string[] { }).Value;
         }
 
         [Test]
