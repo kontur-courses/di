@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer.LayouterAlgorithms
 {
@@ -35,6 +34,14 @@ namespace TagsCloudContainer.LayouterAlgorithms
                 .First(rectangle => !IntersectsWithOtherRectangles(rectangle));
             Rectangles.Add(rect);
             return rect;
+        }
+
+        public Point PlaceNextWord(string word, int wordCount, int coefficient)
+        {
+            var rectangleHeight = wordCount * coefficient * word.Length + coefficient;
+            var rectangleWidth = wordCount * 2 * coefficient;
+            var rectangle = PutNextRectangle(new Size(rectangleHeight, rectangleWidth));
+            return new Point(rectangle.X, rectangle.Y);
         }
 
         private bool IntersectsWithOtherRectangles(Rectangle rectangle)
