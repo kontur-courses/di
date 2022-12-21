@@ -16,4 +16,10 @@
     <ProjectReference Include="..\TagsCloudContainer.Core\TagsCloudContainer.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="InputWords.odt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
