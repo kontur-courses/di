@@ -7,7 +7,7 @@ namespace TagsCloudContainer.Core.Drawer
 {
     public class LayoutDrawer : ILayoutDrawer
     {
-        private static readonly Regex ColorParser = new(@"argb\((?<alpha>\d{1,3}),(?<red>\d{1,3}),(?<green>\d{1,3}),(?<blue>\d{1,3})\)");
+        private static readonly Regex ColorParser = new(@"argb\((?<alpha>\d{1,3}),(?<red>\d{1,3}),(?<green>\d{1,3}),(?<blue>\d{1,3})\)", RegexOptions.Compiled);
 
         private readonly Random _random;
         private readonly List<WordRectangle> _rectangles;
@@ -28,8 +28,8 @@ namespace TagsCloudContainer.Core.Drawer
             foreach (var rectangle in _rectangles)
             {
                 var brush = new SolidBrush(StringToArgbColor(rectangle.FontColor));
-                using var arialFont = new Font(rectangle.FontFamily, rectangle.FontSize);
-                graphics.DrawString(rectangle.Text, arialFont, brush, rectangle.Rectangle.Location);
+                using var font = new Font(rectangle.FontFamily, rectangle.FontSize);
+                graphics.DrawString(rectangle.Text, font, brush, rectangle.Rectangle.Location);
             }
         }
 

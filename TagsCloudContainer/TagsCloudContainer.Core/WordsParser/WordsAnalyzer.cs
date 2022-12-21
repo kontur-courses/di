@@ -31,8 +31,10 @@ namespace TagsCloudContainer.Core.WordsParser
 
             var filteredWords = _filter.RemoveBoringWords(words.ToHashSet());
 
-            foreach (var word in words.Where(word => filteredWords.Contains(word)))
-                wordsCount.SetOrUpdate(word);
+
+            foreach (var word in words)
+                if(filteredWords.Contains(word))
+                    wordsCount.SetOrUpdate(word);
             
             return wordsCount;
         }
