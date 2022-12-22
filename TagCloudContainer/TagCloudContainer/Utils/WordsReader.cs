@@ -1,21 +1,20 @@
-﻿namespace TagCloudContainer;
+﻿using TagCloudContainer.Additions.Interfaces;
+
+namespace TagCloudContainer;
 
 public class WordsReader : IWordsReader
 {
-    private readonly Dictionary<string, Word> _words = new Dictionary<string, Word>();
-    private readonly IWordConfig _wordConfig;
-    private readonly IMainFormConfig _mainFormConfig;
+    private readonly Dictionary<string, TagCloudContainer.Additions.Models.Word> _words = new Dictionary<string, TagCloudContainer.Additions.Models.Word>();
+    private readonly IWordValidator _wordValidator;
+    private readonly IWordReaderConfig _wordReaderConfig;
 
-    public WordsReader(IWordConfig wordConfig, IMainFormConfig mainFormConfig)
+    public WordsReader(IWordValidator wordValidator, IWordReaderConfig wordReaderConfig)
     {
-        if (string.IsNullOrEmpty(mainFormConfig.FileName))
-            throw new ArgumentException("File name can not be null or empty");
-
-        _mainFormConfig = mainFormConfig;
-        _wordConfig = wordConfig;
+        _wordReaderConfig = wordReaderConfig;
+        _wordValidator = wordValidator;
     }
     
-    public IEnumerable<Word> GetWordsFromFile(string filePath)
+    public IEnumerable<Additions.Models.Word> GetWordsFromFile(string filePath)
     {
         Read(filePath);
         var wordsList = _words.Values.ToList();
@@ -27,7 +26,7 @@ public class WordsReader : IWordsReader
         var lines = File
             .ReadLines(filePath)
             .Distinct();
-        lines = _mainFormConfig.NeedValidate ? _wordConfig.Validate(lines) : lines;
+        lines = _wordReaderConfig.NeedValidate ? _wordValidator.Validate(lines) : lines;
 
         foreach (var word in lines)
             AddWord(word);
@@ -41,7 +40,7 @@ public class WordsReader : IWordsReader
             return;
         }
         
-        var word = new Word() { Value = wordValue, Weight = 1 };
+        var word = new TagCloudContainer.Additions.Models.Word() { Value = wordValue, Weight = 1 };
         _words.Add(wordValue, word);
     }
 }

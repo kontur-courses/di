@@ -2,7 +2,7 @@
 
 public static class WordsShuffler
 {
-    public static List<Word> ShuffleWords(List<Word> words)
+    public static List<TagCloudContainer.Additions.Models.Word> ShuffleWords(List<TagCloudContainer.Additions.Models.Word> words)
     {
         if (words == null)
             throw new ArgumentException("Argument is null");

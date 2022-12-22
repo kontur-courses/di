@@ -1,34 +1,32 @@
-﻿namespace TagCloudContainer;
+﻿using TagCloudContainer.Additions.Interfaces;
+
+namespace TagCloudContainer;
 
 public class TagCloudProvider : ITagCloudProvider
 {
-    private readonly ITagConfig _tagConfig;
-    private readonly IMainFormConfig _mainFormConfig;
-    private readonly IEnumerable<Word> _words;
+    private readonly ITagCloudPlacer _tagCloudPlacer;
+    private readonly IEnumerable<Additions.Models.Word> _words;
+    private readonly IWordReaderConfig _wordReaderConfig;
+    private readonly ITagCloudContainerConfig _tagCloudContainerConfig;
 
-    public TagCloudProvider(ITagConfig tagConfig, IWordsReader wordsReader, IMainFormConfig mainFormConfig)
+    public TagCloudProvider(
+        ITagCloudPlacer tagCloudPlacer, 
+        IWordsReader wordsReader, 
+        IWordReaderConfig wordReaderConfig,
+        ITagCloudContainerConfig tagCloudContainerConfig)
     {
-        _tagConfig = tagConfig;
-        _mainFormConfig = mainFormConfig;
+        _tagCloudPlacer = tagCloudPlacer;
+        _wordReaderConfig = wordReaderConfig;
+        _tagCloudContainerConfig = tagCloudContainerConfig;
         
-        IsValidArguments();
-        var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-        var wordsFilePath = Path.Combine(projectPath, _mainFormConfig.FileName);
+        var wordsFilePath = _wordReaderConfig.FilePath;
         _words = wordsReader.GetWordsFromFile(wordsFilePath);
     }
 
-    public IEnumerable<Word> GetPreparedWords()
+    public IEnumerable<Additions.Models.Word> GetPreparedWords()
     {
-        var sortedWords = _mainFormConfig.Random ? WordsShuffler.ShuffleWords(_words.ToList()) : _words;
-        return sortedWords.Select(w => _tagConfig.ConfigureWordTag(w));
-    }
-
-    private void IsValidArguments()
-    {
-        var center = _mainFormConfig.Center;
-        var standartSize = _mainFormConfig.StandartSize;
-        
-        if (standartSize.IsEmpty || standartSize == null)
-            throw new ArgumentException("Standart size can not be empty or null");
+        var sortedWords = _tagCloudContainerConfig.Random 
+            ? WordsShuffler.ShuffleWords(_words.ToList()) : _words;
+        return sortedWords.Select(w => _tagCloudPlacer.PlaceInCloud(w));
     }
 }

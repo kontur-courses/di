@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using TagCloudContainer.Forms;
 
 namespace TagCloudContainer;
 
