@@ -122,7 +122,8 @@ public partial class MainForm : Form
             if (bitmapResult.Exception.Message.Contains("GUI"))
                 MessageBox.Show(
                     "Occured error while generating image, try using smaller input or smaller growth value");
-            MessageBox.Show(bitmapResult.Exception.ToString());
+            else
+                MessageBox.Show(bitmapResult.Exception.Message);
         }
         else
         {

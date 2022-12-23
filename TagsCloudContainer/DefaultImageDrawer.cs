@@ -26,34 +26,29 @@ public class DefaultImageDrawer : IImageDrawer
 
     public Result<Bitmap> DrawImage()
     {
-        if (DrawnBitmap != null) return DrawnBitmap;
-
-        try
-        {
-            var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            var offset = new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2);
-            var graphics = Graphics.FromImage(bitmap);
-            graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), 0, 0, bitmap.Width, bitmap.Height);
-
-            foreach (var pair in rectanglesDistribution)
+        if (DrawnBitmap == null)
+            DrawnBitmap = Result.GetResult(() =>
             {
-                var rect = pair.Value;
-                var font = settings.Font;
-                var freq = wordsDistribution[pair.Key];
-                var sizeAdd = settings.FrequencyGrowth * (wordsDistribution[pair.Key] - 1);
-                rect.Offset(offset);
-                font = new Font(font.FontFamily, font.Size + sizeAdd, font.Style);
-                graphics.DrawString(pair.Key, font, new SolidBrush(colorProvider.ProvideColorForWord(pair.Key, freq)),
-                    rect);
-            }
+                var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+                var offset = new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2);
+                var graphics = Graphics.FromImage(bitmap);
+                graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), 0, 0, bitmap.Width, bitmap.Height);
 
-            DrawnBitmap = new Result<Bitmap>(bitmap);
-        }
-        catch (Exception e)
-        {
-            return new Result<Bitmap>(e);
-        }
+                foreach (var pair in rectanglesDistribution)
+                {
+                    var rect = pair.Value;
+                    var font = settings.Font;
+                    var freq = wordsDistribution[pair.Key];
+                    var sizeAdd = settings.FrequencyGrowth * (wordsDistribution[pair.Key] - 1);
+                    rect.Offset(offset);
+                    font = new Font(font.FontFamily, font.Size + sizeAdd, font.Style);
+                    graphics.DrawString(pair.Key, font,
+                        new SolidBrush(colorProvider.ProvideColorForWord(pair.Key, freq)),
+                        rect);
+                }
 
+                return bitmap;
+            });
         return DrawnBitmap;
     }
 }

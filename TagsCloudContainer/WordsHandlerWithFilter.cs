@@ -4,25 +4,25 @@ public class WordsHandlerWithFilter : DefaultWordsHandler, IWordsHandler
 {
     private readonly IEnumerable<string> wordsToExclude;
 
-    private Dictionary<string, int> wordDistribution;
-
     public WordsHandlerWithFilter(IWordSequenceProvider wordSequenceProvider, IWordFilterProvider wordsFilterProvider)
         : base(wordSequenceProvider)
     {
-        if (wordsFilterProvider.WordFilter.Successful)
+        if (!wordsFilterProvider.WordFilter.Successful)
+            WordDistribution = new Result<Dictionary<string, int>>(wordsFilterProvider.WordFilter.Exception);
+        else
             wordsToExclude =
                 from word in wordsFilterProvider.WordFilter.Value
                 select word.ToLower();
-        else WordDistribution = new Result<Dictionary<string, int>>(wordsFilterProvider.WordFilter.Exception);
     }
 
-    protected override void ProcessSequence()
+    protected override Dictionary<string, int> ProcessSequence()
     {
-        base.ProcessSequence();
-        WordDistribution = new Result<Dictionary<string, int>>(
+        var baseProcess = base.ProcessSequence();
+        var distribution = new Dictionary<string, int>(
             new Dictionary<string, int>(
-            from pair in base.WordDistribution.Value
-            where !wordsToExclude.Contains(pair.Key)
-            select pair));
+                from pair in baseProcess
+                where !wordsToExclude.Contains(pair.Key)
+                select pair));
+        return distribution;
     }
 }

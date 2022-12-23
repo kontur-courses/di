@@ -3,35 +3,28 @@ namespace TagsCloudContainer;
 public class DefaultWordsHandler : IWordsHandler
 {
     private readonly IEnumerable<string> WordSequence;
-
     private Result<Dictionary<string, int>> wordDistribution;
 
     public DefaultWordsHandler(IWordSequenceProvider wordSequenceProvider)
     {
         var wordSequenceResult = wordSequenceProvider.WordSequence;
-        if (wordSequenceProvider.WordSequence.Successful) WordSequence = wordSequenceResult.Value;
-        else WordDistribution = new Result<Dictionary<string, int>>(wordSequenceResult.Exception);
+        if (!wordSequenceResult.Successful)
+            wordDistribution = new Result<Dictionary<string, int>>(wordSequenceResult.Exception);
+        else WordSequence = wordSequenceResult.Value;
     }
 
     public Result<Dictionary<string, int>> WordDistribution
     {
         get
         {
-            try
-            {
-                if (wordDistribution == null) ProcessSequence();
-            }
-            catch (Exception e)
-            {
-                wordDistribution = new Result<Dictionary<string, int>>(e);
-            }
-
+            if (wordDistribution == null)
+                wordDistribution = Result.GetResult(ProcessSequence);
             return wordDistribution;
         }
         protected set => wordDistribution = value;
     }
 
-    protected virtual void ProcessSequence()
+    protected virtual Dictionary<string, int> ProcessSequence()
     {
         var wordD = new Dictionary<string, int>();
 
@@ -42,6 +35,6 @@ public class DefaultWordsHandler : IWordsHandler
             else wordD.Add(w, 1);
         }
 
-        wordDistribution = new Result<Dictionary<string, int>>(wordD);
+        return new Dictionary<string, int>(wordD);
     }
 }

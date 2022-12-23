@@ -25,28 +25,21 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
     {
         get
         {
-            try
-            {
-                if (distrubutedRectangles == null) Distribute();
-            }
-            catch (Exception e)
-            {
-                distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(e);
-            }
-
+            if (distrubutedRectangles == null)
+                distrubutedRectangles = Result.GetResult(Distribute);
             return distrubutedRectangles;
         }
         private set => distrubutedRectangles = value;
     }
 
-    private void Distribute()
+    private Dictionary<string, Rectangle> Distribute()
     {
         var distributedRectangles = new Dictionary<string, Rectangle>();
 
         foreach (var dist in wordDistribution)
             distributedRectangles.Add(dist.Key,
                 layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
-        distrubutedRectangles = new Result<Dictionary<string, Rectangle>>(distributedRectangles);
+        return new Dictionary<string, Rectangle>(distributedRectangles);
     }
 
     private Size CalculateSizeForWord(string word, int frequency)
