@@ -1,4 +1,4 @@
-namespace TagsCloudContainer.FileOpeners
+namespace TagsCloudContainer.FileReaders
 {
     /// <summary>
     ///  Нужен чтобы можно было реализовать открытие разных форматов

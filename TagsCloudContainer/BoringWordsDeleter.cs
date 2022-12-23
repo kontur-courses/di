@@ -14,14 +14,14 @@ namespace TagsCloudContainer
             var ignoreWords = settings.ExceptWords.Contains('+')
                 ? settings.ExceptWords.Trim().Split('+').Select(str => str.Trim().Split(' ')[0])
                 : Array.Empty<string>();
-            var deleteWords = settings.ExceptWords.Contains('-')
-                ? settings.ExceptWords.Trim().Split('-').Select(str => str.Trim().Split(' ')[0])
+            var deleteWords = settings.ExceptWords.Contains('.')
+                ? settings.ExceptWords.Trim().Split('.').Select(str => str.Trim().Split(' ')[0])
                 : Array.Empty<string>();
             var ignorePartOfSpeech = settings.ExceptPartOfSpeech.Contains('+')
                 ? settings.ExceptPartOfSpeech.Trim().Split('+').Select(str => str.Trim().Split(' ')[0])
                 : Array.Empty<string>();
-            var deletePartOfSpeech = settings.ExceptPartOfSpeech.Contains('-')
-                ? settings.ExceptPartOfSpeech.Trim().Split('-').Select(str => str.Trim().Split(' ')[0])
+            var deletePartOfSpeech = settings.ExceptPartOfSpeech.Contains('.')
+                ? settings.ExceptPartOfSpeech.Trim().Split('.').Select(str => str.Trim().Split(' ')[0])
                 : Array.Empty<string>();
 
             var morph = new MorphAnalyzer();

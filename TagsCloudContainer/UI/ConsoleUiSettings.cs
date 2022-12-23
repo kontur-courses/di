@@ -54,11 +54,11 @@ namespace TagsCloudContainer.UI
                 "Algorithm for coloring words. Variants: d (every word has the same color), gd (brightness of word depends on it's size), g (brightness of word depends on it's position)")]
         public string WordsColoringAlgorithm { get; set; }
 
-        [Option('x', "except", Required = false, Default = "-котихах +как",
-            HelpText = "'-': Words that are not in the tag cloud\n '+': Words that are in the tag cloud")]
+        [Option('x', "except", Required = false, Default = ".бойцовский",
+            HelpText = "'.': Words that are not in the tag cloud\n '+': Words that are in the tag cloud")]
         public string ExceptWords { get; set; }
 
-        [Option('p', "exceptpofs", Required = false, Default = "-сущ",
+        [Option('p', "exceptpofs", Required = false, Default = "+мест",
             HelpText =
                 "'-': Parts of speech that are not in the tag cloud\n '+': Parts of speech that are in the tag cloud. Variants: 'сущ', 'прил', 'мест', 'предл', 'союз', 'част', 'числ', 'цифра', 'прич'")]
         public string ExceptPartOfSpeech { get; set; }

@@ -1,4 +1,3 @@
-using TagsCloudContainer.FileOpeners;
 
 namespace TagsCloudContainer.UI
 {
