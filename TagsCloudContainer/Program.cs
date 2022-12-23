@@ -28,7 +28,7 @@ namespace TagsCloudContainer
                 var configuration = new Configuration(parsedArguments, container.Resolve<WordsColoringFactory>(),
                     container.Resolve<FileSaverFactory>(),
                     container.Resolve<FileReaderFactory>(), container.Resolve<LayouterFactory>());
-                CircularCloudDrawer.DrawWords(parsedArguments, configuration);
+                CloudDrawer.DrawWords(parsedArguments, configuration);
             }
             catch (ArgumentException e)
             {

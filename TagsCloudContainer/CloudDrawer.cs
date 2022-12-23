@@ -4,7 +4,7 @@ using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
 {
-    public static class CircularCloudDrawer
+    public static class CloudDrawer
     {
         public static void DrawWords(IUi settings, Configuration configuration)
         {

@@ -12,12 +12,12 @@ namespace TagsCloudContainer.LayouterAlgorithms
             this.settingsProvider = settingsProvider;
         }
 
-        public ICloudLayouterAlgorithm Create(Spiral spiral)
+        public ICloudLayouterAlgorithm Create()
         {
             var actualSettings = settingsProvider.Invoke();
             return actualSettings.Layouter switch
             {
-                "d" => new CircularCloudLayouter(spiral),
+                "d" => new CircularCloudLayouter(new Spiral(actualSettings)),
                 _ => throw new ArgumentException("Wrong algorithm name")
             };
         }

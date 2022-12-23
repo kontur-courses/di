@@ -125,7 +125,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="BoringWordsDeleter.cs" />
-        <Compile Include="CircularCloudDrawer.cs" />
+        <Compile Include="CloudDrawer.cs" />
         <Compile Include="FileReaders\FileReaderFactory.cs" />
         <Compile Include="FileReaders\TxtReader.cs" />
         <Compile Include="FileSavers\BmpSaver.cs" />

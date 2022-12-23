@@ -33,7 +33,7 @@ namespace TagsCloudContainer.UI
             FileSaver = fileSaverFactory.Create();
             Painter = wordsColoringFactory.Create();
             FileReader = fileReaderFactory.Create();
-            Algorithm = layouterFactory.Create(new Spiral(settings));
+            Algorithm = layouterFactory.Create();
         }
 
         private string CheckFontName(string settingsFontName)
