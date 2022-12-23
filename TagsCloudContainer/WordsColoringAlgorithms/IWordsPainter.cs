@@ -5,6 +5,7 @@ namespace TagsCloudContainer.WordsColoringAlgorithms
 {
     public interface IWordsPainter
     {
-        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, Color startColor);
+        public Dictionary<string, Color> GetWordColorDictionary(Dictionary<string, int> frequencyDictionary,
+            Color startColor);
     }
 }

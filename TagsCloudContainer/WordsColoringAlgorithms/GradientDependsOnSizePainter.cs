@@ -7,21 +7,21 @@ namespace TagsCloudContainer.WordsColoringAlgorithms
 {
     public class GradientDependsOnSizePainter : IWordsPainter
     {
-        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, Color startColor)
+        public Dictionary<string, Color> GetWordColorDictionary(Dictionary<string, int> frequencyDictionary,
+            Color startColor)
         {
+            var result = new Dictionary<string, Color>();
             if (frequencyDictionary.Count == 0)
-                return Array.Empty<Color>();
+                return result;
             var maxWordCount = frequencyDictionary.Values.Max();
             var resultA = startColor.A / maxWordCount;
-            var colors = new Color[frequencyDictionary.Count];
-            var counter = 0;
-            foreach (var wordCount in frequencyDictionary.Values)
+            foreach (var pair in frequencyDictionary)
             {
-                colors[counter] = Color.FromArgb(resultA * wordCount, startColor.R, startColor.G, startColor.B);
-                counter++;
+                var wordCount = pair.Value;
+                result[pair.Key] = Color.FromArgb(resultA * wordCount, startColor.R, startColor.G, startColor.B);
             }
 
-            return colors;
+            return result;
         }
     }
 }

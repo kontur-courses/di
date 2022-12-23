@@ -49,7 +49,7 @@ namespace TagsCloudContainer.UI
         [Option('a', "angle", Required = false, Default = 0.1, HelpText = "Angle offset")]
         public double AngleOffset { get; set; }
 
-        [Option('e', "coloring", Required = false, Default = "d",
+        [Option('e', "coloring", Required = false, Default = "gd",
             HelpText =
                 "Algorithm for coloring words. Variants: d (every word has the same color), gd (brightness of word depends on it's size), g (brightness of word depends on it's position)")]
         public string WordsColoringAlgorithm { get; set; }

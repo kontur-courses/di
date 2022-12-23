@@ -6,15 +6,15 @@ namespace TagsCloudContainer.WordsColoringAlgorithms
 {
     public class DefaultWordsPainter : IWordsPainter
     {
-        public Color[] GetColorsSequence(Dictionary<string, int> frequencyDictionary, Color startColor)
+        public Dictionary<string, Color> GetWordColorDictionary(Dictionary<string, int> frequencyDictionary,
+            Color startColor)
         {
-            var wordsCount = frequencyDictionary.Count;
-            if (wordsCount == 0|| startColor.IsEmpty)
-                return Array.Empty<Color>();
-            var colors = new Color[wordsCount];
-            for (var i = 0; i < wordsCount; i++)
-                colors[i] = startColor;
-            return colors;
+            var result = new Dictionary<string, Color>();
+            if (frequencyDictionary.Count == 0)
+                return result;
+            foreach (var pair in frequencyDictionary)
+                result[pair.Key] = startColor;
+            return result;
         }
     }
 }

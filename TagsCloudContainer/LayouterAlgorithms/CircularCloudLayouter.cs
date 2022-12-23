@@ -36,13 +36,7 @@ namespace TagsCloudContainer.LayouterAlgorithms
             return rect;
         }
 
-        public Point PlaceNextWord(string word, int wordCount, int coefficient)
-        {
-            var rectangleHeight = wordCount * coefficient * word.Length + coefficient;
-            var rectangleWidth = wordCount * 2 * coefficient;
-            var rectangle = PutNextRectangle(new Size(rectangleHeight, rectangleWidth));
-            return new Point(rectangle.X, rectangle.Y);
-        }
+        
 
         private bool IntersectsWithOtherRectangles(Rectangle rectangle)
         {

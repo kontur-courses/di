@@ -4,6 +4,6 @@ namespace TagsCloudContainer.LayouterAlgorithms
 {
     public interface ICloudLayouterAlgorithm
     {
-        public Point PlaceNextWord(string word, int wordCount, int coefficient);
+        public Rectangle PutNextRectangle(Size rectangleSize);
     }
 }
