@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -16,13 +17,29 @@ namespace TagsCloudContainer.Infrastructure.WordPreparers
             this.excludedTypes = excludedTypes;
         }
 
-        public string[] Prepare(IEnumerable<string> words)
+        public Result<string[]> Prepare(IEnumerable<string> words)
         {
-            ArgumentNullException.ThrowIfNull(words, nameof(words));
+            if (words is null)
+                return Result.Fail($"nameof{words} is null");
 
-            return words.Select(word => word.ToLower())
-                        .Where(word => !excludedTypes.Contains(OpenNLPPOSFacade.GetWordType(word)))
-                        .ToArray();       
+            var initializeResult = OpenNLPPOSFacade.Initialize();
+            if (initializeResult.IsFailed)
+                return initializeResult;
+
+            var preparedWords = new List<string>();
+            foreach(var word in words.Select(w => w.ToLower()))
+            {
+                var getTypeResult = OpenNLPPOSFacade.GetWordType(word);
+                if (getTypeResult.IsFailed)
+                    return getTypeResult.ToResult();
+
+                if (excludedTypes.Contains(getTypeResult.Value))
+                    continue;
+
+                preparedWords.Add(word);
+            }
+
+            return Result.Ok(preparedWords.ToArray());     
         }
     }
 }

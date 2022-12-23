@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
     public interface IWordLayoutBuilder
     {
         public IWordLayoutBuilder AddWord(string word, SizeF size);
-        public WordRectangle[] Build(PointF center);
+        public Result<WordRectangle[]> Build(PointF center);
+        public void Clear();
     }
 }

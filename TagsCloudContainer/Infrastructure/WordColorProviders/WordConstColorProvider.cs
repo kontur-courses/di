@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace TagsCloudContainer.Infrastructure.WordColorProviders
 {
     public class WordConstColorProvider : IWordColorProvider
     {
-        public Color GetColor(string word)
+        public Result<Color> GetColor(string word)
         {
-            return Color.BlueViolet;
+            return Result.Ok(Color.BlueViolet);
         }
     }
 }

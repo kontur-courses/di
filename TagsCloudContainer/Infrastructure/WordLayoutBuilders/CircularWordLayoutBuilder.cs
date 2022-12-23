@@ -1,4 +1,5 @@
 ﻿using EParser;
+using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,21 +27,25 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
             return this;
         }
 
-        public WordRectangle[] Build(PointF center)
+        public Result<WordRectangle[]> Build(PointF center)
         {
             var distanceFunction = GetDistanceFunction(center);
             
             var rectangles = new List<RectangleF>();
             var searchStartPoints = new HashSet<PointF>();
-            return words.Select(word =>
+            var wordRectangles = new List<WordRectangle>();
+            foreach(var word in words)
             {
                 var rectangle = GetRectangle(center, distanceFunction, rectangles, word.Size, searchStartPoints);
+                if (rectangle is null)
+                    return Result.Fail<WordRectangle[]>($"Can't build rectangle for word '{word}'");
 
-                rectangles.Add(rectangle);
-                AddRectanglePointsTo(searchStartPoints, rectangle);
-
-                return new WordRectangle() { Word = word.Word, Rectangle = rectangle };
-            }).ToArray();
+                var value = rectangle.Value;
+                rectangles.Add(value);
+                AddRectanglePointsTo(searchStartPoints, value);
+                wordRectangles.Add(new WordRectangle() { Word = word.Word, Rectangle = value });
+            }
+            return Result.Ok(wordRectangles.ToArray());
         }
 
         private static Func GetDistanceFunction(PointF center)
@@ -49,7 +54,7 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
                         (t[1] - center.Y) * (t[1] - center.Y);
         }
 
-        private static RectangleF GetRectangle(PointF center, Func distanceFunction, IEnumerable<RectangleF> rectangles, SizeF targetRectangleSize, HashSet<PointF> searchStartPoints)
+        private static RectangleF? GetRectangle(PointF center, Func distanceFunction, IEnumerable<RectangleF> rectangles, SizeF targetRectangleSize, HashSet<PointF> searchStartPoints)
         {
             if (!rectangles.Any())
                 return BuildRectangle(center, targetRectangleSize);
@@ -99,7 +104,7 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
             return new RectangleF(location, size);
         }
 
-        private static RectangleF BuildNearestRectangle(Func distanceFunction, 
+        private static RectangleF? BuildNearestRectangle(Func distanceFunction, 
                                                         List<Func> penaltyFunctions,
                                                         IEnumerable<RectangleF> rectanges,
                                                         SizeF requiredRectangleSize,
@@ -124,7 +129,7 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
             }
 
             if (minFunctionValue == double.MaxValue)
-                throw new Exception("Can't find optimal point for new rectangle");
+                return null;
 
             return nearestRectangle;
         }
@@ -143,6 +148,11 @@ namespace TagsCloudContainer.Infrastructure.WordLayoutBuilders
             points.Add(new PointF(rectangle.X, rectangle.Y + halfHeight));
             points.Add(new PointF(rectangle.X + rectangle.Width, rectangle.Y + halfHeight));
             points.Add(new PointF(rectangle.X + halfWidth, rectangle.Y + rectangle.Height));
+        }
+
+        public void Clear()
+        {
+            words.Clear();
         }
     }
 }

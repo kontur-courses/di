@@ -32,10 +32,12 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
             var expectedRectangle = new WordRectangle() { Rectangle = new Rectangle(new Point(-50, -50), size), Word = word };
 
             layoutBuilder.AddWord(word, size);
-            var actualRectanles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
-            actualRectanles.Should().HaveCount(1);
-            actualRectanles.Last().Should().BeEquivalentTo(expectedRectangle);
+            result.IsSuccess.Should().BeTrue();
+            actualRectangles.Should().HaveCount(1);
+            actualRectangles.Last().Should().BeEquivalentTo(expectedRectangle);
         }
 
         [Test]
@@ -48,8 +50,10 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
 
             layoutBuilder.AddWord("567", firstRectangleSize)
                          .AddWord(word, secondRectangleSize);
-            var actualRectangles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
+            result.IsSuccess.Should().BeTrue();
             actualRectangles.Should().HaveCount(2);
             actualRectangles.Last().Should().BeEquivalentTo(expectedRectangle);
         }
@@ -64,8 +68,10 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
             
             layoutBuilder.AddWord("567", firstRectangleSize)
                          .AddWord(word, secondRectangleSize);
-            var actualRectangles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
+            result.IsSuccess.Should().BeTrue();
             actualRectangles.Should().HaveCount(2);
             actualRectangles[1].Should().BeEquivalentTo(expectedRectangle);
         }
@@ -81,8 +87,10 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
             layoutBuilder.AddWord("567", firstRectangleSize)
                          .AddWord("222", rectangleSize)
                          .AddWord(word, rectangleSize);
-            var actualRectangles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
+            result.IsSuccess.Should().BeTrue();
             actualRectangles.Should().HaveCount(3);
             actualRectangles.Last().Should().BeEquivalentTo(expectedRectangle);
         }
@@ -106,8 +114,10 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
                          .AddWord("8", brickSize)
                          .AddWord(word, smallRectangleSize);
 
-            var actualRectangles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
+            result.IsSuccess.Should().BeTrue();
             actualRectangles.Should().HaveCount(9);
             actualRectangles.Last().Should().Match<WordRectangle>(wr => wr.Word == word && (wr.Rectangle == expectedRectangle1.Rectangle || 
                                                                                             wr.Rectangle == expectedRectangle2.Rectangle));
@@ -128,8 +138,10 @@ namespace TagsCloudContainer.Tests.LayoutBuilderTests
                          .AddWord("3", bigVerticalRectangleSize)
                          .AddWord("4", bigHorizontalRectangleSize)
                          .AddWord(word, expectedRectangleSize);
-            var actualRectangles = layoutBuilder.Build(default);
+            var result = layoutBuilder.Build(default);
+            var actualRectangles = result.Value;
 
+            result.IsSuccess.Should().BeTrue();
             actualRectangles.Should().HaveCount(5);
             actualRectangles.Last().Should().BeEquivalentTo(expectedRectangle);
         }

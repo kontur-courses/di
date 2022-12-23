@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -26,12 +27,10 @@ namespace TagsCloudContainer.Infrastructure.WordColorProviders
             frequencyDelta = maxFrequency - minFrequency;
         }
 
-        public Color GetColor(string word)
+        public Result<Color> GetColor(string word)
         {
-            if (!settings.WordFrequencies.ContainsKey(word))
-                throw new ArgumentException($"Can't generate color for word '{word}'", new KeyNotFoundException(word));
-
-            return GenerateColor(GetNormalizedFrequency(settings.WordFrequencies[word]));
+            return settings.WordFrequencies.ContainsKey(word) ? Result.Ok(GenerateColor(GetNormalizedFrequency(settings.WordFrequencies[word]))):
+                                                                Result.Fail<Color>($"Can't generate color for word '{word}'");
         }
 
         private float GetNormalizedFrequency(int frequency)

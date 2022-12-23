@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -18,10 +19,10 @@ namespace TagsCloudContainer.Infrastructure
             this.colorProviderFactory = colorProviderFactory;
         }
 
-        public Bitmap DrawPlates(WordPlate[] plates, Size size, WordColorSettings settings)
+        public Result<Bitmap> DrawPlates(WordPlate[] plates, Size size, WordColorSettings settings)
         {
             if (size.IsEmpty)
-                throw new ArgumentException("Size can't be empty");
+                return Result.Fail("Size can't be empty");
 
             var colorProvider = colorProviderFactory.CreateDefault(settings);
 
@@ -29,16 +30,27 @@ namespace TagsCloudContainer.Infrastructure
             using var graphics = Graphics.FromImage(bitmap);
             graphics.Clear(Color.White);
 
-            foreach(var plate in plates)
-                graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(colorProvider.GetColor(plate.WordRectangle.Word)), plate.WordRectangle.Rectangle);
+            foreach (var plate in plates)
+            {
+                var colorResult = colorProvider.GetColor(plate.WordRectangle.Word);
+                if (colorResult.IsFailed)
+                    return colorResult.ToResult();
 
-            return bitmap;
+                graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(colorResult.Value), plate.WordRectangle.Rectangle);
+            }
+
+            return Result.Ok(bitmap);
         }
 
-        public void DrawPlatesAndSave(WordPlate[] plates, Size size, string filename, WordColorSettings settings)
+        public Result DrawPlatesAndSave(WordPlate[] plates, Size size, string filename, WordColorSettings settings)
         {
-            using var bitmap = DrawPlates(plates, size, settings);
+            var result = DrawPlates(plates, size, settings);
+            if (result.IsFailed)
+                return result.ToResult();
+
+            using var bitmap = result.Value!;
             bitmap.Save(filename);
+            return Result.Ok();
         }
     }
 }

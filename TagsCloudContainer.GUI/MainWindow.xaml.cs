@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -62,28 +63,35 @@ namespace TagsCloudContainer.GUI
 
         private void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
         {
-            Result result;
-            if (!(result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename, out var words)).Success)
-            {
-                MessageBox.Show("Can't read words from input file: " + result.Message, "File error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            var result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
+                                   .Then(wds => wordPreparer.Prepare(wds))
+                                   .Then(wds =>
+                                   {
+                                       var wordFrequencies = GetWordFrequencies(wds);
+                                       var wordFontSettings = settingsProvider.GetWordFontSettings();
+                                       wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
 
-            var wordFrequencies = GetWordFrequencies(wordPreparer.Prepare(words));
+                                       var wordColorSettings = settingsProvider.GetWordColorSettings();
+                                       wordColorSettings.WordFrequencies = wordFrequencies;
 
-            var wordFontSettings = settingsProvider.GetWordFontSettings();
-            wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
+                                       var words = wordFrequencies.Keys.ToArray();
+                                       var outputImageSettings = settingsProvider.GetOutputImageSettings();
+                                       var pictureSize = new System.Drawing.Size(outputImageSettings.Width, outputImageSettings.Height);
 
-            var wordColorSettings = settingsProvider.GetWordColorSettings();
-            wordColorSettings.WordFrequencies = wordFrequencies;
+                                       var generatePlatesResult = tagsCloudGenerator.GeneratePlates(words,
+                                                                                                    new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F),
+                                                                                                    wordFontSettings);
 
-            words = wordFrequencies.Keys.ToArray();
-            var outputImageSettings = settingsProvider.GetOutputImageSettings();
-            var pictureSize = new System.Drawing.Size(outputImageSettings.Width, outputImageSettings.Height);
+                                       return generatePlatesResult.ToResult(r => new { Plates = r, PictureSize = pictureSize, WordColorSettings = wordColorSettings });
+                                   })
+                                   .Then(info => wordPlateVisualizer.DrawPlates(info.Plates, info.PictureSize, info.WordColorSettings))
+                                   .OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()))
+                                   .OnFail(r => HandleFailedResult(r));
+        }
 
-            var wordPlates = tagsCloudGenerator.GeneratePlates(words, new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSettings);
-            var bitmap = wordPlateVisualizer.DrawPlates(wordPlates, pictureSize, wordColorSettings);
-            TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        private void HandleFailedResult<T>(Result<T> result)
+        {
+            ErrorTextBlock.Text = string.Join("\n", result.Reasons.Select(reason => reason.Message));
         }
 
         private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)

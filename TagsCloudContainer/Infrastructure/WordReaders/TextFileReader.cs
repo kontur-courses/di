@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,14 @@ namespace TagsCloudContainer.Infrastructure.WordReaders
     {
         private const string fileExtension = ".txt";
 
-        public Result TryReadWords(string filename, out string[] words)
+        public Result<string[]> TryReadWords(string filename)
         {
-            words = Array.Empty<string>();
-
             if (!File.Exists(filename))
-                return new Result() { Success = false, Message = $"'{filename}' doesn't exist" };
+                return Result.Fail<string[]>($"File '{filename}' doesn't exist");
 
             string extension;
             if ((extension = Path.GetExtension(filename)) != fileExtension)
-                return new Result() { Success = false, Message = $"File was wrong extension: should be: '{fileExtension}', but have '{extension}'" };
+                return Result.Fail<string[]>($"File was wrong extension: should be: '{fileExtension}', but have '{extension}'");
 
             try
             {
@@ -28,14 +27,13 @@ namespace TagsCloudContainer.Infrastructure.WordReaders
                 while (!stream.EndOfStream)
                     wordList.Add(stream.ReadLine()!);
 
-                words = wordList.ToArray();
-                return Result.Ok;
+                var words = wordList.ToArray();
+                return Result.Ok(words);
             }
             catch(Exception e)
             {
-                return new Result() { Success = false, Message = e.Message };
+                return Result.Fail<string[]>(new Error("Can't read words").CausedBy(e));
             }
-            
         }
     }
 }

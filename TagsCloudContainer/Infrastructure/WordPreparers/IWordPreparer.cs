@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace TagsCloudContainer.Infrastructure.WordPreparers
 {
     public interface IWordPreparer
     {
-        public string[] Prepare(IEnumerable<string> words);
+        public Result<string[]> Prepare(IEnumerable<string> words);
     }
 }

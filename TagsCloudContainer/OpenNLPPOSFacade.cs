@@ -1,4 +1,6 @@
-﻿using opennlp.tools.postag;
+﻿using FluentResults;
+using opennlp.tools.postag;
+using org.omg.CORBA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +12,45 @@ namespace TagsCloudContainer
     internal static class OpenNLPPOSFacade
     {
         private const string binFolder = "OpenNLPBins";
-        private static readonly POSTaggerME wordTagger;
+        private static POSTaggerME wordTagger;
+        private static Result initializeResult;
 
-        private static readonly Dictionary<string, WordType> openNLPTagToWordTypeDictionary = new Dictionary<string, WordType>();
+        private static Dictionary<string, WordType> openNLPTagToWordTypeDictionary = new Dictionary<string, WordType>();
 
-        static OpenNLPPOSFacade()
+        public static Result Initialize()
         {
-            using var modelIn = new java.io.FileInputStream(Path.Combine(binFolder, "en-pos-maxent.bin"));
-            wordTagger = new POSTaggerME(new POSModel(modelIn));
+            if (initializeResult is not null)
+                return initializeResult;
 
-            openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "animal" })[0], WordType.Noun);
-            openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "take" })[0], WordType.Verb);
-            openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "awesome" })[0], WordType.Adjective);
+            try
+            {
+                using var modelIn = new java.io.FileInputStream(Path.Combine(binFolder, "en-pos-maxent.bin"));
+                wordTagger = new POSTaggerME(new POSModel(modelIn));
+
+                openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "animal" })[0], WordType.Noun);
+                openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "take" })[0], WordType.Verb);
+                openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "awesome" })[0], WordType.Adjective);
+
+                initializeResult = Result.Ok();
+            }
+            catch (Exception e)
+            {
+                initializeResult = Result.Fail(new Error("Initialization failed").CausedBy(e));
+            }
+
+            return initializeResult;
         }
 
-        public static WordType GetWordType(string word)
+        public static Result<WordType> GetWordType(string word)
         {
+            if (initializeResult is null)
+                return Result.Fail("Word tagger is not initialized");
+
+            if (initializeResult.IsFailed)
+                return initializeResult;
+
             var tag = wordTagger.tag(new[] { word })[0];
-            return openNLPTagToWordTypeDictionary.ContainsKey(tag) ? openNLPTagToWordTypeDictionary[tag] : WordType.Other;
+            return Result.Ok(openNLPTagToWordTypeDictionary.ContainsKey(tag) ? openNLPTagToWordTypeDictionary[tag] : WordType.Other);
         }
     }
 }

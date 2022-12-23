@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,11 +28,13 @@ namespace TagsCloudContainer.Infrastructure.WordFontSizeProviders
             frequencyDelta = maxFrequency - minFrequency;
         }
 
-        public float GetFontSize(string word)
+        public Result<float> GetFontSize(string word)
         {
             if (!settings.WordFrequencies.ContainsKey(word))
-                throw new ArgumentException($"Can't generate font size for { word }");
-            return GetFontSizeWithNormalizedFrequency(GetNormalizedFrequency(settings.WordFrequencies[word]));
+                return Result.Fail<float>($"Can't generate font size for {word}");
+
+            var fontSize = GetFontSizeWithNormalizedFrequency(GetNormalizedFrequency(settings.WordFrequencies[word]));
+            return Result.Ok(fontSize);
         }
 
         private float GetNormalizedFrequency(int frequency)

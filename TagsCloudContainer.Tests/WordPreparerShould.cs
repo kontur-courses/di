@@ -21,11 +21,11 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
         }
 
         [Test]
-        public void ThrowArgumentException_WhenWordsAreNull()
+        public void ReturnFailResult_WhenWordsAreNull()
         {
-            Action action = () => wordPreparer.Prepare(null);
+            var result = wordPreparer.Prepare(null);
 
-            action.Should().Throw<ArgumentNullException>();
+            result.IsFailed.Should().BeTrue();
         }
 
         [Test]
@@ -35,7 +35,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             var actual = wordPreparer.Prepare(words);
 
-            actual.Should().BeEmpty();
+            actual.IsSuccess.Should().BeTrue();
+            actual.Value.Should().BeEmpty();
         }
 
         [Test]
@@ -45,7 +46,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             var actual = wordPreparer.Prepare(words);
 
-            actual.Should().BeEquivalentTo(words);
+            actual.IsSuccess.Should().BeTrue();
+            actual.Value.Should().BeEquivalentTo(words);
         }
 
         [Test]
@@ -56,7 +58,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             var actual = wordPreparer.Prepare(words);
 
-            actual.Should().BeEquivalentTo(expected);
+            actual.IsSuccess.Should().BeTrue();
+            actual.Value.Should().BeEquivalentTo(expected);
         }
 
         [Test]
@@ -68,7 +71,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             var actual = wordPreparer.Prepare(words);
 
-            actual.Should().BeEquivalentTo(expected);
+            actual.IsSuccess.Should().BeTrue();
+            actual.Value.Should().BeEquivalentTo(expected);
         }
 
         [Test]
@@ -80,7 +84,8 @@ namespace TagsCloudContainer.Tests.WordPreparerTests
 
             var actual = wordPreparer.Prepare(words);
 
-            actual.Should().BeEquivalentTo(expected);
+            actual.IsSuccess.Should().BeTrue();
+            actual.Value.Should().BeEquivalentTo(expected);
         }
     }
 

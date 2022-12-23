@@ -51,6 +51,7 @@
 				<RowDefinition/>
 				<RowDefinition/>
 				<RowDefinition/>
+				<RowDefinition/>
 			</Grid.RowDefinitions>
 
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="InputWordFilename"/>
@@ -79,6 +80,8 @@
 
 			<TextBlock Grid.Row="8" Grid.Column="0" Text="MaxFrequncyFontSize"/>
 			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Path=MaxFrequncyFontSize}"/>
+
+			<TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorTextBlock" Foreground="Red"/>
 		</Grid>
 
 		<Border Grid.Column="1" BorderBrush="Black" BorderThickness="3">

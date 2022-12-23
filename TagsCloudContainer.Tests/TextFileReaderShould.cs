@@ -21,20 +21,20 @@ namespace TagsCloudContainer.Tests.TextFileReaderTests
         }
 
         [Test]
-        public void ReturnNegativeResult_WhenFileDoesntExist()
+        public void ReturnFailedResult_WhenFileDoesntExist()
         {
-            var result = wordReader.TryReadWords("0", out _);
+            var result = wordReader.TryReadWords("0");
 
-            result.Success.Should().BeFalse();
+            result.IsFailed.Should().BeTrue();
         }
 
         [Test]
-        public void ReturnNegativeResult_WhenFileHasWrongExtension()
+        public void ReturnFailedResult_WhenFileHasWrongExtension()
         {
             var file = File.Create("123");
-            var result = wordReader.TryReadWords(file.Name, out _);
+            var result = wordReader.TryReadWords(file.Name);
 
-            result.Success.Should().BeFalse();
+            result.IsFailed.Should().BeTrue();
         }
 
         [Test]
@@ -44,10 +44,10 @@ namespace TagsCloudContainer.Tests.TextFileReaderTests
             var path = Path.GetTempFileName();
             File.Move(path, filename = Path.ChangeExtension(path, TextFileReaderFactory.FileExtension));
 
-            var result = wordReader.TryReadWords(filename, out var words);
+            var result = wordReader.TryReadWords(filename);
             
-            result.Success.Should().BeTrue();
-            words.Should().BeEmpty();
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().BeEmpty();
         }
 
         [Test]
@@ -59,10 +59,10 @@ namespace TagsCloudContainer.Tests.TextFileReaderTests
             var expectedWords = new string[] { "word1", "word2" };
             File.WriteAllLines(filename, expectedWords);
 
-            var result = wordReader.TryReadWords(filename, out var actualWords);
+            var result = wordReader.TryReadWords(filename);
 
-            result.Success.Should().BeTrue();
-            actualWords.Should().BeEquivalentTo(expectedWords);
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().BeEquivalentTo(expectedWords);
         }
     }
 

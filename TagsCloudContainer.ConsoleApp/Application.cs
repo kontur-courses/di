@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -32,37 +33,43 @@ namespace TagsCloudContainer.ConsoleApp
             this.wordPlateVisualizer = wordPlateVisualizer;
         }
 
-        public void Run(TextWriter outStream) 
+        public void Run(TextWriter outStream)
         {
-            Result result;
-            if (!(result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename, out var words)).Success)
-            {
-                outStream.Write(result.Message);
-                return;
-            }
+            var result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
+                                   .Then(wds => wordPreparer.Prepare(wds))
+                                   .Then(wds =>
+                                   {
+                                       var wordFrequencies = GetWordFrequencies(wds);
 
-            var wordFrequencies = GetWordFrequencies(wordPreparer.Prepare(words));
-            
-            var wordFontSettings = settingsProvider.GetWordFontSettings();
-            wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
+                                       var wordFontSettings = settingsProvider.GetWordFontSettings();
+                                       wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
 
-            var wordColorSettings = settingsProvider.GetWordColorSettings();
-            wordColorSettings.WordFrequencies = wordFrequencies;
+                                       var wordColorSettings = settingsProvider.GetWordColorSettings();
+                                       wordColorSettings.WordFrequencies = wordFrequencies;
 
-            words = wordFrequencies.Keys.ToArray();
-            var outputImageSettings = settingsProvider.GetOutputImageSettings();
-            var pictureSize = new Size(outputImageSettings.Width, outputImageSettings.Height);
+                                       var words = wordFrequencies.Keys.ToArray();
+                                       var outputImageSettings = settingsProvider.GetOutputImageSettings();
+                                       var pictureSize = new Size(outputImageSettings.Width, outputImageSettings.Height);
 
-            var wordPlates = tagsCloudGenerator.GeneratePlates(words, new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSettings);
-            wordPlateVisualizer.DrawPlatesAndSave(wordPlates, pictureSize, settingsProvider.GetOutputImageSettings().Filename, wordColorSettings);
+                                       var generatePlatesResult = tagsCloudGenerator.GeneratePlates(words,
+                                                                                                    new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F),
+                                                                                                    wordFontSettings);
+                                       return generatePlatesResult.ToResult(r => new { Plates = r, PictureSize = pictureSize, WordColorSettings = wordColorSettings });
+                                   })
+                                   .Then(info => wordPlateVisualizer.DrawPlatesAndSave(info.Plates, info.PictureSize, settingsProvider.GetOutputImageSettings().Filename, info.WordColorSettings))
+                                   .OnSuccess(r => outStream.Write($"Generated and saved to '{settingsProvider.GetOutputImageSettings().Filename}'"))
+                                   .OnFail(r => HandleFailedResult(r, outStream));
+        }
 
-            outStream.Write($"Generated and saved to '{ settingsProvider.GetOutputImageSettings().Filename }'");
+        private static void HandleFailedResult(Result result, TextWriter outStream)
+        {
+            outStream.Write(result);
         }
 
         private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)
         {
             var frequencies = new Dictionary<string, int>();
-            foreach(var word in words)
+            foreach (var word in words)
             {
                 if (!frequencies.ContainsKey(word))
                     frequencies.Add(word, 0);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace TagsCloudContainer.Infrastructure
 {
     public interface ITagsCloudGenerator
     {
-        public WordPlate[] GeneratePlates(IEnumerable<string> words, PointF center, WordFontSettings fontSettings);
+        public Result<WordPlate[]> GeneratePlates(IEnumerable<string> words, PointF center, WordFontSettings fontSettings);
     }
 }

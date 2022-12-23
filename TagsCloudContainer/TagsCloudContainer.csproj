@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="FluentResults" Version="3.15.1" />
     <PackageReference Include="OpenNLP.NET" Version="1.9.4.1" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>

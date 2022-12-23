@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,9 @@ namespace TagsCloudContainer.Infrastructure.WordFontSizeProviders
 {
     public class WordConstFontSizeProvider : IWordFontSizeProvider
     {
-        public float GetFontSize(string word)
+        public Result<float> GetFontSize(string word)
         {
-            return 14F;
+            return Result.Ok(14F);
         }
     }
 }
