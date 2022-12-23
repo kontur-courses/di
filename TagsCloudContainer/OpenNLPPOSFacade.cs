@@ -38,7 +38,7 @@ namespace TagsCloudContainer
             if (initializeResult is null)
                 return Result.Fail("Word tagger is not initialized");
 
-            return initializeResult.Then(() =>
+            return initializeResult.Bind(() =>
             {
                 var tag = wordTagger.tag(new[] { word })[0];
                 return Result.Ok(openNLPTagToWordTypeDictionary.ContainsKey(tag) ? openNLPTagToWordTypeDictionary[tag] : WordType.Other);

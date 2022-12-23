@@ -64,29 +64,31 @@ namespace TagsCloudContainer.GUI
         private void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
         {
             var result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
-                                   .Then(wds => wordPreparer.Prepare(wds))
-                                   .Then(wds =>
-                                   {
-                                       var wordFrequencies = GetWordFrequencies(wds);
-                                       var wordFontSettings = settingsProvider.GetWordFontSettings();
-                                       wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
-
-                                       var wordColorSettings = settingsProvider.GetWordColorSettings();
-                                       wordColorSettings.WordFrequencies = wordFrequencies;
-
-                                       var words = wordFrequencies.Keys.ToArray();
-                                       var outputImageSettings = settingsProvider.GetOutputImageSettings();
-                                       var pictureSize = new System.Drawing.Size(outputImageSettings.Width, outputImageSettings.Height);
-
-                                       var generatePlatesResult = tagsCloudGenerator.GeneratePlates(words,
-                                                                                                    new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F),
-                                                                                                    wordFontSettings);
-
-                                       return generatePlatesResult.ToResult(r => new { Plates = r, PictureSize = pictureSize, WordColorSettings = wordColorSettings });
-                                   })
-                                   .Then(info => wordPlateVisualizer.DrawPlates(info.Plates, info.PictureSize, info.WordColorSettings))
+                                   .Bind(wds => wordPreparer.Prepare(wds))
+                                   .Bind(GeneratePlates)
+                                   .Bind(info => (Result<Bitmap>)wordPlateVisualizer.DrawPlates(info.Value.Plates, info.Value.PictureSize, info.Value.WordColorSettings))
                                    .OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()))
                                    .OnFail(r => HandleFailedResult(r));
+        }
+
+        private Result<dynamic> GeneratePlates(string[] wds)
+        {
+            var wordFrequencies = GetWordFrequencies(wds);
+            var wordFontSettings = settingsProvider.GetWordFontSettings();
+            wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
+
+            var wordColorSettings = settingsProvider.GetWordColorSettings();
+            wordColorSettings.WordFrequencies = wordFrequencies;
+
+            var words = wordFrequencies.Keys.ToArray();
+            var outputImageSettings = settingsProvider.GetOutputImageSettings();
+            var pictureSize = new System.Drawing.Size(outputImageSettings.Width, outputImageSettings.Height);
+
+            var generatePlatesResult = tagsCloudGenerator.GeneratePlates(words,
+                                                                         new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F),
+                                                                         wordFontSettings);
+
+            return generatePlatesResult.ToResult(r => new { Plates = r, PictureSize = pictureSize, WordColorSettings = wordColorSettings });
         }
 
         private void HandleFailedResult<T>(Result<T> result)

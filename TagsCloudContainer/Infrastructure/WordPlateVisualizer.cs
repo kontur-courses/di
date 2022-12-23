@@ -22,7 +22,7 @@ namespace TagsCloudContainer.Infrastructure
         public Result<Bitmap> DrawPlates(WordPlate[] plates, Size size, WordColorSettings settings)
         {
             return Result.OkIf(size.Width != 0 && size.Height != 0, "Size dimensions can't be empty")
-                         .Then(() => GetBitmap(plates, size, settings));
+                         .Bind(() => GetBitmap(plates, size, settings));
         }
 
         private Result<Bitmap> GetBitmap(WordPlate[] plates, Size size, WordColorSettings settings)
