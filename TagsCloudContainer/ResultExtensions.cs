@@ -9,6 +9,14 @@ namespace TagsCloudContainer
 {
     public static class ResultExtensions
     {
+        public static Result Then(this Result input, Func<Result> continuation)
+        {
+            return input.Bind(continuation);
+        }
+        public static Result<TOutput> Then<TOutput>(this Result input, Func<Result<TOutput>> continuation)
+        {
+            return input.Bind(continuation);
+        }
         public static Result Then<TInput>(this Result<TInput> input, Func<TInput, Result> continuation)
         {
             return input.Bind(continuation);

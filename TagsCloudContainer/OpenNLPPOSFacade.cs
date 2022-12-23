@@ -22,7 +22,7 @@ namespace TagsCloudContainer
             if (initializeResult is not null)
                 return initializeResult;
 
-            try
+            return initializeResult = Result.Try(() =>
             {
                 using var modelIn = new java.io.FileInputStream(Path.Combine(binFolder, "en-pos-maxent.bin"));
                 wordTagger = new POSTaggerME(new POSModel(modelIn));
@@ -30,15 +30,7 @@ namespace TagsCloudContainer
                 openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "animal" })[0], WordType.Noun);
                 openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "take" })[0], WordType.Verb);
                 openNLPTagToWordTypeDictionary.Add(wordTagger.tag(new[] { "awesome" })[0], WordType.Adjective);
-
-                initializeResult = Result.Ok();
-            }
-            catch (Exception e)
-            {
-                initializeResult = Result.Fail(new Error("Initialization failed").CausedBy(e));
-            }
-
-            return initializeResult;
+            }, e => new Error("Initialization failed").CausedBy(e));
         }
 
         public static Result<WordType> GetWordType(string word)
@@ -46,11 +38,11 @@ namespace TagsCloudContainer
             if (initializeResult is null)
                 return Result.Fail("Word tagger is not initialized");
 
-            if (initializeResult.IsFailed)
-                return initializeResult;
-
-            var tag = wordTagger.tag(new[] { word })[0];
-            return Result.Ok(openNLPTagToWordTypeDictionary.ContainsKey(tag) ? openNLPTagToWordTypeDictionary[tag] : WordType.Other);
+            return initializeResult.Then(() =>
+            {
+                var tag = wordTagger.tag(new[] { word })[0];
+                return Result.Ok(openNLPTagToWordTypeDictionary.ContainsKey(tag) ? openNLPTagToWordTypeDictionary[tag] : WordType.Other);
+            });
         }
     }
 }

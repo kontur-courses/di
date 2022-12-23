@@ -22,24 +22,22 @@ namespace TagsCloudContainer.Infrastructure.WordPreparers
             if (words is null)
                 return Result.Fail($"nameof{words} is null");
 
-            var initializeResult = OpenNLPPOSFacade.Initialize();
-            if (initializeResult.IsFailed)
-                return initializeResult;
+            return Result.OkIf(words is not null, $"nameof{words} is null")
+                         .Bind(OpenNLPPOSFacade.Initialize)
+                         .Bind(() => GetPreparedWords(words));   
+        }
 
+        private Result<string[]> GetPreparedWords(IEnumerable<string> words)
+        {
             var preparedWords = new List<string>();
-            foreach(var word in words.Select(w => w.ToLower()))
+            foreach (var word in words.Select(w => w.ToLower()))
             {
-                var getTypeResult = OpenNLPPOSFacade.GetWordType(word);
-                if (getTypeResult.IsFailed)
-                    return getTypeResult.ToResult();
-
-                if (excludedTypes.Contains(getTypeResult.Value))
-                    continue;
-
-                preparedWords.Add(word);
+                var result = OpenNLPPOSFacade.GetWordType(word)
+                                             .OnSuccess(wt => { if (!excludedTypes.Contains(wt.Value)) preparedWords.Add(word); });
+                if (result.IsFailed)
+                    return result.ToResult();
             }
-
-            return Result.Ok(preparedWords.ToArray());     
+            return Result.Ok(preparedWords.ToArray());
         }
     }
 }

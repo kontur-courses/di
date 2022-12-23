@@ -21,9 +21,12 @@ namespace TagsCloudContainer.Infrastructure
 
         public Result<Bitmap> DrawPlates(WordPlate[] plates, Size size, WordColorSettings settings)
         {
-            if (size.IsEmpty)
-                return Result.Fail("Size can't be empty");
+            return Result.OkIf(size.Width != 0 && size.Height != 0, "Size dimensions can't be empty")
+                         .Then(() => GetBitmap(plates, size, settings));
+        }
 
+        private Result<Bitmap> GetBitmap(WordPlate[] plates, Size size, WordColorSettings settings)
+        {
             var colorProvider = colorProviderFactory.CreateDefault(settings);
 
             var bitmap = new Bitmap(size.Width, size.Height);
@@ -32,11 +35,10 @@ namespace TagsCloudContainer.Infrastructure
 
             foreach (var plate in plates)
             {
-                var colorResult = colorProvider.GetColor(plate.WordRectangle.Word);
+                var colorResult = colorProvider.GetColor(plate.WordRectangle.Word)
+                                               .OnSuccess(color => graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(color.Value), plate.WordRectangle.Rectangle));
                 if (colorResult.IsFailed)
                     return colorResult.ToResult();
-
-                graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(colorResult.Value), plate.WordRectangle.Rectangle);
             }
 
             return Result.Ok(bitmap);

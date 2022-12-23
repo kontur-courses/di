@@ -29,8 +29,8 @@ namespace TagsCloudContainer.Infrastructure.WordColorProviders
 
         public Result<Color> GetColor(string word)
         {
-            return settings.WordFrequencies.ContainsKey(word) ? Result.Ok(GenerateColor(GetNormalizedFrequency(settings.WordFrequencies[word]))):
-                                                                Result.Fail<Color>($"Can't generate color for word '{word}'");
+            return Result.OkIf(settings.WordFrequencies.ContainsKey(word), $"Can't generate color for word '{word}'")
+                         .Bind(() => Result.Ok(GenerateColor(GetNormalizedFrequency(settings.WordFrequencies[word]))));
         }
 
         private float GetNormalizedFrequency(int frequency)
