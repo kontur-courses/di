@@ -12,6 +12,19 @@ public partial class MainForm : Form
     private readonly SettingsHandler settingsHandler = new();
     private readonly string TextFilesFilter = "text files|*.txt";
 
+    private readonly Action<ContainerBuilder>[] SetColorProvider =
+    {
+        builder => builder.RegisterType<SimpleColorProvider>().As<IColorProvider>(),
+        builder => builder.RegisterType<RandomColorProvider>().As<IColorProvider>(),
+        builder => builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>()
+    };
+
+    private readonly Action<ContainerBuilder>[] SetLayouter =
+    {
+        builder => builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>(),
+        builder => builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>()
+    };
+
     public MainForm()
     {
         InitializeComponent();
@@ -38,7 +51,7 @@ public partial class MainForm : Form
                           settingsHandler.LocalSettings.Font.Name;
         backgroundColor_button.BackColor = settingsHandler.LocalSettings.BackgroundColor;
         fontColor_button.BackColor = settingsHandler.LocalSettings.FontColor;
-        growth_numeric.Value = (decimal) settingsHandler.LocalSettings.FrequencyGrowth;
+        growth_numeric.Value = settingsHandler.LocalSettings.FrequencyGrowth;
         imageWidth_numeric.Value = settingsHandler.LocalSettings.ImageSize.Width;
         imageHeight_numeric.Value = settingsHandler.LocalSettings.ImageSize.Height;
 
@@ -101,23 +114,21 @@ public partial class MainForm : Form
 
     private void generate_button_Click(object sender, EventArgs e)
     {
-            var container = BuildContainer();
-            var imgDrawer = container.Resolve<IImageDrawer>();
-            var bitmapResult = imgDrawer.DrawImage();
-            if(!bitmapResult.Successful)
-            {
-                if (bitmapResult.Exception.Message.Contains("GUI"))
-                {
-                    MessageBox.Show(
-                        "Occured error while generating image, try using smaller input or smaller growth value");
-                }
-                MessageBox.Show(bitmapResult.Exception.ToString());
-            }
-            else
-            {
-                mainPictureBox.Image = bitmapResult.Value;
-                UpdateSettingsView();
-            }
+        var container = BuildContainer();
+        var imgDrawer = container.Resolve<IImageDrawer>();
+        var bitmapResult = imgDrawer.DrawImage();
+        if (!bitmapResult.Successful)
+        {
+            if (bitmapResult.Exception.Message.Contains("GUI"))
+                MessageBox.Show(
+                    "Occured error while generating image, try using smaller input or smaller growth value");
+            MessageBox.Show(bitmapResult.Exception.ToString());
+        }
+        else
+        {
+            mainPictureBox.Image = bitmapResult.Value;
+            UpdateSettingsView();
+        }
     }
 
     private IContainer BuildContainer()
@@ -178,17 +189,4 @@ public partial class MainForm : Form
     {
         UpdateSettingsView();
     }
-
-    private Action<ContainerBuilder>[] SetColorProvider =
-    {
-        (builder) => builder.RegisterType<SimpleColorProvider>().As<IColorProvider>(),
-        (builder) => builder.RegisterType<RandomColorProvider>().As<IColorProvider>(),
-        (builder) => builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>()
-    };
-
-    private Action<ContainerBuilder>[] SetLayouter =
-    {
-        (builder) => builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>(),
-        (builder) => builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>()
-    };
 }
