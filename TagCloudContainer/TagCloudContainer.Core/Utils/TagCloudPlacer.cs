@@ -18,6 +18,7 @@ public class TagCloudPlacer : ITagCloudPlacer
         ITagCloudFormConfig tagCloudFormConfig,
         ISizeInvestigator sizeInvestigator)
     {
+        Validate(tagCloudContainerConfig, tagCloudFormConfig, sizeInvestigator);
         _tagCloudContainerConfig = tagCloudContainerConfig;
         _tagCloudFormConfig = tagCloudFormConfig;
         _sizeInvestigator = sizeInvestigator;
@@ -105,5 +106,18 @@ public class TagCloudPlacer : ITagCloudPlacer
     {
         var distanceFromCenter = new Vector2(point.X - _tagCloudContainerConfig.Center.X, point.Y - _tagCloudContainerConfig.Center.Y);
         return distanceFromCenter.Length();
+    }
+    
+    public void Validate(
+        ITagCloudContainerConfig tagCloudContainerConfig,
+        ITagCloudFormConfig tagCloudFormConfig,
+        ISizeInvestigator sizeInvestigator)
+    {
+        if (tagCloudFormConfig == null)
+            throw new ArgumentException("Tag cloud form config can't be null");
+        if (tagCloudContainerConfig == null)
+            throw new ArgumentException("Tag cloud config can't be null");
+        if (sizeInvestigator == null)
+            throw new ArgumentException("Word reader can't be null");
     }
 }

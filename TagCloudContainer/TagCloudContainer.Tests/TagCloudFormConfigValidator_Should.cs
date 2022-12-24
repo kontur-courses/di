@@ -25,15 +25,37 @@ public class TagCloudFormConfigValidator_Should
     }
     
     [Test]
+    public void ValidateTagCloudFormConfig_TryValidateNull_ShouldBeFail()
+    {
+        var validator = new TagCloudFormConfigValidator();
+
+        validator
+            .Validate(null)
+            .Should()
+            .BeEquivalentTo(Result.Fail<ITagCloudFormConfig>("Tag cloud form config is null"));
+    }
+    
+    [Test]
     public void ValidateTagCloudFormConfig_EmptyFormSize_ShouldBeFail()
     {
         var validator = new TagCloudFormConfigValidator();
-        var tagCloudFormConfig = new TagCloudContainerConfig();
-        tagCloudFormConfig.ImageSize = Size.Empty;
+        var tagCloudFormConfig = new TagCloudContainerConfig() { ImageSize = Size.Empty };
 
         validator
             .Validate(tagCloudFormConfig)
             .Should()
-            .BeEquivalentTo(Result.Fail<ITagCloudFormConfig>("Form size can't be empty"));
+            .BeEquivalentTo(Result.Fail<ITagCloudFormConfig>("Form size can't be empty or null"));
+    }
+    
+    [Test]
+    public void ValidateTagCloudFormConfig_InvalidFontFamily_ShouldBeFail()
+    {
+        var validator = new TagCloudFormConfigValidator();
+        var tagCloudFormConfig = new TagCloudContainerConfig() { FontFamily = Guid.NewGuid().ToString("N") };
+
+        validator
+            .Validate(tagCloudFormConfig)
+            .Should()
+            .BeEquivalentTo(Result.Fail<ITagCloudFormConfig>("Incorrect font family"));
     }
 }

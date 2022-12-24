@@ -1,4 +1,5 @@
-﻿using TagCloudContainer.Core;
+﻿using TagCloudContainer.Configs;
+using TagCloudContainer.Core;
 using TagCloudContainer.Core.Interfaces;
 using TagCloudContainer.Forms.Interfaces;
 
@@ -8,6 +9,10 @@ public class TagCloudContainerConfigValidator : IConfigValidator<ITagCloudContai
 {
     public Result<ITagCloudContainerConfig> Validate(ITagCloudContainerConfig tagCloudContainerConfig)
     {
+        if (tagCloudContainerConfig == null)
+            return Result.Fail<ITagCloudContainerConfig>("Tag cloud config is null");
+        if (!Directory.Exists(tagCloudContainerConfig.MainDirectoryPath))
+            return Result.Fail<ITagCloudContainerConfig>("Incorrect path to main directory");
         if (tagCloudContainerConfig.Center.IsEmpty)
             return Result.Fail<ITagCloudContainerConfig>("Center point can't be empty");
         if (tagCloudContainerConfig.StandartSize.IsEmpty)

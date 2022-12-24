@@ -19,6 +19,8 @@ public partial class Settings : Form
         IConfigValidator<ITagCloudFormConfig> tagCloudFormConfigValidator,
         IConfigValidator<ITagCloudContainerConfig> tagCloudContainerConfigValidator)
     {
+        ValidateConstructorArguments(tagCloud, tagCloudContainerConfig, tagCloudFormConfig, tagCloudFormConfigValidator, tagCloudContainerConfigValidator);
+        
         _tagCloud = tagCloud;
         _tagCloudContainerConfig = tagCloudContainerConfig;
         _tagCloudFormConfig = tagCloudFormConfig;
@@ -78,7 +80,7 @@ public partial class Settings : Form
     private Result<Color> GetColorsByChoosedName(string colorName)
     {
         var colorResult = Core.Models.Colors.Get(colorName);
-
+        
         if (!colorResult.IsSuccess)
             MessageBox.Show(colorResult.Error, "Ошибка");
         return colorResult;
@@ -93,5 +95,24 @@ public partial class Settings : Form
             MessageBox.Show("Invalid container options: " + tagCloudContainerConfigResult.Error);
         if (!tagCloudFormConfigResult.IsSuccess)
             MessageBox.Show("Invalid form options: " + tagCloudFormConfigResult.Error);
+    }
+
+    private void ValidateConstructorArguments(
+        TagCloud tagCloud, 
+        ITagCloudContainerConfig tagCloudContainerConfig,
+        ITagCloudFormConfig tagCloudFormConfig,
+        IConfigValidator<ITagCloudFormConfig> tagCloudFormConfigValidator,
+        IConfigValidator<ITagCloudContainerConfig> tagCloudContainerConfigValidator)
+    {
+        if (tagCloud == null)
+            throw new ArgumentException("Tag cloud can't be null");
+        if (tagCloudContainerConfig == null)
+            throw new ArgumentException("Tag cloud config can't be null");
+        if (tagCloudFormConfig == null)
+            throw new ArgumentException("Tag cloud form config can't be null");
+        if (tagCloudContainerConfigValidator == null)
+            throw new ArgumentException("Tag cloud config validator can't be null");
+        if (tagCloudFormConfigValidator == null)
+            throw new ArgumentException("Tag cloud form config validator can't be null");
     }
 }

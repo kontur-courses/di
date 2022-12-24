@@ -2,6 +2,7 @@
 using TagCloudContainer.Configs;
 using TagCloudContainer.Core;
 using TagCloudContainer.Core.Interfaces;
+using TagCloudContainer.Core.Models;
 using TagCloudContainer.Core.Utils;
 using TagCloudContainer.Forms.Interfaces;
 using TagCloudContainer.Forms.Validators;
@@ -13,11 +14,12 @@ public static class Register
     public static IContainer Registry()
     {
         var builder = new ContainerBuilder();
+        IContainer container;
 
         builder.RegisterType<TagCloud>();
         builder.RegisterType<Settings>();
 
-        var tagCloudContainerConfig = new TagCloudContainerConfig();
+        var tagCloudContainerConfig = GetTagCloudContainerConfigWithDefaultPropertiesValues();
 
         builder.RegisterInstance(tagCloudContainerConfig).As<ITagCloudContainerConfig>();
         builder.RegisterInstance(tagCloudContainerConfig).As<ITagCloudFormConfig>();
@@ -30,7 +32,39 @@ public static class Register
         builder.RegisterType<TagCloudPlacer>().As<ITagCloudPlacer>().SingleInstance();
         builder.RegisterType<WordsReader>().As<IWordsReader>().SingleInstance();
         builder.RegisterType<TagCloudProvider>().As<ITagCloudProvider>().SingleInstance();
+            
+        try
+        {
+            container = builder.Build();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         
-        return builder.Build();
+        return container;
+    }
+
+    private static ITagCloudContainerConfig GetTagCloudContainerConfigWithDefaultPropertiesValues()
+    {
+        return new TagCloudContainerConfig()
+        {
+            Random = true,
+            StandartSize = new Size(10, 10),
+            ImageSize = new Size(int.Parse(Screens.Sizes.First().Split("x")[0]),
+                int.Parse(Screens.Sizes.First().Split("x")[1])),
+            Center = new Point(1, 1),
+            NearestToTheCenterPoints = new SortedList<float, Point>(),
+            PutRectangles = new List<Rectangle>(),
+            FilePath = Path.Combine(TagCloudContainerConfig.GetMainDirectoryPath(), "words.txt"),
+            ExcludeWordsFilePath = Path.Combine(TagCloudContainerConfig.GetMainDirectoryPath(), "boring_words.txt"),
+            MainDirectoryPath = TagCloudContainerConfig.GetMainDirectoryPath(),
+            ImageName = "TagCloudResult.png",
+            NeedValidate = true,
+            FontFamily = "Arial",
+            Color = Colors.GetAll().First().Value,
+            BackgroundColor = Colors.GetAll().First().Value,
+        };
     }
 }

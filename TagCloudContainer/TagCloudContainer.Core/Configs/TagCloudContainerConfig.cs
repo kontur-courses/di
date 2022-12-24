@@ -20,6 +20,10 @@ public class TagCloudContainerConfig : ITagCloudContainerConfig, ITagCloudFormCo
     public string FilePath { get; set; } = Path.Combine(GetMainDirectoryPath(), "words.txt");
     
     public string ExcludeWordsFilePath { get; set; } = Path.Combine(GetMainDirectoryPath(), "boring_words.txt");
+
+    public string MainDirectoryPath { get; set; } = GetMainDirectoryPath();
+
+    public string ImageName { get; set; } = "TagCloudResult.png";
     
     public bool NeedValidate { get; set; } = true;
 
@@ -35,8 +39,6 @@ public class TagCloudContainerConfig : ITagCloudContainerConfig, ITagCloudFormCo
     {
         ExcludeWordsFilePath = Path.Combine(GetMainDirectoryPath(), fileName);
     }
-    public static string GetMainDirectoryPath()
-    {
-        return Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-    }
+    public static string GetMainDirectoryPath() 
+        => Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
 }

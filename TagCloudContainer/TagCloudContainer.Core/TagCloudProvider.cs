@@ -15,6 +15,8 @@ public class TagCloudProvider : ITagCloudProvider
         IWordsReader wordsReader, 
         ITagCloudContainerConfig tagCloudContainerConfig)
     {
+        Validate(tagCloudPlacer, wordsReader, tagCloudContainerConfig);
+        
         _tagCloudPlacer = tagCloudPlacer;
         _tagCloudContainerConfig = tagCloudContainerConfig;
         
@@ -39,5 +41,18 @@ public class TagCloudProvider : ITagCloudProvider
         }
 
         return result;
+    }
+
+    public void Validate(
+        ITagCloudPlacer tagCloudPlacer, 
+        IWordsReader wordsReader, 
+        ITagCloudContainerConfig tagCloudContainerConfig)
+    {
+        if (tagCloudPlacer == null)
+            throw new ArgumentException("Tag cloud placer can't be null");
+        if (wordsReader == null)
+            throw new ArgumentException("Word reader can't be null");
+        if (tagCloudContainerConfig == null)
+            throw new ArgumentException("Tag cloud config can't be null");
     }
 }

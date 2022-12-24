@@ -25,12 +25,36 @@ public class TagCloudContainerConfigValidator_Should
     }
     
     [Test]
+    public void ValidateContainerConfig_IncorrectMainDirectoryPath_ShouldBeFail()
+    {
+        var validator = new TagCloudContainerConfigValidator();
+        var tagCloudContainerConfig = new TagCloudContainerConfig()
+        {
+            MainDirectoryPath = Path.Combine(TagCloudContainerConfig.GetMainDirectoryPath(), Guid.NewGuid().ToString("N"))
+        };
+        
+        validator
+            .Validate(tagCloudContainerConfig)
+            .Should()
+            .BeEquivalentTo(Result.Fail<ITagCloudContainerConfig>("Incorrect path to main directory"));
+    }
+    
+    [Test]
+    public void ValidateContainerConfig_Null_ShouldBeFail()
+    {
+        var validator = new TagCloudContainerConfigValidator();
+        
+        validator
+            .Validate(null)
+            .Should()
+            .BeEquivalentTo(Result.Fail<ITagCloudContainerConfig>("Tag cloud config is null"));
+    }
+    
+    [Test]
     public void ValidateContainerConfig_EmptyCenterPoint_ShouldBeFail()
     {
         var validator = new TagCloudContainerConfigValidator();
-        var tagCloudContainerConfig = new TagCloudContainerConfig();
-        
-        tagCloudContainerConfig.Center = Point.Empty;
+        var tagCloudContainerConfig = new TagCloudContainerConfig() { Center = Point.Empty };
         
         validator
             .Validate(tagCloudContainerConfig)
@@ -42,9 +66,7 @@ public class TagCloudContainerConfigValidator_Should
     public void ValidateContainerConfig_EmptyStandartSize_ShouldBeFail()
     {
         var validator = new TagCloudContainerConfigValidator();
-        var tagCloudContainerConfig = new TagCloudContainerConfig();
-        
-        tagCloudContainerConfig.StandartSize = Size.Empty;
+        var tagCloudContainerConfig = new TagCloudContainerConfig() { StandartSize = Size.Empty };
 
         validator
             .Validate(tagCloudContainerConfig)
