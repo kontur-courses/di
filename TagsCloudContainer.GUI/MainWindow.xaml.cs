@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -52,16 +53,23 @@ namespace TagsCloudContainer.GUI
             OptionsViewModel.CurrentOptions = options;
         }
 
-        private void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
+        private async void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
         {
             ErrorTextBlock.Text = string.Empty;
 
-            wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
-                      .Bind(wds => wordPreparer.Prepare(wds))
-                      .Bind(GeneratePlates)
-                      .Bind(info => (Result<Bitmap>)wordPlateVisualizer.DrawPlates(info.Value.Plates, info.Value.PictureSize, info.Value.WordColorSettings))
-                      .OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()))
-                      .OnFail(r => HandleFailedResult(r));
+            var result = await Task.Run(() =>
+            {
+                return wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
+                                 .Bind(wds => wordPreparer.Prepare(wds))
+                                 .Bind(GeneratePlates)
+                                 .Bind(info => (Result<Bitmap>)wordPlateVisualizer.DrawPlates(info.Value.Plates, info.Value.PictureSize, info.Value.WordColorSettings));
+            });
+
+            result.OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(),
+                                                                                                IntPtr.Zero,
+                                                                                                Int32Rect.Empty,
+                                                                                                BitmapSizeOptions.FromEmptyOptions()))
+                  .OnFail(r => HandleFailedResult(r));
         }
 
         private Result<dynamic> GeneratePlates(string[] wds)
@@ -115,7 +123,7 @@ namespace TagsCloudContainer.GUI
                       return jpgEncoder;
                   }, e => new Error("Can't make picture from bitmap").CausedBy(e)))
                   .Bind(jpgEncoder => Result.Try(() => new { Stream = File.Create(settingsProvider.GetOutputImageSettings().Filename), Encoder = jpgEncoder },
-                                                  e => new Error("Can't create picture").CausedBy(e)))
+                                                  e => new Error("Can't create picture. Check path or folder permissions").CausedBy(e)))
                   .Bind(tools => Result.Try(() => tools.Encoder.Save(tools.Stream),
                                              e => new Error("Can't save picture").CausedBy(e)))
                   .OnSuccess(r => MessageBox.Show("Saved"))
