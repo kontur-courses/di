@@ -35,24 +35,34 @@ namespace TagsCloudContainer.Infrastructure
 
             foreach (var plate in plates)
             {
-                var colorResult = colorProvider.GetColor(plate.WordRectangle.Word)
-                                               .OnSuccess(color => graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(color.Value), plate.WordRectangle.Rectangle));
-                if (colorResult.IsFailed)
-                    return colorResult.ToResult();
+                var result = Result.OkIf(IsWordPlateInsidePicture(plate, size), "TagsCloud doesn't fit in image")
+                                   .Bind(() => colorProvider.GetColor(plate.WordRectangle.Word))
+                                   .OnSuccess(color => graphics.DrawString(plate.WordRectangle.Word, plate.Font, new SolidBrush(color.Value), plate.WordRectangle.Rectangle));
+                if (result.IsFailed)
+                    return result.ToResult();
             }
 
             return Result.Ok(bitmap);
         }
 
+        private bool IsWordPlateInsidePicture(WordPlate wordPlate, Size pictureSize)
+        {
+            var rectangle = wordPlate.WordRectangle.Rectangle;
+            var halfWidth = pictureSize.Width / 2.0;
+            var halfHeight = pictureSize.Height / 2.0;
+
+            return rectangle.Left >= -halfWidth && rectangle.Right <= halfWidth &&
+                   rectangle.Top >= -halfHeight && rectangle.Bottom <= halfHeight;
+        }
+
         public Result DrawPlatesAndSave(WordPlate[] plates, Size size, string filename, WordColorSettings settings)
         {
-            var result = DrawPlates(plates, size, settings);
-            if (result.IsFailed)
-                return result.ToResult();
-
-            using var bitmap = result.Value!;
-            bitmap.Save(filename);
-            return Result.Ok();
+            return DrawPlates(plates, size, settings).OnSuccess(r =>
+                                                     {
+                                                         using var bitmap = r.Value!;
+                                                         bitmap.Save(filename);
+                                                     })
+                                                     .ToResult();
         }
     }
 }
