@@ -4,18 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
 using TagsCloudContainer.Infrastructure.WordPreparers;
@@ -63,12 +54,14 @@ namespace TagsCloudContainer.GUI
 
         private void GenerateTagsCloudButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
-                                   .Bind(wds => wordPreparer.Prepare(wds))
-                                   .Bind(GeneratePlates)
-                                   .Bind(info => (Result<Bitmap>)wordPlateVisualizer.DrawPlates(info.Value.Plates, info.Value.PictureSize, info.Value.WordColorSettings))
-                                   .OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()))
-                                   .OnFail(r => HandleFailedResult(r));
+            ErrorTextBlock.Text = string.Empty;
+
+            wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
+                      .Bind(wds => wordPreparer.Prepare(wds))
+                      .Bind(GeneratePlates)
+                      .Bind(info => (Result<Bitmap>)wordPlateVisualizer.DrawPlates(info.Value.Plates, info.Value.PictureSize, info.Value.WordColorSettings))
+                      .OnSuccess(r => TagsCloudImage.Source = Imaging.CreateBitmapSourceFromHBitmap(r.Value!.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()))
+                      .OnFail(r => HandleFailedResult(r));
         }
 
         private Result<dynamic> GeneratePlates(string[] wds)
@@ -95,6 +88,10 @@ namespace TagsCloudContainer.GUI
         {
             ErrorTextBlock.Text = string.Join("\n", result.Reasons.Select(reason => reason.Message));
         }
+        private void HandleFailedResult(Result result)
+        {
+            ErrorTextBlock.Text = string.Join("\n", result.Reasons.Select(reason => reason.Message));
+        }
 
         private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)
         {
@@ -110,11 +107,19 @@ namespace TagsCloudContainer.GUI
 
         private void SaveTagsCloudButton_Click(object sender, RoutedEventArgs e)
         {
-            var jpgEncoder = new JpegBitmapEncoder();
-            jpgEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)TagsCloudImage.Source));
-            using var stream = File.Create(settingsProvider.GetOutputImageSettings().Filename);
-            jpgEncoder.Save(stream);
-            MessageBox.Show("Saved");
+            Result.OkIf(TagsCloudImage.Source is BitmapSource, "Image is null")
+                  .Bind(() => Result.Try(() =>
+                  {
+                      var jpgEncoder = new JpegBitmapEncoder();
+                      jpgEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)TagsCloudImage.Source));
+                      return jpgEncoder;
+                  }, e => new Error("Can't make picture from bitmap").CausedBy(e)))
+                  .Bind(jpgEncoder => Result.Try(() => new { Stream = File.Create(settingsProvider.GetOutputImageSettings().Filename), Encoder = jpgEncoder },
+                                                  e => new Error("Can't create picture").CausedBy(e)))
+                  .Bind(tools => Result.Try(() => tools.Encoder.Save(tools.Stream),
+                                             e => new Error("Can't save picture").CausedBy(e)))
+                  .OnSuccess(r => MessageBox.Show("Saved"))
+                  .OnFail(r => HandleFailedResult(r));
         }
     }
 }

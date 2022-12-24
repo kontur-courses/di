@@ -38,8 +38,8 @@ namespace TagsCloudContainer.GUI
                 FontFamily = options.FontFamily,
                 FontSizeSettings = new WordFontSizeSettings()
                 {
-                    MinFrequencyFontSize = options.MinFrequncyFontSize,
-                    MaxFrequencyFontSize = options.MaxFrequncyFontSize
+                    MinFrequencyFontSize = options.MinFrequencyFontSize,
+                    MaxFrequencyFontSize = options.MaxFrequencyFontSize
                 }
             };
         }

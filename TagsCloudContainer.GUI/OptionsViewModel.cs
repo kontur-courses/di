@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Printing;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace TagsCloudContainer.GUI
 {
     public class OptionsViewModel : INotifyPropertyChanged
     {
-        private static readonly PropertyInfo[] properties = typeof(OptionsViewModel).GetProperties();
+        protected static readonly PropertyInfo[] properties = typeof(OptionsViewModel).GetProperties();
 
         private Options currentOptions;
         public Options CurrentOptions
@@ -106,25 +107,25 @@ namespace TagsCloudContainer.GUI
             }
         }
 
-        public float MinFrequncyFontSize
+        public float MinFrequencyFontSize
         {
-            get => currentOptions.MinFrequncyFontSize;
+            get => currentOptions.MinFrequencyFontSize;
             set 
             {
-                if(value == currentOptions.MinFrequncyFontSize) return;
-                currentOptions.MinFrequncyFontSize = value;
-                OnPropertyChanged(nameof(MinFrequncyFontSize));
+                if(value == currentOptions.MinFrequencyFontSize) return;
+                currentOptions.MinFrequencyFontSize = value;
+                OnPropertyChanged(nameof(MinFrequencyFontSize));
             }
         }
 
-        public float MaxFrequncyFontSize
+        public float MaxFrequencyFontSize
         {
-            get => currentOptions.MaxFrequncyFontSize;
+            get => currentOptions.MaxFrequencyFontSize;
             set
             {
-                if(value != currentOptions.MaxFrequncyFontSize) return;
-                currentOptions.MaxFrequncyFontSize = value;
-                OnPropertyChanged(nameof(MaxFrequncyFontSize));
+                if(value == currentOptions.MaxFrequencyFontSize) return;
+                currentOptions.MaxFrequencyFontSize = value;
+                OnPropertyChanged(nameof(MaxFrequencyFontSize));
             }
         }
 

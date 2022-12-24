@@ -23,8 +23,8 @@ namespace TagsCloudContainer.GUI
 
         public string MaxFrequencyColorString { get; set; } = "#FFFF0000";
 
-        public float MinFrequncyFontSize { get; set; } = 14F;
+        public float MinFrequencyFontSize { get; set; } = 14F;
 
-        public float MaxFrequncyFontSize { get; set; } = 30F;
+        public float MaxFrequencyFontSize { get; set; } = 30F;
     }
 }

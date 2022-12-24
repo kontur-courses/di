@@ -4,8 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TagsCloudContainer.GUI"
+		  xmlns:rules="clr-namespace:TagsCloudContainer.GUI.OptionsValidationRules"
         mc:Ignorable="d"
         Title="MainWindow" Height="667" Width="1199">
+
+	<Window.Resources>
+		<Style TargetType="TextBlock">
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="MaxHeight" Value="25"/>
+		</Style>
+
+		<Style x:Key="GridTextBox" TargetType="TextBox">
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="MaxHeight" Value="25"/>
+			<Setter Property="MaxWidth" Value="250"/>
+		</Style>
+
+		<Style x:Key="ToolTipWithError" TargetType="TextBox" BasedOn="{StaticResource GridTextBox}">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="True">
+					<Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
 
 	<Grid DataContext="{Binding OptionsViewModel}" Background="DarkGray">
 		<Grid.Resources>
@@ -25,18 +47,6 @@
 		</Grid.RowDefinitions>
 
 		<Grid MaxWidth="300">
-			<Grid.Resources>
-				<Style TargetType="TextBlock">
-					<Setter Property="Margin" Value="5"/>
-					<Setter Property="MaxHeight" Value="25"/>
-				</Style>
-				<Style TargetType="TextBox">
-					<Setter Property="Margin" Value="5"/>
-					<Setter Property="MaxHeight" Value="25"/>
-					<Setter Property="MaxWidth" Value="250"/>
-				</Style>
-			</Grid.Resources>
-
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
@@ -55,31 +65,81 @@
 			</Grid.RowDefinitions>
 
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="InputWordFilename"/>
-			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=InputWordFilename, UpdateSourceTrigger=PropertyChanged}"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<TextBox.Text>
+					<Binding Path="InputWordFilename" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+						<Binding.ValidationRules>
+							<rules:InputWordFilenameRule/>
+						</Binding.ValidationRules>
+					</Binding>
+				</TextBox.Text>
+			</TextBox>
 
 			<TextBlock Grid.Row="1" Grid.Column="0" Text="OutputImageFilename"/>
-			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=OutputImageFilename}"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource GridTextBox}" Text="{Binding Path=OutputImageFilename}"/>
 
 			<TextBlock Grid.Row="2" Grid.Column="0" Text="OutputImageWidth"/>
-			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=OutputImageWidth}"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="OutputImageWidth" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:IntegerRangeRule MaxValue="10000" MinValue="10"/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
 			<TextBlock Grid.Row="3" Grid.Column="0" Text="OutputImageHeight"/>
-			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=OutputImageHeight}"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="OutputImageHeight" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:IntegerRangeRule MaxValue="10000" MinValue="10"/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
 			<TextBlock Grid.Row="4" Grid.Column="0" Text="FontFamily"/>
-			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=FontFamily}"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="FontFamily" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:FontFamilyRule/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
 			<TextBlock Grid.Row="5" Grid.Column="0" Text="MinFrequencyColor"/>
-			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=MinFrequencyColorString}"/>
+			<TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="MinFrequencyColorString" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:ColorRule/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
 			<TextBlock Grid.Row="6" Grid.Column="0" Text="MaxFrequencyColor"/>
-			<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=MaxFrequencyColorString}"/>
+			<TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="MaxFrequencyColorString" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:ColorRule/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
-			<TextBlock Grid.Row="7" Grid.Column="0" Text="MinFrequncyFontSize"/>
-			<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Path=MinFrequncyFontSize}"/>
+			<TextBlock Grid.Row="7" Grid.Column="0" Text="MinFrequencyFontSize"/>
+			<TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="MinFrequencyFontSize" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:FloatRangeRule MaxValue="36" MinValue="10"/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
-			<TextBlock Grid.Row="8" Grid.Column="0" Text="MaxFrequncyFontSize"/>
-			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Path=MaxFrequncyFontSize}"/>
+			<TextBlock Grid.Row="8" Grid.Column="0" Text="MaxFrequencyFontSize"/>
+			<TextBox Grid.Row="8" Grid.Column="1" Style="{StaticResource ToolTipWithError}">
+				<Binding Path="MaxFrequencyFontSize" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<rules:FloatRangeRule MaxValue="36" MinValue="10"/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox>
 
 			<TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorTextBlock" Foreground="Red"/>
 		</Grid>
