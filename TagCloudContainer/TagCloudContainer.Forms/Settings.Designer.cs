@@ -46,7 +46,7 @@ partial class Settings
         // 
         this.Colors.FormattingEnabled = true;
         this.Colors.Location = new System.Drawing.Point(21, 44);
-        this.Colors.Items.AddRange(Additions.Models.Colors.GetAll().Keys.ToArray());
+        this.Colors.Items.AddRange(TagCloudContainer.Core.Models.Colors.GetAll().Keys.ToArray());
         this.Colors.Name = "Colors";
         this.Colors.Size = new System.Drawing.Size(149, 28);
         this.Colors.TabIndex = 1;
@@ -56,7 +56,7 @@ partial class Settings
         // 
         this.BackgroundColors.FormattingEnabled = true;
         this.BackgroundColors.Location = new System.Drawing.Point(193, 44);
-        this.BackgroundColors.Items.AddRange(Additions.Models.Colors.GetAll().Keys.ToArray());
+        this.BackgroundColors.Items.AddRange(TagCloudContainer.Core.Models.Colors.GetAll().Keys.ToArray());
         this.BackgroundColors.Name = "BackgroundColors";
         this.BackgroundColors.Size = new System.Drawing.Size(153, 28);
         this.BackgroundColors.TabIndex = 2;
@@ -104,11 +104,11 @@ partial class Settings
         // 
         this.Sizes.FormattingEnabled = true;
         this.Sizes.Location = new System.Drawing.Point(544, 44);
-        this.Sizes.Items.AddRange(Additions.Models.Screens.Sizes);
+        this.Sizes.Items.AddRange(TagCloudContainer.Core.Models.Screens.Sizes);
         this.Sizes.Name = "Sizes";
         this.Sizes.Size = new System.Drawing.Size(155, 28);
         this.Sizes.TabIndex = 9;
-        this.Sizes.Text = Additions.Models.Screens.Sizes.First();
+        this.Sizes.Text = TagCloudContainer.Core.Models.Screens.Sizes.First();
         // 
         // label3
         // 

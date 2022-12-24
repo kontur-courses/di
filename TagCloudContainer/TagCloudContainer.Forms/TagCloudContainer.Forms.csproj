@@ -12,10 +12,13 @@
       <Compile Update="Settings.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="TagCloud.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagCloudContainer.Additions\TagCloudContainer.Additions.csproj" />
+      <ProjectReference Include="..\TagCloudContainer.Core\TagCloudContainer.Core.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,12 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer", "TagCloudContainer\TagCloudContainer.csproj", "{5592BE90-6225-4A6A-A524-F626724490EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Core", "TagCloudContainer.Core\TagCloudContainer.Core.csproj", "{5592BE90-6225-4A6A-A524-F626724490EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Tests", "TagCloudContainer.Tests\TagCloudContainer.Tests.csproj", "{919A7056-79BE-4262-BB1C-29BE91E5ADFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Forms", "TagCloudContainer.Forms\TagCloudContainer.Forms.csproj", "{6BB122E0-9AF1-4DC6-BA5D-8597A29637E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Additions", "TagCloudContainer.Additions\TagCloudContainer.Additions.csproj", "{AAF7170F-6338-40FB-ADDD-210A5FDFAA89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainer.Forms", "TagCloudContainer.Forms\TagCloudContainer.Forms.csproj", "{EBD7BA65-B9CA-4FE6-B318-767C029E867E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,13 +20,9 @@ Global
 		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{919A7056-79BE-4262-BB1C-29BE91E5ADFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BB122E0-9AF1-4DC6-BA5D-8597A29637E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BB122E0-9AF1-4DC6-BA5D-8597A29637E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BB122E0-9AF1-4DC6-BA5D-8597A29637E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BB122E0-9AF1-4DC6-BA5D-8597A29637E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAF7170F-6338-40FB-ADDD-210A5FDFAA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAF7170F-6338-40FB-ADDD-210A5FDFAA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAF7170F-6338-40FB-ADDD-210A5FDFAA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAF7170F-6338-40FB-ADDD-210A5FDFAA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD7BA65-B9CA-4FE6-B318-767C029E867E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD7BA65-B9CA-4FE6-B318-767C029E867E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD7BA65-B9CA-4FE6-B318-767C029E867E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD7BA65-B9CA-4FE6-B318-767C029E867E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

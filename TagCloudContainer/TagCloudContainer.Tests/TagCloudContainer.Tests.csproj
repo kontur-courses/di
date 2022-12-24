@@ -18,7 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagCloudContainer\TagCloudContainer.csproj" />
+      <ProjectReference Include="..\TagCloudContainer.Core\TagCloudContainer.Core.csproj" />
+      <ProjectReference Include="..\TagCloudContainer.Forms\TagCloudContainer.Forms.csproj" />
     </ItemGroup>
 
 </Project>
