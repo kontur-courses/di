@@ -23,7 +23,7 @@ namespace TagCloudContainerTests
             var result =
                 painter.GetWordColorDictionary(new Dictionary<string, int> {{"asdx", 2}, {"ssds", 1}, {"ssdsas", 1}},
                     Color.Black);
-            result.Should().BeEquivalentTo(new Color[] {Color.Black, Color.Black, Color.Black});
+            result.Should().BeEquivalentTo(new Dictionary<string, Color>{{"asdx", Color.Black}, {"ssds", Color.Black}, {"ssdsas", Color.Black}});
         }
     }
 }

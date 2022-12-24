@@ -37,7 +37,7 @@ namespace TagCloudContainerTests
         [Test]
         public void BoringWordsDeleter_ShouldDeleteEmptyStrings()
         {
-            var notBoringWords = new[] {"а", "и", "не", "я", "спатеньки"};
+            var notBoringWords = new[] {"а", "и", "не", "спатеньки"};
             var result = BoringWordsDeleter.DeleteBoringWords(notBoringWords, parsedArguments);
             result.Should().BeEquivalentTo("спатеньки");
         }
