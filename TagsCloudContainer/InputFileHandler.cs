@@ -12,7 +12,8 @@ namespace TagsCloudContainer
         public static Dictionary<string, int> FormFrequencyDictionary(IEnumerable<string> words, IUi settings)
         {
             words = words.Select(word => word.ToLower()).ToArray();
-            var filteredWords = BoringWordsDeleter.DeleteBoringWords(words, settings);
+            
+            var filteredWords = BoringWordsDeleter.DeleteBoringWords(words);
             return filteredWords.GroupBy(w => w).ToDictionary(g => g.Key, g => g.Count());
         }
     }

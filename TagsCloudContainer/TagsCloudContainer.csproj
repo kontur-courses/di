@@ -63,8 +63,20 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="mscorlib" />
+        <Reference Include="MyStemWrapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\MyStemWrapper.1.0.0\lib\net461\MyStemWrapper.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
           <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
+          <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="NStack, Version=1.0.7.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\NStack.Core.1.0.7\lib\netstandard2.0\NStack.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />

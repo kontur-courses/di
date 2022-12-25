@@ -5,7 +5,7 @@ using NUnit.Framework;
 using TagsCloudContainer;
 using TagsCloudContainer.UI;
 
-namespace TagCloudContainerTests
+/*namespace TagCloudContainerTests
 {
     public class BoringWordsDeleterTests
     {
@@ -42,4 +42,6 @@ namespace TagCloudContainerTests
             result.Should().BeEquivalentTo("спатеньки");
         }
     }
+
 }
+    */
