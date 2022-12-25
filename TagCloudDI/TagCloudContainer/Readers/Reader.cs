@@ -11,6 +11,7 @@ namespace TagCloudContainer.Readers
         {
             return File.ReadAllText(path);
         }
+
         public string DocRead(string path)
         {
             var stringBuilder = new StringBuilder();
@@ -21,6 +22,16 @@ namespace TagCloudContainer.Readers
                     stringBuilder.AppendLine(paragraph.Text);
 
             return stringBuilder.ToString();
+        }
+
+        public string ReadFile(string path)
+        {
+            return Path.GetExtension(path) switch
+            {
+                ".txt" => TxtRead(path),
+                ".doc" or ".docx" => DocRead(path),
+                _ => throw new ArgumentException("Incorrect file extension: " + Path.GetExtension(path)),
+            };
         }
     }
 }

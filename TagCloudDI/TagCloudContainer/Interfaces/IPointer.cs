@@ -2,7 +2,7 @@
 
 namespace TagCloudContainer.Interfaces
 {
-    public interface IPointer
+    public interface IPointProvider
     {
         Point GetNextPoint();
         void Reset();

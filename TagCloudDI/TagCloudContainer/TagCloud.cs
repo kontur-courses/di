@@ -17,16 +17,19 @@ namespace TagCloudContainer
 
         public List<RectangleWithText> GetRectangles() => rectangles;
 
-        public void CreateTagCloud(ICloudCreateSettings cloudCreator, IEnumerable<ITag> tags)
+        public void CreateTagCloud(
+            IPointProvider pointFigure,
+            IRectangleBuilder rectangleBuilder,
+            IEnumerable<ITag> tags)
         {
-            var nextSizeRectangle = cloudCreator.RectangleBuilder.GetRectangles(tags).GetEnumerator();
+            var nextSizeRectangle = rectangleBuilder.GetRectangles(tags).GetEnumerator();
             nextSizeRectangle.MoveNext();
             bool? filledEmptySpaces = false;
 
-            while (!TryFillRectangle(cloudCreator.PointFigure, nextSizeRectangle, ref filledEmptySpaces));
+            while (!TryFillRectangle(pointFigure, nextSizeRectangle, ref filledEmptySpaces));
         }
 
-        private bool TryFillRectangle(IPointer arithmeticSpiral,
+        private bool TryFillRectangle(IPointProvider arithmeticSpiral,
             IEnumerator<RectangleWithText> nextSizeRectangle, ref bool? nextIteration)
         {
             var point = arithmeticSpiral.GetNextPoint();
@@ -36,10 +39,10 @@ namespace TagCloudContainer
 
             nextIteration = FillEmptySpaces(nextIteration, nextSizeRectangle);
 
-            if (!rectangles.Select(x => x.rectangle.Contains(point)).Contains(true))
+            if (!rectangles.Select(x => x.Rectangle.Contains(point)).Contains(true))
                 emptyPoints.Add(point);
 
-            if (!Contains(rectangles, point, nextSizeRectangle.Current.rectangle.Size))
+            if (!Contains(rectangles, point, nextSizeRectangle.Current.Rectangle.Size))
                 nextIteration = AddRectangle(point, nextSizeRectangle);
 
             return false;
@@ -50,7 +53,7 @@ namespace TagCloudContainer
             if (filledEmptySpaced.Value && emptyPoints.Any())
             {
                 for (var i = 0; i < emptyPoints.Count; i++)
-                    if (!Contains(rectangles, emptyPoints[i], nextRectangle.Current.rectangle.Size))
+                    if (!Contains(rectangles, emptyPoints[i], nextRectangle.Current.Rectangle.Size))
                         AddRectangle(emptyPoints[i], nextRectangle);
                 filledEmptySpaced = false;
             }
@@ -62,18 +65,18 @@ namespace TagCloudContainer
         {
             var rectangle =
                 new Rectangle(
-                    point - new Size(nextSizeRectangle.Current.rectangle.Width / 2,
-                        nextSizeRectangle.Current.rectangle.Height / 2), nextSizeRectangle.Current.rectangle.Size);
+                    point - new Size(nextSizeRectangle.Current.Rectangle.Width / 2,
+                        nextSizeRectangle.Current.Rectangle.Height / 2), nextSizeRectangle.Current.Rectangle.Size);
 
-            var textRectangle = new RectangleWithText(rectangle, nextSizeRectangle.Current.text,
-                nextSizeRectangle.Current.font);
+            var textRectangle = new RectangleWithText(rectangle, nextSizeRectangle.Current.Text,
+                nextSizeRectangle.Current.Font);
 
             if (!nextSizeRectangle.MoveNext())
                 return null;
 
             rectangles.Add(textRectangle);
             for (var i = 0; i < emptyPoints.Count; i++)
-                if (textRectangle.rectangle.Contains(emptyPoints[i]))
+                if (textRectangle.Rectangle.Contains(emptyPoints[i]))
                     emptyPoints.Remove(emptyPoints[i]);
             return true;
         }
@@ -82,7 +85,7 @@ namespace TagCloudContainer
             Size size)
         {
             return rectangles
-                .Select(x => x.rectangle
+                .Select(x => x.Rectangle
                     .IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
                 .Contains(true);
         }

@@ -14,8 +14,8 @@ namespace TagCloudGUI
 
             var srcSize = drawImageSettingsProvider.GetImageSize();
             var graphics = drawImageSettingsProvider.StartDrawing();
-            var maxFontSize = rectangles.MaxBy(x => x.font.Size).font.Size;
-            var minFontSize = rectangles.MinBy(x => x.font.Size).font.Size;
+            var maxFontSize = rectangles.MaxBy(x => x.Font.Size).Font.Size;
+            var minFontSize = rectangles.MinBy(x => x.Font.Size).Font.Size;
 
             var diff = maxFontSize != minFontSize ? maxFontSize - minFontSize : 1;
 
@@ -23,7 +23,7 @@ namespace TagCloudGUI
             
             foreach (var textRectangle in rectangles)
             {
-                var coef = ((double)textRectangle.font.Size - minFontSize) / diff;
+                var coef = ((double)textRectangle.Font.Size - minFontSize) / diff;
 
                 var color = Color.FromArgb(
                     (int)((palette.SecondaryColor.R * (1 - coef)) + (palette.PrimaryColor.R * (coef))),
@@ -38,8 +38,8 @@ namespace TagCloudGUI
         private static void DrawTag(IImageSettingsProvider drawImageSettingsProvider,
             Graphics graphics, RectangleWithText textRectangle, Color color, Size srcSize)
         {
-            graphics.DrawString(textRectangle.text, textRectangle.font, new SolidBrush(color),
-                textRectangle.rectangle.Location + new Size(srcSize.Width / 2, srcSize.Height / 2));
+            graphics.DrawString(textRectangle.Text, textRectangle.Font, new SolidBrush(color),
+                textRectangle.Rectangle.Location + new Size(srcSize.Width / 2, srcSize.Height / 2));
             drawImageSettingsProvider.UpdateUi();
         }
     }

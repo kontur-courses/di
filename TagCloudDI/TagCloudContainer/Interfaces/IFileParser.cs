@@ -2,6 +2,6 @@
 {
     public interface IFileParser
     {
-        IEnumerable<string> Parse(string text, bool filterBoring);
+        IEnumerable<string> Parse(string text);
     }
 }

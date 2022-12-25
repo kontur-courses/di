@@ -3,7 +3,7 @@ using TagCloudContainer.Interfaces;
 
 namespace TagCloudContainer.PointAlgorithm
 {
-    public class ArithmeticSpiral : IPointer
+    public class ArithmeticSpiral : IPointProvider
     {
         private double angle;
         public Point GetNextPoint()

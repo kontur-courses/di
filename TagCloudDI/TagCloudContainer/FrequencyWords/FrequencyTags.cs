@@ -3,7 +3,7 @@ using TagCloudContainer.Models;
 
 namespace TagCloudContainer.FrequencyWords
 {
-    public class FrequencyTags : IFrequencyCounter
+    public class FrequencyCounter : IFrequencyCounter
     {
         public IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words)
         {

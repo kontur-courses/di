@@ -4,25 +4,25 @@ namespace TagCloudGUI.Interfaces
 {
     public interface IAlgorithmSettings : IVisualizationCloudSettings, IProviderSettings
     {
-        public IFontSettings FontSettings { get; set; }
-        public string ImagesDirectory { get; set; }
+        IFontSettings FontSettings { get; set; }
+        string ImagesDirectory { get; set; }
 
-        public FontFamily Font
+        FontFamily Font
         {
             get => FontSettings.Font;
             set => FontSettings.Font = value;
         }
 
-        public int MaxFont
+        int MaxFont
         {
-            get => FontSettings.MaxFont;
-            set => FontSettings.MaxFont = value;
+            get => FontSettings.MaxFontSize;
+            set => FontSettings.MaxFontSize = value;
         }
 
-        public int MinFont
+        int MinFont
         {
-            get => FontSettings.MinFont;
-            set => FontSettings.MinFont = value;
+            get => FontSettings.MinFontSize;
+            set => FontSettings.MinFontSize = value;
         }
     }
 }

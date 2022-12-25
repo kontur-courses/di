@@ -13,8 +13,8 @@ namespace TagCloudGUI.Actions
             this.palette = palette;
         }
 
-        public string Category => "Настройки";
-        public string Name => "Цвет вывода";
+        public string Category => "Кастомизация";
+        public string Name => "Настройка цветов";
         public string Description => "Цвета для рисования облака";
 
         public void Perform()

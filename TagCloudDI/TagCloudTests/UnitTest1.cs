@@ -1,6 +1,7 @@
 using FluentAssertions;
 using System.Drawing;
 using System.Text;
+using TagCloudContainer.BoringFilters;
 using TagCloudContainer.Formatters;
 using TagCloudContainer.FrequencyWords;
 using TagCloudContainer.Models;
@@ -24,7 +25,7 @@ namespace TagCloudTests
             var testString = @"hello
 super
 word";
-            var parsedText = new FileLinesParser().Parse(testString, false);
+            var parsedText = new FileLinesParser().Parse(testString);
             parsedText.Count().Should().Be(3);
 
             var testStringSplitted = testString.Split('\n').Select(s => s.Trim()).ToList();
@@ -42,8 +43,9 @@ word";
 тест
 с
 подвохом";
-            var parsedText = new FileLinesParser().Parse(testString, true);
-            parsedText.Count().Should().Be(3);
+            var parsedText = new FileLinesParser().Parse(testString);
+            var filteredText = new BoringFilter().FilterWords(parsedText);
+            filteredText.Count().Should().Be(3);
         }
 
         [Test]
@@ -74,7 +76,7 @@ word";
                 "b", "b", "b", "b"
             };
 
-            var wordsFrequency = new FrequencyTags().GetTagsFrequency(words).ToList();
+            var wordsFrequency = new FrequencyCounter().GetTagsFrequency(words).ToList();
             wordsFrequency.Count().Should().Be(3);
 
             wordsFrequency[0].Count.Should().Be(4);
@@ -109,8 +111,8 @@ word";
            
             var fontTags = fontSizer
                 .GetTagsWithSize(
-                new FrequencyTags().GetTagsFrequency(words),
-                new FontSettings() { MaxFont = 150, MinFont = 50, Font = new FontFamily("Arial") }
+                new FrequencyCounter().GetTagsFrequency(words),
+                new FontSettings() { MaxFontSize = 150, MinFontSize = 50, Font = new FontFamily("Arial") }
                 ).ToList();
 
             fontTags.Count.Should().Be(2);

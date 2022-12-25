@@ -4,14 +4,14 @@ namespace TagCloudContainer.Models
 {
     public class RectangleWithText
     {
-        public Rectangle rectangle { get; }
-        public string text { get; }
-        public Font font { get; }
+        public Rectangle Rectangle { get; }
+        public string Text { get; }
+        public Font Font { get; }
         public RectangleWithText(Rectangle rectangle, string text, Font font)
         {
-            this.rectangle = rectangle;
-            this.text = text;
-            this.font = font ?? throw new ArgumentNullException(nameof(font));
+            Rectangle = rectangle;
+            Text = text;
+            Font = font ?? throw new ArgumentNullException(nameof(font));
         }
     }
 }

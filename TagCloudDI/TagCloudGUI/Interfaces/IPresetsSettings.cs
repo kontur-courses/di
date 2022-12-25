@@ -5,15 +5,14 @@ namespace TagCloudGUI.Interfaces
 {
     public interface IPresetsSettings
     {
-        public Switcher TxtReader { get; set; }
-        public Switcher Filtered { get; set; }
-        public Switcher ToLowerCase { get; set; }
-        public IFileReader Reader { get; }
-        public IFileParser Parser { get; }
-        public IWordFormatter Formatter { get; }
-        public IFrequencyCounter FrequencyCounter { get; }
-        public IFontSizer FontSizer { get; }
-        public ICloudDrawer Drawer { get; }
+        Switcher Filtered { get; set; }
+        Switcher ToLowerCase { get; set; }
+        IFileReader Reader { get; }
+        IFileParser Parser { get; }
+        IWordFormatter Formatter { get; }
+        IFrequencyCounter FrequencyCounter { get; }
+        IFontSizer FontSizer { get; }
+        ICloudDrawer Drawer { get; }
 
     }
 }

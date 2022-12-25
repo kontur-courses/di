@@ -13,8 +13,7 @@ namespace TagCloudContainer.Models
         {
             Word = word;
             SizeFont = sizeFont;
-            Font = font;
+            Font = font ?? throw new ArgumentNullException(nameof(font));
         }
-
     }
 }

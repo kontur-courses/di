@@ -10,21 +10,28 @@ namespace TagCloudGUI.Actions
     {
         private readonly IImageSettingsProvider image;
         private readonly IPresetsSettings presetsSettings;
-        private readonly ICloudCreateSettings settingsCreator;
+        private readonly IPointProvider pointFigure;
+        private readonly IRectangleBuilder rectangleBuilder;
         private readonly IAlgorithmSettings algorithmSettings;
+        private readonly IBoringWordsFilter boringWordsFilter;
         private readonly Palette palette;
 
-        public TagAction(ICloudCreateSettings settingsCreator,
+        public TagAction(
+            IPointProvider pointFigure,
+            IRectangleBuilder rectangleBuilder,
             IPresetsSettings presetsSettings,
             IImageSettingsProvider image,
             IAlgorithmSettings algorithmSettings,
+            IBoringWordsFilter boringWordsFilter,
             Palette palette)
         {
             this.image = image;
             this.algorithmSettings = algorithmSettings;
             this.palette = palette;
-            this.settingsCreator = settingsCreator;
             this.presetsSettings = presetsSettings;
+            this.rectangleBuilder = rectangleBuilder;
+            this.pointFigure = pointFigure;
+            this.boringWordsFilter = boringWordsFilter;
         }
 
         string IActionForm.Category => "Рисование";
@@ -35,12 +42,16 @@ namespace TagCloudGUI.Actions
 
         void IActionForm.Perform()
         {
-            CheckForSettings();
+            algorithmSettings.ImagesDirectory ??= GetFilePathDialog();
+
             SettingsForm.For(algorithmSettings).ShowDialog();
-            settingsCreator.PointFigure.Reset();
+            pointFigure.Reset();
 
             var cloud = new TagCloud();
-            cloud.CreateTagCloud(settingsCreator, InitialTags(algorithmSettings.ImagesDirectory));
+            cloud.CreateTagCloud(
+                pointFigure,
+                rectangleBuilder,
+                InitialTags(algorithmSettings.ImagesDirectory));
 
             var size = ImageSizer.GetImageSize(cloud.GetRectangles());
             image.RecreateImage(new ImageSettings { Height = size.Height, Width = size.Width });
@@ -48,14 +59,18 @@ namespace TagCloudGUI.Actions
             DrawCloud(cloud);
         }
 
-        private void CheckForSettings()
+        private string GetFilePathDialog()
         {
-            if (algorithmSettings.ImagesDirectory is null)
-                new SourceTagsAction(algorithmSettings).Perform();
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            if (algorithmSettings.Font is null)
-                new FontAction(algorithmSettings).Perform();
+            openFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+            openFileDialog1.Filter = "Txt files (*.txt)|*.txt|Doc files (*.doc)|*.doc|Docx files (*.docx)|*.docx";
+            openFileDialog1.FilterIndex = 0;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.ShowDialog();
+            return openFileDialog1.FileName;
         }
+
         private void DrawCloud(TagCloud cloud)
         {
             presetsSettings.Drawer.DrawCloudFromPalette(cloud.GetRectangles(), image,
@@ -64,11 +79,12 @@ namespace TagCloudGUI.Actions
 
         public IEnumerable<ITag> InitialTags(string filePath)
         {
-            var text = presetsSettings.TxtReader == Switcher.Enabled
-                ? presetsSettings.Reader.TxtRead(filePath)
-                : presetsSettings.Reader.DocRead(filePath);
+            string originalText = presetsSettings.Reader.ReadFile(filePath);
 
-            var parsedText = presetsSettings.Parser.Parse(text, presetsSettings.Filtered == Switcher.Enabled);
+            var parsedText = presetsSettings.Parser.Parse(originalText);
+
+            if (presetsSettings.Filtered == Switcher.Enabled)
+                parsedText = boringWordsFilter.FilterWords(parsedText);
 
             var formattedTags = presetsSettings.ToLowerCase == Switcher.Enabled
                 ? presetsSettings.Formatter.Normalize(parsedText, x => x.ToLower())

@@ -4,8 +4,8 @@ namespace TagCloudContainer.Interfaces
 {
     public interface IFontSettings
     {
-        public int MaxFont { get; set; }
-        public int MinFont { get; set; }
+        public int MaxFontSize { get; set; }
+        public int MinFontSize { get; set; }
         public FontFamily Font { get; set; }
     }
 }

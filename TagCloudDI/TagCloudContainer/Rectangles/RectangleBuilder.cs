@@ -16,6 +16,8 @@ namespace TagCloudContainer.Rectangles
                 var rectangle = new Rectangle(new Point(0,0), g.MeasureString(tag.Word, font).ToSize());
                 yield return new RectangleWithText(rectangle, tag.Word, font);
             }
+
+            g.Dispose();
         }
     }
 }
