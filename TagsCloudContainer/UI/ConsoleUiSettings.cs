@@ -1,6 +1,5 @@
 using CommandLine;
 
-
 namespace TagsCloudContainer.UI
 {
     public class ConsoleUiSettings : IUi
@@ -24,7 +23,7 @@ namespace TagsCloudContainer.UI
         [Option('o',
             "openpath",
             Required = false,
-            Default = "../testfile.txt",
+            Default = "C:/Users/schap/Downloads/di-master/di-master/TagsCloudContainer/bin/testfile.txt",
             HelpText = "Path to file with words")]
         public string PathToOpen { get; set; }
 
@@ -57,16 +56,41 @@ namespace TagsCloudContainer.UI
 
         [Option('p', "exceptpofs", Required = false, Default = "A",
             HelpText =
-                "Parts of speech that are not in the tag cloud\n  Variants: 'S' - существительное, 'A' -прилагательное, 'SPRO' - существительное-местоимение, 'APRO' - прилагательное-местоимение, 'PR' - предлог, 'CONJ' - союз, 'PART'-частица, 'NUM'-числительное, 'ADV'-наречие"
-        )]
+                "Parts of speech that are in the tag cloud. Variants:" +
+                "Parts of speech that are not in the tag cloud\n  Variants:" +
+                " 'A' - adjective, " +
+                " 'ADV' - adverb, " +
+                " 'ANUM' - numeral-adjective, " +
+                " 'APRO' - pronoun-adjective, " +
+                " 'COM' - compound word, " +
+                " 'CONJ' - conjunction, " +
+                " 'INTJ' -  interjection, " +
+                " 'NUM' - numeral," +
+                " 'PART' - particle," +
+                " 'PR' - preposition," +
+                " 'S' - noun," +
+                " 'SPRO' - noun-pronoun, " +
+                " 'V' - verb")]
         public string ExceptPartOfSpeech { get; set; }
 
         [Option('z', "includepofs", Required = false, Default = "ADVPRO CONJ",
             HelpText =
-                "Parts of speech that are in the tag cloud. Variants: 'S' - существительное, 'A' -прилагательное, 'SPRO' - существительное-местоимение, 'APRO' - прилагательное-местоимение, 'PR' - предлог, 'CONJ' - союз, 'PART'-частица, 'NUM'-числительное, 'ADV'-наречие")]
+                "Parts of speech that are in the tag cloud. Variants:" +
+                "Parts of speech that are not in the tag cloud\n  Variants:" +
+                " 'A' - adjective, " +
+                " 'ADV' - adverb, " +
+                " 'ANUM' - numeral-adjective, " +
+                " 'APRO' - pronoun-adjective, " +
+                " 'COM' - compound word, " +
+                " 'CONJ' - conjunction, " +
+                " 'INTJ' -  interjection, " +
+                " 'NUM' - numeral," +
+                " 'PART' - particle," +
+                " 'PR' - preposition," +
+                " 'S' - noun," +
+                " 'SPRO' - noun-pronoun, " +
+                " 'V' - verb")]
         public string IncludePartOfSpeech { get; set; }
-
-        [Option('u', "layouter", Required = false, Default = "d", HelpText = "Layoter algorithm")]
         public string Layouter { get; set; }
     }
 }

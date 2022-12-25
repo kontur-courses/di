@@ -11,16 +11,18 @@ namespace TagsCloudContainer
         public static IEnumerable<string> DeleteBoringWords(IEnumerable<string> words, IUi settings)
         {
             var result = new List<string>();
-            var ignorePartOfSpeech = settings.IncludePartOfSpeech.Contains(' ')
-                ? settings.IncludePartOfSpeech.Trim().Split(' ').Select(str => str.Trim())
-                : new [] { settings.IncludePartOfSpeech };
-
-            var deletePartOfSpeech = settings.ExceptPartOfSpeech.Contains(' ')
-                ? settings.ExceptPartOfSpeech.Trim().Split(' ').Select(str => str.Trim())
-                : new [] { settings.ExceptPartOfSpeech };
-
             var partsOfSpeech = new List<string>
-                { "A", "ADV", "ADVPRO", "ANUM", "APRO", "COM", "CONJ", "NUM", "PART", "PR", "S", "SPRO", "V" };
+                { "A", "ADV", "ADVPRO", "ANUM", "APRO", "COM", "CONJ", "INTJ", "NUM", "PART", "PR", "S", "SPRO", "V" };
+            var ignorePartOfSpeech = settings.IncludePartOfSpeech.Contains(' ')
+                ? settings.IncludePartOfSpeech.Trim().Split(' ').Select(str => str.Trim().ToUpper())
+                : new[] { settings.IncludePartOfSpeech.ToUpper() };
+            var deletePartOfSpeech = settings.ExceptPartOfSpeech.Contains(' ')
+                ? settings.ExceptPartOfSpeech.Trim().Split(' ').Select(str => str.Trim().ToUpper())
+                : new[] { settings.ExceptPartOfSpeech.ToUpper() };
+            var unknownPartOfSpeech = ignorePartOfSpeech.Concat(deletePartOfSpeech)
+                .Where(word => !partsOfSpeech.Contains(word));
+            if (unknownPartOfSpeech.Count() != 0)
+                throw new ArgumentException("Unknown part of speech");
             var boringPartsOfSpeech = new[] { "CONJ", "INTJ", "PART", "PR", "SPRO", "ADVPRO" }
                 .Concat(deletePartOfSpeech)
                 .Where(partsOfSpeech => !ignorePartOfSpeech.Contains(partsOfSpeech));
@@ -29,7 +31,7 @@ namespace TagsCloudContainer
             {
                 StartInfo =
                 {
-                    FileName = "mystem.exe",
+                    FileName = "C:/Users/schap/Downloads/di-master/di-master/TagsCloudContainer/bin/mystem.exe",
                     Arguments = "-i -n -e cp866",
                     UseShellExecute = false,
                     RedirectStandardInput = true,

@@ -35,5 +35,13 @@ namespace TagCloudContainerTests
             var result = BoringWordsDeleter.DeleteBoringWords(notBoringWords, parsedArguments);
             result.Should().BeEmpty();
         }
+
+        [Test]
+        public void BoringWordsDeleter_ShouldThrowException_OnWrongPartOfSpeech()
+        {
+            parsedArguments.IncludePartOfSpeech = "unknown";
+            Action act = () => BoringWordsDeleter.DeleteBoringWords(new[] { "test" }, parsedArguments);
+            act.Should().Throw<ArgumentException>().WithMessage("Unknown part of speech");
+        }
     }
 }
