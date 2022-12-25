@@ -16,10 +16,10 @@ namespace TagsCloudContainer.ConsoleApp
         [Option('o', "outputFilename", Required = true, HelpText = "Set image output file")]
         public string OutputImageFilename { get; set; }
 
-        [Option('w', "outputImageWidth", Required = false, Default = 500, HelpText = "Set output image width")]
+        [Option('w', "outputImageWidth", Required = false, Min = 100, Default = 500, Max = 10000, HelpText = "Set output image width")]
         public int OutputImageWidth { get; set; }
 
-        [Option('h', "outputImageHeight", Required = false, Default = 500, HelpText = "Set output image height")]
+        [Option('h', "outputImageHeight", Required = false, Min = 100, Default = 500, Max = 10000, HelpText = "Set output image height")]
         public int OutputImageHeight { get; set; }
 
         [Option("font", Required = false, Default = "Consolas", HelpText = "Set word font family")]
@@ -31,10 +31,10 @@ namespace TagsCloudContainer.ConsoleApp
         [Option("maxColor", Required = false, Default = "#FFFF0000", HelpText = "Set maximum frequency word plate color (ARGB with '#')")]
         public string MaxFrequencyColorString { get; set; }
 
-        [Option("minFontSize", Required = false, Default = 14F, HelpText = "Set minimum frequency word font size")]
+        [Option("minFontSize", Required = false, Min = 10, Default = 14F, Max = 36, HelpText = "Set minimum frequency word font size")]
         public float MinFrequncyFontSize { get; set; }
 
-        [Option("maxFontSize", Required = false, Default = 24F, HelpText = "Set maximum frequency word font size")]
+        [Option("maxFontSize", Required = false, Min = 10, Default = 24F, Max = 36, HelpText = "Set maximum frequency word font size")]
         public float MaxFrequncyFontSize { get; set; }
     }
 }
