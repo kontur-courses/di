@@ -17,12 +17,13 @@ public partial class TagCloud : Form
         ITagCloudFormConfig tagCloudFormConfig,
         IImageCreator imageCreator)
     {
-        ValidateConstructorArguments(tagCloudProvider, tagCloudContainerConfig, tagCloudFormConfig, imageCreator);
-        
-        _tagCloudProvider = tagCloudProvider;
-        _imageCreator = imageCreator;
-        _tagCloudContainerConfig = tagCloudContainerConfig;
-        _tagCloudFormConfig = tagCloudFormConfig;
+        _tagCloudProvider = 
+            tagCloudProvider ?? throw new ArgumentNullException("Tag cloud provider can't be null");
+        _imageCreator = imageCreator ?? throw new ArgumentNullException("Image creator can't be null");
+        _tagCloudContainerConfig =
+            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+        _tagCloudFormConfig = 
+            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
 
         InitializeComponent();
         SetupWindow();
@@ -61,37 +62,32 @@ public partial class TagCloud : Form
     private void DrawWords(PaintEventArgs e, Result<List<Word>> words)
     {
         var pen = new Pen(_tagCloudFormConfig.Color);
-
-        foreach (var word in words.GetValueOrThrow())
+        try
         {
-            var font = new Font(_tagCloudFormConfig.FontFamily,
-                word.Weight * _tagCloudContainerConfig.StandartSize.Width);
-            _graphics.DrawString(word.Value, font, pen.Brush, word.Position);
+            foreach (var word in words.GetValueOrThrow())
+            {
+                var font = new Font(_tagCloudFormConfig.FontFamily,
+                    word.Weight * _tagCloudContainerConfig.StandartSize.Width);
+                try
+                {
+                    _graphics.DrawString(word.Value, font, pen.Brush, word.Position);
+                }
+                finally
+                {
+                    font.Dispose();
+                }
+            }
 
-            font.Dispose();
         }
-
-        pen.Dispose();
+        finally
+        {
+            pen.Dispose();
+        }
     }
 
     private void SaveImage()
     {
         _imageCreator.Save(this,
             Path.Combine(_tagCloudContainerConfig.MainDirectoryPath, _tagCloudContainerConfig.ImageName));
-    }
-
-    public void ValidateConstructorArguments(ITagCloudProvider tagCloudProvider,
-        ITagCloudContainerConfig tagCloudContainerConfig,
-        ITagCloudFormConfig tagCloudFormConfig,
-        IImageCreator imageCreator)
-    {
-        if (tagCloudProvider == null)
-            throw new ArgumentException("Tag cloud provider can't be null");
-        if (tagCloudContainerConfig == null)
-            throw new ArgumentException("Tag cloud config can't be null");
-        if (tagCloudFormConfig == null)
-            throw new ArgumentException("Tag cloud form config can't be null");
-        if (imageCreator == null)
-            throw new ArgumentException("Image creator can't be null");
     }
 }

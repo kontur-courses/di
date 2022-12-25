@@ -1,5 +1,6 @@
 ﻿using TagCloudContainer.Core;
 using TagCloudContainer.Core.Interfaces;
+using TagCloudContainer.Core.Models;
 using TagCloudContainer.Forms.Interfaces;
 
 namespace TagCloudContainer.Forms;
@@ -19,13 +20,15 @@ public partial class Settings : Form
         IConfigValidator<ITagCloudFormConfig> tagCloudFormConfigValidator,
         IConfigValidator<ITagCloudContainerConfig> tagCloudContainerConfigValidator)
     {
-        ValidateConstructorArguments(tagCloud, tagCloudContainerConfig, tagCloudFormConfig, tagCloudFormConfigValidator, tagCloudContainerConfigValidator);
-        
-        _tagCloud = tagCloud;
-        _tagCloudContainerConfig = tagCloudContainerConfig;
-        _tagCloudFormConfig = tagCloudFormConfig;
-        _tagCloudFormConfigValidator = tagCloudFormConfigValidator;
-        _tagCloudContainerConfigValidator = tagCloudContainerConfigValidator;
+        _tagCloud = tagCloud ?? throw new ArgumentNullException("Tag cloud can't be null");
+        _tagCloudContainerConfig = 
+            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+        _tagCloudFormConfig = 
+            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
+        _tagCloudFormConfigValidator = 
+            tagCloudFormConfigValidator ?? throw new ArgumentNullException("Tag cloud config validator can't be null");
+        _tagCloudContainerConfigValidator = 
+            tagCloudContainerConfigValidator ?? throw new ArgumentNullException("Tag cloud form config validator can't be null");
 
         InitializeComponent();
     }
@@ -47,7 +50,8 @@ public partial class Settings : Form
             .Split("x")
             .Select(i => int.Parse(i))
             .ToArray();
-        var userSelectedSize = new Size(parsedUserSelectedSizeValue[0], parsedUserSelectedSizeValue[1]);
+        var userSelectedSize = Screens.Sizes.First(size =>
+            size.Width == parsedUserSelectedSizeValue[0] && size.Height == parsedUserSelectedSizeValue[1]);
 
         var colorResult = GetColorsByChoosedName(Colors.Text);
         var backgroundColorResult = GetColorsByChoosedName(BackgroundColors.Text);
@@ -80,39 +84,18 @@ public partial class Settings : Form
     private Result<Color> GetColorsByChoosedName(string colorName)
     {
         var colorResult = Core.Models.Colors.Get(colorName);
+        colorResult.OnFail(error => MessageBox.Show(error, "Ошибка"));
         
-        if (!colorResult.IsSuccess)
-            MessageBox.Show(colorResult.Error, "Ошибка");
         return colorResult;
     }
 
     private void ValidateUserParameters()
     {
-        var tagCloudContainerConfigResult = _tagCloudContainerConfigValidator.Validate(_tagCloudContainerConfig);
-        var tagCloudFormConfigResult= _tagCloudFormConfigValidator.Validate(_tagCloudFormConfig);
-        
-        if (!tagCloudContainerConfigResult.IsSuccess)
-            MessageBox.Show("Invalid container options: " + tagCloudContainerConfigResult.Error);
-        if (!tagCloudFormConfigResult.IsSuccess)
-            MessageBox.Show("Invalid form options: " + tagCloudFormConfigResult.Error);
-    }
-
-    private void ValidateConstructorArguments(
-        TagCloud tagCloud, 
-        ITagCloudContainerConfig tagCloudContainerConfig,
-        ITagCloudFormConfig tagCloudFormConfig,
-        IConfigValidator<ITagCloudFormConfig> tagCloudFormConfigValidator,
-        IConfigValidator<ITagCloudContainerConfig> tagCloudContainerConfigValidator)
-    {
-        if (tagCloud == null)
-            throw new ArgumentException("Tag cloud can't be null");
-        if (tagCloudContainerConfig == null)
-            throw new ArgumentException("Tag cloud config can't be null");
-        if (tagCloudFormConfig == null)
-            throw new ArgumentException("Tag cloud form config can't be null");
-        if (tagCloudContainerConfigValidator == null)
-            throw new ArgumentException("Tag cloud config validator can't be null");
-        if (tagCloudFormConfigValidator == null)
-            throw new ArgumentException("Tag cloud form config validator can't be null");
+        _tagCloudContainerConfigValidator
+            .Validate(_tagCloudContainerConfig)
+            .OnFail(error => MessageBox.Show("Invalid container options: " + error, "Ошибка"));
+        _tagCloudFormConfigValidator
+            .Validate(_tagCloudFormConfig)
+            .OnFail(error => MessageBox.Show("Invalid form options: " + error, "Ошибка"));
     }
 }

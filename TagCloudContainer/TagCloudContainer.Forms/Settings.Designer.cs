@@ -104,11 +104,12 @@ partial class Settings
         // 
         this.Sizes.FormattingEnabled = true;
         this.Sizes.Location = new System.Drawing.Point(544, 44);
-        this.Sizes.Items.AddRange(TagCloudContainer.Core.Models.Screens.Sizes);
+        var availableSizes = TagCloudContainer.Core.Models.Screens.Sizes.Select(size => size.Width + "x" + size.Height);
+        this.Sizes.Items.AddRange(availableSizes.ToArray());
         this.Sizes.Name = "Sizes";
         this.Sizes.Size = new System.Drawing.Size(155, 28);
         this.Sizes.TabIndex = 9;
-        this.Sizes.Text = TagCloudContainer.Core.Models.Screens.Sizes.First();
+        this.Sizes.Text = availableSizes.First();
         // 
         // label3
         // 

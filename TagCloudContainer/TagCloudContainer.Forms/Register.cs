@@ -52,8 +52,7 @@ public static class Register
         {
             Random = true,
             StandartSize = new Size(10, 10),
-            ImageSize = new Size(int.Parse(Screens.Sizes.First().Split("x")[0]),
-                int.Parse(Screens.Sizes.First().Split("x")[1])),
+            ImageSize = Screens.Sizes.First(),
             Center = new Point(1, 1),
             NearestToTheCenterPoints = new SortedList<float, Point>(),
             PutRectangles = new List<Rectangle>(),

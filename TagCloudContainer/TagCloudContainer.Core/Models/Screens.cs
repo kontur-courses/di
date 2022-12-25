@@ -2,16 +2,16 @@
 
 public static class Screens
 {
-    private static readonly string[] _sizes = 
+    private static readonly Size[] _sizes = 
     {
-        "1920x1080",
-        "1600x900",
-        "1400x1050",
-        "1024x768",
-        "600x600",
+        new Size(1920, 1080),
+        new Size(1600, 900),
+        new Size(1400, 1050),
+        new Size(1024, 768),
+        new Size(600, 600),
     };
 
-    public static string[] Sizes
+    public static Size[] Sizes
     {
         get => _sizes;
     }

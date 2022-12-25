@@ -12,10 +12,10 @@ public class WordsReader : IWordsReader
 
     public WordsReader(IWordValidator wordValidator, ITagCloudContainerConfig tagCloudContainerConfig)
     {
-        Validate(wordValidator, tagCloudContainerConfig);
-        
-        _tagCloudContainerConfig = tagCloudContainerConfig;
-        _wordValidator = wordValidator;
+        _tagCloudContainerConfig = 
+            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+        _wordValidator = 
+            wordValidator ?? throw new ArgumentNullException("Word validator can't be null");
     }
     
     public IEnumerable<Word> GetWordsFromFile(string filePath)
@@ -46,13 +46,5 @@ public class WordsReader : IWordsReader
         
         var word = new Word() { Value = wordValue, Weight = 1 };
         _words.Add(wordValue, word);
-    }
-
-    private void Validate(IWordValidator wordValidator, ITagCloudContainerConfig tagCloudContainerConfig)
-    {
-        if (wordValidator == null)
-            throw new ArgumentException("Word validator can't be null");
-        if (tagCloudContainerConfig == null)
-            throw new ArgumentException("Tag cloud config can't be null");
     }
 }

@@ -8,8 +8,7 @@ public class TagCloudContainerConfig : ITagCloudContainerConfig, ITagCloudFormCo
     public bool Random { get; set; } = true;
     
     public Size StandartSize { get; set; } = new Size(10, 10);
-    public Size ImageSize { get; set; } = new Size(int.Parse(Screens.Sizes.First().Split("x")[0]), 
-        int.Parse(Screens.Sizes.First().Split("x")[1]));
+    public Size ImageSize { get; set; } = Screens.Sizes.First();
     
     public Point Center { get; set; } = new Point(1, 1);
     
