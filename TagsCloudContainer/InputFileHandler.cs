@@ -13,7 +13,7 @@ namespace TagsCloudContainer
         {
             words = words.Select(word => word.ToLower()).ToArray();
             
-            var filteredWords = BoringWordsDeleter.DeleteBoringWords(words);
+            var filteredWords = BoringWordsDeleter.DeleteBoringWords(words, settings);
             return filteredWords.GroupBy(w => w).ToDictionary(g => g.Key, g => g.Count());
         }
     }

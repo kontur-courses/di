@@ -1,5 +1,6 @@
 using CommandLine;
 
+
 namespace TagsCloudContainer.UI
 {
     public class ConsoleUiSettings : IUi
@@ -54,14 +55,16 @@ namespace TagsCloudContainer.UI
                 "Algorithm for coloring words. Variants: d (every word has the same color), gd (brightness of word depends on it's size), g (brightness of word depends on it's position)")]
         public string WordsColoringAlgorithm { get; set; }
 
-        [Option('x', "except", Required = false, Default = ".бойцовский",
-            HelpText = "'.': Words that are not in the tag cloud\n '+': Words that are in the tag cloud")]
-        public string ExceptWords { get; set; }
-
-        [Option('p', "exceptpofs", Required = false, Default = "+мест",
+        [Option('p', "exceptpofs", Required = false, Default = "A",
             HelpText =
-                "'-': Parts of speech that are not in the tag cloud\n '+': Parts of speech that are in the tag cloud. Variants: 'сущ', 'прил', 'мест', 'предл', 'союз', 'част', 'числ', 'цифра', 'прич'")]
+                "Parts of speech that are not in the tag cloud\n  Variants: 'S' - существительное, 'A' -прилагательное, 'SPRO' - существительное-местоимение, 'APRO' - прилагательное-местоимение, 'PR' - предлог, 'CONJ' - союз, 'PART'-частица, 'NUM'-числительное, 'ADV'-наречие"
+        )]
         public string ExceptPartOfSpeech { get; set; }
+
+        [Option('z', "includepofs", Required = false, Default = "ADVPRO CONJ",
+            HelpText =
+                "Parts of speech that are in the tag cloud. Variants: 'S' - существительное, 'A' -прилагательное, 'SPRO' - существительное-местоимение, 'APRO' - прилагательное-местоимение, 'PR' - предлог, 'CONJ' - союз, 'PART'-частица, 'NUM'-числительное, 'ADV'-наречие")]
+        public string IncludePartOfSpeech { get; set; }
 
         [Option('u', "layouter", Required = false, Default = "d", HelpText = "Layoter algorithm")]
         public string Layouter { get; set; }
