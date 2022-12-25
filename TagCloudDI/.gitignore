@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+.vs
 *.com
 *.class
 *.dll
