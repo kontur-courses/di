@@ -31,7 +31,7 @@ namespace TagsCloudContainer
             {
                 StartInfo =
                 {
-                    FileName = "C:/Users/schap/Downloads/di-master/di-master/TagsCloudContainer/bin/mystem.exe",
+                    FileName = "../mystem.exe",
                     Arguments = "-i -n -e cp866",
                     UseShellExecute = false,
                     RedirectStandardInput = true,

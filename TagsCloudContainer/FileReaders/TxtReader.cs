@@ -9,7 +9,10 @@ namespace TagsCloudContainer.FileReaders
         {
             if (!File.Exists(filePath))
                 throw new ArgumentException("File doesn't exist");
-            return File.ReadAllText(filePath).Trim().Split(new[] {Environment.NewLine, " "}, StringSplitOptions.None);
+            var result = File.ReadAllText(filePath);
+            if (result.Length == 0)
+                throw new ArgumentException("Empty file");
+            return result.Trim().Split(new[] {Environment.NewLine, " "}, StringSplitOptions.None);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace TagsCloudContainer.UI
         [Option('o',
             "openpath",
             Required = false,
-            Default = "C:/Users/schap/Downloads/di-master/di-master/TagsCloudContainer/bin/testfile.txt",
+            Default = "../testfile.txt",
             HelpText = "Path to file with words")]
         public string PathToOpen { get; set; }
 
@@ -91,6 +91,7 @@ namespace TagsCloudContainer.UI
                 " 'SPRO' - noun-pronoun, " +
                 " 'V' - verb")]
         public string IncludePartOfSpeech { get; set; }
+        [Option('l', "layouter", Required = false, Default = "d", HelpText = "Layouter algorithm. Variants: 'd' - default algorithm")]
         public string Layouter { get; set; }
     }
 }
