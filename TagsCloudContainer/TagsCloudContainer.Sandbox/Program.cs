@@ -52,7 +52,7 @@ namespace TagsCloudContainer.Sandbox
                     new NamedParameter("boringWords", options.BoringWords)
                 });
             builder.RegisterType<WordsAnalyzer>().As<IWordsAnalyzer>();
-            builder.RegisterType<FileReader>().As<IWordsReader>().WithParameter("filePath", options.FilePath);
+            builder.RegisterType<WordsReader>().As<IWordsReader>().WithParameter("filePath", options.FilePath);
             builder.RegisterType<WordsFilter>().As<IWordsFilter>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<LayoutDrawer>().As<ILayoutDrawer>();
