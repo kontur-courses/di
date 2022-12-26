@@ -8,7 +8,7 @@ namespace TagCloudContainer.FrequencyWords
         public IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words)
         {
             if (words == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(words));
 
             var totalWords = 0;
             var frequencyDict = new Dictionary<string, int>();
