@@ -5,6 +5,7 @@ namespace TagCloudGUI.Interfaces
 {
     public interface IPresetsSettings
     {
+        Switcher UseSort { get; set; }
         Switcher Filtered { get; set; }
         Switcher ToLowerCase { get; set; }
         IFileReader Reader { get; }

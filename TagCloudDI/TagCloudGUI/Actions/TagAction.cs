@@ -42,7 +42,7 @@ namespace TagCloudGUI.Actions
 
         void IActionForm.Perform()
         {
-            algorithmSettings.ImagesDirectory ??= GetFilePathDialog();
+            algorithmSettings.ImagesDirectory = GetFilePathDialog();
 
             SettingsForm.For(algorithmSettings).ShowDialog();
             pointFigure.Reset();
@@ -83,14 +83,14 @@ namespace TagCloudGUI.Actions
 
             var parsedText = presetsSettings.Parser.Parse(originalText);
 
-            if (presetsSettings.Filtered == Switcher.Enabled)
+            if (presetsSettings.Filtered == Switcher.Enabled)   
                 parsedText = boringWordsFilter.FilterWords(parsedText);
 
             var formattedTags = presetsSettings.ToLowerCase == Switcher.Enabled
                 ? presetsSettings.Formatter.Normalize(parsedText, x => x.ToLower())
                 : parsedText;
 
-            var freqTags = presetsSettings.FrequencyCounter.GetTagsFrequency(formattedTags);
+            var freqTags = presetsSettings.FrequencyCounter.GetTagsFrequency(formattedTags, presetsSettings.UseSort == Switcher.Enabled);
 
             return presetsSettings.FontSizer.GetTagsWithSize(freqTags, algorithmSettings.FontSettings);
         }
