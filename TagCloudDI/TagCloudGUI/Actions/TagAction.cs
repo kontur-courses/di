@@ -15,6 +15,7 @@ namespace TagCloudGUI.Actions
         private readonly IAlgorithmSettings algorithmSettings;
         private readonly IBoringWordsFilter boringWordsFilter;
         private readonly ITagCloud tagCloud;
+        private readonly IFrequencySorter frequencySorter;
         private readonly Palette palette;
 
         public TagAction(
@@ -25,6 +26,7 @@ namespace TagCloudGUI.Actions
             IAlgorithmSettings algorithmSettings,
             IBoringWordsFilter boringWordsFilter,
             ITagCloud tagCloud,
+            IFrequencySorter frequencySorter,
             Palette palette)
         {
             this.image = image;
@@ -35,6 +37,7 @@ namespace TagCloudGUI.Actions
             this.pointFigure = pointFigure;
             this.boringWordsFilter = boringWordsFilter;
             this.tagCloud = tagCloud;
+            this.frequencySorter = frequencySorter;
         }
 
         string IActionForm.Category => "Рисование";
@@ -56,6 +59,7 @@ namespace TagCloudGUI.Actions
                 InitialTags(algorithmSettings.ImagesDirectory));
 
             var size = ImageSizer.GetImageSize(tagCloud.GetRectangles());
+
             image.RecreateImage(new ImageSettings { Height = size.Height, Width = size.Width });
             
             DrawCloud();
@@ -92,7 +96,7 @@ namespace TagCloudGUI.Actions
                 ? presetsSettings.Formatter.ApplyFunction(parsedText, x => x.ToLower())
                 : parsedText;
 
-            var freqTags = presetsSettings.FrequencyCounter.GetTagsFrequency(formattedTags, presetsSettings.UseSort == Switcher.Enabled);
+            var freqTags = presetsSettings.FrequencyCounter.GetTagsFrequency(formattedTags, frequencySorter);
 
             return presetsSettings.FontSizer.GetTagsWithSize(freqTags, algorithmSettings.FontSettings);
         }

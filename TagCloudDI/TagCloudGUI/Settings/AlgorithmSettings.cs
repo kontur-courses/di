@@ -51,8 +51,6 @@ namespace TagCloudGUI.Settings
         [DisplayName("Удалять мусор")] public Switcher Filtered { get; set; }
         [DisplayName("Нижний регистр")] public Switcher ToLowerCase { get; set; }
 
-        [DisplayName("Упорядочить слова")] public Switcher UseSort { get; set; }
-
         [Browsable(false)] public IFileReader Reader { get; }
         [Browsable(false)] public IFileParser Parser { get; }
         [Browsable(false)] public IWordProcessor Formatter { get; }

@@ -4,6 +4,6 @@ namespace TagCloudContainer.Interfaces
 {
     public interface IFrequencyCounter
     {
-        IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words, bool useSort);
+        IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words, IFrequencySorter frequencySorter);
     }
 }

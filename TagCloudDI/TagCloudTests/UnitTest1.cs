@@ -8,6 +8,8 @@ using TagCloudContainer.Models;
 using TagCloudContainer.Parsers;
 using TagCloudContainer.Readers;
 using TagCloudContainer.TagsWithFont;
+using TagCloudContainer.TagSorters;
+using TagCloudContainer.FrequencySorters;
 
 namespace TagCloudTests
 {
@@ -72,7 +74,7 @@ word";
                 "b", "b", "b", "b"
             };
 
-            var wordsFrequency = new FrequencyCounter().GetTagsFrequency(words, true).ToList();
+            var wordsFrequency = new FrequencyCounter().GetTagsFrequency(words, new DefaultFrequencySorter()).ToList();
             wordsFrequency.Count().Should().Be(3);
 
             wordsFrequency[0].Count.Should().Be(4);
@@ -107,7 +109,7 @@ word";
            
             var fontTags = fontSizer
                 .GetTagsWithSize(
-                new FrequencyCounter().GetTagsFrequency(words, true),
+                new FrequencyCounter().GetTagsFrequency(words, new RandomFrequencySorter()),
                 new FontSettings() { MaxFontSize = 150, MinFontSize = 50, Font = new FontFamily("Arial") }
                 ).ToList();
 

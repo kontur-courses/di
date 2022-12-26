@@ -5,7 +5,7 @@ namespace TagCloudContainer.FrequencyWords
 {
     public class FrequencyCounter : IFrequencyCounter
     {
-        public IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words, bool useSort)
+        public IEnumerable<TagWithFrequency> GetTagsFrequency(IEnumerable<string> words, IFrequencySorter frequencySorter)
         {
             if (words == null)
                 throw new ArgumentNullException(nameof(words));
@@ -23,14 +23,8 @@ namespace TagCloudContainer.FrequencyWords
                     frequencyDict.Add(word, 1);
             }
 
-            var rand = new Random((int)(DateTime.Now.Ticks % int.MaxValue));
 
-            frequencyDict = frequencyDict
-                .OrderByDescending(x => useSort ? x.Value : rand.Next())
-                .ToDictionary(
-                    x => x.Key,
-                    x => x.Value
-                );
+            frequencyDict = frequencySorter.GetSortedWordsWithFrequancies(frequencyDict);
 
             return frequencyDict
                 .Select(pair => new TagWithFrequency(pair.Key, pair.Value));

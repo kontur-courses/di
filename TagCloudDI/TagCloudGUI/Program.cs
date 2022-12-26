@@ -13,6 +13,8 @@ using TagCloudContainer.TagsWithFont;
 using TagCloudGUI.Actions;
 using TagCloudGUI.Interfaces;
 using TagCloudGUI.Settings;
+using TagCloudContainer.TagSorters;
+using TagCloudContainer.FrequencySorters;
 
 namespace TagCloudGUI
 {
@@ -29,6 +31,7 @@ namespace TagCloudGUI
             var builder = new ContainerBuilder();
             builder.RegisterType<FontSettings>().As<IFontSettings>();
 
+            builder.RegisterType<DefaultFrequencySorter>().As<IFrequencySorter>();
             builder.RegisterType<BoringFilter>().As<IBoringWordsFilter>().SingleInstance();
             builder.RegisterType<WordProcessor>().As<IWordProcessor>().SingleInstance();
             builder.RegisterType<FileLinesParser>().As<IFileParser>().SingleInstance();
