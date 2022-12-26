@@ -8,16 +8,14 @@ namespace TagCloudContainer.Rectangles
     {
         public IEnumerable<RectangleWithText> GetRectangles(IEnumerable<ITag> fontTags)
         {
-            var g = Graphics.FromImage(new Bitmap(1, 1));
+            using var g = Graphics.FromHwnd(IntPtr.Zero);
 
             foreach (var tag in fontTags)
             {
                 var font = new Font(tag.Font, tag.SizeFont);
-                var rectangle = new Rectangle(new Point(0,0), g.MeasureString(tag.Word, font).ToSize());
+                var rectangle = new Rectangle(new Point(0, 0), g.MeasureString(tag.Word, font).ToSize());
                 yield return new RectangleWithText(rectangle, tag.Word, font);
             }
-
-            g.Dispose();
         }
     }
 }
