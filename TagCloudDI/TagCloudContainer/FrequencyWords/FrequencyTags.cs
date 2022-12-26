@@ -17,7 +17,7 @@ namespace TagCloudContainer.FrequencyWords
             {
                 totalWords++;
 
-                if (frequencyDict!.ContainsKey(word))
+                if (frequencyDict.ContainsKey(word))
                     frequencyDict[word]++;
                 else
                     frequencyDict.Add(word, 1);

@@ -7,12 +7,12 @@ namespace TagCloudContainer.Readers
 {
     public class Reader : IFileReader
     {
-        public string TxtRead(string path)
+        static string TxtRead(string path)
         {
             return File.ReadAllText(path);
         }
 
-        public string DocRead(string path)
+        static string DocRead(string path)
         {
             var stringBuilder = new StringBuilder();
             var document = new Document(path);

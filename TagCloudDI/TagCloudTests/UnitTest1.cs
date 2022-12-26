@@ -13,10 +13,6 @@ namespace TagCloudTests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         [Test]
         public void ReaderShould_ParseTextCorrectly()
@@ -53,7 +49,7 @@ word";
         {
             var reader = new Reader();
           
-            var text = reader.DocRead($"test_reader.docx");
+            var text = reader.ReadFile($"test_reader.docx");
             text.Trim().Should().Be("test" + Environment.NewLine + "reader");
         }
 
@@ -62,7 +58,7 @@ word";
         {
             var reader = new Reader();
 
-            var text = reader.TxtRead($"test_reader.txt");
+            var text = reader.ReadFile($"test_reader.txt");
             text.Trim().Should().Be("test" + Environment.NewLine + "reader");
         }
 
