@@ -39,7 +39,7 @@ namespace TagsCloudContainer.ConsoleApp
             var result = wordReader.TryReadWords(settingsProvider.GetTextReaderSettings().Filename)
                                    .Bind(wds => wordPreparer.Prepare(wds))
                                    .Bind(GeneratePlates)
-                                   .Bind(info => (Result)wordPlateVisualizer.DrawPlatesAndSave(info.Plates, info.PictureSize, settingsProvider.GetOutputImageSettings().Filename, info.WordColorSettings))
+                                   .Bind(info => (Result)wordPlateVisualizer.DrawPlatesAndSave(info.Value.Plates, info.Value.PictureSize, settingsProvider.GetOutputImageSettings().Filename, info.Value.WordColorSettings))
                                    .OnSuccess(r => outStream.Write($"Generated and saved to '{settingsProvider.GetOutputImageSettings().Filename}'"))
                                    .OnFail(r => HandleFailedResult(r, outStream));
         }

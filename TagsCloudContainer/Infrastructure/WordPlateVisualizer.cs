@@ -48,11 +48,8 @@ namespace TagsCloudContainer.Infrastructure
         private bool IsWordPlateInsidePicture(WordPlate wordPlate, Size pictureSize)
         {
             var rectangle = wordPlate.WordRectangle.Rectangle;
-            var halfWidth = pictureSize.Width / 2.0;
-            var halfHeight = pictureSize.Height / 2.0;
-
-            return rectangle.Left >= -halfWidth && rectangle.Right <= halfWidth &&
-                   rectangle.Top >= -halfHeight && rectangle.Bottom <= halfHeight;
+            return rectangle.Left >= 0 && rectangle.Right <= pictureSize.Width &&
+                   rectangle.Top >= 0 && rectangle.Bottom <= pictureSize.Height;
         }
 
         public Result DrawPlatesAndSave(WordPlate[] plates, Size size, string filename, WordColorSettings settings)
