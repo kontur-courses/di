@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using CommandLine;
 using CommandLine.Text;
+using FluentResults;
+using System.ComponentModel.DataAnnotations;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.Settings;
 using TagsCloudContainer.Infrastructure.WordColorProviders.Factories;
@@ -19,13 +21,20 @@ namespace TagsCloudContainer.ConsoleApp
             {
                 if(!TryParseOptions(args, out var options, out var message))
                 {
-                    Console.WriteLine(message);
+                    LogMessage(message);
+                    return;
+                }
+
+                var result = IsOptionsValid(options!);
+                if(result.IsFailed)
+                {
+                    LogMessage(string.Join("\n", result.Reasons.Select(reason => reason.Message)));
                     return;
                 }
 
                 var container = ConfigureAndBuildContainer(options!);
                 container.Resolve<Application>().Run(Console.Out);
-            }, e => Console.Write(e.Message));
+            }, e => LogMessage(e.Message));
         }
 
         private static bool TryParseOptions(string[] args, out Options? options, out string message) 
@@ -47,6 +56,18 @@ namespace TagsCloudContainer.ConsoleApp
             }
 
             return true;
+        }
+
+        private static void LogMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private static Result IsOptionsValid(Options options)
+        {
+            var context = new ValidationContext(options!);
+            var results = new List<ValidationResult>();
+            return Validator.TryValidateObject(options!, context, results, true) ? Result.Ok() : Result.Fail(results.Select(r => r.ErrorMessage));
         }
 
         private static IContainer ConfigureAndBuildContainer(Options options)
