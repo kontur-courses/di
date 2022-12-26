@@ -11,7 +11,7 @@ namespace TagCloudGUI.Settings
     public class AlgorithmSettings : IAlgorithmSettings, IPresetsSettings
     {
         public AlgorithmSettings(IFontSettings fontSettings, ICloudDrawer drawer, IFileReader reader, IFileParser parser,
-            IWordFormatter formatter, IFrequencyCounter frequency, IFontSizer sizer)
+            IWordProcessor formatter, IFrequencyCounter frequency, IFontSizer sizer)
         {
             FontSettings = fontSettings;
 
@@ -55,7 +55,7 @@ namespace TagCloudGUI.Settings
 
         [Browsable(false)] public IFileReader Reader { get; }
         [Browsable(false)] public IFileParser Parser { get; }
-        [Browsable(false)] public IWordFormatter Formatter { get; }
+        [Browsable(false)] public IWordProcessor Formatter { get; }
         [Browsable(false)] public IFrequencyCounter FrequencyCounter { get; }
         [Browsable(false)] public IFontSizer FontSizer { get; }
         [Browsable(false)] public ICloudDrawer Drawer { get; }

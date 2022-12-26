@@ -87,7 +87,7 @@ namespace TagCloudGUI.Actions
                 parsedText = boringWordsFilter.FilterWords(parsedText);
 
             var formattedTags = presetsSettings.ToLowerCase == Switcher.Enabled
-                ? presetsSettings.Formatter.Normalize(parsedText, x => x.ToLower())
+                ? presetsSettings.Formatter.ApplyFunction(parsedText, x => x.ToLower())
                 : parsedText;
 
             var freqTags = presetsSettings.FrequencyCounter.GetTagsFrequency(formattedTags, presetsSettings.UseSort == Switcher.Enabled);

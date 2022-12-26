@@ -10,7 +10,7 @@ namespace TagCloudGUI.Interfaces
         Switcher ToLowerCase { get; set; }
         IFileReader Reader { get; }
         IFileParser Parser { get; }
-        IWordFormatter Formatter { get; }
+        IWordProcessor Formatter { get; }
         IFrequencyCounter FrequencyCounter { get; }
         IFontSizer FontSizer { get; }
         ICloudDrawer Drawer { get; }

@@ -1,7 +1,7 @@
 ﻿namespace TagCloudContainer.Interfaces
 {
-    public interface IWordFormatter
+    public interface IWordProcessor
     {
-        IEnumerable<string> Normalize(IEnumerable<string> textWords, Func<string, string> normalizeFunction);
+        IEnumerable<string> ApplyFunction(IEnumerable<string> textWords, Func<string, string> normalizeFunction);
     }
 }

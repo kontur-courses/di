@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using TagCloudContainer;
 using TagCloudContainer.BoringFilters;
-using TagCloudContainer.Formatters;
+using TagCloudContainer.Processors;
 using TagCloudContainer.FrequencyWords;
 using TagCloudContainer.Interfaces;
 using TagCloudContainer.Models;
@@ -30,7 +30,7 @@ namespace TagCloudGUI
             builder.RegisterType<FontSettings>().As<IFontSettings>();
 
             builder.RegisterType<BoringFilter>().As<IBoringWordsFilter>().SingleInstance();
-            builder.RegisterType<WordFormatter>().As<IWordFormatter>().SingleInstance();
+            builder.RegisterType<WordProcessor>().As<IWordProcessor>().SingleInstance();
             builder.RegisterType<FileLinesParser>().As<IFileParser>().SingleInstance();
             builder.RegisterType<Reader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<FontSizer>().As<IFontSizer>().SingleInstance();

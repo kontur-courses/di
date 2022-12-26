@@ -2,7 +2,7 @@ using FluentAssertions;
 using System.Drawing;
 using System.Text;
 using TagCloudContainer.BoringFilters;
-using TagCloudContainer.Formatters;
+using TagCloudContainer.Processors;
 using TagCloudContainer.FrequencyWords;
 using TagCloudContainer.Models;
 using TagCloudContainer.Parsers;
@@ -90,7 +90,7 @@ word";
                 "b", "b", "b", "b"
             };
 
-            var result = new WordFormatter().Normalize(words, s => s.ToUpper()).ToArray();
+            var result = new WordProcessor().ApplyFunction(words, s => s.ToUpper()).ToArray();
 
             for (var i = 0; i < words.Count(); i++)
                 words[i].ToUpper().Should().Be(result[i]);
