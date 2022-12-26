@@ -42,7 +42,7 @@ namespace TagCloudContainer
             if (!rectangles.Select(x => x.Rectangle.Contains(point)).Contains(true))
                 emptyPoints.Add(point);
 
-            if (!Contains(rectangles, point, nextSizeRectangle.Current.Rectangle.Size))
+            if (!HasIntersection(rectangles, point, nextSizeRectangle.Current.Rectangle.Size))
                 nextIteration = AddRectangle(point, nextSizeRectangle);
 
             return false;
@@ -53,7 +53,7 @@ namespace TagCloudContainer
             if (filledEmptySpaced.Value && emptyPoints.Any())
             {
                 for (var i = 0; i < emptyPoints.Count; i++)
-                    if (!Contains(rectangles, emptyPoints[i], nextRectangle.Current.Rectangle.Size))
+                    if (!HasIntersection(rectangles, emptyPoints[i], nextRectangle.Current.Rectangle.Size))
                         AddRectangle(emptyPoints[i], nextRectangle);
                 filledEmptySpaced = false;
             }
@@ -81,13 +81,12 @@ namespace TagCloudContainer
             return true;
         }
 
-        private static bool Contains(IEnumerable<RectangleWithText> rectangles, Point point,
+        private static bool HasIntersection(IEnumerable<RectangleWithText> rectangles, Point point,
             Size size)
         {
             return rectangles
-                .Select(x => x.Rectangle
-                    .IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
-                .Contains(true);
+                .Any(x => x.Rectangle
+                    .IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)));
         }
     }
 }
