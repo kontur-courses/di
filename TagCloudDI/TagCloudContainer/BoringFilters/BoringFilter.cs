@@ -6,16 +6,6 @@ namespace TagCloudContainer.BoringFilters
 {
     public class BoringFilter : IBoringWordsFilter
     {
-        public IEnumerable<string> FilterText(string text)
-        {
-            DownloadRuntimeIfNotExist();
-
-            MystemMultiThread mystem = new(1, @"mystem.exe");
-            return mystem.StemWords(text)!
-                .Where(l => !l.IsSlug)
-                .Select(l => l.Lemma);
-        }
-
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
             DownloadRuntimeIfNotExist();

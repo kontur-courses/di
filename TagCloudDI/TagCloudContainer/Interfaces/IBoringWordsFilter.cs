@@ -8,8 +8,6 @@ namespace TagCloudContainer.Interfaces
 {
     public interface IBoringWordsFilter
     {
-        IEnumerable<string> FilterText(string text);
-
         IEnumerable<string> FilterWords(IEnumerable<string> text);
     }
 }
