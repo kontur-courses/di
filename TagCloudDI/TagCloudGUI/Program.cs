@@ -48,7 +48,10 @@ namespace TagCloudGUI
             builder.RegisterType<PictureBoxTags>().As<IImageSettingsProvider, PictureBoxTags>().SingleInstance();
             builder.RegisterType<AlgorithmSettings>().As<IPresetsSettings, IAlgorithmSettings>().SingleInstance();
 
-            builder.RegisterTypes(typeof(TagCloud), typeof(RectangleWithText), typeof(CloudForm), typeof(ImageSettings)).AsSelf();
+            builder.RegisterType<TagCloud>().As<ITagCloud>();
+            builder.RegisterTypes(typeof(RectangleWithText), typeof(CloudForm), typeof(ImageSettings)).AsSelf();
+            
+            
             var container = builder.Build();
             Application.Run(container.Resolve<CloudForm>());
 

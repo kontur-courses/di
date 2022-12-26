@@ -14,6 +14,7 @@ namespace TagCloudGUI.Actions
         private readonly IRectangleBuilder rectangleBuilder;
         private readonly IAlgorithmSettings algorithmSettings;
         private readonly IBoringWordsFilter boringWordsFilter;
+        private readonly ITagCloud tagCloud;
         private readonly Palette palette;
 
         public TagAction(
@@ -23,6 +24,7 @@ namespace TagCloudGUI.Actions
             IImageSettingsProvider image,
             IAlgorithmSettings algorithmSettings,
             IBoringWordsFilter boringWordsFilter,
+            ITagCloud tagCloud,
             Palette palette)
         {
             this.image = image;
@@ -32,6 +34,7 @@ namespace TagCloudGUI.Actions
             this.rectangleBuilder = rectangleBuilder;
             this.pointFigure = pointFigure;
             this.boringWordsFilter = boringWordsFilter;
+            this.tagCloud = tagCloud;
         }
 
         string IActionForm.Category => "Рисование";
@@ -47,16 +50,15 @@ namespace TagCloudGUI.Actions
             SettingsForm.For(algorithmSettings).ShowDialog();
             pointFigure.Reset();
 
-            var cloud = new TagCloud();
-            cloud.CreateTagCloud(
+            tagCloud.CreateTagCloud(
                 pointFigure,
                 rectangleBuilder,
                 InitialTags(algorithmSettings.ImagesDirectory));
 
-            var size = ImageSizer.GetImageSize(cloud.GetRectangles());
+            var size = ImageSizer.GetImageSize(tagCloud.GetRectangles());
             image.RecreateImage(new ImageSettings { Height = size.Height, Width = size.Width });
             
-            DrawCloud(cloud);
+            DrawCloud();
         }
 
         private string GetFilePathDialog()
@@ -71,9 +73,9 @@ namespace TagCloudGUI.Actions
             return openFileDialog1.FileName;
         }
 
-        private void DrawCloud(TagCloud cloud)
+        private void DrawCloud()
         {
-            presetsSettings.Drawer.DrawCloudFromPalette(cloud.GetRectangles(), image,
+            presetsSettings.Drawer.DrawCloudFromPalette(tagCloud.GetRectangles(), image,
                     palette);
         }
 

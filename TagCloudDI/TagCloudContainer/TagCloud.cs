@@ -4,7 +4,7 @@ using TagCloudContainer.Models;
 
 namespace TagCloudContainer
 {
-    public class TagCloud
+    public class TagCloud : ITagCloud
     {
         private readonly List<RectangleWithText> rectangles;
         private readonly List<Point> emptyPoints;
