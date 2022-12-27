@@ -19,11 +19,18 @@ public class TagCloudPlacer : ITagCloudPlacer
         ISizeInvestigator sizeInvestigator)
     {
         _tagCloudContainerConfig =
-            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+            tagCloudContainerConfig ?? throw new ArgumentNullException(
+                nameof(tagCloudContainerConfig), 
+                "Tag cloud config can't be null");
+        
         _tagCloudFormConfig =
-            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
+            tagCloudFormConfig ?? throw new ArgumentNullException(
+                nameof(tagCloudFormConfig),
+                "Tag cloud form config can't be null");
         _sizeInvestigator = 
-            sizeInvestigator ?? throw new ArgumentNullException("Size investigator can't be null");
+            sizeInvestigator ?? throw new ArgumentNullException(
+                nameof(sizeInvestigator),
+                "Size investigator can't be null");
     }
 
     public Result<Word> PlaceInCloud(Word word)
@@ -34,9 +41,8 @@ public class TagCloudPlacer : ITagCloudPlacer
         if (_nearestToTheCenterPoints.Count == 0)
             AddFreePoint(_tagCloudContainerConfig.Center);
 
-        var wordFontSize = new Font(_tagCloudFormConfig.FontFamily,
-            word.Weight * _tagCloudContainerConfig.StandartSize.Width);
-        try
+        using (var wordFontSize = new Font(_tagCloudFormConfig.FontFamily,
+            word.Weight * _tagCloudContainerConfig.StandartSize.Width))
         {
             word.Size = TextRenderer
                 .MeasureText(word.Value, wordFontSize);
@@ -50,12 +56,9 @@ public class TagCloudPlacer : ITagCloudPlacer
 
             word.Position = new Point(rectangle.X, rectangle.Y);
 
+            wordFontSize.Dispose();
             if (_sizeInvestigator.DidFit(word))
                 return Result.Fail<Word>("Picture doesn't fit in form area");
-        }
-        finally
-        {
-            wordFontSize.Dispose();
         }
 
         return Result.Ok(word);

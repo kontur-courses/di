@@ -18,12 +18,12 @@ public partial class TagCloud : Form
         IImageCreator imageCreator)
     {
         _tagCloudProvider = 
-            tagCloudProvider ?? throw new ArgumentNullException("Tag cloud provider can't be null");
-        _imageCreator = imageCreator ?? throw new ArgumentNullException("Image creator can't be null");
+            tagCloudProvider ?? throw new ArgumentNullException(nameof(tagCloudProvider), "Tag cloud provider can't be null");
+        _imageCreator = imageCreator ?? throw new ArgumentNullException(nameof(imageCreator),"Image creator can't be null");
         _tagCloudContainerConfig =
-            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+            tagCloudContainerConfig ?? throw new ArgumentNullException(nameof(tagCloudContainerConfig),"Tag cloud config can't be null");
         _tagCloudFormConfig = 
-            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
+            tagCloudFormConfig ?? throw new ArgumentNullException(nameof(tagCloudFormConfig),"Tag cloud form config can't be null");
 
         InitializeComponent();
         SetupWindow();
@@ -61,26 +61,17 @@ public partial class TagCloud : Form
 
     private void DrawWords(PaintEventArgs e, Result<List<Word>> words)
     {
-        var pen = new Pen(_tagCloudFormConfig.Color);
-        try
+        using (var pen = new Pen(_tagCloudFormConfig.Color))
         {
             foreach (var word in words.GetValueOrThrow())
             {
-                var font = new Font(_tagCloudFormConfig.FontFamily,
-                    word.Weight * _tagCloudContainerConfig.StandartSize.Width);
-                try
+                using (var font = new Font(_tagCloudFormConfig.FontFamily,
+                           word.Weight * _tagCloudContainerConfig.StandartSize.Width))
                 {
                     _graphics.DrawString(word.Value, font, pen.Brush, word.Position);
-                }
-                finally
-                {
                     font.Dispose();
                 }
             }
-
-        }
-        finally
-        {
             pen.Dispose();
         }
     }

@@ -20,15 +20,15 @@ public partial class Settings : Form
         IConfigValidator<ITagCloudFormConfig> tagCloudFormConfigValidator,
         IConfigValidator<ITagCloudContainerConfig> tagCloudContainerConfigValidator)
     {
-        _tagCloud = tagCloud ?? throw new ArgumentNullException("Tag cloud can't be null");
+        _tagCloud = tagCloud ?? throw new ArgumentNullException(nameof(tagCloud),"Tag cloud can't be null");
         _tagCloudContainerConfig = 
-            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+            tagCloudContainerConfig ?? throw new ArgumentNullException(nameof(tagCloudContainerConfig),"Tag cloud config can't be null");
         _tagCloudFormConfig = 
-            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
+            tagCloudFormConfig ?? throw new ArgumentNullException(nameof(tagCloudFormConfig),"Tag cloud form config can't be null");
         _tagCloudFormConfigValidator = 
-            tagCloudFormConfigValidator ?? throw new ArgumentNullException("Tag cloud config validator can't be null");
+            tagCloudFormConfigValidator ?? throw new ArgumentNullException(nameof(tagCloudFormConfigValidator),"Tag cloud config validator can't be null");
         _tagCloudContainerConfigValidator = 
-            tagCloudContainerConfigValidator ?? throw new ArgumentNullException("Tag cloud form config validator can't be null");
+            tagCloudContainerConfigValidator ?? throw new ArgumentNullException(nameof(tagCloudContainerConfigValidator),"Tag cloud form config validator can't be null");
 
         InitializeComponent();
     }

@@ -13,9 +13,9 @@ public class WordsReader : IWordsReader
     public WordsReader(IWordValidator wordValidator, ITagCloudContainerConfig tagCloudContainerConfig)
     {
         _tagCloudContainerConfig = 
-            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+            tagCloudContainerConfig ?? throw new ArgumentNullException(nameof(tagCloudContainerConfig),"Tag cloud config can't be null");
         _wordValidator = 
-            wordValidator ?? throw new ArgumentNullException("Word validator can't be null");
+            wordValidator ?? throw new ArgumentNullException(nameof(wordValidator),"Word validator can't be null");
     }
     
     public IEnumerable<Word> GetWordsFromFile(string filePath)

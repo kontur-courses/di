@@ -16,10 +16,10 @@ public class TagCloudProvider : ITagCloudProvider
         ITagCloudContainerConfig tagCloudContainerConfig)
     {
         if (wordsReader == null)
-            throw new ArgumentNullException("Word reader can't be null");
+            throw new ArgumentNullException(nameof(wordsReader),"Word reader can't be null");
         
-        _tagCloudPlacer = tagCloudPlacer ?? throw new ArgumentNullException("Tag cloud placer can't be null");
-        _tagCloudContainerConfig = tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+        _tagCloudPlacer = tagCloudPlacer ?? throw new ArgumentNullException(nameof(tagCloudPlacer),"Tag cloud placer can't be null");
+        _tagCloudContainerConfig = tagCloudContainerConfig ?? throw new ArgumentNullException(nameof(tagCloudContainerConfig),"Tag cloud config can't be null");
         
         var wordsFilePath = _tagCloudContainerConfig.FilePath;
         _words = wordsReader.GetWordsFromFile(wordsFilePath);

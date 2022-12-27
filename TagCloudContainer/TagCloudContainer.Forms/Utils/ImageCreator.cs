@@ -10,7 +10,7 @@ public class ImageCreator : IImageCreator
     public ImageCreator(ITagCloudFormConfig tagCloudFormConfig)
     {
         _tagCloudFormConfig = 
-            tagCloudFormConfig ?? throw new ArgumentNullException("Tag cloud form config can't be null");
+            tagCloudFormConfig ?? throw new ArgumentNullException(nameof(tagCloudFormConfig),"Tag cloud form config can't be null");
     }
     
     public void Save(Form form, string path)

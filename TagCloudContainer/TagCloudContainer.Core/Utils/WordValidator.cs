@@ -18,7 +18,7 @@ public class WordValidator : IWordValidator
     public WordValidator(ITagCloudContainerConfig tagCloudContainerConfig)
     {
         _tagCloudContainerConfig = 
-            tagCloudContainerConfig ?? throw new ArgumentNullException("Tag cloud config can't be null");
+            tagCloudContainerConfig ?? throw new ArgumentNullException(nameof(tagCloudContainerConfig),"Tag cloud config can't be null");
     }
     
     public IEnumerable<string> Validate(IEnumerable<string> lines)
