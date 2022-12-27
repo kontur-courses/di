@@ -56,7 +56,6 @@ public class TagCloudPlacer : ITagCloudPlacer
 
             word.Position = new Point(rectangle.X, rectangle.Y);
 
-            wordFontSize.Dispose();
             if (_sizeInvestigator.DidFit(word))
                 return Result.Fail<Word>("Picture doesn't fit in form area");
         }

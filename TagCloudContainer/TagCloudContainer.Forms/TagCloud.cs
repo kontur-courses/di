@@ -69,10 +69,8 @@ public partial class TagCloud : Form
                            word.Weight * _tagCloudContainerConfig.StandartSize.Width))
                 {
                     _graphics.DrawString(word.Value, font, pen.Brush, word.Position);
-                    font.Dispose();
                 }
             }
-            pen.Dispose();
         }
     }
 
