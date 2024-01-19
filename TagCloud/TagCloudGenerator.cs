@@ -1,4 +1,5 @@
 ﻿using System.CodeDom.Compiler;
+using System.Drawing;
 using TagCloud.TextHandlers;
 //TODO: перенести в TagCloud
 using TagCloudTests;
@@ -20,6 +21,11 @@ public class TagCloudGenerator
 
     public void Generate()
     {
-        throw new NotImplementedException();
+        var rectangles = new List<Rectangle>();
+        foreach (var (word, count) in handler.Handle())
+        {
+            rectangles.Add(layouter.PutNextRectangle(new Size(10*count, 5*count)));
+        }
+        drawer.Draw(rectangles);
     }
 }

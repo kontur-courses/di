@@ -25,16 +25,16 @@ class Program
             {
                 services.AddScoped<TagCloudGenerator>();
                 
+                services.AddScoped<ICloudShaper>(provider => SpiralCloudShaper.Create(new Point(0, 0)));
                 services.AddScoped<CircularCloudLayouter>(provider => new CircularCloudLayouter(
                         new Point(0,0),
                         provider.GetService<ICloudShaper>()
                     )
                 );
-                services.AddScoped<ICloudShaper, SpiralCloudShaper>();
                 
                 //TODO: file + name, may be directory and names
                 services.AddScoped<ICloudDrawer>(provider => TagCloudDrawer.Create(
-                        o.File, 
+                        o.Path, 
                         "rnd", 
                         provider.GetService<IColorSelector>()
                     )
@@ -44,7 +44,12 @@ class Program
                 else
                     services.AddScoped<IColorSelector>(provider => new ConstantColorSelector(Color.Black));
                 
-                services.AddScoped<ITextHandler, FileTextHandler>();
+                services.AddScoped<ITextHandler>(provider => 
+                    new FileTextHandler(
+                        File.Open(@"..\..\..\Fails\text.txt", 
+                            FileMode.Open)
+                        )
+                );
             });
         return services;
     }

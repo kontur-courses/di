@@ -4,9 +4,9 @@ namespace TagCloudApplication;
 
 public class Options
 {
-    [Option('f', "filename", Required = true, HelpText = "Set filename.")]
-    public string File { get; set; }
+    [Option('p', "path", HelpText = "Set path.", Default = @"..\..\..\Fails")]
+    public string Path { get; set; }
         
-    [Option('c', "color", Required = true, HelpText = "Set filename.", Default = "r")]
+    [Option('c', "color", HelpText = "Set color.", Default = "random")]
     public string ColorScheme { get; set; }
 }
