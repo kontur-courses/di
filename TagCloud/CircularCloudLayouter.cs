@@ -10,11 +10,11 @@ public class CircularCloudLayouter
 
     public IEnumerable<Rectangle> Rectangles => rectangles;
 
-    public CircularCloudLayouter(Point center)
+    public CircularCloudLayouter(Point center, ICloudShaper shaper)
     {
         this.center = center;
         rectangles = new List<Rectangle>();
-        shaper = SpiralCloudShaper.Create(this.center);
+        this.shaper = shaper;
     }
 
     public Rectangle PutNextRectangle(Size size)

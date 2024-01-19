@@ -4,5 +4,5 @@ namespace TagCloudTests;
 
 public interface ICloudDrawer
 {
-    void Draw(IEnumerable<Rectangle> rectangle, string name);
+    void Draw(IEnumerable<Rectangle> rectangle);
 }
