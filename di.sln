@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{405FAAB3-6E4C-487C-9429-43529876FB44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudWindorms", "TagsCloudWindorms\TagsCloudWindorms.csproj", "{E8F573BE-2D9B-46E4-B0F5-BC08BF84A719}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{405FAAB3-6E4C-487C-9429-43529876FB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{405FAAB3-6E4C-487C-9429-43529876FB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{405FAAB3-6E4C-487C-9429-43529876FB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{405FAAB3-6E4C-487C-9429-43529876FB44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F573BE-2D9B-46E4-B0F5-BC08BF84A719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F573BE-2D9B-46E4-B0F5-BC08BF84A719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F573BE-2D9B-46E4-B0F5-BC08BF84A719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F573BE-2D9B-46E4-B0F5-BC08BF84A719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
