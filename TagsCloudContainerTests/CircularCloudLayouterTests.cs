@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
-using SixLabors.ImageSharp.Formats.Jpeg;
 using TagsCloudContainer;
 
 namespace TagsCloudContainerTests;
@@ -26,9 +25,9 @@ public class CircularCloudLayouterTests
         if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
         {
             using var imageGenerator = new ImageGenerator(
-                FileHandler.GetRelativeFilePath($"out/{FailOutputName}.jpg"),
+                FileHandler.GetRelativeFilePath($"out/{FailOutputName}"), ImageEncodings.Png,
                 FileHandler.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
-                30, 1920, 1080, new JpegEncoder { Quality = 100 }
+                30, 1920, 1080
             );
             imageGenerator.DrawLayout(circularCloudLayouter.PlacedRectangles);
             Console.WriteLine("Tag cloud visualization saved to file " +
