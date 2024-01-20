@@ -3,42 +3,58 @@ namespace TagsCloudContainer.utility;
 public static class WordHandler
 {
     private static readonly Predicate<string> BoringWordsExcludeRule = w => w.Length > 3;
-
+    
     public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict, bool excludeBoring = true,
-        string? customExcludeFilename = null)
+        IEnumerable<(string word, int count)> frequencyDict,
+        bool excludeByDefaultFile, bool excludeByDefaultRule)
     {
-        return Preprocessing(frequencyDict, excludeBoring, customExcludeFilename, null);
+        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, null, null);
+    }
+    
+    public static IEnumerable<(string word, int count)> Preprocessing(
+        IEnumerable<(string word, int count)> frequencyDict,
+        bool excludeByDefaultFile, bool excludeByDefaultRule,
+        string? customExcludeFilename)
+    {
+        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, customExcludeFilename, null);
     }
 
     public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict, bool excludeBoring = true,
-        Predicate<string>? customExcludeRule = null)
+        IEnumerable<(string word, int count)> frequencyDict,
+        bool excludeByDefaultFile, bool excludeByDefaultRule,
+        Predicate<string>? customExcludeRule)
     {
-        return Preprocessing(frequencyDict, excludeBoring, null, customExcludeRule);
+        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, null, customExcludeRule);
     }
 
     public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict, bool excludeBoring = true,
-        string? customExcludeFilename = null, Predicate<string>? customExcludeRule = null)
+        IEnumerable<(string word, int count)> frequencyDict, bool excludeByDefaultFile, bool excludeByDefaultRule,
+        string? customExcludeFilename, Predicate<string>? customExcludeRule)
     {
-        if (!excludeBoring)
-            return frequencyDict.Select(kvp => (kvp.word.ToLower(), kvp.count));
+        frequencyDict = frequencyDict.Select(kvp => (kvp.word.ToLower(), kvp.count));
 
-        var boringDict = WordDataSet.CreateFrequencyDict(
-            TextHandler.ReadText("boringWords.txt")
-        ).Select(kvp => kvp.word.ToLower());
+        if (excludeByDefaultFile)
+        {
+            var defaultBoringDict = WordDataSet.CreateFrequencyDict(
+                TextHandler.ReadText("boringWords.txt")
+            ).Select(kvp => kvp.word.ToLower());
+            frequencyDict = frequencyDict.Where(kvp => !defaultBoringDict.Contains(kvp.word));
+        }
+
+        if (excludeByDefaultRule)
+            frequencyDict = frequencyDict.Where(kvp => BoringWordsExcludeRule(kvp.word));
 
         if (customExcludeFilename != null)
         {
-            boringDict = boringDict.Union(WordDataSet.CreateFrequencyDict(
+            var defaultBoringDict = WordDataSet.CreateFrequencyDict(
                 TextHandler.ReadText(customExcludeFilename)
-            ).Select(kvp => kvp.word.ToLower()));
+            ).Select(kvp => kvp.word.ToLower());
+            frequencyDict = frequencyDict.Where(kvp => !defaultBoringDict.Contains(kvp.word));
         }
 
-        return frequencyDict.Select(kvp => (kvp.word.ToLower(), kvp.count))
-            .Where(kvp => BoringWordsExcludeRule(kvp.Item1))
-            .Where(kvp => customExcludeRule == null || customExcludeRule(kvp.Item1))
-            .Where(kvp => !boringDict.Contains(kvp.Item1));
+        if (customExcludeRule != null)
+            frequencyDict = frequencyDict.Where(kvp => customExcludeRule(kvp.word));
+
+        return frequencyDict;
     }
 }

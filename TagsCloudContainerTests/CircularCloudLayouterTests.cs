@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
-using TagsCloudContainer;
 using TagsCloudContainer.Image;
 using TagsCloudContainer.TagCloud;
 using TagsCloudContainer.utility;

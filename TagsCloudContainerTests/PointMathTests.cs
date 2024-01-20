@@ -1,6 +1,5 @@
 using System.Drawing;
 using FluentAssertions;
-using TagsCloudContainer;
 using TagsCloudContainer.utility;
 
 namespace TagsCloudContainerTests;

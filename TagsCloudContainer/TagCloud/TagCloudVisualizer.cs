@@ -3,8 +3,7 @@ using TagsCloudContainer.Image;
 
 namespace TagsCloudContainer.TagCloud;
 
-public class TagCloudVisualizer(ICircularCloudLayouter circularCloudLayouter,
-    ImageGenerator imageGenerator)
+public class TagCloudVisualizer(ICircularCloudLayouter circularCloudLayouter, ImageGenerator imageGenerator)
 {
     public void GenerateTagCloud(IEnumerable<(string word, int count)> frequencyDict)
     {
