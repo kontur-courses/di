@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.WordProcessing.WordInput;
+﻿using TagsCloudContainer.WordProcessing.WordFiltering;
+
+namespace TagsCloudContainer.WordProcessing.WordInput;
 
 
 public class TxtFileWordParser : IWordProvider

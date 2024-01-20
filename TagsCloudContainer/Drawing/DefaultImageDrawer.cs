@@ -37,6 +37,6 @@ public class DefaultImageDrawer : IImageDrawer
 
     public static void SaveImage(Bitmap bitmap)
     {
-        bitmap.Save(Path.Combine(Directory.GetCurrentDirectory(), "image.jpeg"), ImageFormat.Jpeg);
+        bitmap.Save(Path.Combine(Directory.GetCurrentDirectory(), "image.png"), ImageFormat.Png);
     }
 }

@@ -15,27 +15,25 @@ public static class Program
     public static void Main(string[] args)
     {
         var containerBuilder = new ContainerBuilder();
+
+        containerBuilder
+            .RegisterInstance(new TxtFileWordParser("words.txt"))
+            .As<IWordProvider>()
+            .SingleInstance();
         
-        containerBuilder.RegisterType<DefaultWordFiler>()
-            .Named<IWordProvider>("filtered_words")
-            .WithParameter((pi, _) => pi.Name == "words", (_, c) => c.Resolve<IWordProvider>())
-            .WithParameter((pi, _) => pi.Name == "wordsToExclude", (_, c) => c.ResolveNamed<IWordProvider>("filter"))
+        containerBuilder
+            .RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("filter.txt")))
+            .As<IWordFilter>()
             .SingleInstance();
 
-        containerBuilder.RegisterType<DefaultWordGrouper>()
-            .As<IWordGrouperProvider>()
-            .WithParameter((pi, _) => pi.Name == "words", (_, c) => c.ResolveNamed<IWordProvider>("filtered_words").Words)
+        containerBuilder.RegisterType<DefaultWordProcessor>()
+            .As<IProcessedWordProvider>()
             .SingleInstance();
 
-        containerBuilder.RegisterType<CircularCloudLayouter>()
+        containerBuilder.RegisterInstance(new CircularCloudLayouter(Point.Empty))
             .As<ICloudLayouter>()
-            .WithParameter("center", new Point(0, 0))
             .SingleInstance();
-
-        containerBuilder.RegisterType<DefaultOptionsProvider>()
-            .As<IOptionsProvider>()
-            .SingleInstance();
-
+        
         containerBuilder.RegisterType<DefaultWordCloudDistributor>()
             .As<IWordCloudDistributorProvider>()
             .SingleInstance();
@@ -44,14 +42,8 @@ public static class Program
             .As<IImageDrawer>()
             .SingleInstance();
 
-        containerBuilder
-            .RegisterInstance(new TxtFileWordParser("words.txt"))
-            .As<IWordProvider>()
-            .SingleInstance();
-
-        containerBuilder
-            .RegisterInstance(new TxtFileWordParser("filter.txt"))
-            .Named<IWordProvider>("filter")
+        containerBuilder.RegisterType<DefaultOptionsProvider>()
+            .As<IOptionsProvider>()
             .SingleInstance();
         
         var containter = containerBuilder.Build();

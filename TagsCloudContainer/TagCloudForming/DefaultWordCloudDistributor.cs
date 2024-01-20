@@ -12,10 +12,10 @@ public class DefaultWordCloudDistributor : IWordCloudDistributorProvider
     private readonly ICloudLayouter _cloudLayouter;
     private readonly Options _options;
 
-    public DefaultWordCloudDistributor(IWordGrouperProvider wordGrouper, ICloudLayouter cloudLayouter,
+    public DefaultWordCloudDistributor(IProcessedWordProvider processedWord, ICloudLayouter cloudLayouter,
         IOptionsProvider optionsProvider)
     {
-        _words = wordGrouper.GrouppedWords;
+        _words = processedWord.ProcessedWords;
         _cloudLayouter = cloudLayouter;
         _options = optionsProvider.Options;
     }
