@@ -1,8 +1,9 @@
 using System.Drawing;
+using TagsCloudContainer.utility;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.TagCloud;
 
-public class CircularCloudLayouter(Point center)
+public class CircularCloudLayouter(Point center) : ICircularCloudLayouter
 {
     private int radius;
     private int minDimension = int.MaxValue;

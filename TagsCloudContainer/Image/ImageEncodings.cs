@@ -5,7 +5,7 @@ using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Formats.Tiff;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.Image;
 
 public static class ImageEncodings
 {

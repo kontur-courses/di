@@ -1,33 +1,32 @@
 ﻿using System.Drawing;
 using Color = SixLabors.ImageSharp.Color;
-using TagsCloudContainer;
+using TagsCloudContainer.Image;
+using TagsCloudContainer.TagCloud;
+using TagsCloudContainer.utility;
 
 using var imageGenerator = new ImageGenerator(
-    FileHandler.GetRelativeFilePath("out/res"), ImageEncodings.Png,
-    FileHandler.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
+    Utility.GetRelativeFilePath("out/res"), ImageEncodings.Jpg,
+    Utility.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
     30, 1920, 1080,
-    Color.FromRgb(33,0,46),
-    frequency => (
-        (byte)(frequency == 1 ? 84 : frequency <= 5 ? 255 : 57),
-        (byte)(frequency == 1 ? 253 : frequency <= 5 ? 122 : 108),
-        (byte)(frequency == 1 ? 158 : frequency <= 5 ? 254 : 255),
-        (byte)Math.Min(255, 200 + frequency * 5)
+    Color.FromRgb(33, 0, 46),
+    (w, freq) => (
+        (byte)(freq == 1 ? 84 : freq <= 5 ? 255 : 57),
+        (byte)(freq == 1 ? 253 : freq <= 5 ? 122 : 108),
+        (byte)(freq == 1 ? 158 : freq <= 5 ? 254 : 255),
+        (byte)Math.Min(255, 255 - w.Length * 20)
     )
 );
 
 new TagCloudVisualizer(
     new CircularCloudLayouter(new Point(960, 540)),
     imageGenerator
-).GenerateTagCloud(new WordsDataSet(FileHandler.ReadText("words")));
-
-/*
-using var imageGenerator = new ImageGenerator(
-    FileHandler.GetRelativeFilePath("out/res"), Encoder.Jpg,
-    FileHandler.GetSourceRelativeFilePath("JosefinSans-Regular.ttf"),
-    30, 1920, 1080);
-
-new TagCloudVisualizer(
-    new CircularCloudLayouter(new Point(960, 540)),
-    imageGenerator
-).GenerateTagCloud(new WordsDataSet(Words.Preprocessing(FileHandler.ReadText("words"))));
-*/
+).GenerateTagCloud(
+    WordHandler.Preprocessing(
+        WordDataSet.CreateFrequencyDict(
+            TextHandler.ReadText("mars.docx")
+        ), 
+        true, 
+        "boringCustom.txt", 
+        w => w.Length < 10
+    )
+);

@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.utility;
 
-public class WordsDataSet(string text)
+public static class WordDataSet
 {
-    public IEnumerable<(string word, int count)> CreateFrequencyDict()
+    public static IEnumerable<(string word, int count)> CreateFrequencyDict(string text)
     {
         var words = Regex
             .Matches(text, @"[\w\d]+")

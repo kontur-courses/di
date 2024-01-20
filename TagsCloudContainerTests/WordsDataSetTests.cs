@@ -1,5 +1,6 @@
 using FluentAssertions;
 using TagsCloudContainer;
+using TagsCloudContainer.utility;
 
 namespace TagsCloudContainerTests;
 
@@ -18,7 +19,7 @@ public class WordsDataSetTests
             { "Three", 3 }
         }.Select(kv => (kv.Key, kv.Value));
 
-        var actual = new WordsDataSet(testString).CreateFrequencyDict();
+        var actual = WordDataSet.CreateFrequencyDict(testString);
 
         actual.Should().Equal(expected);
     }
