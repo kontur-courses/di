@@ -12,4 +12,27 @@ public static class DrawingUtils
         var newFont = new Font(font.FontFamily, font.Size + sizeIncrement, font.Style);
         return Size.Ceiling(Graphics.MeasureString(word, newFont));
     }
+
+    public static bool TryParseRgb(string? rgbString, out Color color, char separator = ' ')
+    {
+        if (string.IsNullOrWhiteSpace(rgbString))
+        {
+            color = default;
+            return false;
+        }
+
+        var numbers = rgbString.Split(separator);
+        if (numbers.Length != 3 || numbers.Any(n => !int.TryParse(n, out var parsed) || parsed < 0 || parsed > 255))
+        {
+            color = default;
+            return false;
+        }
+
+        var asInts = numbers
+            .Select(int.Parse)
+            .ToArray();
+
+        color = Color.FromArgb(asInts[0], asInts[1], asInts[2]);
+        return true;
+    }
 }

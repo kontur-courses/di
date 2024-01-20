@@ -23,7 +23,7 @@ public class TxtFileWordParser : IWordProvider
         }
         catch (Exception e)
         {
-            throw new IOException($"Failed to read from file {_filePath} Most likely the file path is incorrect.", e);
+            throw new IOException($"Failed to read from file {_filePath} Most likely the file path is incorrect or the file is corrupted.", e);
         }
 
         return line;

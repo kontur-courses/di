@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using TagsCloudContainer.Common;
+using TagsCloudContainer.Drawing.Colorers;
 using TagsCloudContainer.DrawingOptions;
 using TagsCloudContainer.TagCloudForming;
 
@@ -10,11 +11,12 @@ public class DefaultImageDrawer : IImageDrawer
 {
     private readonly IReadOnlyDictionary<string, Word> _distributedWords;
     private readonly Options _options;
-
-    public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider, IOptionsProvider optionsProvider)
+    private readonly IWordColorer _colorer;
+    public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider, IOptionsProvider optionsProvider, IWordColorer colorer)
     {
         _distributedWords = cloudDistributorProvider.DistributedWords;
         _options = optionsProvider.Options;
+        _colorer = colorer;
     }
 
     public Bitmap DrawImage()
@@ -28,7 +30,7 @@ public class DefaultImageDrawer : IImageDrawer
         {
             var sizeAdd = _options.FrequencyScaling * (word.Frequency - 1);
             var newFont = new Font(_options.Font.FontFamily, _options.Font.Size + sizeAdd, _options.Font.Style);
-            graphics.DrawString(value, newFont, new SolidBrush(_options.FontColor),
+            graphics.DrawString(value, newFont, new SolidBrush(_colorer.GetWordColor(value, word.Frequency)),
                 word.Rectangle with {X = word.Rectangle.X + offset.X, Y = word.Rectangle.Y + offset.Y});
         }
 

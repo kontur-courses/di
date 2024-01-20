@@ -4,9 +4,18 @@ namespace TagsCloudContainer.DrawingOptions;
 
 public class Options
 {
-    public Color FontColor { get; set; }
-    public Color BackgroundColor { get; set; }
-    public Size ImageSize { get; set; }
-    public Font Font { get; set; }
-    public int FrequencyScaling { get; set; }
+    public Color FontColor { get; }
+    public Color BackgroundColor { get; }
+    public Size ImageSize { get; }
+    public Font Font { get; }
+    public int FrequencyScaling { get; }
+
+    public Options(Color fontColor, Color backgroundColor, Size imageSize, Font font, int frequencyScaling)
+    {
+        FontColor = fontColor;
+        BackgroundColor = backgroundColor;
+        ImageSize = imageSize;
+        Font = font;
+        FrequencyScaling = frequencyScaling;
+    }
 }

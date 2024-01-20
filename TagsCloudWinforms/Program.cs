@@ -1,3 +1,5 @@
+using Autofac;
+
 namespace TagsCloudWindorms;
 
 public static class Program
@@ -6,6 +8,6 @@ public static class Program
     public static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run();
+        Application.Run(new MainForm());
     }
 }
