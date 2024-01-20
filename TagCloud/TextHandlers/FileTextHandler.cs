@@ -18,6 +18,6 @@ public class FileTextHandler : ITextHandler
             counts.TryAdd(t, 0);
             counts[t]++;
         }
-        return counts.Select(pair =>  (pair.Key, pair.Value));
+        return counts.Select(pair => (pair.Key, pair.Value));
     }
 }

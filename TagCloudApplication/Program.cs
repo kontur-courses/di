@@ -34,8 +34,9 @@ class Program
                 
                 //TODO: file + name, may be directory and names
                 services.AddScoped<ICloudDrawer>(provider => TagCloudDrawer.Create(
-                        o.Path, 
-                        "rnd", 
+                        o.DestinationPath, 
+                        o.Name, 
+                        o.FontSize,
                         provider.GetService<IColorSelector>()
                     )
                 );
@@ -45,10 +46,7 @@ class Program
                     services.AddScoped<IColorSelector>(provider => new ConstantColorSelector(Color.Black));
                 
                 services.AddScoped<ITextHandler>(provider => 
-                    new FileTextHandler(
-                        File.Open(@"..\..\..\Fails\text.txt", 
-                            FileMode.Open)
-                        )
+                    new FileTextHandler(File.Open(o.SourcePath, FileMode.Open))
                 );
             });
         return services;

@@ -14,4 +14,14 @@ public static class Extensions
             pen.Color = selector.PickColor();
         }
     }
+    
+    public static void DrawStrings(this Graphics graphics, IColorSelector selector, TextRectangle[] rectangles)
+    {
+        var brush = new SolidBrush(selector.PickColor());
+        foreach (var rectangle in rectangles)
+        {
+            graphics.DrawString(rectangle.text, rectangle.font, brush, rectangle.X, rectangle.Y);
+            brush.Color = selector.PickColor();
+        }
+    }
 }
