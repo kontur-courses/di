@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using TagCloud.Layouter;
+using TagCloud.PointGenerator;
 
 namespace TagCloud;
 
@@ -20,7 +22,7 @@ namespace TagCloud;
 
             var saver = new CloudSaver.CloudSaver();
 
-            using var bitmap = CloudDrawer.DrawTagCloud(layouter.Rectangles);
+            using var bitmap = CloudDrawer.CloudDrawer.DrawTagCloud(layouter.Rectangles);
             saver.Save(bitmap, "Sample", "png");
         }
     }

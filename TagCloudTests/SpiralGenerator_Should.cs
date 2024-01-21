@@ -1,4 +1,6 @@
-﻿[TestFixture]
+﻿using TagCloud.PointGenerator;
+
+[TestFixture]
 public class SpiralGenerator_Should
 {
     private const int Width = 1920;

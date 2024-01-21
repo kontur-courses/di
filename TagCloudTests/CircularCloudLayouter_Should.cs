@@ -1,4 +1,7 @@
 using NUnit.Framework.Interfaces;
+using TagCloud.CloudDrawer;
+using TagCloud.Layouter;
+using TagCloud.PointGenerator;
 
 [TestFixture]
 public class CircularCloudLayouter_Should
