@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using TagsCloudContainer.Drawing.Colorers;
 
-namespace TagsCloudContainer.Providers;
+namespace TagsCloudConsoleUI.Providers;
 
 public static class ColorerProviders
 {

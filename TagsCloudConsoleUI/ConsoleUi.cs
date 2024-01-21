@@ -2,10 +2,10 @@
 using System.Text;
 using Autofac;
 using McMaster.Extensions.CommandLineUtils;
+using TagsCloudConsoleUI.Providers;
 using TagsCloudContainer.Drawing;
 using TagsCloudContainer.Drawing.Colorers;
 using TagsCloudContainer.DrawingOptions;
-using TagsCloudContainer.Providers;
 using TagsCloudContainer.TagCloudForming;
 using TagsCloudContainer.Utils;
 using TagsCloudContainer.WordProcessing.WordFiltering;

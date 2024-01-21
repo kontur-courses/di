@@ -2,7 +2,7 @@
 using Autofac;
 using TagsCloudVisualization;
 
-namespace TagsCloudContainer.Providers;
+namespace TagsCloudConsoleUI.Providers;
 
 public static class CloudAlgorithmProviders
 {
