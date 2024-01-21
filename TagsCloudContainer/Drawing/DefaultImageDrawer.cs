@@ -37,8 +37,20 @@ public class DefaultImageDrawer : IImageDrawer
         return bitmap;
     }
 
-    public static void SaveImage(Bitmap bitmap)
+    public static void SaveImage(Bitmap bitmap, string dirPath, string filename, ImageFormat imageFormat)
     {
-        bitmap.Save(Path.Combine(Directory.GetCurrentDirectory(), "image.png"), ImageFormat.Png);
+        if (string.IsNullOrWhiteSpace(filename) || filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            throw new ArgumentException("The provided filename is not valid.");
+
+        try
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException("The provided directory path is not valid.", e);
+        }
+
+        bitmap.Save(Path.Combine(dirPath, filename), imageFormat);
     }
 }

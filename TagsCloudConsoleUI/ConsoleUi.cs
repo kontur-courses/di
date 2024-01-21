@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using Autofac;
 using McMaster.Extensions.CommandLineUtils;
@@ -21,9 +22,30 @@ public class ConsoleUi : IUiManager
         var containerBuilder = new ContainerBuilder();
         RegisterWordProvider(GetPathToWordsFile(), containerBuilder);
 
+        RegisterCloudBuildingOptions(containerBuilder);
+        
+        RegisterAlgorithm(CloudAlgorithmProviders.RegisteredProviders, "Choose the cloud forming algorithm:",
+            containerBuilder);
+
+        containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
+        containerBuilder.RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("filter.txt"))).As<IWordFilter>()
+            .SingleInstance();
+        containerBuilder.RegisterType<DefaultWordProcessor>().As<IProcessedWordProvider>().SingleInstance();
+        containerBuilder.RegisterType<DefaultWordCloudDistributor>().As<IWordCloudDistributorProvider>().SingleInstance();
+        containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
+        
+        var container = containerBuilder.Build();
+
+        BuildTagCloud(container.Resolve<IImageDrawer>(), ".", "image.png", ImageFormat.Png);
+    }
+
+    private void RegisterCloudBuildingOptions(ContainerBuilder containerBuilder)
+    {
         var font = GetFont();
         var backgroundColor = GetRgbColor("Enter background color in RGB format separated by space");
+        
         RegisterColoringAlgorithm(out var fontColor, containerBuilder);
+        
         var imageSide =
             GetInteger(
                 "Enter the image's desired size in px. The image will be a square. It must range from 500 px to 5000 px.",
@@ -33,34 +55,22 @@ public class ConsoleUi : IUiManager
             GetInteger(
                 "Enter the frequency scaling (a positive integer). It Determines the scale to word frequency ratio.", 2,
                 100);
-        containerBuilder.RegisterInstance(new DefaultOptionsProvider(new Options(fontColor, backgroundColor, imageSize, font, frequencyScaling)))
-            .As<IOptionsProvider>().SingleInstance();
-        RegisterAlgorithm(CloudAlgorithmProviders.RegisteredProviders, "Choose the cloud forming algorithm:", containerBuilder);
-
-        containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
-        containerBuilder
-            .RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("filter.txt")))
-            .As<IWordFilter>()
-            .SingleInstance();
         
-        containerBuilder.RegisterType<DefaultWordProcessor>()
-            .As<IProcessedWordProvider>()
-            .SingleInstance();
-        containerBuilder.RegisterType<DefaultWordCloudDistributor>()
-            .As<IWordCloudDistributorProvider>()
-            .SingleInstance();
-
-        containerBuilder.RegisterType<DefaultImageDrawer>()
-            .As<IImageDrawer>()
-            .SingleInstance();
-        var container = containerBuilder.Build();
-        var drawer = container.Resolve<IImageDrawer>();
-        var bitmap = drawer.DrawImage();
-        DefaultImageDrawer.SaveImage(bitmap);
-        Console.WriteLine("The image has been saved to the current directory.");
+        containerBuilder
+            .RegisterInstance(new DefaultOptionsProvider(new Options(fontColor, backgroundColor, imageSize, font,
+                frequencyScaling)))
+            .As<IOptionsProvider>().SingleInstance();
     }
 
-    private void RegisterAlgorithm(IReadOnlyDictionary<string, Action<ContainerBuilder>> registeredAlgorithms, string prompt, ContainerBuilder containerBuilder)
+    private static void BuildTagCloud(IImageDrawer imageDrawer, string dirPath, string fileName, ImageFormat imageFormat)
+    {
+        var bitmap = imageDrawer.DrawImage();
+        DefaultImageDrawer.SaveImage(bitmap, dirPath, fileName, imageFormat);
+        Console.WriteLine($"The image has been saved to \"{dirPath}\"");
+    }
+
+    private void RegisterAlgorithm(IReadOnlyDictionary<string, Action<ContainerBuilder>> registeredAlgorithms,
+        string prompt, ContainerBuilder containerBuilder)
     {
         var sb = new StringBuilder($"{prompt}\n");
         foreach (var algorithmProvider in registeredAlgorithms.Keys)
@@ -96,7 +106,7 @@ public class ConsoleUi : IUiManager
         if (Prompt.GetYesNo("Do you want to use a custom coloring algorithm?", false, ConsoleColor.DarkGreen))
         {
             RegisterAlgorithm(ColorerProviders.RegisteredProviders, "Choose the algorithm:", containerBuilder);
-            
+
             fontColor = Color.White;
             return;
         }
