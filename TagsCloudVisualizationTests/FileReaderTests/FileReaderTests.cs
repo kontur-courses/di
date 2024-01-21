@@ -46,4 +46,14 @@ public class FileReaderTests
         var result = reader.ReadText(@"..\..\..\FileReaderData\DocxFile.docx");
         result.Should().Be("docx\rfile\rdata\r");
     }
+
+    [TestCase("Empty.docx", "\r", TestName = "empty docx file")]
+    [TestCase("Empty.txt", "", TestName = "empty txt file")]
+    [TestCase("Empty.doc", "\r", TestName = "empty doc file")]
+    public void ReadText_EmptyTxtFile_ReturnsEmptyStringOrSpecialSymbol(string fileName, string exceptedResult)
+    {
+        var reader = new FileReader();
+        var result = reader.ReadText($@"..\..\..\FileReaderData\{fileName}");
+        result.Should().Be(exceptedResult);
+    }
 }
