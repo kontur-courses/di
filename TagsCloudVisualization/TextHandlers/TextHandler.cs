@@ -2,14 +2,14 @@
 
 namespace TagsCloudVisualization.TextHandlers;
 
-public partial class TextHandler : ITextHandler
+public class TextHandler : ITextHandler
 {
     private readonly IEnumerable<string> words;
     private readonly HashSet<string> boringWords;
 
     public TextHandler(string text, string boringWords)
     {
-        words = GetWords(text);
+        words = GetWords(text.ToLower());
         this.boringWords = GetWords(boringWords.ToLower()).ToHashSet();
     }
 

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.PointCreators;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.CloudLayouters;
 
 public class CircularCloudLayouter : ICircularCloudLayouter
 {
@@ -15,7 +15,7 @@ public class CircularCloudLayouter : ICircularCloudLayouter
         this.center = center;
         rectanglesInLayout = new();
         spiral = new(center, 0.05, 0.01);
-        pointsOnSpiral = spiral.GetPointsOnSpiral().GetEnumerator();
+        pointsOnSpiral = spiral.GetPoints().GetEnumerator();
     }
 
     public Point CloudCenter { get => center; }

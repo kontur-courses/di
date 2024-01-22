@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.PointCreators;
 
-public class Spiral : ISpiral
+public class Spiral : IPointCreator
 {
     private readonly Point center;
     private readonly double deltaAngle;
@@ -21,7 +20,7 @@ public class Spiral : ISpiral
         this.deltaRadius = deltaRadius;
     }
 
-    public IEnumerable<Point> GetPointsOnSpiral()
+    public IEnumerable<Point> GetPoints()
     {
         var angle = 0.0;
         var radius = 0.0;

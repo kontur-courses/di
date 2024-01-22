@@ -2,6 +2,8 @@ using NUnit.Framework;
 using FluentAssertions;
 using TagsCloudVisualization;
 using System.Drawing;
+using TagsCloudVisualization.CloudLayouters;
+using TagsCloudVisualization.ImageSavers;
 
 namespace TagsCloudVisualizationTests;
 
@@ -96,6 +98,7 @@ public class CircularCloudLayouterTests
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
+            var saver = new ImageSaver();
             var pathToTestsFailsImages = @"..\..\..\FailsTests";
             if (!Directory.Exists(pathToTestsFailsImages))
             {
@@ -103,7 +106,7 @@ public class CircularCloudLayouterTests
             }
             var image = Visualizer.Visualize(sut.Rectangles, 500, 500);
             var fileName = $"{TestContext.CurrentContext.Test.Name}.png";
-            Visualizer.SaveBitmap(image, fileName, pathToTestsFailsImages);
+            saver.SaveImage(image, fileName, pathToTestsFailsImages);
         }
     }
 

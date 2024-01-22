@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
-using TagsCloudVisualization;
 using System.Drawing;
+using TagsCloudVisualization.PointCreators;
 
 namespace TagsCloudVisualizationTests;
 
@@ -46,7 +46,7 @@ public class SpiralTests
     {
         var sut = new Spiral(center, 0.1, 0.1);
 
-        var points = sut.GetPointsOnSpiral().GetEnumerator();
+        var points = sut.GetPoints().GetEnumerator();
         points.MoveNext();
 
         points.Current.Should().BeEquivalentTo(center);
@@ -57,7 +57,7 @@ public class SpiralTests
     {
         var sut = new Spiral(center, 0.1, 0.1);
 
-        var points = sut.GetPointsOnSpiral().GetEnumerator();
+        var points = sut.GetPoints().GetEnumerator();
         points.MoveNext();
         points.MoveNext();
 

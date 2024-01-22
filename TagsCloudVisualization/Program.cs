@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.CloudLayouters;
 
 namespace TagsCloudVisualization;
 
@@ -11,7 +12,7 @@ public class Program
 
     public static void Main(string[] args)
     {
-        var layouter = new CircularCloudLayouter(new Point(ImageWidth / 2, ImageHeight / 2));
+        /*var layouter = new CircularCloudLayouter(new Point(ImageWidth / 2, ImageHeight / 2));
         var random = new Random();
 
         for (int i = 0; i < CountRectangles; i++)
@@ -19,6 +20,6 @@ public class Program
             layouter.PutNextRectangle(new Size(random.Next(5, 20), random.Next(5, 20)));
         }
         var image = Visualizer.Visualize(layouter.Rectangles, ImageWidth, ImageHeight);
-        Visualizer.SaveBitmap(image, $"Result{CountRectangles}Rectangles.png", PathToImages);
+        Visualizer.SaveBitmap(image, $"Result{CountRectangles}Rectangles.png", PathToImages);*/
     }
 }
