@@ -122,7 +122,7 @@ public class CircularCloudLayouterTests
         var visualizator = new TagsCloudVisualizator(layouter);
         var pathToFolder = @"..\FailsTests";
         var fileName = TestContext.CurrentContext.Test.Name;
-        visualizator.Draw().SaveAs(pathToFolder, fileName, ImageFormat.Png);
+        visualizator.DrawRectanglesCloud().SaveAs(pathToFolder, fileName, ImageFormat.Png);
         
         TestContext.WriteLine($"Tag cloud visualization saved to file {Path.GetFullPath(Path.Combine(pathToFolder, fileName))}");
     }
