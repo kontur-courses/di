@@ -4,20 +4,23 @@ namespace TagsCloudContainer.Utility
 {
     public static class Visualizer
     {
-        public static Bitmap VisualizeRectangles(List<Rectangle> rectangles, HashSet<string> uniqueWords, int bitmapWidth, int bitmapHeight)
+        public static Bitmap VisualizeRectangles(List<Rectangle> rectangles, HashSet<string> uniqueWords,
+    int bitmapWidth, int bitmapHeight, List<int> fontSizes, string fontName, Color fontColor, Color highlightColor, double percentageToHighlight,
+    Dictionary<string, int> wordFrequencies)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             using var graphics = Graphics.FromImage(bitmap);
+            var mostPopularWords = GetMostPopularWords(uniqueWords, percentageToHighlight, wordFrequencies);
 
             for (var i = 0; i < rectangles.Count; i++)
             {
                 var rect = rectangles[i];
-                var word = uniqueWords.ElementAt(i);
+                var word = uniqueWords.ElementAt(i).ToLower(); 
 
-                var fontSize = rect.Width / word.Length;
-                var font = new Font("Arial", fontSize, FontStyle.Regular);
+                var fontSize = fontSizes[i];
+                var font = new Font(fontName, fontSize, FontStyle.Regular);
 
-                var brushColor = word == GetMostPopularWord(uniqueWords) ? Color.Green : Color.Black;
+                var brushColor = mostPopularWords.Contains(word) ? highlightColor : fontColor;
                 var brush = new SolidBrush(brushColor);
 
                 graphics.DrawString(word, font, brush, rect);
@@ -26,9 +29,10 @@ namespace TagsCloudContainer.Utility
             return bitmap;
         }
 
-        private static string GetMostPopularWord(HashSet<string> uniqueWords)
+        private static List<string> GetMostPopularWords(HashSet<string> uniqueWords, double percentage, Dictionary<string, int> wordFrequencies)
         {
-            return uniqueWords.FirstOrDefault();
+            int countToHighlight = (int)Math.Ceiling(uniqueWords.Count * percentage);
+            return uniqueWords.OrderByDescending(word => wordFrequencies[word]).Take(countToHighlight).ToList();
         }
 
         //private static void DrawRectangles(IEnumerable<Rectangle> rectangles, Graphics graphics)
