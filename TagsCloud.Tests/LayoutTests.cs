@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 using TagsCloudVisualization;
 using static TagsCloud.Tests.TestConfiguration;
 
@@ -13,7 +14,7 @@ public class LayoutTests
     public void SetUp()
     {
         var layoutFunction = new Spiral(random.Next(1, 25), random.NextSingle());
-        var screenCenter = new PointF(WindowWidth / 2, WindowHeight / 2);
+        var screenCenter = new PointF((float)WindowWidth / 2, (float)WindowHeight / 2);
         layout = new Layout(layoutFunction, screenCenter);
 
         // Clear currentRectangles between tests to update running context.
@@ -21,28 +22,24 @@ public class LayoutTests
         currentRectangles.TrimExcess();
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        var context = TestContext.CurrentContext;
-        var writer = TestContext.Out;
-
-        if (context.Result.FailCount == 0)
-            return;
-
-        var fileName = $"{TestContext.CurrentContext.Test.MethodName}-fail.png";
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-
-        LayoutVisualizer.CreateVisualization(
-            currentRectangles,
-            ImageCenter,
-            Color.White,
-            1f,
-            Color.Red,
-            filePath);
-
-        writer.WriteLine($"Tag cloud visualization saved to file <{filePath}>");
-    }
+    // [TearDown]
+    // public void TearDown()
+    // {
+    //     var context = TestContext.CurrentContext;
+    //     var writer = TestContext.Out;
+    //
+    //     if (context.Result.FailCount == 0)
+    //         return;
+    //
+    //     var fileName = $"{TestContext.CurrentContext.Test.MethodName}-fail.png";
+    //     var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+    //
+    //     new VisualizationBuilder(new Size(WindowWidth, WindowHeight), Color.White)
+    //         .CreateImageFrom(currentRectangles)
+    //         .SaveAs(filePath, new PngEncoder());
+    //
+    //     writer.WriteLine($"Tag cloud visualization saved to file <{filePath}>");
+    // }
 
     private Layout layout;
     private readonly Random random = new();
