@@ -4,7 +4,7 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using TagsCloudVisualization.Entities;
+using TagsCloud.Entities;
 
 namespace TagsCloudVisualization;
 
@@ -20,7 +20,7 @@ public class VisualizationBuilder
         this.backgroundColor = backgroundColor;
     }
 
-    public VisualizationBuilder CreateImageFrom(List<Tag> tags)
+    public VisualizationBuilder CreateImageFrom(List<CloudTag> tags)
     {
         image = new Image<Rgba32>(canvasSize.Width, canvasSize.Height);
         image.Mutate(ctx =>
