@@ -28,7 +28,7 @@ public class ConsoleUi : IUiManager
             containerBuilder);
 
         containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
-        containerBuilder.RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("filter.txt"))).As<IWordFilter>()
+        containerBuilder.RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("../../../../TagsCloudContainer/Resources/filter.txt"))).As<IWordFilter>()
             .SingleInstance();
         containerBuilder.RegisterType<DefaultWordProcessor>().As<IProcessedWordProvider>().SingleInstance();
         containerBuilder.RegisterType<DefaultWordCloudDistributor>().As<IWordCloudDistributorProvider>().SingleInstance();
