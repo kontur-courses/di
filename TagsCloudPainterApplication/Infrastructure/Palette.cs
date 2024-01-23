@@ -1,9 +1,8 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure
+﻿namespace TagsCloudPainterApplication.Infrastructure;
+
+public class Palette
 {
-    public class Palette
-    {
-        public Color PrimaryColor { get; set; } = Color.Yellow;
-        public Color SecondaryColor { get; set; } = Color.Red;
-        public Color BackgroundColor { get; set; } = Color.DarkBlue;
-    }
+    public Color PrimaryColor { get; set; } = Color.Yellow;
+    public Color SecondaryColor { get; set; } = Color.Red;
+    public Color BackgroundColor { get; set; } = Color.DarkBlue;
 }

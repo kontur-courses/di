@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter.Tags
+﻿namespace TagsCloudPainter.Tags;
+
+public interface ITagsBuilder
 {
-    public interface ITagsBuilder
-    {
-        public List<Tag> GetTags(List<string> words);
-    }
+    public List<Tag> GetTags(List<string> words);
 }

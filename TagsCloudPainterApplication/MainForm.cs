@@ -1,21 +1,20 @@
 using TagsCloudPainterApplication.Actions;
 using TagsCloudPainterApplication.Infrastructure.Settings;
 
-namespace TagsCloudPainterApplication
+namespace TagsCloudPainterApplication;
+
+public partial class MainForm : Form
 {
-    public partial class MainForm : Form
+    public MainForm(IUiAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
     {
-        public MainForm(IUiAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
-        {
-            ClientSize = new Size(imageSettings.Width, imageSettings.Height);
+        ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
-            var mainMenu = new MenuStrip();
-            mainMenu.Items.AddRange(actions.ToMenuItems());
-            Controls.Add(mainMenu);
+        var mainMenu = new MenuStrip();
+        mainMenu.Items.AddRange(actions.ToMenuItems());
+        Controls.Add(mainMenu);
 
-            pictureBox.RecreateImage(imageSettings);
-            pictureBox.Dock = DockStyle.Fill;
-            Controls.Add(pictureBox);
-        }
+        pictureBox.RecreateImage(imageSettings);
+        pictureBox.Dock = DockStyle.Fill;
+        Controls.Add(pictureBox);
     }
 }

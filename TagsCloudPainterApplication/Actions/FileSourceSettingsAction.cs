@@ -1,23 +1,22 @@
 ﻿using TagsCloudPainterApplication.Infrastructure.Settings;
 
-namespace TagsCloudPainterApplication.Actions
+namespace TagsCloudPainterApplication.Actions;
+
+public class FileSourceSettingsAction : IUiAction
 {
-    public class FileSourceSettingsAction: IUiAction
+    private readonly FilesSourceSettings filesSourceSettings;
+
+    public FileSourceSettingsAction(FilesSourceSettings filesSourceSettings)
     {
-        private readonly FilesSourceSettings filesSourceSettings;
+        this.filesSourceSettings = filesSourceSettings;
+    }
 
-        public FileSourceSettingsAction(FilesSourceSettings filesSourceSettings)
-        {
-            this.filesSourceSettings = filesSourceSettings;
-        }
+    public string Category => "Настройки";
+    public string Name => "Ресурсы";
+    public string Description => "Укажите ресурсы";
 
-        public string Category => "Настройки";
-        public string Name => "Ресурсы";
-        public string Description => "Укажите ресурсы";
-
-        public void Perform()
-        {
-            SettingsForm.For(filesSourceSettings).ShowDialog();
-        }
+    public void Perform()
+    {
+        SettingsForm.For(filesSourceSettings).ShowDialog();
     }
 }

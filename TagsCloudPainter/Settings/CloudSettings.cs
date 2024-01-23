@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudPainter.Settings
+namespace TagsCloudPainter.Settings;
+
+public class CloudSettings
 {
-    public class CloudSettings
-    {
-        public Point CloudCenter { get; set; }
-        public Color BackgroundColor { get; set; }
-    }
+    public Point CloudCenter { get; set; }
+    public Color BackgroundColor { get; set; }
 }

@@ -1,13 +1,12 @@
 ﻿using System.Drawing;
 using TagsCloudPainter.Tags;
 
-namespace TagsCloudPainter.CloudLayouter
+namespace TagsCloudPainter.CloudLayouter;
+
+public interface ICloudLayouter : IResetable
 {
-    public interface ICloudLayouter: IResetable
-    {
-        Rectangle PutNextTag(Tag tag);
-        TagsCloud GetCloud();
-        void PutTags(List<Tag> tags);
-        void InitializeCloud();
-    }
+    Rectangle PutNextTag(Tag tag);
+    TagsCloud GetCloud();
+    void PutTags(List<Tag> tags);
+    void InitializeCloud();
 }

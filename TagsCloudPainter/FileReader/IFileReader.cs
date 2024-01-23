@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter.FileReader
+﻿namespace TagsCloudPainter.FileReader;
+
+public interface IFileReader
 {
-    public interface IFileReader
-    {
-        public string ReadFile(string path);
-    }
+    public string ReadFile(string path);
 }

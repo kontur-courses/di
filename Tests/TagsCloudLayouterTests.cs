@@ -1,91 +1,90 @@
-﻿using TagsCloudPainter.FormPointer;
-using TagsCloudPainter.Settings;
-using System.Drawing;
+﻿using System.Drawing;
+using FluentAssertions;
 using TagsCloudPainter.CloudLayouter;
+using TagsCloudPainter.FormPointer;
+using TagsCloudPainter.Settings;
 using TagsCloudPainter.Tags;
 using TagsCloudPainter.Utils;
-using FluentAssertions;
 
-namespace TagsCloudPainterTests
+namespace TagsCloudPainterTests;
+
+[TestFixture]
+public class TagsCloudLayouterTests
 {
-    [TestFixture]
-    public class TagsCloudLayouterTests
+    [SetUp]
+    public void Setup()
     {
-        private TagsCloudLayouter tagsCloudLayouter;
-        private TagSettings tagSettings;
+        var cloudSettings = new CloudSettings { CloudCenter = new Point(0, 0) };
+        tagSettings = new TagSettings { TagFontSize = 32 };
+        var pointerSettings = new SpiralPointerSettings { AngleConst = 1, RadiusConst = 0.5, Step = 0.1 };
+        var formPointer = new ArchimedeanSpiralPointer(cloudSettings, pointerSettings);
+        tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings);
+        tagsCloudLayouter.InitializeCloud();
+    }
 
-        [SetUp]
-        public void Setup()
-        {
-            var cloudSettings = new CloudSettings() { CloudCenter = new Point(0, 0) };
-            tagSettings = new TagSettings() { TagFontSize = 32 };
-            var pointerSettings = new SpiralPointerSettings() { AngleConst = 1, RadiusConst = 0.5, Step = 0.1 };
-            var formPointer = new ArchimedeanSpiralPointer(cloudSettings, pointerSettings);
-            tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings);
-            tagsCloudLayouter.InitializeCloud();
-        }
+    private TagsCloudLayouter tagsCloudLayouter;
+    private TagSettings tagSettings;
 
-        private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]
-        {
+    private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]
+    {
         new TestCaseData(new Tag("", 10, 1)).SetName("WhenGivenTagWithEmptyValue"),
-        new TestCaseData(new Tag("das", 0, 1)).SetName("WhenGivenTagWithFontSizeLessThanOne"),
-        };
+        new TestCaseData(new Tag("das", 0, 1)).SetName("WhenGivenTagWithFontSizeLessThanOne")
+    };
 
-        [TestCaseSource(nameof(PutNextTagArgumentException))]
-        public void PutNextRectangle_ShouldThrowArgumentException(Tag tag)
-        {
-            Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutNextTag(tag));
-        }
+    [TestCaseSource(nameof(PutNextTagArgumentException))]
+    public void PutNextRectangle_ShouldThrowArgumentException(Tag tag)
+    {
+        Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutNextTag(tag));
+    }
 
-        [Test]
-        public void PutNextTag_ShouldReturnRectangleOfTheTagValueSize()
-        {
-            var tag = new Tag("ads", 10, 5);
-            var tagRectangle = Utils.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
+    [Test]
+    public void PutNextTag_ShouldReturnRectangleOfTheTagValueSize()
+    {
+        var tag = new Tag("ads", 10, 5);
+        var tagRectangle = Utils.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
 
-            var resultRectangle = tagsCloudLayouter.PutNextTag(tag);
+        var resultRectangle = tagsCloudLayouter.PutNextTag(tag);
 
-            resultRectangle.Size.Should().Be(tagRectangle);
-        }
+        resultRectangle.Size.Should().Be(tagRectangle);
+    }
 
-        [Test]
-        public void PutNextTag_ShouldReturnRectangleThatDoesNotIntersectWithAlreadyPutOnes()
-        {
-            var firstTag = new Tag("ads", 10, 5);
-            var secondTag = new Tag("ads", 10, 5);
-            var firstPutRectangle = tagsCloudLayouter.PutNextTag(firstTag);
-            var secondPutRectangle = tagsCloudLayouter.PutNextTag(secondTag);
+    [Test]
+    public void PutNextTag_ShouldReturnRectangleThatDoesNotIntersectWithAlreadyPutOnes()
+    {
+        var firstTag = new Tag("ads", 10, 5);
+        var secondTag = new Tag("ads", 10, 5);
+        var firstPutRectangle = tagsCloudLayouter.PutNextTag(firstTag);
+        var secondPutRectangle = tagsCloudLayouter.PutNextTag(secondTag);
 
-            var doesRectanglesIntersect = firstPutRectangle.IntersectsWith(secondPutRectangle);
+        var doesRectanglesIntersect = firstPutRectangle.IntersectsWith(secondPutRectangle);
 
-            doesRectanglesIntersect.Should().BeFalse();
-        }
+        doesRectanglesIntersect.Should().BeFalse();
+    }
 
-        [Test]
-        public void PutNextRectangle_ShouldPutRectangleWithCenterInTheCloudCenter()
-        {
-            var center = tagsCloudLayouter.GetCloud().Center;
-            var tag = new Tag("ads", 10, 5);
-            var firstRectangle = tagsCloudLayouter.PutNextTag(tag);
-            var firstRectangleCenter = Utils.GetRectangleCenter(firstRectangle);
+    [Test]
+    public void PutNextRectangle_ShouldPutRectangleWithCenterInTheCloudCenter()
+    {
+        var center = tagsCloudLayouter.GetCloud().Center;
+        var tag = new Tag("ads", 10, 5);
+        var firstRectangle = tagsCloudLayouter.PutNextTag(tag);
+        var firstRectangleCenter = Utils.GetRectangleCenter(firstRectangle);
 
-            firstRectangleCenter.Should().Be(center);
-        }
+        firstRectangleCenter.Should().Be(center);
+    }
 
-        [Test]
-        public void PutTags_ThrowsArgumentNullException_WhenGivenEmptyDictionary()
-        {
-            Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutTags([]));
-        }
+    [Test]
+    public void PutTags_ThrowsArgumentNullException_WhenGivenEmptyDictionary()
+    {
+        Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutTags([]));
+    }
 
-        [Test]
-        public void GetCloud_ReturnsAsManyTagsAsWasPut()
-        {
-            tagsCloudLayouter.PutNextTag(new Tag("ads", 10, 5));
-            tagsCloudLayouter.PutNextTag(new Tag("ads", 10, 5));
-            var rectanglesAmount = tagsCloudLayouter.GetCloud().Tags.Count;
+    [Test]
+    public void GetCloud_ReturnsAsManyTagsAsWasPut()
+    {
+        tagsCloudLayouter.PutNextTag(new Tag("ads", 10, 5));
+        tagsCloudLayouter.PutNextTag(new Tag("ads", 10, 5));
+        var rectanglesAmount = tagsCloudLayouter.GetCloud().Tags.Count;
 
-            rectanglesAmount.Should().Be(2);
-        }
+        rectanglesAmount.Should().Be(2);
     }
 }

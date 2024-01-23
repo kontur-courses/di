@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter.Settings
+﻿namespace TagsCloudPainter.Settings;
+
+public class TextSettings
 {
-    public class TextSettings
-    {
-        public string BoringText { get; set; }
-    }
+    public string BoringText { get; set; }
 }

@@ -2,45 +2,44 @@
 using TagsCloudPainter.Settings;
 using TagsCloudPainter.Tags;
 
-namespace TagsCloudPainterTests
+namespace TagsCloudPainterTests;
+
+[TestFixture]
+public class TagsBuilderTests
 {
-    [TestFixture]
-    public class TagsBuilderTests
+    [SetUp]
+    public void Setup()
     {
-        private TagsBuilder tagsBuilder;
+        var tagSettings = new TagSettings { TagFontSize = 32 };
+        tagsBuilder = new TagsBuilder(tagSettings);
+    }
 
-        [SetUp]
-        public void Setup()
-        {
-            var tagSettings = new TagSettings() { TagFontSize = 32 };
-            tagsBuilder = new TagsBuilder(tagSettings);
-        }
+    private TagsBuilder tagsBuilder;
 
-        [Test]
-        public void GetTags_ShouldReturnTagsWithGivenWords()
-        {
-            var words = new List<string>() { "tag"};
-            var tags = tagsBuilder.GetTags(words);
+    [Test]
+    public void GetTags_ShouldReturnTagsWithGivenWords()
+    {
+        var words = new List<string> { "tag" };
+        var tags = tagsBuilder.GetTags(words);
 
-            tags[0].Value.Should().Be("tag");
-        }
+        tags[0].Value.Should().Be("tag");
+    }
 
-        [Test]
-        public void GetTags_ShouldReturnTagsWithDifferentValues()
-        {
-            var words = new List<string>() { "tag", "tag" };
-            var tags = tagsBuilder.GetTags(words);
+    [Test]
+    public void GetTags_ShouldReturnTagsWithDifferentValues()
+    {
+        var words = new List<string> { "tag", "tag" };
+        var tags = tagsBuilder.GetTags(words);
 
-            tags.Count.Should().Be(1);
-        }
+        tags.Count.Should().Be(1);
+    }
 
-        [Test]
-        public void GetTags_ShouldReturnTagsWithCorrectCount()
-        {
-            var words = new List<string>() { "tag", "tag" };
-            var tags = tagsBuilder.GetTags(words);
+    [Test]
+    public void GetTags_ShouldReturnTagsWithCorrectCount()
+    {
+        var words = new List<string> { "tag", "tag" };
+        var tags = tagsBuilder.GetTags(words);
 
-            tags[0].Count.Should().Be(2);
-        }
+        tags[0].Count.Should().Be(2);
     }
 }

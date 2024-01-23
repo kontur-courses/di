@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure.Settings
+﻿namespace TagsCloudPainterApplication.Infrastructure.Settings;
+
+public class FilesSourceSettings
 {
-    public class FilesSourceSettings
-    {
-        public string BoringTextFilePath { get; set; } = @$"{Environment.CurrentDirectory}..\..\..\..\Data\BoringWords.txt";
-    }
+    public string BoringTextFilePath { get; set; } = @$"{Environment.CurrentDirectory}..\..\..\..\Data\BoringWords.txt";
 }

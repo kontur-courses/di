@@ -5,14 +5,14 @@ namespace TagsCloudPainter;
 
 public class TagsCloud
 {
-    public Point Center { get; private set; }
-    public Dictionary<Tag, Rectangle> Tags { get; }
-
     public TagsCloud(Point center, Dictionary<Tag, Rectangle> tags)
     {
         Center = center;
         Tags = tags ?? [];
     }
+
+    public Point Center { get; private set; }
+    public Dictionary<Tag, Rectangle> Tags { get; }
 
     public void AddTag(Tag tag, Rectangle rectangle)
     {

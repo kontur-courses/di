@@ -1,11 +1,10 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudPainter.Settings
+namespace TagsCloudPainter.Settings;
+
+public class TagSettings
 {
-    public class TagSettings
-    {
-        public int TagFontSize { get; set; }
-        public string TagFontName { get; set; } = "Arial";
-        public Color TagColor { get; set; }
-    }
+    public int TagFontSize { get; set; }
+    public string TagFontName { get; set; } = "Arial";
+    public Color TagColor { get; set; }
 }

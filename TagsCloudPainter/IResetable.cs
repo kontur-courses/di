@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter
+﻿namespace TagsCloudPainter;
+
+public interface IResetable
 {
-    public interface IResetable
-    {
-        void Reset();
-    }
+    void Reset();
 }

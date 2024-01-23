@@ -1,23 +1,22 @@
 ﻿using TagsCloudPainterApplication.Infrastructure.Settings;
 
-namespace TagsCloudPainterApplication.Actions
+namespace TagsCloudPainterApplication.Actions;
+
+public class ImageSettingsAction : IUiAction
 {
-    public class ImageSettingsAction: IUiAction
+    private readonly ImageSettings imageSettings;
+
+    public ImageSettingsAction(ImageSettings imageSettings)
     {
-        private readonly ImageSettings imageSettings;
+        this.imageSettings = imageSettings;
+    }
 
-        public ImageSettingsAction(ImageSettings imageSettings)
-        {
-            this.imageSettings = imageSettings;
-        }
+    public string Category => "Настройки";
+    public string Name => "Изображение";
+    public string Description => "Укажите размер изображения";
 
-        public string Category => "Настройки";
-        public string Name => "Изображение";
-        public string Description => "Укажите размер изображения";
-
-        public void Perform()
-        {
-            SettingsForm.For(imageSettings).ShowDialog();
-        }
+    public void Perform()
+    {
+        SettingsForm.For(imageSettings).ShowDialog();
     }
 }

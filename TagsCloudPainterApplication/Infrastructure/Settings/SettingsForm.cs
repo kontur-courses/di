@@ -1,36 +1,35 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure.Settings
+﻿namespace TagsCloudPainterApplication.Infrastructure.Settings;
+
+public static class SettingsForm
 {
-    public static class SettingsForm
+    public static SettingsForm<TSettings> For<TSettings>(TSettings settings)
     {
-        public static SettingsForm<TSettings> For<TSettings>(TSettings settings)
+        return new SettingsForm<TSettings>(settings);
+    }
+}
+
+public class SettingsForm<TSettings> : Form
+{
+    public SettingsForm(TSettings settings)
+    {
+        var okButton = new Button
         {
-            return new SettingsForm<TSettings>(settings);
-        }
+            Text = "OK",
+            DialogResult = DialogResult.OK,
+            Dock = DockStyle.Bottom
+        };
+        Controls.Add(okButton);
+        Controls.Add(new PropertyGrid
+        {
+            SelectedObject = settings,
+            Dock = DockStyle.Fill
+        });
+        AcceptButton = okButton;
     }
 
-    public class SettingsForm<TSettings> : Form
+    protected override void OnLoad(EventArgs e)
     {
-        public SettingsForm(TSettings settings)
-        {
-            var okButton = new Button
-            {
-                Text = "OK",
-                DialogResult = DialogResult.OK,
-                Dock = DockStyle.Bottom,
-            };
-            Controls.Add(okButton);
-            Controls.Add(new PropertyGrid
-            {
-                SelectedObject = settings,
-                Dock = DockStyle.Fill
-            });
-            AcceptButton = okButton;
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            Text = "Настройки";
-        }
+        base.OnLoad(e);
+        Text = "Настройки";
     }
 }

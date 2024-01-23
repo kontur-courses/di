@@ -1,24 +1,23 @@
 ﻿using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
 
-namespace TagsCloudPainterApplication.Actions
+namespace TagsCloudPainterApplication.Actions;
+
+public class PaletteSettingsAction : IUiAction
 {
-    public class PaletteSettingsAction : IUiAction
+    private readonly Palette palette;
+
+    public PaletteSettingsAction(Palette palette)
     {
-        private readonly Palette palette;
+        this.palette = palette;
+    }
 
-        public PaletteSettingsAction(Palette palette)
-        {
-            this.palette = palette;
-        }
+    public string Category => "Настройки";
+    public string Name => "Палитра...";
+    public string Description => "Цвета для рисования облака тэгов";
 
-        public string Category => "Настройки";
-        public string Name => "Палитра...";
-        public string Description => "Цвета для рисования облака тэгов";
-
-        public void Perform()
-        {
-            SettingsForm.For(palette).ShowDialog();
-        }
+    public void Perform()
+    {
+        SettingsForm.For(palette).ShowDialog();
     }
 }

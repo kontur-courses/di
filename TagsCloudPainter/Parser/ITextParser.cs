@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter.Parser
+﻿namespace TagsCloudPainter.Parser;
+
+public interface ITextParser
 {
-    public interface ITextParser
-    {
-        List<string> ParseText(string text);
-    }
+    List<string> ParseText(string text);
 }

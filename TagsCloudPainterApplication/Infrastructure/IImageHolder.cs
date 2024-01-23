@@ -1,13 +1,12 @@
 using TagsCloudPainterApplication.Infrastructure.Settings;
 
-namespace TagsCloudPainterApplication.Infrastructure
+namespace TagsCloudPainterApplication.Infrastructure;
+
+public interface IImageHolder
 {
-    public interface IImageHolder
-    {
-        Size GetImageSize();
-        Graphics StartDrawing();
-        void UpdateUi();
-        void RecreateImage(ImageSettings settings);
-        void SaveImage(string fileName);
-    }
+    Size GetImageSize();
+    Graphics StartDrawing();
+    void UpdateUi();
+    void RecreateImage(ImageSettings settings);
+    void SaveImage(string fileName);
 }
