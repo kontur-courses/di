@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagCloudTests;
 

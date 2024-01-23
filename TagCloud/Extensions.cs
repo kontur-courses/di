@@ -20,7 +20,7 @@ public static class Extensions
         var brush = new SolidBrush(selector.PickColor());
         foreach (var rectangle in rectangles)
         {
-            graphics.DrawString(rectangle.text, rectangle.font, brush, rectangle.X, rectangle.Y);
+            graphics.DrawString(rectangle.Text, rectangle.Font, brush, rectangle.X, rectangle.Y);
             brush.Color = selector.PickColor();
         }
     }

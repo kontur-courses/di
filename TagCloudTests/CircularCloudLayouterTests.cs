@@ -1,36 +1,20 @@
 using System.Drawing;
 using FluentAssertions;
-using NUnit.Framework.Interfaces;
 using TagCloud;
 
 namespace TagCloudTests;
 
 public class CircularCloudLayouterTests
 {
-    private const string RelativePathToFailDirectory = @"..\..\..\Fails";
-    
     private CircularCloudLayouter layouter;
     private Point center;
     private ICloudDrawer drawer;
-
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
-    {
-        drawer = TagCloudDrawer.Create(Path.GetFullPath(RelativePathToFailDirectory), new RandomColorSelector());
-    }
 
     [SetUp]
     public void Setup()
     {
         center = new Point(0, 0);
-        layouter = new CircularCloudLayouter(center);
-    }
-
-    [TearDown]
-    public void Tear_Down()
-    {
-        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            drawer.Draw(layouter.Rectangles, TestContext.CurrentContext.Test.FullName);
+        layouter = new CircularCloudLayouter(center, SpiralCloudShaper.Create(center));
     }
 
     [Test]

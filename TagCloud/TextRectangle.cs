@@ -4,9 +4,8 @@ namespace TagCloud;
 
 public struct TextRectangle
 {
-    //TODO: to prop
-    public readonly string text;
-    public readonly Font font;
+    public string Text { get; }
+    public Font Font { get; }
 
     public TextRectangle(Rectangle rectangle, string text, Font font)
     {
@@ -14,8 +13,8 @@ public struct TextRectangle
         Y = rectangle.Y;
         Width = rectangle.Width;
         Height = rectangle.Height;
-        this.text = text;
-        this.font = font;
+        Text = text;
+        Font = font;
     }
 
     public int X { get; set; }

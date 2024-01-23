@@ -7,53 +7,60 @@ namespace TagCloudTests;
 public class TagCloudDrawerTest
 {
     private const string RelativePathToTestDirectory = @"..\..\..\Test";
-    
-    private static readonly string path = Path.GetFullPath(RelativePathToTestDirectory);
-    private readonly DirectoryInfo directory = new DirectoryInfo(path);
-    
+
+    private static readonly string Path = System.IO.Path.GetFullPath(RelativePathToTestDirectory);
+    private readonly DirectoryInfo directory = new DirectoryInfo(Path);
+
     private TagCloudDrawer drawer;
-    
+
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        foreach (var file in directory.EnumerateFiles()) 
+        foreach (var file in directory.EnumerateFiles())
             file.Delete();
     }
 
     [SetUp]
     public void SetUp()
     {
-        drawer = TagCloudDrawer.Create(path, new ConstantColorSelector(Color.Black));
+        drawer = TagCloudDrawer.Create(
+            Path, 
+            TestContext.CurrentContext.Test.Name, 
+            1,
+            new ConstantColorSelector(Color.Black)
+        );
     }
 
     [Test]
     public void Throw_ThenDrawEmptyList()
     {
-        Assert.Throws<ArgumentException>(() => drawer.Draw(Array.Empty<Rectangle>(), "throw"));
+        Assert.Throws<ArgumentException>(() => drawer.Draw(Array.Empty<TextRectangle>()));
     }
-    
+
     [Test]
     public void Throw_ThenDirectoryDoesNotExist()
     {
         Assert.Throws<ArgumentException>(() => TagCloudDrawer.Create(
-            $@"{path}\DontExist", 
+            "PathDontExist",
+            "xxx",
+            1,
             new ConstantColorSelector(Color.Black))
         );
     }
-    
+
     [Test]
     public void DrawOneCase()
     {
-        var rectangles = new Rectangle[]
-        {
-            new Rectangle(0, 1, 2, 3),
-            new Rectangle(4, 5, 6, 7),
-            new Rectangle(8, 9, 10, 11),
-        };
-        drawer.Draw(rectangles, "three_rectangles");
+        var testRect = new TextRectangle(
+            new Rectangle(0, 0, 1, 1),
+            "abc",
+            new Font(FontFamily.GenericSerif, 10)
+        );
+        var textRectangles = Enumerable.Repeat(testRect, 3);
+        drawer.Draw(textRectangles);
         directory
             .EnumerateFiles()
-            .Count(file => file.Name.Contains("three_rectangles"))
+            .Count(file => file.Name.Contains(nameof(DrawOneCase)))
             .Should()
             .Be(1);
     }

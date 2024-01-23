@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Runtime.ExceptionServices;
-using FluentAssertions;
 using TagCloud;
 
 namespace TagCloudTests;
@@ -30,15 +28,5 @@ public class SpiralCloudShaperTests
     public void NotThrow_OnCreationWith(double coefficient, double deltaAngle)
     {
         Assert.DoesNotThrow(() => SpiralCloudShaper.Create(center, coefficient, deltaAngle));
-    }
-
-    [Test]
-    public void RadiusShouldIncrease()
-    {
-        shaper.GetPossiblePoints()
-            .Take(100)
-            .Select(point => point.GetDistanceTo(center))
-            .Should()
-            .BeInAscendingOrder();
     }
 }

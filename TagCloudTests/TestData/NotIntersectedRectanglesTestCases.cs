@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagCloudTests.TestData;
 
