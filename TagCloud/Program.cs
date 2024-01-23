@@ -30,6 +30,7 @@ public class Program
         builder.Register(c =>
             new CircularLayouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
                 settings.CloudDensity))).As<ILayouter>();
+        builder.Register(c => new FileReaderProvider(c.Resolve<IEnumerable<IFileReader>>())).As<IFileReaderProvider>();
 
         builder.Register(c => settings).AsImplementedInterfaces();
 

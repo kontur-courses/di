@@ -10,17 +10,18 @@ namespace TagCloud.UserInterface;
 
 public class ConsoleUI : IUserInterface
 {
-    private readonly IFileReader reader;
+    private readonly IFileReaderProvider readerProvider;
     private readonly ISaver saver;
     private readonly IDrawer drawer;
     private readonly IWordRanker ranker;
     private readonly IFilter filter;
     private readonly IPreprocessor preprocessor;
 
-    public ConsoleUI(IFileReader reader, ISaver saver, IDrawer drawer, IWordRanker ranker, IFilter filter,
+    public ConsoleUI(IFileReaderProvider readerProvider, ISaver saver, IDrawer drawer, IWordRanker ranker,
+        IFilter filter,
         IPreprocessor preprocessor)
     {
-        this.reader = reader;
+        this.readerProvider = readerProvider;
         this.saver = saver;
         this.drawer = drawer;
         this.ranker = ranker;
@@ -30,7 +31,7 @@ public class ConsoleUI : IUserInterface
 
     public void Run(IAppSettings appSettings)
     {
-        var words = reader.ReadLines(appSettings.InputPath);
+        var words = readerProvider.CreateReader($"{appSettings.InputPath}").ReadLines(appSettings.InputPath);
         var preprocessed = preprocessor.HandleWords(words);
         var filtered = filter.FilterWords(preprocessed);
         var ranked = ranker.RankWords(filtered);

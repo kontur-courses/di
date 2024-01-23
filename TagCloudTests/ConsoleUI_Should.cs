@@ -38,6 +38,7 @@ public class ConsoleUI_Should
         builder.Register(l =>
             new CircularLayouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
                 settings.CloudDensity))).As<ILayouter>();
+        builder.Register(c => new FileReaderProvider(c.Resolve<IEnumerable<IFileReader>>())).As<IFileReaderProvider>();
 
         builder.Register(s => settings).AsImplementedInterfaces();
 
@@ -60,6 +61,11 @@ public class ConsoleUI_Should
         public IEnumerable<string> ReadLines(string inputPath)
         {
             yield return "test";
+        }
+
+        public IList<string> GetAviableExtensions()
+        {
+            return new List<string>() {"txt"};
         }
     }
 }
