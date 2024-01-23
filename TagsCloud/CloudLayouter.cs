@@ -2,13 +2,13 @@ using System.Drawing;
 
 namespace TagsCloud;
 
-public class CircularCloudLayouter : ICircularCloudLayouter
+public class CloudLayouter : ICircularCloudLayouter
 {
     public List<Rectangle> Rectangles { get; }
 
     private readonly ISpiral spiral;
 
-    public CircularCloudLayouter(ISpiral spiral)
+    public CloudLayouter(ISpiral spiral)
     {
         this.spiral = spiral;
         Rectangles = new List<Rectangle>();
@@ -26,14 +26,14 @@ public class CircularCloudLayouter : ICircularCloudLayouter
     private Rectangle CreateNextRectangle(Size rectangleSize)
     {
         var point = spiral.GetPoint();
-        var rectangles = new Rectangle(point, rectangleSize);
-        while (!HasNoIntersections(rectangles))
+        var rectangle = new Rectangle(point, rectangleSize);
+        while (!HasNoIntersections(rectangle))
         {
             point = spiral.GetPoint();
-            rectangles = new Rectangle(point, rectangleSize);
+            rectangle = new Rectangle(point, rectangleSize);
         }
 
-        return rectangles;
+        return rectangle;
     }
 
     private bool HasNoIntersections(Rectangle rectangles)

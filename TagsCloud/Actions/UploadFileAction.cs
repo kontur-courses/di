@@ -1,0 +1,34 @@
+using System.Windows.Forms;
+using TagsCloud.Infrastructure;
+using TagsCloud.Infrastructure.UiActions;
+
+namespace TagsCloud.Actions;
+
+public class UploadFileAction : IUiAction
+{
+    private readonly IImageHolder imageHolder;
+    private readonly AppSettings settings;
+
+    public UploadFileAction(IImageHolder imageHolder, AppSettings settings)
+    {
+        this.settings = settings;
+        this.imageHolder = imageHolder;
+    }
+    public MenuCategory Category => MenuCategory.File;
+    public string Name => "Загрузить";
+    public string Description => "";
+    
+    public void Perform()
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Title = "Выберите файл",
+            Filter = "Текстовые файлы (*.txt)|*.txt|Документы (*.doc;*.docx)|*.doc;*.docx|Все файлы (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = true,
+        };
+        if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+        settings.File = new FileInfo(openFileDialog.FileName);
+        
+    }
+}

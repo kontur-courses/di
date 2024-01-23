@@ -1,34 +1,38 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿
+using System.Reflection;
+using System.Windows.Forms;
+using Autofac;
+using TagsCloud.Actions;
+using TagsCloud.Infrastructure;
+using TagsCloud.Infrastructure.UiActions;
+using TagsCloud.Settings;
 
 namespace TagsCloud;
 
 public class MainProgram
 {
+    [STAThread]
     public static void Main(string[] args)
     {
-        var spiral = new Spiral(new Point(100, 100));
-        var layout = new CircularCloudLayouter(spiral);
-         
-        for (var i = 0; i < 10000; i++)
-        {
-            var rectangle = layout.PutNextRectangle(Utils.GetRandomSize());
-        }
-        
-        var workingDirectory = Environment.CurrentDirectory;
-        var imagesDirectoryPath = Path.Combine(workingDirectory, "images");
-        
-        if (!Directory.Exists(imagesDirectoryPath))
-        {
-            Directory.CreateDirectory(imagesDirectoryPath);
-        }
-
-        const string imageName = "1077rect";
-        var imagePath = Path.Combine(imagesDirectoryPath, $"{imageName}.png");
-
-        using var image = RectanglesVisualizer.GetTagsCloudImage(layout.Rectangles);
-        image.Save(imagePath, ImageFormat.Png);
+        Application.SetHighDpiMode(HighDpiMode.SystemAware);
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        var containerBuilder = new ContainerBuilder();
+        containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            .Where(t => typeof(IUiAction).IsAssignableFrom(t))
+            .AsImplementedInterfaces();
+        containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            .Where(t => typeof(IParser).IsAssignableFrom(t))
+            .AsImplementedInterfaces();
+        containerBuilder.RegisterType<FileReader>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<CloudForm>();
+        containerBuilder.RegisterType<TagCloudPainter>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<PictureBoxImageHolder>().As<PictureBoxImageHolder, IImageHolder>().SingleInstance();
+        containerBuilder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<AppSettings>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<TagSettings>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<WordAnalyzerSettings>().AsSelf().SingleInstance();
+        var cloudForm = containerBuilder.Build().Resolve<CloudForm>();
+        Application.Run(cloudForm);
     }
 }
