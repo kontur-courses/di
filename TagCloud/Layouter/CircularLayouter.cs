@@ -3,12 +3,12 @@ using TagCloud.PointGenerator;
 
 namespace TagCloud.Layouter;
 
-public class Layouter : ILayouter
+public class CircularLayouter : ILayouter
 {
     private readonly IPointGenerator pointGenerator;
     public IList<Rectangle> Rectangles { get; }
 
-    public Layouter(IPointGenerator pointGenerator)
+    public CircularLayouter(IPointGenerator pointGenerator)
     {
         Rectangles = new List<Rectangle>();
         this.pointGenerator = pointGenerator;

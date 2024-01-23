@@ -1,6 +1,6 @@
 namespace TagCloud.FileReader;
 
-public class FileReader : IFileReader
+public class TxtReader : IFileReader
 {
     public IEnumerable<string> ReadLines(string InputPath)
     {

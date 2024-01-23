@@ -1,4 +1,4 @@
-using TagCloud.WordFilter;
+using TagCloud.Filter;
 
 namespace TagCloudTests.WordProcessorsTests;
 
@@ -6,14 +6,14 @@ namespace TagCloudTests.WordProcessorsTests;
 public class WordFilter_Should
 {
     private IFilter sut;
-    private List<string> words = new(){"aba", "cabc", "testword", "zaz"};
+    private List<string> words = new() { "aba", "cabc", "testword", "zaz" };
 
     [SetUp]
     public void SetUp()
     {
         sut = new WordFilter();
     }
-    
+
     [Test]
     public void FilterWordList_ByGivenFilter()
     {
@@ -21,7 +21,7 @@ public class WordFilter_Should
 
         var result = sut.FilterWords(words);
 
-        result.Should().Contain(new List<string> {"cabc", "testword"});
+        result.Should().Contain(new List<string> { "cabc", "testword" });
     }
 
     [Test]

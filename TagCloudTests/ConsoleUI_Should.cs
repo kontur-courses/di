@@ -1,13 +1,13 @@
 using Autofac;
 using CommandLine;
-using TagCloud.CloudDrawer;
-using TagCloud.CloudSaver;
+using TagCloud.AppSettings;
+using TagCloud.Drawer;
 using TagCloud.FileReader;
+using TagCloud.FileSaver;
+using TagCloud.Filter;
 using TagCloud.Layouter;
 using TagCloud.PointGenerator;
-using TagCloud.Settings;
 using TagCloud.UserInterface;
-using TagCloud.WordFilter;
 using TagCloud.WordRanker;
 using TagCloud.WordsPreprocessor;
 
@@ -26,7 +26,7 @@ public class ConsoleUI_Should
 
         var builder = new ContainerBuilder();
         builder.RegisterType<FakeReader>().As<IFileReader>();
-        builder.RegisterType<CloudSaver>().As<ICloudSaver>();
+        builder.RegisterType<ImageSaver>().As<ISaver>();
         builder.RegisterType<CloudDrawer>().As<IDrawer>();
         builder.RegisterType<WordRankerByFrequency>().As<IWordRanker>();
         builder.RegisterType<WordFilter>().As<IFilter>();
@@ -36,7 +36,7 @@ public class ConsoleUI_Should
 
         builder.RegisterType<RandomPalette>().As<IPalette>();
         builder.Register(l =>
-            new Layouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
+            new CircularLayouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
                 settings.CloudDensity))).As<ILayouter>();
 
         builder.Register(s => settings).AsImplementedInterfaces();

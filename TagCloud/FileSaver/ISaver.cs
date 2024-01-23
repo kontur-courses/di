@@ -1,8 +1,8 @@
 using System.Drawing;
 
-namespace TagCloud.CloudSaver;
+namespace TagCloud.FileSaver;
 
-public interface ICloudSaver
+public interface ISaver
 {
     void Save(Bitmap bitmap, string OutputPath, string imageFormat);
 }

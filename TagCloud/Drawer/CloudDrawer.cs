@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
+using TagCloud.AppSettings;
 using TagCloud.Layouter;
-using TagCloud.Settings;
 
-namespace TagCloud.CloudDrawer;
+namespace TagCloud.Drawer;
 
 public class CloudDrawer : IDrawer
 {
@@ -13,7 +13,6 @@ public class CloudDrawer : IDrawer
     private int maximalRank;
     private const int MaximalFontSize = 50;
     private const int LengthSizeMultiplier = 35;
-    private const int ImageBorder = 10;
 
     public CloudDrawer(ILayouter layouter, IPalette palette, IAppSettings appSettings)
     {
@@ -21,12 +20,12 @@ public class CloudDrawer : IDrawer
         this.palette = palette;
         this.appSettings = appSettings;
     }
-    
+
     public Bitmap DrawTagCloud(IEnumerable<(string word, int rank)> words)
     {
         var tags = PlaceWords(words);
-        var imageSize = GetImageSize(layouter.Rectangles, ImageBorder);
-        var shift = GetImageShift(layouter.Rectangles, ImageBorder);
+        var imageSize = new Size(appSettings.CloudWidth, appSettings.CloudHeight);
+        var shift = GetImageShift(layouter.Rectangles);
         var image = new Bitmap(imageSize.Width, imageSize.Height);
         using var graphics = Graphics.FromImage(image);
         using var background = new SolidBrush(palette.BackgroudColor);
@@ -35,7 +34,7 @@ public class CloudDrawer : IDrawer
         {
             var shiftedCoordinates = new PointF(tag.Position.X - shift.Width, tag.Position.Y - shift.Height);
             using var brush = new SolidBrush(palette.ForegroundColor);
-            graphics.DrawString(tag.Value, new Font(FontFamily.GenericSerif, tag.FontSize), brush, shiftedCoordinates);
+            graphics.DrawString(tag.Value, new Font(appSettings.FontType, tag.FontSize), brush, shiftedCoordinates);
         }
 
         return image;
@@ -45,9 +44,9 @@ public class CloudDrawer : IDrawer
     {
         maximalRank = words.First().rank;
         minimalRank = words.Last().rank - 1;
-        
+
         var tags = new List<Tag>();
-        
+
         foreach (var pair in words)
         {
             var fontSize = CalculateFontSize(pair.rank);
@@ -69,21 +68,11 @@ public class CloudDrawer : IDrawer
         return (int)Math.Round(length * LengthSizeMultiplier * ((double)fontSize / MaximalFontSize));
     }
 
-    private static Size GetImageShift(IList<Rectangle> rectangles, int border)
+    private static Size GetImageShift(IList<Rectangle> rectangles)
     {
         var minX = rectangles.Min(rectangle => rectangle.Left);
         var minY = rectangles.Min(rectangle => rectangle.Top);
 
-        return new Size(minX - border, minY - border);
-    }
-
-    private static Size GetImageSize(IList<Rectangle> rectangles, int border)
-    {
-        var minX = rectangles.Min(rectangle => rectangle.Left);
-        var maxX = rectangles.Max(rectangle => rectangle.Right);
-        var minY = rectangles.Min(rectangle => rectangle.Top);
-        var maxY = rectangles.Max(rectangle => rectangle.Bottom);
-
-        return new Size(maxX - minX + 2 * border, maxY - minY + 2 * border);
+        return new Size(minX, minY);
     }
 }

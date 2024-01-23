@@ -1,8 +1,8 @@
-using TagCloud.CloudDrawer;
-using TagCloud.CloudSaver;
+using TagCloud.AppSettings;
+using TagCloud.Drawer;
 using TagCloud.FileReader;
-using TagCloud.Settings;
-using TagCloud.WordFilter;
+using TagCloud.FileSaver;
+using TagCloud.Filter;
 using TagCloud.WordRanker;
 using TagCloud.WordsPreprocessor;
 
@@ -11,13 +11,14 @@ namespace TagCloud.UserInterface;
 public class ConsoleUI : IUserInterface
 {
     private readonly IFileReader reader;
-    private readonly ICloudSaver saver;
+    private readonly ISaver saver;
     private readonly IDrawer drawer;
     private readonly IWordRanker ranker;
     private readonly IFilter filter;
     private readonly IPreprocessor preprocessor;
 
-    public ConsoleUI(IFileReader reader, ICloudSaver saver, IDrawer drawer, IWordRanker ranker, IFilter filter, IPreprocessor preprocessor)
+    public ConsoleUI(IFileReader reader, ISaver saver, IDrawer drawer, IWordRanker ranker, IFilter filter,
+        IPreprocessor preprocessor)
     {
         this.reader = reader;
         this.saver = saver;

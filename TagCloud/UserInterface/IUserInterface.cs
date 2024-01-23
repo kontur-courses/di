@@ -1,4 +1,4 @@
-using TagCloud.Settings;
+using TagCloud.AppSettings;
 
 namespace TagCloud.UserInterface;
 

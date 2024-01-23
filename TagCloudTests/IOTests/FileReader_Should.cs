@@ -6,7 +6,7 @@ namespace TagCloudTests;
 [TestFixture]
 public class FileReader_Should
 {
-    private IFileReader sut = new FileReader();
+    private IFileReader sut = new TxtReader();
     private const string inputPath = "test.txt";
     private string text = $"one{Environment.NewLine}two{Environment.NewLine}three{Environment.NewLine}";
 
@@ -15,7 +15,7 @@ public class FileReader_Should
     {
         using var fileStream = File.Open(inputPath, FileMode.Create);
         using var writer = new StreamWriter(fileStream);
-        
+
         writer.Write(text);
     }
 
@@ -23,11 +23,11 @@ public class FileReader_Should
     public void ReadWordsFromTxt()
     {
         var expected = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
-        
+
         var result = sut.ReadLines(inputPath);
 
         result.Should().BeEquivalentTo(expected);
-        
+
         File.Delete(inputPath);
     }
 }

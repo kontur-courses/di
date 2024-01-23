@@ -1,7 +1,6 @@
 using System.Drawing;
-using TagCloud.Layouter;
 
-namespace TagCloud.CloudDrawer;
+namespace TagCloud.Drawer;
 
 public interface IDrawer
 {

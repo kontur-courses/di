@@ -1,12 +1,12 @@
 using System.Drawing;
 
-namespace TagCloud.CloudDrawer;
+namespace TagCloud.Drawer;
 
 public class CustomPalette : IPalette
 {
     private Color foregroundColor;
     private Color backgroundColor;
-    
+
     public CustomPalette(Color foregroundColor, Color backgroundColor)
     {
         this.foregroundColor = foregroundColor;

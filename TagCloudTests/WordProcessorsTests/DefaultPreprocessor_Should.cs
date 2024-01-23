@@ -6,7 +6,7 @@ namespace TagCloudTests.WordProcessorsTests;
 public class DefaultPreprocessor_Should
 {
     private IPreprocessor sut = new DefaultPreprocessor();
-    private List<string> words = new(){"Aba", "caBC", "teSTword", "ZAZ", "word"};
+    private List<string> words = new() { "Aba", "caBC", "teSTword", "ZAZ", "word" };
 
     [SetUp]
     public void SetUp()

@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagCloud.CloudDrawer;
+namespace TagCloud.Drawer;
 
 public class Tag
 {
