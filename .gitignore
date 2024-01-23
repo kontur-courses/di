@@ -20,6 +20,7 @@ x64/
 x86/
 bld/
 [Bb]in/
+![Bbin]/**/mystem.exe
 [Oo]bj/
 
 # Visual Studio 2015 cache/options directory
