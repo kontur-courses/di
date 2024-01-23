@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudVisualization;
 
-public class SpiralGenerator : IPointGenerator
+public class SpiralPointGenerator : IPointGenerator
 {
-    public Point Center { get; set; } = new(0, 0);
+    public Point Center { get; } = new(0, 0);
     public int Radius { get; private set; }
     public double Angle { get; private set; }
     public int RadiusDelta { get; private set; } = 1;

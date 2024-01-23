@@ -4,14 +4,14 @@ using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTests;
 
-public class SpiralGenerator_Should
+public class SpiralPointGenerator_Should
 {
-    private SpiralGenerator spiralGenerator;
+    private SpiralPointGenerator spiralPointGenerator;
 
     [SetUp]
     public void CreateSpiralGenerator()
     {
-        spiralGenerator = new SpiralGenerator();
+        spiralPointGenerator = new SpiralPointGenerator();
     }
 
     [Test]
@@ -35,10 +35,10 @@ public class SpiralGenerator_Should
 
         foreach (var expectedPoint in expectedPoints)
         {
-            var actualPoint = spiralGenerator.GetNextPoint();
+            var actualPoint = spiralPointGenerator.GetNextPoint();
             while (existingPoints.Contains(actualPoint))
             {
-                actualPoint = spiralGenerator.GetNextPoint();
+                actualPoint = spiralPointGenerator.GetNextPoint();
             }
             existingPoints.Add(actualPoint);
             actualPoint.Should().Be(expectedPoint);

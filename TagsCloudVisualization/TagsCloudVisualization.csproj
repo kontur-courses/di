@@ -7,12 +7,29 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
-    <StartupObject>TagsCloudVisualization.LayoutExamples</StartupObject>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="WeCantSpell.Hunspell" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="WordDictionaries\en-us.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="WordDictionaries\en-us.aff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TextSamples\TestText.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TextSamples\LoremText.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
