@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.CloudLayouters;
 
-public interface ITagsCloudLayouter
+public interface ITagsCloudLayouter : IDisposable
 {
     Point Center { get; }
     IEnumerable<Rectangle> Rectangles { get; }

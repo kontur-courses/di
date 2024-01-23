@@ -38,4 +38,9 @@ public abstract class BaseCloudLayouter<TPointsProvider> : ITagsCloudLayouter
     {
         return rectangles.All(x => !x.IntersectsWith(rectangle));
     }
+
+    public void Dispose()
+    {
+        rectangles.Clear();
+    }
 }

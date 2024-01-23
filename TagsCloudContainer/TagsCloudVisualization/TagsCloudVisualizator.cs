@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using TagsCloudVisualization.CloudLayouters;
+using TagsCloudVisualization.Common;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.WordsAnalyzers;
 
@@ -9,77 +10,48 @@ namespace TagsCloudVisualization;
 public class TagsCloudVisualizator
 {
     private readonly ITagsCloudLayouter layouter;
-    private readonly Bitmap image;
     private readonly TagProvider tagProvider;
+    private readonly IImageHolder imageHolder;
+    private readonly Palette palette;
     
-    public TagsCloudVisualizator(ITagsCloudLayouter layouter, TagProvider tagProvider)
+    public TagsCloudVisualizator(ITagsCloudLayouter layouter, IImageHolder imageHolder, TagProvider tagProvider, Palette palette)
     {
         this.tagProvider = tagProvider;
         this.layouter = layouter;
-        image = new Bitmap(2000, 2000);
+        this.palette = palette;
+        this.imageHolder = imageHolder;
     }
 
-    public TagsCloudVisualizator(ITagsCloudLayouter layouter)
+    public void DrawTagsCloud()
     {
-        if (!layouter.Rectangles.Any())
-            throw new ArgumentException("Layouter rectangles should contain elements");
-        this.layouter = layouter;
-        var radius = (int)layouter.Rectangles.GetDistanceToMostDistantPoint(layouter.Center);
-        image = new Bitmap(radius * 2, radius * 2);
-    }
-
-    public Bitmap DrawTagsCloud()
-    {
-        using (var graphics = Graphics.FromImage(image))
+        using (var graphics = imageHolder.StartDrawing())
         {
             FillBackground(graphics);
             DrawTags(graphics);
-            Centering(graphics);
             graphics.Save();
         }
 
-        return image;
+        imageHolder.UpdateUi();
     }
 
-    public Bitmap DrawRectanglesCloud()
-    {
-        using (var graphics = Graphics.FromImage(image))
-        {
-            FillBackground(graphics);
-            DrawRectangles(graphics);
-            Centering(graphics);
-            graphics.Save();
-        }
-
-        return image;
-    }
-
-    private void Centering(Graphics graphics)
-    {
-        var radius = (float)layouter.Rectangles.GetDistanceToMostDistantPoint(layouter.Center);
-        graphics.TranslateTransform(radius - layouter.Center.X, radius - layouter.Center.Y);
-    }
-    
     private void FillBackground(Graphics graphics)
     {
-        graphics.Clear(Color.Black);
+        graphics.Clear(palette.BackgroundColor);
     }
 
     private void DrawTags(Graphics graphics)
     {
-        var fontsize = 200;
-        foreach (var tag in tagProvider.GetTags())
+        using (layouter)
         {
-            var font = new Font("Times New Roman", fontsize * (float)tag.Coeff);
-            var rectangle = layouter.PutNextRectangle(graphics.MeasureString(tag.Word, font).ToSize());
-            graphics.DrawRectangle(Pens.Azure, rectangle);
-            graphics.DrawString(tag.Word, font, new SolidBrush(Color.Aquamarine), rectangle.Location);
+            var fontsize = 42;
+            foreach (var tag in tagProvider.GetTags())
+            {
+                var font = new Font("Times New Roman", fontsize * (float) tag.Coeff);
+                var rectangle = layouter.PutNextRectangle(graphics.MeasureString(tag.Word, font).ToSize());
+                var color = tag.Coeff > 0.75 ? palette.PrimaryColor :
+                    tag.Coeff > 0.35 ? palette.SecondaryColor : palette.TertiaryColor;
+                graphics.DrawString(tag.Word, font, new SolidBrush(color), rectangle.Location);
+            }
         }
-    }
-
-    private void DrawRectangles(Graphics graphics)
-    {
-        graphics.FillRectangles(Brushes.Aqua, layouter.Rectangles.ToArray());
-        graphics.DrawRectangles(Pens.Black, layouter.Rectangles.ToArray());
     }
 }
