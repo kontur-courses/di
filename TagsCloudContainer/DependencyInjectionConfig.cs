@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagsCloudContainer.FreqAnalyzer;
+using TagsCloudContainer.FrequencyAnalyzers;
 using TagsCloudContainer.TextTools;
 
 namespace TagsCloudContainer
@@ -13,7 +8,7 @@ namespace TagsCloudContainer
     {
         public static IServiceCollection AddCustomServices(IServiceCollection services)
         {
-            services.AddTransient<TextFileReader>();
+            services.AddScoped<TextFileReader>();
             services.AddTransient<FrequencyAnalyzer>();
 
             return services;

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudContainer.TextTools
+﻿namespace TagsCloudContainer.TextTools
 {
-    public class TextFileReader : IFileReader
+    public class TextFileReader : ITextReader
     {
-        public string ReadTextFromFile(string filePath)
+        public string ReadText(string filePath)
         {
             //try catch?
             using (StreamReader reader = new StreamReader(filePath))

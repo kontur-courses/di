@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudContainer.FreqAnalyzer
+﻿namespace TagsCloudContainer.FrequencyAnalyzers
 {
-    public class FrequencyAnalyzer
+    public class FrequencyAnalyzer : IAnalyzer
     {
         private readonly Dictionary<string, int> wordFrequency;
 
@@ -15,7 +9,7 @@ namespace TagsCloudContainer.FreqAnalyzer
             wordFrequency = new Dictionary<string, int>();
         }
 
-        public void Analyze(string text)
+        public void Analyze(string text) // TODO: filter booring words
         {
             string[] words = text.Split(new[] { ' ', '.', ',', ';', ':', '!', '?', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -29,6 +23,14 @@ namespace TagsCloudContainer.FreqAnalyzer
                 {
                     wordFrequency.Add(word.ToLower(), 1);
                 }
+            }
+        }
+
+        public IEnumerable<(string, int)> GetAnalyzedText()
+        {
+            foreach (KeyValuePair<string, int> pair in wordFrequency)
+            {
+                yield return (pair.Key, pair.Value);
             }
         }
 
