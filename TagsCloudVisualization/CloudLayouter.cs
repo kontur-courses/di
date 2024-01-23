@@ -2,23 +2,24 @@
 
 namespace TagsCloudVisualization;
 
-public class CloudLayouter
+public class CloudLayouter : ICloudLayouter
 {
     private readonly IPointGenerator pointGenerator;
+    private Dictionary<string, Font> wordsFonts = new();
     private readonly List<Rectangle> createdRectangles = new();
 
-    public IEnumerable<Rectangle> CreatedRectangles => createdRectangles.AsEnumerable();
-
-    public CloudLayouter(IPointGenerator pointGenerator)
+    public CloudLayouter(IPointGenerator pointGenerator, Font font, Dictionary<string, int> wordsCounter)
     {
         this.pointGenerator = pointGenerator;
+        var maxOccurrencies = wordsCounter.Values.Max();
+        foreach (var pair in wordsCounter)
+        {
+            wordsFonts.Add(pair.Key, new Font(font.FontFamily, font.Size * pair.Value / maxOccurrencies));
+        }
     }
 
-    public Rectangle PutNextRectangle(Size rectangleSize)
+    private Rectangle PutNextRectangle(Size rectangleSize)
     {
-        if (rectangleSize.Width < 0 || rectangleSize.Height < 0)
-            throw new ArgumentException("Rectangle can't have negative width or height");
-
         while (true)
         {
             var nextPoint = pointGenerator.GetNextPoint();
@@ -27,10 +28,23 @@ public class CloudLayouter
                 nextPoint.Y - rectangleSize.Height / 2);
 
             var newRectangle = new Rectangle(rectangleLocation, rectangleSize);
-            if (createdRectangles.Any(rectangle => rectangle.IntersectsWith(newRectangle))) continue;
+            if (createdRectangles.Any(rectangle => rectangle.IntersectsWith(newRectangle)))
+                continue;
 
             createdRectangles.Add(newRectangle);
             return newRectangle;
+        }
+    }
+
+    public IEnumerable<TextRectangle> CreateLayout()
+    {
+        foreach (var wordFont in wordsFonts.OrderByDescending(pair => pair.Value.Size))
+        {
+            using var smallBitmap = new Bitmap(1, 1);
+            using var graphics = Graphics.FromImage(smallBitmap);
+            var rectangleSize = graphics.MeasureString(wordFont.Key, wordFont.Value);
+            var intSize = new Size((int)rectangleSize.Width, (int)rectangleSize.Height);
+            yield return new TextRectangle(wordFont.Key, wordFont.Value, PutNextRectangle(intSize));
         }
     }
 }
