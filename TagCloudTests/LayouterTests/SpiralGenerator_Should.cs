@@ -12,7 +12,7 @@ public class SpiralGenerator_Should
     public void Setup()
     {
         startPoint = new Point(Width / 2, Height / 2);
-        sut = new SpiralGenerator(startPoint);
+        sut = new SpiralGenerator(startPoint, 1, 0.1);
     }
 
     [Test]

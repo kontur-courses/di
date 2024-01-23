@@ -4,13 +4,13 @@ namespace TagCloud.Settings;
 
 public class Settings : IAppSettings
 {
-    [Option('s', "sourceFile", Required = true, HelpText = "Path to file with words to visualize")]
+    [Option('s', "sourceFile", Default = "text.txt", HelpText = "Path to file with words to visualize")]
     public string InputPath { get; set; }
     
     [Option('o', "outputPath", Default = "result", HelpText = "Path to output image file")]
     public string OutputPath { get; set; }
     
-    [Option('e', "outputFormat", Default = "png", HelpText = "Output image file format")]
+    [Option('e', "extensionImage", Default = "png", HelpText = "Output image file format")]
     public string ImageExtension { get; set; }
     
     [Option('f', "fontType", Default = "Roboto", HelpText = "Font type of words")]
@@ -24,4 +24,7 @@ public class Settings : IAppSettings
     
     [Option('l', "layouter", Default = "Circular", HelpText = "Cloud layouter algorithm")]
     public string LayouterType { get; set; }
+    
+    [Option('d', "density", Default = 1, HelpText = "Density of cloud")]
+    public int CloudDensity { get; set; }
 }

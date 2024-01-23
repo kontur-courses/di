@@ -8,37 +8,13 @@ public class CircularCloudLayouter_Should
 {
     private const int Width = 1920;
     private const int Height = 1080;
-    private CircularCloudLayouter sut;
+    private Layouter sut;
 
 
     [SetUp]
     public void Setup()
     {
-        sut = new CircularCloudLayouter(new SpiralGenerator(new Point(Width / 2, Height / 2)));
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        if (TestContext.CurrentContext.Result.Outcome == ResultState.Failure)
-        {
-            var bitmap = CloudDrawer.DrawTagCloud(sut.Rectangles);
-
-            var path = @$"{Environment.CurrentDirectory}\..\..\..\FailedTests\{this.GetType()}";
-            var absPath = Path.GetFullPath(path);
-
-            if (!Directory.Exists(absPath))
-            {
-                Directory.CreateDirectory(absPath);
-            }
-
-            var fileName = TestContext.CurrentContext.Test.Name;
-            absPath += @$"\{fileName}.png";
-
-            bitmap.Save(absPath);
-            
-            TestContext.Out.WriteLine($"Tag cloud visualization saved to file <{absPath}>");
-        }
+        sut = new Layouter(new SpiralGenerator(new Point(Width / 2, Height / 2)));
     }
 
     [Test]

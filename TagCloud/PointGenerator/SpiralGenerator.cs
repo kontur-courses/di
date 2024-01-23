@@ -9,7 +9,7 @@ public class SpiralGenerator : IPointGenerator
     private readonly double angleShift;
     private double currentAngle;
 
-    public SpiralGenerator(Point startPoint, int spiralDensity = 1, double angleShift = 0.1)
+    public SpiralGenerator(Point startPoint, int spiralDensity = 1, double angleShift = 0.01)
     {
         if (startPoint.X < 0 || startPoint.Y < 0)
             throw new ArgumentException("Spiral center point coordinates should be non-negative");

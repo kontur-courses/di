@@ -1,28 +1,41 @@
 ﻿using System.Drawing;
-using TagCloud.Layouter;
+using Autofac;
+using TagCloud.CloudDrawer;
 using TagCloud.PointGenerator;
+using CommandLine;
+using TagCloud.CloudSaver;
+using TagCloud.FileReader;
+using TagCloud.Layouter;
+using TagCloud.UserInterface;
+using TagCloud.WordFilter;
+using TagCloud.WordRanker;
+using TagCloud.WordsPreprocessor;
 
 namespace TagCloud;
 
-    public class Program
+public class Program
+{
+    static void Main(string[] args)
     {
-        private const int Width = 1920;
-        private const int Height = 1080;
+        var settings = Parser.Default.ParseArguments<Settings.Settings>(args).Value;
+        var builder = new ContainerBuilder();
+        builder.RegisterType<FileReader.FileReader>().As<IFileReader>();
+        builder.RegisterType<CloudSaver.CloudSaver>().As<ICloudSaver>();
+        builder.RegisterType<CloudDrawer.CloudDrawer>().As<IDrawer>();
+        builder.RegisterType<WordRankerByFrequency>().As<IWordRanker>();
+        builder.RegisterType<WordFilter.WordFilter>().As<IFilter>();
+        builder.RegisterType<DefaultPreprocessor>().As<IPreprocessor>();
 
-        static void Main(string[] args)
-        {
-            var layouter = new CircularCloudLayouter(new SpiralGenerator(new Point(Width / 2, Height / 2), 1, 0.01));
+        builder.RegisterType<ConsoleUI>().As<IUserInterface>();
 
-            var random = new Random();
+        builder.RegisterType<RandomPalette>().As<IPalette>();
+        builder.Register(l =>
+            new Layouter.Layouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
+                settings.CloudDensity))).As<ILayouter>();
 
-            for (var i = 0; i < 150; i++)
-            {
-                layouter.PutNextRectangle(new Size(50 + random.Next(0, 100), 50 + random.Next(0, 100)));
-            }
+        builder.Register(s => settings).AsImplementedInterfaces();
 
-            var saver = new CloudSaver.CloudSaver();
-
-            using var bitmap = CloudDrawer.CloudDrawer.DrawTagCloud(layouter.Rectangles);
-            saver.Save(bitmap, "Sample", "png");
-        }
+        var container = builder.Build();
+        container.Resolve<IUserInterface>().Run(settings);
     }
+}

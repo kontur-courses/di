@@ -9,4 +9,5 @@ public interface IAppSettings
     public int CloudWidth { get; }
     public int CloudHeight { get; }
     public string LayouterType { get; }
+    public int CloudDensity { get; }
 }
