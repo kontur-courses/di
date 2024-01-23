@@ -1,3 +1,6 @@
+
+![Getting Started](./TEST.png)
+
 # Dependency Injection Container
 
 DI-контейнеры используется во многих команд Контура для управления зависимостями с соблюдением Dependency Inversion Principle.

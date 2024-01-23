@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using WeCantSpell.Hunspell;
+﻿using System.Text;
 
 namespace TagCloudGenerator
 {
     public class TextProcessor : ITextProcessor
     {
-        public string ProcessTheText(string filePath) 
+        public string[] ProcessTheText(string[] file)
         {
-            var text = File.ReadAllText(filePath);
-            // var result = new StringBuilder();
+            var result = new StringBuilder();
 
-            //foreach (var line in text)
-            //{
+            for (var i = 0; i < file.Length; i++)
+            {             
+                file[i] = file[i].ToLower();
+            }
 
-
-            //    result.Append(line.ToLower());
-            //}
-            
-            return text.ToLower();
+            return file;
         }
     }
 }

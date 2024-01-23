@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.PointDistributors
         private double angle;
         private readonly double deltaAngle;
         private Point center;
-        private bool centerOnPoint;
+        public bool centerOnPoint;
 
         public Point GetPosition()
         {

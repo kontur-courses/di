@@ -1,13 +1,17 @@
 ﻿using CommandLine;
-using Microsoft.Extensions.DependencyInjection;
-using TagsCloudVisualization;
+using TagCloudGenerator;
 
 public class Program
 {
+    static TagCloudDrawer tagCloudDrawer = new TagCloudDrawer();
+    public class Options
+    {
+        [Option('p', "path", Required = true, HelpText = "The path for the text file.")]
+        public string Path { get; set; }
+    }
     public static void Main(string[] args)
     {
-        var filePath = @"C:\Users\lholy\Documents\GitHub\di\TagCloudGeneratorTest\TestsData\test1.txt";
-
-        var text = File.ReadAllLines(filePath);
+        Parser.Default.ParseArguments<Options>(args)
+                   .WithParsed<Options>(o => tagCloudDrawer.DrawWordsCloud(o.Path));
     }
 }

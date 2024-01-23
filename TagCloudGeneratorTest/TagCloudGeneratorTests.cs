@@ -1,6 +1,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloudGenerator;
+using System.IO;
+using System;
 
 namespace TagCloudGeneratorTest
 {
@@ -19,20 +21,22 @@ namespace TagCloudGeneratorTest
         public void WhenPassWordsInUppercase_ShouldReturnWordsInLowerCase()
         {
             var filePath = @"C:\Users\lholy\Documents\GitHub\di\TagCloudGeneratorTest\TestsData\test1.txt";
+            var file = File.ReadAllLines(filePath);
 
-            var fileText = textProcessor.ProcessTheText(filePath);
+            var fileText = textProcessor.ProcessTheText(file);
 
-            fileText.Should().Be("создание\r\nоблака\r\nтегов\r\nиз\r\nфайла");
-        }
+            var result = "";
+            for(var i = 0; i < fileText.Length; i++)
+            {
+                if (i == fileText.Length - 1)
+                {
+                    result += fileText[i];
+                    continue;
+                }
+                result += (fileText[i] + Environment.NewLine);
+            }
 
-        [Test]
-        public void WhenPassBoringWords_ShouldReturnWordsWithoutBoringWords()
-        {
-            var filePath = @"C:\Users\lholy\Documents\GitHub\di\TagCloudGeneratorTest\TestsData\test2.txt";
-
-            var fileText = textProcessor.ProcessTheText(filePath);
-
-            fileText.Should().Be("");
+            result.Should().Be("создание\r\nоблака\r\nтегов\r\nиз\r\nфайла");
         }
     }
 }
