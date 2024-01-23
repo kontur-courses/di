@@ -20,12 +20,13 @@ static class Program
 
         container.RegisterType<PaletteSettingsAction>().As<IUiAction>();
         container.RegisterType<TagsCloudAction>().As<IUiAction>();
+        container.RegisterType<SourceSettingsAction>().As<IUiAction>();
         container.RegisterType<ImageSettingsAction>().As<IUiAction>();
         container.RegisterType<PictureBoxImageHolder>().As<PictureBoxImageHolder, IImageHolder>().SingleInstance();
         container.RegisterType<ImageSettings>().SingleInstance();
-        
-        container.RegisterType<TxtTextReader>().As<TextReader>().WithParameter("path",
-            @"C:\Users\Pobeda\Desktop\Practiti\.ШПОРА\di\TagsCloudContainer\TagsCloudVisualization\src\textSample.txt");
+        container.RegisterType<SourceSettings>().SingleInstance();
+
+        container.RegisterType<TxtTextReader>().As<TextReader>();
         container.RegisterType<TagProvider>();
         container.RegisterType<Palette>().SingleInstance();
         container.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>();

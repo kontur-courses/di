@@ -2,13 +2,13 @@
 
 public class TxtTextReader : TextReader
 {
-    public TxtTextReader(string path) : base(path)
+    public TxtTextReader(SourceSettings settings) : base(settings)
     {
     }
 
     public override string GetText()
     {
-        using var reader = new StreamReader(path);
+        using var reader = new StreamReader(Settings.Path);
         return reader.ReadToEnd();
     }
 }

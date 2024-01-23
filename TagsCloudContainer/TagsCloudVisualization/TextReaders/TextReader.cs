@@ -2,11 +2,11 @@
 
 public abstract class TextReader
 {
-    protected string path;
+    protected SourceSettings Settings;
 
-    protected TextReader(string path)
+    protected TextReader(SourceSettings settings)
     {
-        this.path = path;
+        Settings = settings;
     }
 
     public abstract string GetText();
