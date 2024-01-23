@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.ColorGenerators;
 
@@ -6,12 +7,12 @@ public class ColorGenerator : IColorGenerator
 {
     private readonly IColorGenerator generator;
 
-    public ColorGenerator(string color)
+    public ColorGenerator(FontSettings settings)
     {
-        generator = color switch
+        generator = settings.Color switch
         {
             "random" => new RandomColorGenerator(),
-            _ => new DefaultColorGenerator(color), 
+            _ => new DefaultColorGenerator(settings.Color), 
         };
     }
 

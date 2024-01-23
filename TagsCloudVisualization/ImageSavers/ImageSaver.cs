@@ -1,39 +1,61 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.ImageSavers;
 
 public class ImageSaver : IImageSaver
 {
-    public void SaveImage(Bitmap bitmap, string fileName, string pathToDirectory)
+    private readonly FileSettings settings;
+    
+    public ImageSaver(FileSettings fileSettings) 
     {
-        if (!IsFileNameValid(fileName))
+        settings = fileSettings;
+    }
+
+    public void SaveImage(Bitmap bitmap)
+    {
+        if (!IsFileNameValid(settings.FileName))
         {
-            throw new ArgumentException($"filename {fileName} is incorrect");
+            throw new ArgumentException($"filename {settings.FileName} is incorrect");
         }
-        if (!IsPathValid(pathToDirectory))
+        if (!IsPathValid(settings.PathToSaveDirectory))
         {
-            throw new ArgumentException($"path {pathToDirectory} is incorrect");
+            throw new ArgumentException($"path {settings.PathToSaveDirectory} is incorrect");
         }
 
-        if (!Directory.Exists(pathToDirectory))
+        if (!Directory.Exists(settings.PathToSaveDirectory))
         {
-            Directory.CreateDirectory(pathToDirectory);
+            Directory.CreateDirectory(settings.PathToSaveDirectory);
         }
-
-        bitmap.Save(Path.Combine(pathToDirectory, fileName), System.Drawing.Imaging.ImageFormat.Png);
+        bitmap.Save(Path.Combine(settings.PathToSaveDirectory, settings.FileName + "." + settings.FileFormat),
+            GetImageFormat(settings.FileFormat));
     }
 
     public static bool IsFileNameValid(string fileName)
     {
-        if (fileName == null || fileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
-            return false;
-        return true;
+        return !(fileName == null || fileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1);
     }
 
     public static bool IsPathValid(string filePath)
     {
-        if (filePath.IndexOfAny(Path.GetInvalidPathChars()) != -1)
-            return false;
-        return true;
+        return !(filePath.IndexOfAny(Path.GetInvalidPathChars()) != -1);
+
+    }
+
+    public static ImageFormat GetImageFormat(string format)
+    {
+        try
+        {
+            var imageFormatConverter = new ImageFormatConverter();
+            var imageFormat = imageFormatConverter.ConvertFromString(format);
+            if (imageFormat != null)
+                return (ImageFormat)imageFormat;
+            throw new ArgumentException($"Can't convert format from this string {format}");
+        }
+        catch (NotSupportedException)
+        {
+            throw new NotSupportedException($"File with format {format} doesn't supported");
+        }
     }
 }

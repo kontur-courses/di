@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using TagsCloudVisualization.FileReaders;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.TextHandlers;
 
@@ -6,6 +8,12 @@ public class TextHandler : ITextHandler
 {
     private readonly IEnumerable<string> words;
     private readonly HashSet<string> boringWords;
+
+    public TextHandler(IFileReader fileReader, FileSettings settings)
+    {
+        words = GetWords(fileReader.ReadText(settings.PathToText));
+        boringWords = GetWords(fileReader.ReadText(settings.PathToBoringWords).ToLower()).ToHashSet();
+    }
 
     public TextHandler(string text, string boringWords)
     {
@@ -19,10 +27,11 @@ public class TextHandler : ITextHandler
 
         foreach (var word in words)
         {
-            if (result.ContainsKey(word))
-                result[word]++;
-            else if (!boringWords.Contains(word))
-                result[word] = 1;
+            var lowerWord = word.ToLower();
+            if (result.ContainsKey(lowerWord))
+                result[lowerWord]++;
+            else if (!boringWords.Contains(lowerWord))
+                result[lowerWord] = 1;
         }
 
         return result;

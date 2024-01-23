@@ -1,9 +1,11 @@
 using NUnit.Framework;
 using FluentAssertions;
-using TagsCloudVisualization;
 using System.Drawing;
 using TagsCloudVisualization.CloudLayouters;
 using TagsCloudVisualization.ImageSavers;
+using TagsCloudVisualization.Visualizers;
+using TagsCloudVisualization.PointCreators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualizationTests;
 
@@ -11,18 +13,22 @@ namespace TagsCloudVisualizationTests;
 public class CircularCloudLayouterTests
 {
     private Point center = new(250, 250);
+    private ImageSettings imageSettings = new ImageSettings(500, 500, "red");
+    private SpiralSettings spiralSettings = new SpiralSettings(0.05, 0.1);
+    private IPointCreator pointCreator;
     private CircularCloudLayouter sut;
 
     [SetUp]
     public void SetUp()
     {
-        sut = new CircularCloudLayouter(center);
+        pointCreator = new Spiral(imageSettings, spiralSettings);
+        sut = new CircularCloudLayouter(imageSettings, pointCreator);
     }
 
     [Test]
     public void Constructor_NotTrows()
     {
-        var action = () => new CircularCloudLayouter(center);
+        var action = () => new CircularCloudLayouter(imageSettings, pointCreator);
         action.Should().NotThrow();
     }
 
@@ -93,7 +99,7 @@ public class CircularCloudLayouterTests
         HasIntersectedRectangles(sut.Rectangles).Should().BeFalse();
     }
 
-    [TearDown]
+    /*[TearDown]
     public void SaveImageWhenTestFails()
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
@@ -108,7 +114,7 @@ public class CircularCloudLayouterTests
             var fileName = $"{TestContext.CurrentContext.Test.Name}.png";
             saver.SaveImage(image, fileName, pathToTestsFailsImages);
         }
-    }
+    }*/
 
     private bool HasIntersectedRectangles(IList<Rectangle> rectangles)
     {

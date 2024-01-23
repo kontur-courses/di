@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.CloudLayouters;
 
-public interface ICircularCloudLayouter
+public interface ICloudLayouter
 {
     public Point CloudCenter { get; }
     public IList<Rectangle> Rectangles { get; }

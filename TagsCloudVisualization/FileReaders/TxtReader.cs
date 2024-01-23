@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.FileReader;
+﻿namespace TagsCloudVisualization.FileReaders;
 
 public class TxtReader : IFileReader
 {

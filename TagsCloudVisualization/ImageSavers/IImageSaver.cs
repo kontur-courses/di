@@ -4,5 +4,5 @@ namespace TagsCloudVisualization.ImageSavers;
 
 interface IImageSaver
 {
-    void SaveImage(Bitmap bitmap, string fileName, string pathToDirectory);
+    void SaveImage(Bitmap bitmap);
 }

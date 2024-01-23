@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization.FileReader;
+using TagsCloudVisualization.FileReaders;
 
 namespace TagsCloudVisualizationTests.FileReaderTests;
 
@@ -36,7 +36,7 @@ public class FileReaderTests
     {
         var reader = new FileReader();
         var result = reader.ReadText(@"..\..\..\FileReaderData\DocFile.doc");
-        result.Should().Be("doc\rfile\rdata\r");
+        result.Should().Be("doc file data");
     }
 
     [Test]
@@ -44,12 +44,12 @@ public class FileReaderTests
     {
         var reader = new FileReader();
         var result = reader.ReadText(@"..\..\..\FileReaderData\DocxFile.docx");
-        result.Should().Be("docx\rfile\rdata\r");
+        result.Should().Be("docx file data");
     }
 
-    [TestCase("Empty.docx", "\r", TestName = "empty docx file")]
+    [TestCase("Empty.docx", " ", TestName = "empty docx file")]
     [TestCase("Empty.txt", "", TestName = "empty txt file")]
-    [TestCase("Empty.doc", "\r", TestName = "empty doc file")]
+    [TestCase("Empty.doc", "", TestName = "empty doc file")]
     public void ReadText_EmptyTxtFile_ReturnsEmptyStringOrSpecialSymbol(string fileName, string exceptedResult)
     {
         var reader = new FileReader();

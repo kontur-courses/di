@@ -2,13 +2,23 @@
 using FluentAssertions;
 using System.Drawing;
 using TagsCloudVisualization.PointCreators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualizationTests;
 
 [TestFixture]
 public class SpiralTests
 {
-    private static Point center = new(10, 10);
+    private Spiral sut;
+    private readonly static Point center = new(10, 10);
+
+    [SetUp]
+    public void SetUp()
+    {
+        var imageSettings = new ImageSettings(20, 20, "red");
+        var spiralSettings = new SpiralSettings(0.1, 0.1);
+        sut = new Spiral(imageSettings, spiralSettings);
+    }
 
     [TestCase(-0.1, 1, TestName = "Constructor_DeltaAngleNegtaive_ThrowsArgumentException")]
     [TestCase(0.1, -0.1, TestName = "Constructor_DeltaRadiusNegative_ThrowsArgumentException")]
@@ -16,14 +26,19 @@ public class SpiralTests
     [TestCase(0.1, 0, TestName = "Constructor_DeltaRadiusZero_ThrowsArgumentException")]
     public void Constructor_IncorrectArguments_ThrowsArgumentException(double deltaAngle, double deltaRadius)
     {
-        var action = () => new Spiral(center, deltaAngle, deltaRadius);
+        var imageSettings = new ImageSettings(20, 20, "red");
+        var spiralSettings = new SpiralSettings(deltaAngle, deltaRadius);
+
+        var action = () => new Spiral(imageSettings, spiralSettings);
         action.Should().Throw<ArgumentException>();
     }
 
     [Test]
     public void Constructor_DeltaAngleAndDeltaRadiusPositive_NotThrow()
     {
-        var action = () => new Spiral(center, 0.1, 0.1);
+        var imageSettings = new ImageSettings(20, 20, "red");
+        var spiralSettings = new SpiralSettings(0.1, 0.1);
+        var action = () => new Spiral(imageSettings, spiralSettings);
         action.Should().NotThrow<ArgumentException>();
     }
 
@@ -44,8 +59,6 @@ public class SpiralTests
     [Test]
     public void GetPointsOnSpiral_CorrectValues_FirstPointShoulBeCenterPoint()
     {
-        var sut = new Spiral(center, 0.1, 0.1);
-
         var points = sut.GetPoints().GetEnumerator();
         points.MoveNext();
 
@@ -55,8 +68,6 @@ public class SpiralTests
     [Test]
     public void GetPointsOnSpiral_CorrectValues_ReturnsCorrectSecondPoint()
     {
-        var sut = new Spiral(center, 0.1, 0.1);
-
         var points = sut.GetPoints().GetEnumerator();
         points.MoveNext();
         points.MoveNext();

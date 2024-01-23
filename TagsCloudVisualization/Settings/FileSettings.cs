@@ -8,16 +8,16 @@ public class FileSettings
     public string FileName { get; }
     public string FileFormat { get; }
 
-    public FileSettings(string pathToBoringWords = @"..\..\BoringWords.txt",
-        string pathToText = @"..\..\Text.txt", 
-        string pathToSaveDirectory = @"..\..\Images", 
-        string fileName = "Image",
-        string fileForms = ".png")
+    public FileSettings(string pathToBoringWords,
+        string pathToText, 
+        string pathToSaveDirectory, 
+        string fileName,
+        string fileFormat)
     {
         PathToBoringWords = pathToBoringWords;
         PathToText = pathToText;
         PathToSaveDirectory = pathToSaveDirectory;
         FileName = fileName;
-        FileFormat = fileForms;
+        FileFormat = fileFormat;
     }
 }

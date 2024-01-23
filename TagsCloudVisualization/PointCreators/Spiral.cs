@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.PointCreators;
 
@@ -8,16 +9,15 @@ public class Spiral : IPointCreator
     private readonly double deltaAngle;
     private readonly double deltaRadius;
 
-    public Spiral(Point center, double deltaAngle, double deltaRadius)
+    public Spiral(ImageSettings imageSettings, SpiralSettings spiralSettings)
     {
+        deltaRadius = spiralSettings.DeltaRadius;
+        deltaAngle = spiralSettings.DeltaAngle;
+        center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
         if (deltaRadius <= 0 || deltaAngle <= 0)
         {
             throw new ArgumentException("deltaRadius and deltaAngle must be positive");
         }
-
-        this.center = center;
-        this.deltaAngle = deltaAngle;
-        this.deltaRadius = deltaRadius;
     }
 
     public IEnumerable<Point> GetPoints()
