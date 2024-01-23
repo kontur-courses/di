@@ -22,25 +22,6 @@ public class LayoutTests
         currentRectangles.TrimExcess();
     }
 
-    // [TearDown]
-    // public void TearDown()
-    // {
-    //     var context = TestContext.CurrentContext;
-    //     var writer = TestContext.Out;
-    //
-    //     if (context.Result.FailCount == 0)
-    //         return;
-    //
-    //     var fileName = $"{TestContext.CurrentContext.Test.MethodName}-fail.png";
-    //     var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-    //
-    //     new VisualizationBuilder(new Size(WindowWidth, WindowHeight), Color.White)
-    //         .CreateImageFrom(currentRectangles)
-    //         .SaveAs(filePath, new PngEncoder());
-    //
-    //     writer.WriteLine($"Tag cloud visualization saved to file <{filePath}>");
-    // }
-
     private Layout layout;
     private readonly Random random = new();
     private readonly List<RectangleF> currentRectangles = new();

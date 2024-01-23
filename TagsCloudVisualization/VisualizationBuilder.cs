@@ -20,13 +20,13 @@ public class VisualizationBuilder
         this.backgroundColor = backgroundColor;
     }
 
-    public VisualizationBuilder CreateImageFrom(List<Word> words)
+    public VisualizationBuilder CreateImageFrom(List<Tag> tags)
     {
         image = new Image<Rgba32>(canvasSize.Width, canvasSize.Height);
         image.Mutate(ctx =>
         {
             ctx.Clear(backgroundColor);
-            words.ForEach(word => ctx.DrawText(word.Text, word.Font, word.Color, word.Position));
+            tags.ForEach(tag => ctx.DrawText(tag.InnerText!, tag.TextFont!, tag.TextColor, tag.Location));
         });
 
         return this;
