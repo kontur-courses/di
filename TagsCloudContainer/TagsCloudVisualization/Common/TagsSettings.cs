@@ -1,9 +1,12 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 
 namespace TagsCloudVisualization.Common;
 
-public class Palette
+public class TagsSettings
 {
+    [TypeConverter(typeof(FontConverter.FontNameConverter))]
+    public string Font { get; set; } = "Arial";
     public Color PrimaryColor { get; set; } = Color.Yellow;
     public Color SecondaryColor { get; set; } = Color.Red;
     public Color TertiaryColor { get; set; } = Color.Aquamarine;

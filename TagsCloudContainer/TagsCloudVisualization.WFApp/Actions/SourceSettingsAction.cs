@@ -27,6 +27,7 @@ public class SourceSettingsAction : IUiAction
             Filter = "Текстовый файл (*.txt)|*.txt" 
         };
         var res = dialog.ShowDialog();
+        
         if (res == DialogResult.OK)
             sourceSettings.Path = dialog.FileName;
     }

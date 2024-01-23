@@ -12,13 +12,13 @@ public class TagsCloudVisualizator
     private readonly ITagsCloudLayouter layouter;
     private readonly TagProvider tagProvider;
     private readonly IImageHolder imageHolder;
-    private readonly Palette palette;
+    private readonly TagsSettings tagsSettings;
     
-    public TagsCloudVisualizator(ITagsCloudLayouter layouter, IImageHolder imageHolder, TagProvider tagProvider, Palette palette)
+    public TagsCloudVisualizator(ITagsCloudLayouter layouter, IImageHolder imageHolder, TagProvider tagProvider, TagsSettings tagsSettings)
     {
         this.tagProvider = tagProvider;
         this.layouter = layouter;
-        this.palette = palette;
+        this.tagsSettings = tagsSettings;
         this.imageHolder = imageHolder;
     }
 
@@ -36,7 +36,7 @@ public class TagsCloudVisualizator
 
     private void FillBackground(Graphics graphics)
     {
-        graphics.Clear(palette.BackgroundColor);
+        graphics.Clear(tagsSettings.BackgroundColor);
     }
 
     private void DrawTags(Graphics graphics)
@@ -46,10 +46,10 @@ public class TagsCloudVisualizator
             var fontsize = 42;
             foreach (var tag in tagProvider.GetTags())
             {
-                var font = new Font("Times New Roman", fontsize * (float) tag.Coeff);
+                var font = new Font(tagsSettings.Font, fontsize * (float) tag.Coeff);
                 var rectangle = layouter.PutNextRectangle(graphics.MeasureString(tag.Word, font).ToSize());
-                var color = tag.Coeff > 0.75 ? palette.PrimaryColor :
-                    tag.Coeff > 0.35 ? palette.SecondaryColor : palette.TertiaryColor;
+                var color = tag.Coeff > 0.75 ? tagsSettings.PrimaryColor :
+                    tag.Coeff > 0.35 ? tagsSettings.SecondaryColor : tagsSettings.TertiaryColor;
                 graphics.DrawString(tag.Word, font, new SolidBrush(color), rectangle.Location);
             }
         }

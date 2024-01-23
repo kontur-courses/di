@@ -11,24 +11,21 @@ using TextReader = TagsCloudVisualization.TextReaders.TextReader;
 
 namespace TagsCloudVisualization.WFApp;
 
-static class Program
+public static class Program
 {
     [STAThread]
-    static void Main()
+    public static void Main()
     {
         var container = new ContainerBuilder();
 
-        container.RegisterType<PaletteSettingsAction>().As<IUiAction>();
-        container.RegisterType<TagsCloudAction>().As<IUiAction>();
-        container.RegisterType<SourceSettingsAction>().As<IUiAction>();
-        container.RegisterType<ImageSettingsAction>().As<IUiAction>();
+        container.RegisterAssemblyTypes(typeof(IUiAction).Assembly).AsImplementedInterfaces();
         container.RegisterType<PictureBoxImageHolder>().As<PictureBoxImageHolder, IImageHolder>().SingleInstance();
         container.RegisterType<ImageSettings>().SingleInstance();
         container.RegisterType<SourceSettings>().SingleInstance();
 
         container.RegisterType<TxtTextReader>().As<TextReader>();
         container.RegisterType<TagProvider>();
-        container.RegisterType<Palette>().SingleInstance();
+        container.RegisterType<TagsSettings>().SingleInstance();
         container.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>();
         container.RegisterType<ArchimedeanSpiralPointsProvider>().WithParameter("center", new Point(500, 500));
         container.RegisterType<TagsCloudVisualizator>();

@@ -3,6 +3,7 @@ using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CloudLayouters;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.PointsProviders;
+using TagsCloudVisualizationTests.Utils;
 
 
 namespace TagsCloudVisualizationTests;
@@ -119,10 +120,10 @@ public class CircularCloudLayouterTests
     public void SaveImageWhenTestFails()
     {
         if (!TestContext.CurrentContext.Result.Outcome.Status.HasFlag(TestStatus.Failed)) return;
-        var visualizator = new TagsCloudVisualizator(layouter);
+        var visualizator = new RectanglesCloudVisualizator(layouter);
         var pathToFolder = @"..\FailsTests";
         var fileName = TestContext.CurrentContext.Test.Name;
-        visualizator.DrawRectanglesCloud().SaveAs(pathToFolder, fileName, ImageFormat.Png);
+        visualizator.Draw().SaveAs(pathToFolder, fileName, ImageFormat.Png);
         
         TestContext.WriteLine($"Tag cloud visualization saved to file {Path.GetFullPath(Path.Combine(pathToFolder, fileName))}");
     }

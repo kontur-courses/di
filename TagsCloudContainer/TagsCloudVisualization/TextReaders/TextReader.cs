@@ -2,7 +2,7 @@
 
 public abstract class TextReader
 {
-    protected SourceSettings Settings;
+    protected readonly SourceSettings Settings;
 
     protected TextReader(SourceSettings settings)
     {

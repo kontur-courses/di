@@ -22,7 +22,8 @@ public class ImageSettingsAction : IUiAction
 
     public void Perform()
     {
-        SettingsForm.For(imageSettings).ShowDialog();
-        imageHolder.RecreateImage(imageSettings);
+        var dialog = SettingsForm.For(imageSettings).ShowDialog();
+        if (dialog == DialogResult.OK)
+            imageHolder.RecreateImage(imageSettings);
     }
 }
