@@ -9,7 +9,9 @@ public class ArchimedianSpiralPointsProviderTests
      public void Constructor_ThrowsException_OnIncorrectArguments(double spiralDeltaAngle, double spiralDistance)
      {
          var a = () => 
-             new ArchimedeanSpiralPointsProvider(Point.Empty, spiralDeltaAngle, spiralDistance);
+             new ArchimedeanSpiralPointsProvider(new ArchimedeanSpiralSettings {Center = Point.Empty,
+                 DeltaAngle = spiralDeltaAngle, 
+                 Distance = spiralDistance});
          
          a.Should().Throw<ArgumentException>();
      }

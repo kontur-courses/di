@@ -22,6 +22,7 @@ public static class Program
         container.RegisterType<PictureBoxImageHolder>().As<PictureBoxImageHolder, IImageHolder>().SingleInstance();
         container.RegisterType<ImageSettings>().SingleInstance();
         container.RegisterType<SourceSettings>().SingleInstance();
+        container.RegisterType<ArchimedeanSpiralSettings>().SingleInstance();
 
         container.RegisterType<TxtTextReader>().As<TextReader>();
         container.RegisterType<TagProvider>();

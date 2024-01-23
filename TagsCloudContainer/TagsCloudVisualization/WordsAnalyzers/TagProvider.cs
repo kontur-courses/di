@@ -20,7 +20,7 @@ public class TagProvider
 
         foreach (var word in words.Select(x => x.ToLower()).Where(x => x.Length > 3))
         {
-            wordsWithFreq[word] = wordsWithFreq.ContainsKey(word) ? wordsWithFreq[word] + 1 : 1;
+            wordsWithFreq[word] = wordsWithFreq.TryGetValue(word, out var value) ? value + 1 : 1;
         }
 
         var max = wordsWithFreq.Max(x => x.Value);

@@ -19,13 +19,13 @@ public class CircularCloudLayouterTests
     {
         imageSize = new Size(500, 500);
         center = new Point(imageSize.Width / 2, imageSize.Height / 2);
-        layouter = new CircularCloudLayouter(new ArchimedeanSpiralPointsProvider(center));
+        layouter = new CircularCloudLayouter(new ArchimedeanSpiralPointsProvider(new ArchimedeanSpiralSettings {Center = center}));
     }
 
     [Test]
     public void Constructor_Success_OnPointArgument()
     {
-        var a = () => new CircularCloudLayouter(new ArchimedeanSpiralPointsProvider(center));
+        var a = () => new CircularCloudLayouter(new ArchimedeanSpiralPointsProvider(new ArchimedeanSpiralSettings {Center = center}));
 
         a.Should().NotThrow();
     }

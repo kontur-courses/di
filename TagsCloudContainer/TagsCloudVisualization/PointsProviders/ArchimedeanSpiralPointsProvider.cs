@@ -5,25 +5,22 @@ namespace TagsCloudVisualization.PointsProviders;
 
 public class ArchimedeanSpiralPointsProvider : IPointsProvider
 {
-    private readonly double deltaAngle;
-    private readonly double distance;
-    public Point Start { get; }
+    private readonly ArchimedeanSpiralSettings settings;
+    public Point Start => settings.Center;
 
-    public ArchimedeanSpiralPointsProvider(Point center, double deltaAngle = 5 * Math.PI / 180, double distance = 2)
+    public ArchimedeanSpiralPointsProvider(ArchimedeanSpiralSettings settings)
     {
-        if (deltaAngle == 0 || distance == 0)
+        if (settings.DeltaAngle == 0 || settings.Distance == 0)
             throw new ArgumentException("deltaAngle and distance should not equals zero");
-        this.deltaAngle = deltaAngle;
-        this.distance = distance;
-        Start = center;
+        this.settings = settings;
     }
 
     public IEnumerable<Point> GetPoints()
     {
-        for (var angle = 0d; ; angle += deltaAngle)
+        for (var angle = 0d; ; angle += settings.DeltaAngle)
         {
             var point = Start;
-            point.Offset(PolarToCartesian(distance * angle, angle));
+            point.Offset(PolarToCartesian(settings.Distance * angle, angle));
 
             yield return point;
         }

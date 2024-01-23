@@ -6,9 +6,9 @@ namespace TagsCloudVisualization.Common;
 public class TagsSettings
 {
     [TypeConverter(typeof(FontConverter.FontNameConverter))]
-    public string Font { get; set; } = "Arial";
-    public Color PrimaryColor { get; set; } = Color.Yellow;
-    public Color SecondaryColor { get; set; } = Color.Red;
-    public Color TertiaryColor { get; set; } = Color.Aquamarine;
-    public Color BackgroundColor { get; set; } = Color.DarkBlue;
+    public string Font { get; init; } = "Arial";
+    public Color PrimaryColor { get; init; } = Color.Yellow;
+    public Color SecondaryColor { get; init; } = Color.Red;
+    public Color TertiaryColor { get; init; } = Color.Aquamarine;
+    public Color BackgroundColor { get; init; } = Color.DarkBlue;
 }
