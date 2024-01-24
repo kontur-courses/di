@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using Autofac;
 using TagCloudDi.Layouter;
+using TagCloudDi.TextProcessing;
 using IContainer = Autofac.IContainer;
+using TextReader = TagCloudDi.TextProcessing.TextReader;
 
 namespace TagCloudDi
 {
@@ -16,6 +18,8 @@ namespace TagCloudDi
             );
             builder.RegisterType<ArchimedeanSpiral>().AsSelf();
             builder.RegisterType<CircularCloudLayouter>().AsSelf();
+            builder.RegisterType<TextReader>().AsSelf();
+            builder.RegisterType<TextProcessor>().AsSelf();
 
             return builder.Build();
         }
