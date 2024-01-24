@@ -1,7 +1,6 @@
 using System.Drawing;
-using TagsCloud.Algorithms;
 
-namespace TagsCloud;
+namespace TagsCloud.CloudLayouter;
 
 public class CloudLayouter : ICloudLayouter
 {

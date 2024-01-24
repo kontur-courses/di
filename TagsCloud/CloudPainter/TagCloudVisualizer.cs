@@ -1,9 +1,10 @@
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloud.CloudLayouter;
 using TagsCloud.Settings;
 using TagsCloud.WordAnalyzer;
 
-namespace TagsCloud;
+namespace TagsCloud.CloudPainter;
 
 public class TagCloudVisualizer
 {

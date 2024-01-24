@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloud.Algorithms;
+namespace TagsCloud.CloudLayouter;
 
 public class FlowerSpiral : ISpiral
 {

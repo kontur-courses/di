@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
 using TagsCloud;
-using TagsCloud.Algorithms;
+using TagsCloud.CloudLayouter;
 
 namespace TagsCloudTests;
 

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using TagsCloud.CloudPainter;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 using TagsCloud.Settings;

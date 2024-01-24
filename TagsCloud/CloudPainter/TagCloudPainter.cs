@@ -1,7 +1,8 @@
-using TagsCloud.Algorithms;
+using TagsCloud.CloudLayouter;
 using TagsCloud.Infrastructure;
 using TagsCloud.Settings;
-namespace TagsCloud;
+
+namespace TagsCloud.CloudPainter;
 
 public class TagCloudPainter
 {
@@ -22,7 +23,7 @@ public class TagCloudPainter
     public void Paint(ISpiral spiral, string path)
     {
         using var graphics = imageHolder.StartDrawing();
-        var layout = new CloudLayouter(spiral);
+        var layout = new CloudLayouter.CloudLayouter(spiral);
         var wordList = fileReader.GetWords(path);
         var parsedList = wordAnalyzer.GetFrequencyList(wordList);
         new TagCloudVisualizer(graphics, tagSettings, layout).RenderCloudImage(parsedList, imageHolder.GetImageSize());

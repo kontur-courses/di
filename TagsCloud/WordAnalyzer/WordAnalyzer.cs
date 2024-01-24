@@ -17,7 +17,7 @@ public class WordAnalyzer
         var selectedSpeeches = WordAnalyzerHelper.GetConvertedSpeeches(Settings.SelectedSpeeches);
         var morphAnalyzer = new MorphAnalyzer(true);
         var morphInfos = morphAnalyzer.Parse(words);
-        return morphInfos.Where(morphInfo => !Settings.BoringWords.Contains(morphInfo.BestTag.Lemma) &&
+        return morphInfos.Where(morphInfo => !Settings.BoringWords.Any(item => item.Equals(morphInfo.BestTag.Lemma, StringComparison.OrdinalIgnoreCase)) &&
                                              !excludedSpeeches.Contains(morphInfo.BestTag["чр"]) &&
                                              (selectedSpeeches.Count == 0 ||
                                               selectedSpeeches.Contains(morphInfo.BestTag["чр"])))

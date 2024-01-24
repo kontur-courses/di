@@ -1,5 +1,6 @@
 using System.Drawing;
-using TagsCloud.Algorithms;
+using TagsCloud.CloudLayouter;
+using TagsCloud.CloudPainter;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 
