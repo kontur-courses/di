@@ -1,8 +1,11 @@
+using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
 using TagsCloud.Helpers;
+using TagsCloud.TextAnalysisTools;
 
 namespace TagsCloud.Filters;
 
+[FilterOrder(2)]
 public class SpeechPartFilter : FilterBase
 {
     public SpeechPartFilter(FilterOptions options) : base(options)
@@ -29,8 +32,8 @@ public class SpeechPartFilter : FilterBase
                 var actualPart = wordAnalysis.Grammar
                     .Split(FileHelper.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                if (Options.ImportantTextParts.Contains(actualPart))
-                    finalWord = Options.CastWordsToInfinitive ? wordAnalysis.Lexico : analysisItem.Text;
+                if (options.ImportantTextParts.Contains(actualPart))
+                    finalWord = options.CastWordsToInfinitive ? wordAnalysis.Lexico : analysisItem.Text;
             }
 
             if (finalWord == null)
@@ -39,7 +42,7 @@ public class SpeechPartFilter : FilterBase
                 continue;
             }
 
-            words[j++] = Options.CaseType == CaseType.Lower ? finalWord.ToLower() : finalWord.ToUpper();
+            words[j++] = options.CaseType == CaseType.Lower ? finalWord.ToLower() : finalWord.ToUpper();
         }
     }
 }

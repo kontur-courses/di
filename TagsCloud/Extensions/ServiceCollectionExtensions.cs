@@ -1,8 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using SixLabors.Fonts;
 using System.Reflection;
 using TagsCloud.Conveyors;
 using TagsCloud.Entities;
 using TagsCloud.Filters;
+using TagsCloud.Helpers;
 
 namespace TagsCloud.Extensions;
 

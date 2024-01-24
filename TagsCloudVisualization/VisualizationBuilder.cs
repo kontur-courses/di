@@ -4,7 +4,6 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using TagsCloud.Entities;
 
 namespace TagsCloudVisualization;
 
@@ -26,7 +25,10 @@ public class VisualizationBuilder
         image.Mutate(ctx =>
         {
             ctx.Clear(backgroundColor);
-            tags.ForEach(tag => ctx.DrawText(tag.InnerText!, tag.TextFont!, tag.TextColor, tag.Location));
+            tags.ForEach(tag => ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor, tag.BoundRectangle.Location));
+            
+            // Only for testing:
+            tags.ForEach(tag => ctx.Draw(Color.Black, 1f, tag.BoundRectangle));
         });
 
         return this;

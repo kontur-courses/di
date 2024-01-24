@@ -19,7 +19,6 @@ public static class FileHelper
         var lines = reader
             .ReadContent(filename)
             .Where(line => !string.IsNullOrWhiteSpace(line))
-            .Select(line => line.Trim())
             .ToList();
 
         return RemoveExcess(lines);

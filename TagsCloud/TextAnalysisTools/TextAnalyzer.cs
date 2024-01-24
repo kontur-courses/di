@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using TagsCloud.Entities;
 
-namespace TagsCloud;
+namespace TagsCloud.TextAnalysisTools;
 
 public static class TextAnalyzer
 {
