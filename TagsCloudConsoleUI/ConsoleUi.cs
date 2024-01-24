@@ -53,7 +53,7 @@ public class ConsoleUi : IUiManager
         var imageSize = new Size(imageSide, imageSide);
         var frequencyScaling =
             GetInteger(
-                "Enter the frequency scaling (a positive integer). It Determines the scale to word frequency ratio.", 2,
+                "Enter the frequency scaling (a positive integer). It Determines the scale to word frequency ratio.", 1,
                 100);
         
         containerBuilder
@@ -69,7 +69,7 @@ public class ConsoleUi : IUiManager
         Console.WriteLine($"The image has been saved to \"{dirPath}\"");
     }
 
-    private void RegisterAlgorithm(IReadOnlyDictionary<string, Action<ContainerBuilder>> registeredAlgorithms,
+    private static void RegisterAlgorithm(IReadOnlyDictionary<string, Action<ContainerBuilder>> registeredAlgorithms,
         string prompt, ContainerBuilder containerBuilder)
     {
         var sb = new StringBuilder($"{prompt}\n");
@@ -119,9 +119,9 @@ public class ConsoleUi : IUiManager
     {
         while (true)
         {
-            var colorString = Prompt.GetString(prompt,
+            var colorString = Prompt.GetString(prompt, "",
                 promptColor: ConsoleColor.DarkGreen);
-            if (DrawingUtils.TryParseRgb(colorString, out var color))
+            if (DrawingUtils.TryParseRgb(colorString!, out var color))
                 return color;
             Console.WriteLine("Ivalid color format. Try again.");
         }

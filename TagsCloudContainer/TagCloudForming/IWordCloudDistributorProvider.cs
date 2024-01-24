@@ -5,5 +5,5 @@ namespace TagsCloudContainer.TagCloudForming;
 
 public interface IWordCloudDistributorProvider
 {
-    public IReadOnlyDictionary<string, Word> DistributedWords { get; }
+    public IReadOnlyDictionary<string, WordData> DistributedWords { get; }
 }
