@@ -2,6 +2,6 @@
 {
     public interface ITextProcessor
     {
-        string[] ProcessTheText(string[] file);
+        string[] ProcessText(string[] file);
     }
 }

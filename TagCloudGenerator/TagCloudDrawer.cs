@@ -7,10 +7,11 @@ namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
+        public VisualizingSettings settings;
         public void DrawWordsCloud(string filePath)
         {
             var tagCloudDrawer = new TagCloudDrawer();
-
+            
             var words = ReadTextFromFile(filePath);           
             tagCloudDrawer.Draw(words);
 
@@ -22,7 +23,7 @@ namespace TagCloudGenerator
             TextProcessor textProcessor = new TextProcessor();
 
             var text = File.ReadAllLines(filePath);
-            return textProcessor.ProcessTheText(text);
+            return textProcessor.ProcessText(text);
         }
 
         private void Draw(string[] text)

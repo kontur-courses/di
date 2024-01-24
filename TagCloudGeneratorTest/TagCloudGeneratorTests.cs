@@ -23,7 +23,7 @@ namespace TagCloudGeneratorTest
             var filePath = @"C:\Users\lholy\Documents\GitHub\di\TagCloudGeneratorTest\TestsData\test1.txt";
             var file = File.ReadAllLines(filePath);
 
-            var fileText = textProcessor.ProcessTheText(file);
+            var fileText = textProcessor.ProcessText(file);
 
             var result = "";
             for(var i = 0; i < fileText.Length; i++)
