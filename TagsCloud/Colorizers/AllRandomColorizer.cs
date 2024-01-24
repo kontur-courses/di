@@ -1,10 +1,11 @@
 using SixLabors.ImageSharp;
 using TagsCloud.CustomAttributes;
+using TagsCloud.Entities;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Colorizers;
 
-[ColorizerName("AllRandom")]
+[ColorizerName(ColoringStrategy.AllRandom)]
 public class AllRandomColorizer : ColorizerBase
 {
     private readonly Random random;

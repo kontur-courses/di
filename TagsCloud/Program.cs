@@ -1,18 +1,45 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.Extensions.DependencyInjection;
-using SixLabors.Fonts;
 using SixLabors.ImageSharp;
-using TagsCloud.Conveyors;
+using System.ComponentModel.DataAnnotations;
 using TagsCloud.Entities;
-using TagsCloud.Extensions;
-using TagsCloud.Factories;
-using TagsCloud.Helpers;
 using TagsCloudVisualization;
 
 namespace TagsCloud;
 
 public class Program
 {
+    [Option] public CaseType WordsCase { get; }
+
+    [Option] public bool Infinitive { get; }
+
+    [Option("-wi|--width")] [Required] public int? Width { get; }
+
+    [Option("-he|--height")] [Required] public int? Height { get; }
+
+    [Option(CommandOptionType.MultipleValue)]
+    public string[]? TextParts { get; }
+
+    [Option(CommandOptionType.MultipleValue)]
+    public string[]? Excluded { get; } = Array.Empty<string>();
+
+    [Option(CommandOptionType.MultipleValue)]
+    [Required]
+    public string[]? Colors { get; }
+
+    [Option] public ColoringStrategy Strategy { get; } = ColoringStrategy.AllRandom;
+
+    [Option] public float DistanceDelta { get; } = 0.1f;
+
+    [Option] public float AngleDelta { get; } = (float)Math.PI / 180;
+
+    [Option] [Required] public string? BackgroundColor { get; set; }
+
+    [Option] public string? FontPath { get; }
+
+    [Argument(0)] [Required] public string? InputFile { get; }
+
+    [Argument(1)] [Required] public string? OutputFile { get; }
+
     public static int Main(string[] args)
     {
         return CommandLineApplication.Execute<Program>(args);
@@ -20,39 +47,29 @@ public class Program
 
     private void OnExecute()
     {
-        // TODO: form this options from user input
-        var filterOptions = new FilterOptions(
-            CaseType.Lower,
-            true,
-            new List<string> { "S" },
-            new List<string>());
+        var spiral = new Spiral(DistanceDelta, AngleDelta);
+        var layout = new Layout(spiral, new PointF((float)Width.Value / 2, (float)Height.Value / 2));
 
-        var fontCollection = new FontCollection();
-        fontCollection.Add("/home/luvairo/Desktop/Roboto-Medium.ttf");
-        var fontFamily = fontCollection.Families.First();
+        var colors = Colors!
+            .Select(color => Color.ParseHex(color))
+            .ToArray();
 
-        var colorizer = ColorizerHelper.GetAppropriateColorizer(
-            new[] { Color.Red, Color.Green }, "onevsrest")!;
+        var options = new OptionsBuilder()
+            .SetColorizer(colors, Strategy)
+            .SetWordsCase(WordsCase)
+            .SetCastPolitics(Infinitive)
+            .SetExcludedWords(Excluded!)
+            .SetImportantLanguageParts(TextParts!)
+            .SetFontFamily(FontPath)
+            .SetImageSettings(Color.ParseHex(BackgroundColor!), new Size(Width.Value, Height.Value))
+            .SetLayout(layout)
+            .Build();
 
-        var factoryOptions = new CloudTagFactoryOptions(
-            fontFamily,
-            colorizer,
-            new LayoutOptions(new Spiral(0.1f, (float)Math.PI / 180),
-                new PointF((float)1920 / 2, (float)1080 / 2)));
+        var facade = new TagCloudFacade(options);
 
-        var provider = new ServiceCollection()
-            .AddFiltersWithOptions(filterOptions)
-            .BuildServiceProvider();
+        var tagList = facade.GenerateCloudTagList(InputFile!);
+        facade.GenerateTagCloudImage(tagList, OutputFile!);
 
-        var lines = FileHelper.GetLinesFromFile("/home/luvairo/textdata.txt");
-        provider.GetRequiredService<FilterConveyor>().ApplyFilters(lines);
-
-        var cloudTags = CloudTagCreator.CreateCloudTagList(new CloudTagFactory(factoryOptions, lines));
-        
-        new VisualizationBuilder(new Size(1920, 1080), Color.White)
-            .CreateImageFrom(cloudTags)
-            .SaveAs("image.png");
-
-        Console.WriteLine();
+        Console.WriteLine("TagsCloud image saved to " + OutputFile);
     }
 }

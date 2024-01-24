@@ -1,6 +1,6 @@
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
-using TagsCloud.Entities;
+using TagsCloud.Contracts;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Factories;
@@ -12,7 +12,7 @@ public class CloudTagFactory : CloudTagFactoryBase
 
     private readonly Dictionary<CloudTag, int> frequencyStatistics;
 
-    public CloudTagFactory(CloudTagFactoryOptions options, List<string> words)
+    public CloudTagFactory(IFactoryOptions options, List<string> words)
         : base(options, words)
     {
         frequencyStatistics = words
@@ -41,7 +41,7 @@ public class CloudTagFactory : CloudTagFactoryBase
 
     public override CloudTagFactoryBase AdjustPositions()
     {
-        var layout = new Layout(options.LayoutOptions.Function, options.LayoutOptions.Center);
+        var layout = options.Layout;
 
         foreach (var pair in frequencyStatistics)
         {

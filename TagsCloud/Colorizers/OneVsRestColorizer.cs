@@ -1,10 +1,11 @@
 using SixLabors.ImageSharp;
 using TagsCloud.CustomAttributes;
+using TagsCloud.Entities;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Colorizers;
 
-[ColorizerName("OneVsRest")]
+[ColorizerName(ColoringStrategy.OneVsRest)]
 public class OneVsRestColorizer : ColorizerBase
 {
     public OneVsRestColorizer(Color[] colors) : base(colors)

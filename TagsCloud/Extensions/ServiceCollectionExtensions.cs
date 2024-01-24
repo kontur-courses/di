@@ -1,16 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
-using SixLabors.Fonts;
 using System.Reflection;
+using TagsCloud.Contracts;
 using TagsCloud.Conveyors;
-using TagsCloud.Entities;
 using TagsCloud.Filters;
-using TagsCloud.Helpers;
 
 namespace TagsCloud.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static ServiceCollection AddFiltersWithOptions(this ServiceCollection collection, FilterOptions options)
+    public static ServiceCollection AddFiltersWithOptions(this ServiceCollection collection, IFilterOptions options)
     {
         var filters = Assembly
             .GetExecutingAssembly()

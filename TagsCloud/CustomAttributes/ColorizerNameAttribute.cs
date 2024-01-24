@@ -1,12 +1,14 @@
+using TagsCloud.Entities;
+
 namespace TagsCloud.CustomAttributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ColorizerNameAttribute : Attribute
 {
-    public ColorizerNameAttribute(string name)
+    public ColorizerNameAttribute(ColoringStrategy strategy)
     {
-        Name = name;
+        Strategy = strategy;
     }
 
-    public string? Name { get; }
+    public ColoringStrategy Strategy { get; }
 }

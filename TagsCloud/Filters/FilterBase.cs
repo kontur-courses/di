@@ -1,12 +1,12 @@
-using TagsCloud.Entities;
+using TagsCloud.Contracts;
 
 namespace TagsCloud.Filters;
 
 public abstract class FilterBase
 {
-    protected readonly FilterOptions options;
+    protected readonly IFilterOptions options;
 
-    protected FilterBase(FilterOptions options)
+    protected FilterBase(IFilterOptions options)
     {
         this.options = options;
     }

@@ -2,12 +2,13 @@ using SixLabors.ImageSharp;
 using System.Reflection;
 using TagsCloud.Colorizers;
 using TagsCloud.CustomAttributes;
+using TagsCloud.Entities;
 
 namespace TagsCloud.Helpers;
 
 public static class ColorizerHelper
 {
-    public static ColorizerBase? GetAppropriateColorizer(Color[] colors, string colorizerName)
+    public static ColorizerBase? GetAppropriateColorizer(Color[] colors, ColoringStrategy strategy)
     {
         var colorizerType = Assembly
             .GetExecutingAssembly()
@@ -17,8 +18,8 @@ public static class ColorizerHelper
             .Where(type => Attribute.IsDefined(type, typeof(ColorizerNameAttribute)))
             .FirstOrDefault(type =>
             {
-                var actualName = type.GetCustomAttribute<ColorizerNameAttribute>()!.Name;
-                return string.Compare(colorizerName, actualName, StringComparison.OrdinalIgnoreCase) == 0;
+                var actualStrategy = type.GetCustomAttribute<ColorizerNameAttribute>()!.Strategy;
+                return actualStrategy == strategy;
             });
 
         if (colorizerType == null)

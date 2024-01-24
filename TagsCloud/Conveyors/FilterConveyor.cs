@@ -17,7 +17,7 @@ public class FilterConveyor
     {
         foreach (var filter in filters.Order(new FilterComparer()))
             filter.Apply(lines);
-        
+
         lines.TrimExcess();
     }
 

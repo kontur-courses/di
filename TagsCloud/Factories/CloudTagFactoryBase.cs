@@ -1,14 +1,14 @@
-using TagsCloud.Entities;
+using TagsCloud.Contracts;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Factories;
 
 public abstract class CloudTagFactoryBase
 {
-    protected readonly CloudTagFactoryOptions options;
+    protected readonly IFactoryOptions options;
     protected readonly List<string> words;
 
-    protected CloudTagFactoryBase(CloudTagFactoryOptions options, List<string> words)
+    protected CloudTagFactoryBase(IFactoryOptions options, List<string> words)
     {
         this.options = options;
         this.words = words;
