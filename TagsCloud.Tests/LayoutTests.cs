@@ -1,7 +1,6 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
 using TagsCloudVisualization;
 using static TagsCloud.Tests.TestConfiguration;
 

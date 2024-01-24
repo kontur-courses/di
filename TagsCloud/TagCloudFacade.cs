@@ -20,8 +20,9 @@ public class TagCloudFacade
     public List<CloudTag> GenerateCloudTagList(string filePath)
     {
         var lines = FileHelper.GetLinesFromFile(filePath);
-        var factory = new CloudTagFactory(options, lines);
         StartFilterConveyor(lines);
+
+        var factory = new CloudTagFactory(options, lines);
 
         return CloudTagCreator.CreateCloudTagList(factory);
     }
