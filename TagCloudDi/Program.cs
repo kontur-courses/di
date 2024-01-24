@@ -6,7 +6,8 @@ namespace TagCloudDi
     {
         public static void Main(string[] args)
         {
-            var options = Parser.Default.ParseArguments<ArgumentOptions>(args).Value;
+            var settings = Parser.Default.ParseArguments<Settings>(args).Value;
+            var container = Container.SetupContainer(settings);
             
         }
     }
