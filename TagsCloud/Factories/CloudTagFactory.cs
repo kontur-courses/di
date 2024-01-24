@@ -7,8 +7,8 @@ namespace TagsCloud.Factories;
 
 public class CloudTagFactory : CloudTagFactoryBase
 {
-    private const int minFontSize = 10;
-    private const int maxFontSize = 75;
+    private const int minFontSize = 25;
+    private const int maxFontSize = 90;
 
     private readonly Dictionary<CloudTag, int> frequencyStatistics;
 
@@ -47,7 +47,12 @@ public class CloudTagFactory : CloudTagFactoryBase
         {
             var textOptions = new TextOptions(pair.Key.TextFont);
             var fontRect = TextMeasurer.MeasureAdvance(pair.Key.InnerText, textOptions);
-            pair.Key.BoundRectangle = layout.PutNextRectangle(new SizeF(fontRect.Width, fontRect.Height));
+            var rectangle = layout.PutNextRectangle(new SizeF(fontRect.Width, fontRect.Height));
+
+            if (Math.Abs(fontRect.Width - rectangle.Width) > 1e-3)
+                pair.Key.IsRotated = true;
+
+            pair.Key.BoundRectangle = rectangle;
         }
 
         return this;

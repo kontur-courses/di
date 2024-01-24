@@ -25,7 +25,24 @@ public class VisualizationBuilder
         image.Mutate(ctx =>
         {
             ctx.Clear(backgroundColor);
-            tags.ForEach(tag => ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor, tag.BoundRectangle.Location));
+            tags.ForEach(tag =>
+            {
+                var location = tag.BoundRectangle.Location;
+                
+                if (tag.IsRotated)
+                {
+                    var offsetLocation = new PointF(location.X + tag.BoundRectangle.Width, location.Y);
+                    var options = new DrawingOptions
+                    {
+                        Transform = Matrix3x2Extensions.CreateRotationDegrees(90, offsetLocation)
+                    };
+                
+                    ctx.DrawText(options, tag.InnerText, tag.TextFont, tag.TextColor, offsetLocation);
+                    return;
+                }
+
+                ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor, location);
+            });
             
             // Only for testing:
             tags.ForEach(tag => ctx.Draw(Color.Black, 1f, tag.BoundRectangle));

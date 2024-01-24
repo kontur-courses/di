@@ -5,8 +5,8 @@ namespace TagsCloud.Factories;
 
 public abstract class CloudTagFactoryBase
 {
-    protected CloudTagFactoryOptions options;
-    protected List<string> words;
+    protected readonly CloudTagFactoryOptions options;
+    protected readonly List<string> words;
 
     protected CloudTagFactoryBase(CloudTagFactoryOptions options, List<string> words)
     {
