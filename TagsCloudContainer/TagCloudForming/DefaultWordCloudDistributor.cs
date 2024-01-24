@@ -20,15 +20,15 @@ public class DefaultWordCloudDistributor : IWordCloudDistributorProvider
         _options = optionsProvider.Options;
     }
 
-    public IReadOnlyDictionary<string, Word> DistributedWords => DistributeWords().AsReadOnly();
+    public IReadOnlyDictionary<string, WordData> DistributedWords => DistributeWords().AsReadOnly();
 
-    private Dictionary<string, Word> DistributeWords()
+    private Dictionary<string, WordData> DistributeWords()
     {
-        var distributed = new Dictionary<string, Word>();
+        var distributed = new Dictionary<string, WordData>();
 
         foreach (var (word, frequency) in _words)
         {
-            var newWord = new Word(word, _cloudLayouter.PutNextRectangle(DrawingUtils.GetStringSize(word, frequency,
+            var newWord = new WordData(_cloudLayouter.PutNextRectangle(DrawingUtils.GetStringSize(word, frequency,
                 _options.FrequencyScaling, _options.Font)), frequency);
             distributed.Add(word, newWord);
         }

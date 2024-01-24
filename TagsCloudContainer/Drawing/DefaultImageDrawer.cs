@@ -9,7 +9,7 @@ namespace TagsCloudContainer.Drawing;
 
 public class DefaultImageDrawer : IImageDrawer
 {
-    private readonly IReadOnlyDictionary<string, Word> _distributedWords;
+    private readonly IReadOnlyDictionary<string, WordData> _distributedWords;
     private readonly Options _options;
     private readonly IWordColorer _colorer;
     public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider, IOptionsProvider optionsProvider, IWordColorer colorer)
