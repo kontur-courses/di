@@ -10,4 +10,6 @@ public abstract class FilterBase
     {
         Options = options;
     }
+
+    public abstract void Apply(List<string> words);
 }

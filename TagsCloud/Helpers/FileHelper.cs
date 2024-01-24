@@ -46,7 +46,7 @@ public static class FileHelper
     {
         for (var i = 0; i < lines.Count; i++)
         {
-            if (!Separators!.Any(sep => lines[i].Contains(sep)))
+            if (!Separators.Any(sep => lines[i].Contains(sep)))
                 continue;
 
             lines[i] = lines[i].Split(Separators, StringSplitOptions.RemoveEmptyEntries)[0];

@@ -1,31 +1,27 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using TagsCloud.Contracts;
+using TagsCloud.Conveyors;
 using TagsCloud.Entities;
+using TagsCloud.Filters;
 
 namespace TagsCloud.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddFilters(this ServiceCollection collection)
+    public static ServiceCollection AddFiltersWithOptions(this ServiceCollection collection, FilterOptions options)
     {
         var filters = Assembly
             .GetExecutingAssembly()
             .GetTypes()
             .Where(type => type.IsClass)
-            .Where(type => type.GetInterfaces().Any(inter => inter == typeof(IWordFilter)));
+            .Where(type => type.IsSubclassOf(typeof(FilterBase)));
 
         foreach (var filterType in filters)
-            collection.AddSingleton(typeof(IWordFilter), filterType);
-    }
+            collection.AddSingleton(typeof(FilterBase), filterType);
 
-    public static void AddConveyor(this ServiceCollection collection)
-    {
         collection.AddSingleton<FilterConveyor>();
-    }
-
-    public static void AddFilterOptions(this ServiceCollection collection, FilterOptions options)
-    {
         collection.AddSingleton(options);
+
+        return collection;
     }
 }
