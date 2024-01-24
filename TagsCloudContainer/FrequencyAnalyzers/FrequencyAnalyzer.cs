@@ -2,26 +2,26 @@
 {
     public class FrequencyAnalyzer : IAnalyzer
     {
-        private readonly Dictionary<string, int> wordFrequency;
+        private readonly TextPreprocessing preprocessor;
 
+        private readonly Dictionary<string, int> wordFrequency;
         public FrequencyAnalyzer()
         {
             wordFrequency = new Dictionary<string, int>();
+            preprocessor = new TextPreprocessing("excludedWords.txt");
         }
 
-        public void Analyze(string text) // TODO: filter booring words
+        public void Analyze(string text)
         {
-            string[] words = text.Split(new[] { ' ', '.', ',', ';', ':', '!', '?', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var word in words)
+            foreach (var word in preprocessor.Preprocess(text))
             {
                 if (wordFrequency.ContainsKey(word.ToLower()))
                 {
-                    wordFrequency[word.ToLower()]++;
+                    wordFrequency[word]++;
                 }
                 else
                 {
-                    wordFrequency.Add(word.ToLower(), 1);
+                    wordFrequency.Add(word, 1);
                 }
             }
         }

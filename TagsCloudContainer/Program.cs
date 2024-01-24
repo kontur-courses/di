@@ -13,37 +13,22 @@ namespace TagsCloudContainer
             var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
             var serviceProvider = services.BuildServiceProvider();
 
-            var reader = serviceProvider.GetRequiredService<TextFileReader>();
-            var analyzer = serviceProvider.GetRequiredService<FrequencyAnalyzer>();
+            var reader = serviceProvider.GetService<TextFileReader>();
+            var analyzer = serviceProvider.GetService<FrequencyAnalyzer>();
 
             string text = reader.ReadText("sample.txt");
             analyzer.Analyze(text);
 
 
+            var center = new Point(300, 300);
 
-            //var cloudBuilder = new TagCloudBuilder();
+            var pointsProvider = new SpiralPointsProvider(center);
+
             var drawingSettings = new CloudDrawingSettings("Arial", 8, new List<Color> { Color.AliceBlue });
 
-            var layouter = new TagsCloudLayouter(new Point(300, 300), new SpiralPointsProvider(new Point(300, 300)), drawingSettings, analyzer.GetAnalyzedText());
+            var layouter = new TagsCloudLayouter(center, pointsProvider, drawingSettings, analyzer.GetAnalyzedText());
 
             layouter.ToImage().Save("cloud.png");
-
-            //var font = new Font(drawingSettings)
-
-            //analyzer.SaveToFile("frequency.txt");
-
-            //ServiceCollection collection = new();
-            //collection.AddScoped<IFileReader, TextFileReader>();
-            //collection.AddScoped<FrequencyAnalyzer>();
-
-            //using ServiceProvider provider = collection.BuildServiceProvider();
-
-            //IFileReader reader = provider.GetService<IFileReader>();
-            //FrequencyAnalyzer analyzer = provider.GetService<FrequencyAnalyzer>();
-
-            ////var text = reader.ReadTextFromFile("sample.txt");
-            //analyzer.Analyze(reader.ReadTextFromFile("sample.txt"));
-            //analyzer.SaveToFile("frequency.txt");
         }
     }
 }
