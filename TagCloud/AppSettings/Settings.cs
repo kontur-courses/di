@@ -22,21 +22,21 @@ public class Settings : IAppSettings
     [Option('H', "height", Default = 1080, HelpText = "Height of cloud")]
     public int CloudHeight { get; set; }
 
-    [Option('l', "layouter", Default = "Circular", HelpText = "Cloud layouter algorithm")]
+    [Option('l', "layouter", Default = "Spiral", HelpText = "Cloud layouter algorithm")]
     public string LayouterType { get; set; }
 
     [Option('d', "density", Default = 1, HelpText = "Density of cloud")]
     public int CloudDensity { get; set; }
-    
+
     [Option('r', "randomPalette", Default = true, HelpText = "Use random colors")]
     public bool UseRandomPalette { get; set; }
-    
+
     [Option("background", Default = "White", HelpText = "Cloud layouter algorithm")]
     public string BackgroundColor { get; set; }
-    
+
     [Option("foreground", Default = "Black", HelpText = "Cloud layouter algorithm")]
     public string ForegroundColor { get; set; }
-    
+
     [Option("boringWordsFile", Default = null, HelpText = "Cloud layouter algorithm")]
     public string BoringWordsFile { get; set; }
 }

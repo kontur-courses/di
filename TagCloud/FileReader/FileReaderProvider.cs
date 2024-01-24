@@ -8,7 +8,7 @@ public class FileReaderProvider : IFileReaderProvider
     {
         this.readers = ArrangeReaders(readers);
     }
-    
+
     public IFileReader CreateReader(string inputPath)
     {
         var extension = inputPath.Split(".").Last();
@@ -22,7 +22,7 @@ public class FileReaderProvider : IFileReaderProvider
         var readersDictionary = new Dictionary<string, IFileReader>();
         foreach (var reader in readers)
         {
-            foreach (var extension in reader.GetAviableExtensions())
+            foreach (var extension in reader.GetAvailableExtensions())
             {
                 readersDictionary[extension] = reader;
             }

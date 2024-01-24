@@ -5,16 +5,16 @@ namespace TagCloud.FileReader;
 public class TxtReader : IFileReader
 {
     private List<string> extensions = new() { "txt" };
-    
-    public IEnumerable<string> ReadLines(string InputPath)
+
+    public IEnumerable<string> ReadLines(string inputPath)
     {
-        if (!File.Exists(InputPath))
+        if (!File.Exists(inputPath))
             throw new ArgumentException("Source file doesn't exist");
 
-        return File.ReadLines(InputPath);
+        return File.ReadLines(inputPath);
     }
 
-    public IList<string> GetAviableExtensions()
+    public IList<string> GetAvailableExtensions()
     {
         return extensions;
     }

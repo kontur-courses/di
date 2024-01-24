@@ -4,5 +4,5 @@ public interface IFileReader
 {
     IEnumerable<string> ReadLines(string inputPath);
 
-    IList<string> GetAviableExtensions();
+    IList<string> GetAvailableExtensions();
 }

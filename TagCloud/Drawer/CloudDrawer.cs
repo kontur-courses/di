@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using TagCloud.AppSettings;
 using TagCloud.Layouter;
+using TagCloud.PointGenerator;
 
 namespace TagCloud.Drawer;
 
@@ -14,9 +15,9 @@ public class CloudDrawer : IDrawer
     private const int MaximalFontSize = 50;
     private const int LengthSizeMultiplier = 35;
 
-    public CloudDrawer(ILayouter layouter, IPalette palette, IAppSettings appSettings)
+    public CloudDrawer(IPointGeneratorProvider pointGenerator, IPalette palette, IAppSettings appSettings)
     {
-        this.layouter = layouter;
+        layouter = new CloudLayouter(pointGenerator.CreateGenerator(appSettings.LayouterType));
         this.palette = palette;
         this.appSettings = appSettings;
     }

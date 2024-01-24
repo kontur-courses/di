@@ -1,4 +1,3 @@
-using NUnit.Framework.Interfaces;
 using TagCloud.Layouter;
 using TagCloud.PointGenerator;
 
@@ -7,13 +6,12 @@ public class CircularCloudLayouter_Should
 {
     private const int Width = 1920;
     private const int Height = 1080;
-    private CircularLayouter sut;
-
-
+    private CloudLayouter sut;
+    
     [SetUp]
     public void Setup()
     {
-        sut = new CircularLayouter(new SpiralGenerator(new Point(Width / 2, Height / 2)));
+        sut = new CloudLayouter(new SpiralGenerator(new Point(Width / 2, Height / 2)));
     }
 
     [Test]

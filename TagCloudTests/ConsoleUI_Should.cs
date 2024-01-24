@@ -3,13 +3,8 @@ using CommandLine;
 using TagCloud.AppSettings;
 using TagCloud.Drawer;
 using TagCloud.FileReader;
-using TagCloud.FileSaver;
 using TagCloud.Filter;
-using TagCloud.Layouter;
-using TagCloud.PointGenerator;
 using TagCloud.UserInterface;
-using TagCloud.WordRanker;
-using TagCloud.WordsPreprocessor;
 
 namespace TagCloudTests;
 
@@ -25,22 +20,10 @@ public class ConsoleUI_Should
         settings = Parser.Default.ParseArguments<Settings>(new List<string>()).Value;
 
         var builder = new ContainerBuilder();
+        builder = Configurator.BuildWithSettings(settings, builder);
         builder.RegisterType<FakeReader>().As<IFileReader>();
-        builder.RegisterType<ImageSaver>().As<ISaver>();
-        builder.RegisterType<CloudDrawer>().As<IDrawer>();
-        builder.RegisterType<WordRankerByFrequency>().As<IWordRanker>();
-        builder.RegisterType<WordFilter>().As<IFilter>();
-        builder.RegisterType<DefaultPreprocessor>().As<IPreprocessor>();
-
-        builder.RegisterType<ConsoleUI>().As<IUserInterface>();
-
         builder.RegisterType<RandomPalette>().As<IPalette>();
-        builder.Register(l =>
-            new CircularLayouter(new SpiralGenerator(new Point(settings.CloudWidth / 2, settings.CloudWidth / 2),
-                settings.CloudDensity))).As<ILayouter>();
-        builder.Register(c => new FileReaderProvider(c.Resolve<IEnumerable<IFileReader>>())).As<IFileReaderProvider>();
-
-        builder.Register(s => settings).AsImplementedInterfaces();
+        builder.RegisterType<WordFilter>().As<IFilter>();
 
         var container = builder.Build();
         sut = container.Resolve<IUserInterface>();
@@ -63,9 +46,9 @@ public class ConsoleUI_Should
             yield return "test";
         }
 
-        public IList<string> GetAviableExtensions()
+        public IList<string> GetAvailableExtensions()
         {
-            return new List<string>() {"txt"};
+            return new List<string>() { "txt" };
         }
     }
 }
