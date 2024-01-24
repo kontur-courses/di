@@ -6,40 +6,16 @@ using TagsCloud;
 
 namespace TagsCloudTests;
 
-public class CircularCloudLayouterTests
+public class LayouterTests
 {
     private ISpiral spiral;
-    private ICircularCloudLayouter sut;
+    private ICloudLayouter sut;
 
     [SetUp]
     public void SetUp()
     {
         spiral = new Spiral(new Point(10, 10));
-        sut = new CircularCloudLayouter(spiral);
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure) return;
-        var workingDirectory = Environment.CurrentDirectory;
-        var parentDirectory = Directory.GetParent(workingDirectory)?.Parent;
-            
-        var directoryPath = parentDirectory != null
-            ? Path.Combine(parentDirectory.FullName, "FailedTestImages")
-            : Path.Combine(workingDirectory, "FailedTestImages");
-            
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        var imageName = TestContext.CurrentContext.Test.Name;
-        var imagePath = Path.Combine(directoryPath, $"{imageName}.png");
-            
-        RectanglesVisualizer.GetTagsCloudImage(sut.Rectangles).Save(imagePath, ImageFormat.Png);
-
-        Console.WriteLine($"Tag cloud visualization saved to file {imagePath}");
+        sut = new CloudLayouter(spiral);
     }
 
 
