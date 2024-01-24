@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagCloud.ConsoleClient": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"text.txt\"\r\n-o \"image.jpeg\"\r\n-c 8000x8000\r\n-s 16000x16000\r\n-F \"COMIC SANS MS\""
+    }
+  }
+}

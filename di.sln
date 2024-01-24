@@ -1,6 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloud.ConsoleClient", "TagCloud.ConsoleClient\TagCloud.ConsoleClient.csproj", "{BDA985E4-EC69-430C-B5F5-527BCEE3867B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77D1BD1B-EFEF-4F5E-9167-53740576C597} = {77D1BD1B-EFEF-4F5E-9167-53740576C597}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloud.Domain", "TagCloud.Domain\TagCloud.Domain.csproj", "{81016EA3-35CC-49B8-B5AF-D3ED75434E37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloud.Infrastructure", "TagCloud.Infrastructure\TagCloud.Infrastructure.csproj", "{77D1BD1B-EFEF-4F5E-9167-53740576C597}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Tests", "TagCloud.Tests\TagCloud.Tests.csproj", "{3E7E97B8-31F0-470B-9139-B483B2A599F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +26,27 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA985E4-EC69-430C-B5F5-527BCEE3867B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA985E4-EC69-430C-B5F5-527BCEE3867B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA985E4-EC69-430C-B5F5-527BCEE3867B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA985E4-EC69-430C-B5F5-527BCEE3867B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81016EA3-35CC-49B8-B5AF-D3ED75434E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81016EA3-35CC-49B8-B5AF-D3ED75434E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81016EA3-35CC-49B8-B5AF-D3ED75434E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81016EA3-35CC-49B8-B5AF-D3ED75434E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D1BD1B-EFEF-4F5E-9167-53740576C597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D1BD1B-EFEF-4F5E-9167-53740576C597}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D1BD1B-EFEF-4F5E-9167-53740576C597}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D1BD1B-EFEF-4F5E-9167-53740576C597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E7E97B8-31F0-470B-9139-B483B2A599F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E7E97B8-31F0-470B-9139-B483B2A599F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E7E97B8-31F0-470B-9139-B483B2A599F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E7E97B8-31F0-470B-9139-B483B2A599F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A991096-8A05-4E36-92C0-9A7CCADFE4C7}
 	EndGlobalSection
 EndGlobal
