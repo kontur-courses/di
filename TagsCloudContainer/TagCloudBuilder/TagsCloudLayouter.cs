@@ -5,7 +5,7 @@ namespace TagsCloudVisualization
 {
     public class TagsCloudLayouter
     {
-        private readonly Point center;
+        public readonly Point center;
         private readonly IPointsProvider pointsProvider;
         private readonly CloudDrawingSettings drawingSettings;
         private readonly IEnumerable<(string, int)> words;

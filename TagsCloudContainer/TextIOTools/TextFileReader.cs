@@ -4,10 +4,16 @@
     {
         public string ReadText(string filePath)
         {
-            //try catch?
-            using (StreamReader reader = new StreamReader(filePath))
+            try
             {
-                return reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+                throw new FileNotFoundException("File {0} not found!", filePath);
             }
         }
     }
