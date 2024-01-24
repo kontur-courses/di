@@ -10,11 +10,11 @@ namespace TagsCloudVisualization;
 public class TagsCloudVisualizator
 {
     private readonly ITagsCloudLayouter layouter;
-    private readonly TagProvider tagProvider;
+    private readonly ITagProvider tagProvider;
     private readonly IImageHolder imageHolder;
     private readonly TagsSettings tagsSettings;
     
-    public TagsCloudVisualizator(ITagsCloudLayouter layouter, IImageHolder imageHolder, TagProvider tagProvider, TagsSettings tagsSettings)
+    public TagsCloudVisualizator(ITagsCloudLayouter layouter, IImageHolder imageHolder, ITagProvider tagProvider, TagsSettings tagsSettings)
     {
         this.tagProvider = tagProvider;
         this.layouter = layouter;
