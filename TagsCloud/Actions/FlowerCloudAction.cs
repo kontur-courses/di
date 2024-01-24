@@ -1,4 +1,5 @@
 using System.Drawing;
+using TagsCloud.Algorithms;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 
@@ -17,14 +18,12 @@ public class FlowerCloudAction : IUiAction
         this.imageHolder = imageHolder;
         this.painter = painter;
     }
-    
+
     public void Perform()
     {
-        if (settings.File == null){
-            throw new Exception("сначала загрузи файл");
-        }
+        if (settings.File == null) throw new Exception("сначала загрузи файл");
         var size = imageHolder.GetImageSize();
-        painter.Paint(new FlowerSpiral(new Point(size.Width/2, size.Height/2), 0.5, 4), settings.File.FullName);
+        painter.Paint(new FlowerSpiral(new Point(size.Width / 2, size.Height / 2), 0.5, 4), settings.File.FullName);
     }
 
     public MenuCategory Category => MenuCategory.Types;

@@ -6,13 +6,11 @@ namespace TagsCloud.Actions;
 
 public class UploadFileAction : IUiAction
 {
-    private readonly IImageHolder imageHolder;
     private readonly AppSettings settings;
 
-    public UploadFileAction(IImageHolder imageHolder, AppSettings settings)
+    public UploadFileAction(AppSettings settings)
     {
         this.settings = settings;
-        this.imageHolder = imageHolder;
     }
     public MenuCategory Category => MenuCategory.File;
     public string Name => "Загрузить";

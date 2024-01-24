@@ -1,6 +1,7 @@
 using System.Drawing;
 using FluentAssertions;
 using TagsCloud;
+using TagsCloud.Algorithms;
 
 namespace TagsCloudTests;
 

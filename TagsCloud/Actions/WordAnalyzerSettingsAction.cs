@@ -11,9 +11,11 @@ public class WordAnalyzerSettingsAction : IUiAction
     {
         this.wordAnalyzerSettings = wordAnalyzerSettings;
     }
+
     public MenuCategory Category => MenuCategory.Settings;
     public string Name => "Анализатор...";
     public string Description => "";
+
     public void Perform()
     {
         SettingsForm.For(wordAnalyzerSettings).ShowDialog();

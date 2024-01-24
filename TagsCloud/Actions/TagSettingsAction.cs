@@ -12,9 +12,11 @@ public class TagSettingsAction : IUiAction
     {
         this.tag = tag;
     }
+
     public MenuCategory Category => MenuCategory.Settings;
     public string Name => "Облако тегов...";
     public string Description => "";
+
     public void Perform()
     {
         SettingsForm.For(tag).ShowDialog();

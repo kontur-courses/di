@@ -1,8 +1,9 @@
 using System.Drawing;
+using TagsCloud.Algorithms;
 
 namespace TagsCloud;
 
-public class CloudLayouter : ICircularCloudLayouter
+public class CloudLayouter : ICloudLayouter
 {
     public List<Rectangle> Rectangles { get; }
 

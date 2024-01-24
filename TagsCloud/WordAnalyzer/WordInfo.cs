@@ -1,13 +1,11 @@
-using System.Windows.Forms;
-
-namespace TagsCloud;
+namespace TagsCloud.WordAnalyzer;
 
 public class WordInfo
 {
     public readonly int Count;
     public readonly string Word;
 
-    private WordInfo(string word, int count)
+    public WordInfo(string word, int count)
     {
         Word = word;
         Count = count;

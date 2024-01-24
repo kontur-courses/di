@@ -1,4 +1,4 @@
-namespace TagsCloud;
+namespace TagsCloud.WordAnalyzer;
 
 public enum PartSpeech
 {

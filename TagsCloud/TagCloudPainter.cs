@@ -1,8 +1,6 @@
-using Castle.Core.Internal;
-using DeepMorphy;
+using TagsCloud.Algorithms;
 using TagsCloud.Infrastructure;
 using TagsCloud.Settings;
-
 namespace TagsCloud;
 
 public class TagCloudPainter
@@ -10,30 +8,24 @@ public class TagCloudPainter
     
     private readonly IImageHolder imageHolder;
     private readonly TagSettings tagSettings;
-    private readonly WordAnalyzerSettings wordAnalyzerSettings;
+    private readonly WordAnalyzer.WordAnalyzer wordAnalyzer;
     private readonly FileReader fileReader;
 
-    public TagCloudPainter(IImageHolder imageHolder, TagSettings tagSettings, WordAnalyzerSettings wordAnalyzerSettings,
+    public TagCloudPainter(IImageHolder imageHolder, TagSettings tagSettings, WordAnalyzer.WordAnalyzer wordAnalyzer,
         FileReader reader)
     {
         this.imageHolder = imageHolder;
         this.tagSettings = tagSettings;
-        this.wordAnalyzerSettings = wordAnalyzerSettings;
+        this.wordAnalyzer = wordAnalyzer;
         fileReader = reader;
     }
-
     public void Paint(ISpiral spiral, string path)
     {
-        using (var graphics = imageHolder.StartDrawing())
-        {
-            var wordAnalyzer = new WordAnalyzer(wordAnalyzerSettings);
-            var layout = new CloudLayouter(spiral);
-            var wordList = fileReader.GetWords(path);
-            var parsedList = wordAnalyzer.GetFrequencyList(wordList);
-            var tagGenerator = new TagGenerator(layout, tagSettings);
-            RectanglesVisualizer.RenderCloudImage(tagGenerator.GetTagsList(parsedList).ToList(), graphics, imageHolder);
-            imageHolder.UpdateUi();
-        }
+        using var graphics = imageHolder.StartDrawing();
+        var layout = new CloudLayouter(spiral);
+        var wordList = fileReader.GetWords(path);
+        var parsedList = wordAnalyzer.GetFrequencyList(wordList);
+        new TagCloudVisualizer(graphics, tagSettings, layout).RenderCloudImage(parsedList, imageHolder.GetImageSize());
         imageHolder.UpdateUi();
     }
 }

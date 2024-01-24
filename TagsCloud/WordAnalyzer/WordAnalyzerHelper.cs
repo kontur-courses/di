@@ -1,3 +1,5 @@
+using TagsCloud.WordAnalyzer;
+
 namespace TagsCloud;
 
 public static class WordAnalyzerHelper

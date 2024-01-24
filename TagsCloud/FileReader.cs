@@ -1,11 +1,8 @@
-using System.IO;
-using Spire.Doc;
-
 namespace TagsCloud;
 
 public class FileReader
 {
-    private readonly Dictionary<string, IParser> parsers; 
+    private readonly Dictionary<string, IParser> parsers;
 
     public FileReader(IEnumerable<IParser> parsers)
     {
@@ -14,11 +11,13 @@ public class FileReader
 
     public IEnumerable<string?> GetWords(string filePath)
     {
+        if (!File.Exists(filePath))
+            throw new ArgumentException($"Error: File not found at the specified path '{filePath}'.");
+
         var fileType = Path.GetExtension(filePath).Trim('.').ToLower();
-        if (!parsers.ContainsKey(fileType)){
+        if (!parsers.ContainsKey(fileType))
             throw new ArgumentException($"not found parser for {fileType}");
-        }
-        
+
         return parsers[fileType].GetWordList(filePath);
     }
 }

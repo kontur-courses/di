@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TagsCloud;
 
-public class Utils
+public static class Utils
 {
     private static readonly Random Random = new();
     private const int MinSize = 1;

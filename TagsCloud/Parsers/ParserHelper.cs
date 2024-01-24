@@ -14,7 +14,7 @@ public static class ParserHelper
         {
             foreach (var word in SelectAllWordsRegex.Matches(section.Paragraphs[i].Text))
             {
-                yield return word.ToString();
+                yield return word.ToString().Trim().ToLower();
             }
         }
     }
