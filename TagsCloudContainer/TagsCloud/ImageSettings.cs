@@ -7,12 +7,18 @@ namespace TagsCloudContainer.TagsCloud
     {
         public Color BackgroundColor { get; } = Color.White;
         public Color FontColor { get; } = Color.Black;
-        public int ImageWidth { get; } = 1600;
-        public int ImageHeight { get; } = 1200;
+        public int ImageWidth { get; set; } = 1600;
+        public int ImageHeight { get; set; } = 1200;
 
         public Font GetFont()
         {
             return new Font("Verdana", 20);
+        }
+
+        public void UpdateImageSettings(int width, int height)
+        {
+            ImageWidth = width;
+            ImageHeight = height;
         }
 
     }

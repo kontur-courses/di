@@ -22,24 +22,20 @@ namespace TagsCloudContainer.TagsCloud
             _fontName = fontName;
         }
 
-        public void Run(string filePath, string boringWordsFilePath, string fontName, Color fontColor, Color highlightColor, double percentageToHighlight)
+        public void Run(CommandLineOptions options)
         {
-            SetFontName(fontName);
+            Color fontColor = Color.FromName(options.FontColor);
+            Color highlightColor = Color.FromName(options.HighlightColor);
 
-            var words = ReadFile(filePath);
-            var processedWords = _preprocessor.Process(words, boringWordsFilePath);
+            SetFontName(options.FontName);
+            _imageSettings.UpdateImageSettings(options.ImageWidth, options.ImageHeight);
 
-            Console.WriteLine("Processed words:\n");
+            var words = ReadFile(options.TextFilePath);
+            var processedWords = _preprocessor.Process(words, options.BoringWordsFilePath);
 
-            foreach (var item in processedWords)
-            {
-                Console.WriteLine(item);
-            }
-
-            var tagCloudImage = GenerateTagCloud(processedWords, fontName, fontColor, highlightColor, percentageToHighlight);
+            var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
 
             tagCloudImage.Save(@"..\..\..\output\tagsCloud.png");
-            Console.WriteLine("Tag cloud image saved to: /output/");
         }
 
         private IEnumerable<string> ReadFile(string filePath)

@@ -7,7 +7,9 @@ namespace TagsCloudContainer.Interfaces
         Color BackgroundColor { get; }
         Color FontColor { get; }
         Font GetFont();
-        int ImageWidth { get; }
-        int ImageHeight { get; }
+        int ImageWidth { get; set; }
+        int ImageHeight { get; set; }
+
+        void UpdateImageSettings(int width, int height);
     }
 }
