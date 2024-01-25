@@ -14,7 +14,6 @@ namespace TagsCloudContainer
             .AddSingleton<IPreprocessor, WordPreprocessor>()
             .AddSingleton<IImageSettings, ImageSettings>()
             .AddSingleton<ITagCloudGenerator, TagCloudGenerator>()
-            .AddSingleton<ITagCloudClient, CommandLineClient>()
             .AddScoped(provider =>
             {
                 var fileReader = provider.GetRequiredService<IFileReader>();
