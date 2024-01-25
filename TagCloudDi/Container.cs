@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Autofac;
+using TagCloudDi.Applications;
 using TagCloudDi.Layouter;
 using TagCloudDi.TextProcessing;
 using IContainer = Autofac.IContainer;
@@ -20,11 +21,10 @@ namespace TagCloudDi
             builder.RegisterType<CircularCloudLayouter>().AsSelf();
             builder.RegisterType<TextReader>().AsSelf();
             builder.RegisterType<TextProcessor>().AsSelf();
-            builder.Register(c =>
-                new Font(c.Resolve<Settings>().FontName, c.Resolve<Settings>().FontSize, FontStyle.Regular
-                ));
             builder.RegisterType<RectangleGenerator>().AsSelf();
-
+            builder.RegisterType<Drawer>().AsSelf();
+            builder.RegisterType<ConsoleApplication>().As<IApplication>();
+            
             return builder.Build();
         }
     }

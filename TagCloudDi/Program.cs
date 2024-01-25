@@ -1,4 +1,6 @@
-﻿using CommandLine;
+﻿using Autofac;
+using CommandLine;
+using TagCloudDi.Applications;
 
 namespace TagCloudDi
 {
@@ -8,7 +10,8 @@ namespace TagCloudDi
         {
             var settings = Parser.Default.ParseArguments<Settings>(args).Value;
             var container = Container.SetupContainer(settings);
-            
+            var app = container.Resolve<IApplication>();
+            app.Run();
         }
     }
 }

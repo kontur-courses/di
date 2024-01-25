@@ -9,8 +9,8 @@
             var line = sr.ReadLine();
             while (line != null)
             {
-                line = sr.ReadLine();
                 words.Add(line!.ToLower());
+                line = sr.ReadLine();
             }
 
             return words;

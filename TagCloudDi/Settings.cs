@@ -10,7 +10,7 @@ namespace TagCloudDi
         [Option('f', "FontName", Required = false, Default = "Arial")]
         public string FontName { get; set; }
 
-        [Option('c', "FontSize", Required = false, Default = 10, Min = 1)]
+        [Option('c', "FontSize", Required = false, Default = 5)]
         public int FontSize { get; set; }
 
         [Option('t', "TextPath", Required = true)]
@@ -27,5 +27,8 @@ namespace TagCloudDi
 
         [Option('x', "ImageWidth", Required = false, Default = 1920)]
         public int ImageWidth { get; set; }
+        
+        [Option('s', "SavePath", Required = true)]
+        public string SavePath { get; set; }
     }
 }
