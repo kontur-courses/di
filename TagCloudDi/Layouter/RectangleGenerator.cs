@@ -14,7 +14,7 @@ namespace TagCloudDi.Layouter
                 .Select(x =>
                 {
                     using var font = new Font(settings.FontName, settings.FontSize * (
-                            x.Value * 100 / totalAmount), FontStyle.Regular);
+                        x.Value * 100 / totalAmount), FontStyle.Regular);
                     return (layouter.PutNextRectangle(GetTextSize(x.Key, font)), x.Key, font.Size);
                 })
                 .ToList();

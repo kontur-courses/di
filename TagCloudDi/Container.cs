@@ -24,7 +24,7 @@ namespace TagCloudDi
             builder.RegisterType<RectangleGenerator>().AsSelf();
             builder.RegisterType<Drawer>().AsSelf();
             builder.RegisterType<ConsoleApplication>().As<IApplication>();
-            
+
             return builder.Build();
         }
     }

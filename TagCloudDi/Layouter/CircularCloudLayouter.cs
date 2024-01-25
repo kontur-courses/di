@@ -8,8 +8,6 @@ namespace TagCloudDi.Layouter
         private readonly List<Rectangle> rectangles = [];
         private readonly Point centerPoint;
 
-        public IReadOnlyList<Rectangle> Rectangles => rectangles.AsReadOnly();
-
         public CircularCloudLayouter(Point centerPoint, ArchimedeanSpiral archimedeanSpiral)
         {
             this.centerPoint = centerPoint;

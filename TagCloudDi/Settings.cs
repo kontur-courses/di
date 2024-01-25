@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Net.Mime;
-using CommandLine;
+﻿using CommandLine;
 
 namespace TagCloudDi
 {
@@ -27,7 +24,7 @@ namespace TagCloudDi
 
         [Option('x', "ImageWidth", Required = false, Default = 1920)]
         public int ImageWidth { get; set; }
-        
+
         [Option('s', "SavePath", Required = true)]
         public string SavePath { get; set; }
     }
