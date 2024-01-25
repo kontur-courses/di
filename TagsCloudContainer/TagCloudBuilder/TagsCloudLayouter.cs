@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TagsCloudContainer;
+using TagsCloudContainer.SettingsClasses;
 
 namespace TagsCloudVisualization
 {
@@ -33,7 +34,7 @@ namespace TagsCloudVisualization
             {
                 var font = new Font(drawingSettings.FontFamily, drawingSettings.FontSize + word.Item2);
                 var size = (graphics.MeasureString(word.Item1, font) + new SizeF(1, 0)).ToSize(); ;
-                var textImage = new TextImage(word.Item1, font, size);
+                var textImage = new TextImage(word.Item1, font, size, drawingSettings.Colors.First());
 
                 yield return textImage;
             }

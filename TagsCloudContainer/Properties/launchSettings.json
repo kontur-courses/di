@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudContainer": {
+      "commandName": "Project",
+      "commandLineArgs": "sample.txt -font Calibri -size 500 500 -out testout.png"
+    }
+  }
+}
