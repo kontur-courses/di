@@ -23,6 +23,9 @@
     <None Update="src\boring_words.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="src\empty.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="src\Oswald.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

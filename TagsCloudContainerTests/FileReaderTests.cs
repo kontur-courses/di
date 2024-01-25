@@ -64,5 +64,28 @@ namespace TagsCloudContainerTests
 
             words.Should().NotBeNull().And.BeEmpty();
         }
+
+        [Test]
+        public void WithSpecificContent_ReturnsExpectedWords()
+        {
+            var filePath = "src/boring_words.txt";
+            var content = "a an the";
+            File.WriteAllText(filePath, content);
+
+            var words = fileReader.ReadWords(filePath);
+
+            words.Should().Contain("a", "an", "the");
+        }
+
+        [Test]
+        public void EmptyFile_ReturnsEmptyList()
+        {
+            var filePath = "src/empty.txt";
+            File.WriteAllText(filePath, string.Empty);
+
+            var words = fileReader.ReadWords(filePath);
+
+            words.Should().BeEmpty();
+        }
     }
 }
