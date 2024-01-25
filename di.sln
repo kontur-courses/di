@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{A4FDBEF1-EBBD-4129-B87C-AD4629A1BEDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{64FE82B4-6094-4E1B-A7F6-824B5BBA4009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualization.Tests", "TagCloudVisualization.Tests\TagCloudVisualization.Tests.csproj", "{AF18D0EE-5908-410F-BA0F-171431EE06B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4FDBEF1-EBBD-4129-B87C-AD4629A1BEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4FDBEF1-EBBD-4129-B87C-AD4629A1BEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4FDBEF1-EBBD-4129-B87C-AD4629A1BEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4FDBEF1-EBBD-4129-B87C-AD4629A1BEDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64FE82B4-6094-4E1B-A7F6-824B5BBA4009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64FE82B4-6094-4E1B-A7F6-824B5BBA4009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64FE82B4-6094-4E1B-A7F6-824B5BBA4009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64FE82B4-6094-4E1B-A7F6-824B5BBA4009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF18D0EE-5908-410F-BA0F-171431EE06B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF18D0EE-5908-410F-BA0F-171431EE06B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF18D0EE-5908-410F-BA0F-171431EE06B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF18D0EE-5908-410F-BA0F-171431EE06B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
