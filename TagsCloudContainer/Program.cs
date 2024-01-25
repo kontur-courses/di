@@ -1,7 +1,4 @@
 using Autofac;
-using System.Reflection;
-using System.Security.Cryptography;
-using System;
 using TagsCloudContainer.Actions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;

@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace TagsCloudContainer.Infrastucture.Settings
 {
     public class FileSettings
@@ -7,7 +5,6 @@ namespace TagsCloudContainer.Infrastucture.Settings
         private string imagePath = GetProjectDirectory() + @"\";
         private string sourceFilePath = GetProjectDirectory() + @"\src\sourceWords.txt";
         private string boringFilePath = GetProjectDirectory() + @"\src\boringWords.txt";
-
 
         public string ImagePath
         {
@@ -25,7 +22,7 @@ namespace TagsCloudContainer.Infrastucture.Settings
             set => boringFilePath = File.Exists(value) ? value : boringFilePath;
         }
 
-        public static string GetProjectDirectory()
+        private static string GetProjectDirectory()
         {
             var binDirectory = AppContext.BaseDirectory;
             var projectDirectory = Directory.GetParent(binDirectory).Parent.Parent.Parent.FullName;

@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-
 namespace TagsCloudContainer.Infrastucture.UiActions
 {
     public static class UiActionExtensions
@@ -21,7 +17,7 @@ namespace TagsCloudContainer.Infrastucture.UiActions
             return new ToolStripMenuItem(name, null, menuItems);
         }
 
-        public static ToolStripItem ToMenuItem(this IUiAction action)
+        private static ToolStripItem ToMenuItem(this IUiAction action)
         {
             return
                 new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())

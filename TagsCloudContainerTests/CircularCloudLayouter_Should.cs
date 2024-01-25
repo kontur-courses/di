@@ -2,7 +2,6 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Infrastucture.Settings;
-using System.Drawing;
 using TagsCloudContainer.Infrastucture;
 
 namespace TagsCloudContainerTests
