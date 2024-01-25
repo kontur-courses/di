@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using System.Drawing;
-using TagsCloudContainer;
+using TagsCloudContainer.SettingsClasses;
 using TagsCloudVisualization;
 
 namespace TagsCloudTests
@@ -15,7 +15,8 @@ namespace TagsCloudTests
         {
             var center = new Point(100, 100);
             var pointsProvider = new SpiralPointsProvider(center);
-            var drawingSettings = new CloudDrawingSettings("Arial", 12, new List<Color> { Color.White });
+            var drawingSettings = new CloudDrawingSettings();
+            drawingSettings.Size = new Size(center.X * 2, center.Y * 2);
             words = new() { ("TestWord1", 1), ("TestWord2", 2), ("TestWord3", 3) };
 
             sut = new TagsCloudLayouter(center, pointsProvider, drawingSettings, words);
