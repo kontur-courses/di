@@ -20,6 +20,10 @@ namespace TagCloudDi
             builder.RegisterType<CircularCloudLayouter>().AsSelf();
             builder.RegisterType<TextReader>().AsSelf();
             builder.RegisterType<TextProcessor>().AsSelf();
+            builder.Register(c =>
+                new Font(c.Resolve<Settings>().FontName, c.Resolve<Settings>().FontSize, FontStyle.Regular
+                ));
+            builder.RegisterType<RectangleGenerator>().AsSelf();
 
             return builder.Build();
         }
