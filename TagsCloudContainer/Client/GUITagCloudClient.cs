@@ -6,7 +6,7 @@ using TagsCloudContainer.Infrastucture.Visualization;
 
 namespace TagsCloudContainer.Actions
 {
-    public class TagCloudClient : ITagCloudClient
+    public class GUITagCloudClient : ITagCloudClient
     {
         private readonly PictureBox pictureBox;
         private readonly ImageSettings imageSettings;
@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Actions
         private readonly ICloudLayouter cloudLayouter;
         private IWordProcessor wordProcessor;
 
-        public TagCloudClient(PictureBox pictureBox, ImageSettings imageSettings, 
+        public GUITagCloudClient(PictureBox pictureBox, ImageSettings imageSettings, 
             IDrawer drawer, ICloudLayouter cloudLayouter, IWordProcessor wordProcessor)
         {
             this.pictureBox = pictureBox;

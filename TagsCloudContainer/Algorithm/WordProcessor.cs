@@ -1,4 +1,4 @@
-﻿using StopWord;
+using StopWord;
 
 namespace TagsCloudContainer.Algorithm
 {
@@ -17,11 +17,11 @@ namespace TagsCloudContainer.Algorithm
             var wordFrequencies = new Dictionary<string, int>();
             var interestingWords = GetInterestingWords(sourceFilePath, boringFilePath);
 
-            for (int i = 0; i < interestingWords.Count; i++)
+            foreach(var word in interestingWords)
             {
-                if (!wordFrequencies.ContainsKey(interestingWords[i]))
-                    wordFrequencies.Add(interestingWords[i], 0);
-                wordFrequencies[interestingWords[i]]++;
+                if (!wordFrequencies.ContainsKey(word))
+                    wordFrequencies.Add(word, 0);
+                wordFrequencies[word]++;
             }
 
             return wordFrequencies.OrderByDescending(x => x.Value).ToDictionary();

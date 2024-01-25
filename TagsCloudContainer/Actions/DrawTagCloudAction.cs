@@ -17,11 +17,11 @@ namespace TagsCloudContainer.Actions
             this.fileSettings = fileSettings;
         }
 
-        public string Category => "Изображение";
+        public string Category => "РР·РѕР±СЂР°Р¶РµРЅРёРµ";
 
-        public string Name => "Отрисовать изображение";
+        public string Name => "РћС‚СЂРёСЃРѕРІР°С‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёРµ";
 
-        public string Description => "Отрисовать изображение облака тегов";
+        public string Description => "РћС‚СЂРёСЃРѕРІР°С‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РѕР±Р»Р°РєР° С‚РµРіРѕРІ";
 
         public void Perform()
         {

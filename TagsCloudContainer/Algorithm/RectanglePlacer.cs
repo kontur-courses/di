@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.Infrastucture;
+using TagsCloudContainer.Infrastucture;
 using TagsCloudContainer.Infrastucture.Settings;
 
 namespace TagsCloudContainer.Algorithm

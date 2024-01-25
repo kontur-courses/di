@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Algorithm
+namespace TagsCloudContainer.Algorithm
 {
     public class FileParser : IFileParser
     {

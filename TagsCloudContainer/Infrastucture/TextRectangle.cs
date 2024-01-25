@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Infrastucture
+namespace TagsCloudContainer.Infrastucture
 {
     public class TextRectangle
     {

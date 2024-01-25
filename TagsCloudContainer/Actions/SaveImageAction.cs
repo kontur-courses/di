@@ -15,11 +15,11 @@ namespace TagsCloudContainer.Actions
             this.tagCloudClient = tagCloudClient;
         }
 
-        public string Category => "Èçîáðàæåíèå";
+        public string Category => "Ð˜Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ";
 
-        public string Name => "Ñîõðàíèòü";
+        public string Name => "Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ";
 
-        public string Description => "Ñîõðàíèòü èçîáðàæåíèå";
+        public string Description => "Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ";
 
         public void Perform()
         {

@@ -46,7 +46,7 @@ namespace TagsCloudContainer
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<DrawTagCloudAction>().As<IUiAction>();
-            builder.RegisterType<TagCloudClient>().As<ITagCloudClient>();
+            builder.RegisterType<GUITagCloudClient>().As<ITagCloudClient>();
             builder.RegisterType<RectanglePlacer>().As<IRectanglePlacer>();
 
             return builder;
