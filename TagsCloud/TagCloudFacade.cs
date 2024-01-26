@@ -20,7 +20,10 @@ public class TagCloudFacade
 
     public List<CloudTag> GenerateCloudTagList(string filePath)
     {
-        var words = FileHelper.GetLinesFromFile(filePath).Select(word => new WordToStatus { Word = word }).ToList();
+        var words = FileHelper
+                    .GetLinesFromFile(filePath)
+                    .Select(word => new WordToStatus { Word = word })
+                    .ToList();
 
         StartFilterConveyor(words);
         var builder = new CloudTagListBuilder(options, words);
@@ -30,13 +33,16 @@ public class TagCloudFacade
 
     public void GenerateTagCloudImage(List<CloudTag> cloudTags, string filename)
     {
-        new VisualizationBuilder(options.ImageSize, options.BackgroundColor).CreateImageFrom(cloudTags)
+        new VisualizationBuilder(options.ImageSize, options.BackgroundColor)
+            .CreateImageFrom(cloudTags)
             .SaveAs(filename);
     }
 
     private void StartFilterConveyor(List<WordToStatus> words)
     {
-        var provider = new ServiceCollection().AddFiltersWithOptions(options).BuildServiceProvider();
+        var provider = new ServiceCollection()
+                       .AddFiltersWithOptions(options)
+                       .BuildServiceProvider();
 
         var filterConveyor = provider.GetService<FilterConveyor>();
         filterConveyor!.ApplyFilters(words);

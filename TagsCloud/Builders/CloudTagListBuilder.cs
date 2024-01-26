@@ -15,9 +15,13 @@ public class CloudTagListBuilder : CloudTagListBuilderBase
 
     public CloudTagListBuilder(IFactoryOptions options, List<WordToStatus> words) : base(options, words)
     {
-        frequencyStatistics = words.Where(word => !word.IsTrash).Select(word => word.Word)
-            .GroupBy(word => new CloudTag { InnerText = word })
-            .ToDictionary(group => group.Key, group => group.Count());
+        frequencyStatistics = words
+                              .Where(word => !word.IsTrash)
+                              .Select(word => word.Word)
+                              .GroupBy(word => new CloudTag { InnerText = word })
+                              .ToDictionary(
+                                  group => group.Key,
+                                  group => group.Count());
     }
 
     public override CloudTagListBuilderBase AdjustFonts()

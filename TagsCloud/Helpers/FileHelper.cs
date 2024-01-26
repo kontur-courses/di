@@ -16,16 +16,23 @@ public static class FileHelper
         if (reader == null)
             throw new NotSupportedException("Unknown file extension!");
 
-        var lines = reader.ReadContent(filename).Where(line => !string.IsNullOrWhiteSpace(line)).ToList();
+        var lines = reader
+                    .ReadContent(filename)
+                    .Where(line => !string.IsNullOrWhiteSpace(line))
+                    .ToList();
 
         return RemoveExcess(lines);
     }
 
     private static IFileReader FindAppropriateReader(string fileExtension)
     {
-        var readerType = Assembly.GetExecutingAssembly().GetTypes().Where(IsCorrectFileReaderType)
-            .FirstOrDefault(type =>
-                type.GetCustomAttribute<SupportedExtensionAttribute>()!.FileExtension.Equals(fileExtension));
+        var readerType = Assembly
+                         .GetExecutingAssembly()
+                         .GetTypes()
+                         .Where(IsCorrectFileReaderType)
+                         .FirstOrDefault(type =>
+                             type.GetCustomAttribute<SupportedExtensionAttribute>()!.FileExtension
+                                 .Equals(fileExtension));
 
         if (readerType == null)
             return null;
@@ -35,8 +42,9 @@ public static class FileHelper
 
     private static bool IsCorrectFileReaderType(Type readerType)
     {
-        return readerType.IsClass && readerType.GetInterfaces().Any(inter => inter == typeof(IFileReader)) &&
-               Attribute.IsDefined(readerType, typeof(SupportedExtensionAttribute));
+        return readerType.IsClass
+               && readerType.GetInterfaces().Any(inter => inter == typeof(IFileReader))
+               && Attribute.IsDefined(readerType, typeof(SupportedExtensionAttribute));
     }
 
     private static List<string> RemoveExcess(List<string> lines)

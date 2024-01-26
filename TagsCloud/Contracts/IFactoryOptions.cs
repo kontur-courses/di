@@ -6,7 +6,7 @@ namespace TagsCloud.Contracts;
 
 public interface IFactoryOptions
 {
-    FontFamily    FontFamily { get; set; }
-    ColorizerBase Colorizer  { get; set; }
-    ILayout       Layout     { get; set; }
+    FontFamily FontFamily { get; set; }
+    ColorizerBase Colorizer { get; set; }
+    ILayout Layout { get; set; }
 }

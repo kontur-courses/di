@@ -64,11 +64,16 @@ public class Program
 
         var colors = Colors!.Select(color => Color.ParseHex(color)).ToArray();
 
-        var options = new OptionsBuilder().SetColorizer(colors, Strategy).SetWordsCase(WordsCase)
-            .SetCastPolitics(Infinitive).SetExcludedWords(Excluded).SetImportantLanguageParts(TextParts)
-            .SetFontFamily(FontPath)
-            .SetImageSettings(Color.ParseHex(BackgroundColor), new Size(Width.Value, Height.Value)).SetLayout(layout)
-            .Build();
+        var options = new OptionsBuilder()
+                      .SetColorizer(colors, Strategy)
+                      .SetWordsCase(WordsCase)
+                      .SetCastPolitics(Infinitive)
+                      .SetExcludedWords(Excluded)
+                      .SetImportantLanguageParts(TextParts)
+                      .SetFontFamily(FontPath)
+                      .SetImageSettings(Color.ParseHex(BackgroundColor), new Size(Width.Value, Height.Value))
+                      .SetLayout(layout)
+                      .Build();
 
         var facade = new TagCloudFacade(options);
         var tagList = facade.GenerateCloudTagList(InputFile);

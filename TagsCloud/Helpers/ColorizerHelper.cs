@@ -10,24 +10,29 @@ public static class ColorizerHelper
 {
     public static ColorizerBase GetAppropriateColorizer(Color[] colors, ColoringStrategy strategy)
     {
-        var colorizerType = Assembly.GetExecutingAssembly().GetTypes().Where(IsCorrectColorizerType).FirstOrDefault(
-            type =>
-            {
-                var actualStrategy = type.GetCustomAttribute<ColorizerNameAttribute>()!.Strategy;
-                return actualStrategy == strategy;
-            });
+        var colorizerType = Assembly
+                            .GetExecutingAssembly()
+                            .GetTypes()
+                            .Where(IsCorrectColorizerType)
+                            .FirstOrDefault(type =>
+                            {
+                                var actualStrategy = type.GetCustomAttribute<ColorizerNameAttribute>()!.Strategy;
+                                return actualStrategy == strategy;
+                            });
 
         if (colorizerType == null)
             return null;
 
-        var ctor = colorizerType.GetConstructor(BindingFlags.Public | BindingFlags.Instance, new[] { typeof(Color[]) });
+        var ctor = colorizerType
+            .GetConstructor(BindingFlags.Public | BindingFlags.Instance, new[] { typeof(Color[]) });
 
         return ctor!.Invoke(new object[] { colors }) as ColorizerBase;
     }
 
     private static bool IsCorrectColorizerType(Type colorizerType)
     {
-        return colorizerType.IsClass && colorizerType.IsSubclassOf(typeof(ColorizerBase)) &&
-               Attribute.IsDefined(colorizerType, typeof(ColorizerNameAttribute));
+        return colorizerType.IsClass
+               && colorizerType.IsSubclassOf(typeof(ColorizerBase))
+               && Attribute.IsDefined(colorizerType, typeof(ColorizerNameAttribute));
     }
 }

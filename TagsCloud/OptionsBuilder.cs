@@ -12,10 +12,7 @@ public class OptionsBuilder
 {
     private readonly string[] languageParts =
     {
-        "A", "ADV", "ADVPRO", "ANUM",
-        "APRO", "COM", "CONJ", "INTJ",
-        "NUM", "PART", "PR",
-        "S", "SPRO", "V"
+        "A", "ADV", "ADVPRO", "ANUM", "APRO", "COM", "CONJ", "INTJ", "NUM", "PART", "PR", "S", "SPRO", "V"
     };
 
     private readonly ITagCloudOptions options;
@@ -72,7 +69,8 @@ public class OptionsBuilder
         if (colorizer == null)
         {
             var strategies = string.Join(", ", Enum.GetNames<ColoringStrategy>());
-            throw new ArgumentException($"Unknown colorizer type! Got {strategy}, but candidates are: " + strategies);
+            throw new ArgumentException(
+                $"Unknown colorizer type! Got {strategy}, but candidates are: " + strategies);
         }
 
         options.Colorizer = colorizer;
@@ -89,8 +87,9 @@ public class OptionsBuilder
         }
         else
         {
-            using var fontStream = Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("TagsCloud.Fonts.Vollkorn-SemiBold.ttf");
+            using var fontStream = Assembly
+                                   .GetExecutingAssembly()
+                                   .GetManifestResourceStream("TagsCloud.Fonts.Vollkorn-SemiBold.ttf");
 
             collection.Add(fontStream!);
         }

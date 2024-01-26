@@ -55,7 +55,9 @@ public class LayoutTests
     private bool CurrentRectanglesHaveIntersections()
     {
         return currentRectangles.SelectMany(
-            curr => currentRectangles.Where(other => curr != other && curr.IntersectsWith(other)),
-            (current, _) => current).Any();
+                                    curr => currentRectangles.Where(
+                                        other => curr != other && curr.IntersectsWith(other)),
+                                    (current, _) => current)
+                                .Any();
     }
 }

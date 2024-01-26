@@ -6,6 +6,10 @@ public class CloudTagCreator
 {
     public static List<CloudTag> CreateCloudTagList(CloudTagListBuilderBase builder)
     {
-        return builder.AdjustColors().AdjustFonts().AdjustPositions().Build();
+        return builder
+               .AdjustColors()
+               .AdjustFonts()
+               .AdjustPositions()
+               .Build();
     }
 }
