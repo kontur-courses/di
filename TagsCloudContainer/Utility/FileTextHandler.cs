@@ -2,9 +2,9 @@ using Spire.Doc;
 
 namespace TagsCloudContainer.utility;
 
-public static class TextHandler
+public class FileTextHandler(string fileName) : ITextHandler
 {
-    public static string ReadText(string fileName)
+    public string ReadText()
     {
         if (fileName.Contains("doc"))
         {

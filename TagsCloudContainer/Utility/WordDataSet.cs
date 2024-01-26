@@ -2,12 +2,12 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.utility;
 
-public static class WordDataSet
+public class WordDataSet(ITextHandler source)
 {
-    public static IEnumerable<(string word, int count)> CreateFrequencyDict(string text)
+    public IEnumerable<(string word, int count)> CreateFrequencyDict()
     {
         var words = Regex
-            .Matches(text, @"[\w\d]+")
+            .Matches(source.ReadText(), @"[\w\d]+")
             .Select(m => m.Value)
             .ToArray();
 

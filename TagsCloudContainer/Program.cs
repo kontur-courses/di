@@ -11,43 +11,36 @@ public static class Program
 {
     public static void Main()
     {
-        using var provider = ContainerInit();
-
-        using var imageGenerator = new ImageGenerator(
-            Utility.GetRelativeFilePath("out/res"), ImageEncodings.Jpg,
-            Utility.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
-            30, 1920, 1080,
-            Color.FromRgb(33, 0, 46),
-            (w, freq) => (
-                (byte)(freq == 1 ? 84 : freq <= 5 ? 255 : 57),
-                (byte)(freq == 1 ? 253 : freq <= 5 ? 122 : 108),
-                (byte)(freq == 1 ? 158 : freq <= 5 ? 254 : 255),
-                (byte)Math.Min(255, 55 + w.Length * 20)
-            )
-        );
-
-        new TagCloudVisualizer(
-            provider.GetService<ICircularCloudLayouter>()!,
-            imageGenerator
-        ).GenerateTagCloud(
-            WordHandler.Preprocessing(
-                WordDataSet.CreateFrequencyDict(
-                    TextHandler.ReadText("words.txt")
-                ),
-                true,
-                true,
-                "boringCustom.txt",
-                w => w.Length < 10
-            )
-        );
-    }
-
-    private static ServiceProvider ContainerInit()
-    {
-        ServiceCollection services = new();
+        ServiceCollection services = [];
         services.AddTransient<ICircularCloudLayouter>(_ => new CircularCloudLayouter(new Point(960, 540)));
-        
-        return services.BuildServiceProvider();
+        services.AddTransient<TagCloudVisualizer>();
+        services.AddTransient<ImageGenerator>(_ =>
+            new ImageGenerator(
+                Utility.GetRelativeFilePath("out/res"), ImageEncodings.Jpg,
+                Utility.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
+                30, 1920, 1080,
+                Color.FromRgb(33, 0, 46),
+                (w, freq) => (
+                    (byte)(freq == 1 ? 84 : freq <= 5 ? 255 : 57),
+                    (byte)(freq == 1 ? 253 : freq <= 5 ? 122 : 108),
+                    (byte)(freq == 1 ? 158 : freq <= 5 ? 254 : 255),
+                    (byte)Math.Min(255, 55 + w.Length * 20)
+                )
+            )
+        );
+        services.AddTransient<ITextHandler>(_ => new FileTextHandler("words.txt"));
+        services.AddTransient<WordHandler>(_ => new WordHandler(
+            new FileTextHandler("boringWords.txt"),
+            w => w.Length > 3)
+        );
+        services.AddTransient<WordDataSet>();
+
+        var container = services.BuildServiceProvider();
+
+        container.GetService<TagCloudVisualizer>()!
+            .GenerateTagCloud(container.GetService<WordHandler>()!
+                .Preprocessing(container.GetService<WordDataSet>()!.CreateFrequencyDict())
+            );
     }
 }
 

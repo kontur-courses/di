@@ -1,59 +1,21 @@
 namespace TagsCloudContainer.utility;
 
-public static class WordHandler
-{
-    private static readonly Predicate<string> BoringWordsExcludeRule = w => w.Length > 3;
-    
-    public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict,
-        bool excludeByDefaultFile, bool excludeByDefaultRule)
-    {
-        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, null, null);
-    }
-    
-    public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict,
-        bool excludeByDefaultFile, bool excludeByDefaultRule,
-        string? customExcludeFilename)
-    {
-        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, customExcludeFilename, null);
-    }
-
-    public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict,
-        bool excludeByDefaultFile, bool excludeByDefaultRule,
-        Predicate<string>? customExcludeRule)
-    {
-        return Preprocessing(frequencyDict, excludeByDefaultFile, excludeByDefaultRule, null, customExcludeRule);
-    }
-
-    public static IEnumerable<(string word, int count)> Preprocessing(
-        IEnumerable<(string word, int count)> frequencyDict, bool excludeByDefaultFile, bool excludeByDefaultRule,
-        string? customExcludeFilename, Predicate<string>? customExcludeRule)
+public class WordHandler(ITextHandler? excludeSource = null, Predicate<string>? excludeRule = null)
+{ 
+    public IEnumerable<(string word, int count)> Preprocessing(IEnumerable<(string word, int count)> frequencyDict)
     {
         frequencyDict = frequencyDict.Select(kvp => (kvp.word.ToLower(), kvp.count));
 
-        if (excludeByDefaultFile)
+        if (excludeSource != null)
         {
-            var defaultBoringDict = WordDataSet.CreateFrequencyDict(
-                TextHandler.ReadText("boringWords.txt")
-            ).Select(kvp => kvp.word.ToLower());
-            frequencyDict = frequencyDict.Where(kvp => !defaultBoringDict.Contains(kvp.word));
+            var boringDict = new WordDataSet(excludeSource)
+                .CreateFrequencyDict()
+                .Select(kvp => kvp.word.ToLower());
+            frequencyDict = frequencyDict.Where(kvp => !boringDict.Contains(kvp.word));
         }
 
-        if (excludeByDefaultRule)
-            frequencyDict = frequencyDict.Where(kvp => BoringWordsExcludeRule(kvp.word));
-
-        if (customExcludeFilename != null)
-        {
-            var defaultBoringDict = WordDataSet.CreateFrequencyDict(
-                TextHandler.ReadText(customExcludeFilename)
-            ).Select(kvp => kvp.word.ToLower());
-            frequencyDict = frequencyDict.Where(kvp => !defaultBoringDict.Contains(kvp.word));
-        }
-
-        if (customExcludeRule != null)
-            frequencyDict = frequencyDict.Where(kvp => customExcludeRule(kvp.word));
+        if (excludeRule != null)
+            frequencyDict = frequencyDict.Where(kvp => excludeRule(kvp.word));
 
         return frequencyDict;
     }

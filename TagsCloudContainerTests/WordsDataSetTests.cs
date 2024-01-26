@@ -18,8 +18,16 @@ public class WordsDataSetTests
             { "Three", 3 }
         }.Select(kv => (kv.Key, kv.Value));
 
-        var actual = WordDataSet.CreateFrequencyDict(testString);
+        var actual = new WordDataSet(new StringTextHandler(testString)).CreateFrequencyDict();
 
         actual.Should().Equal(expected);
+    }
+
+    private class StringTextHandler(string text) : ITextHandler
+    {
+        public string ReadText()
+        {
+            return text;
+        }
     }
 }
