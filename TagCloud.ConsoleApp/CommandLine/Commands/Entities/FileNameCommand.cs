@@ -19,7 +19,7 @@ public class FileNameCommand : ICommand
         if (parameters.Length < 1)
             throw new ArgumentException(GetHelp());
 
-        pathSettings.FileName = parameters[0] + ".png";
+        pathSettings.OutFileName = parameters[0] + ".png";
 
         return false;
     }
@@ -29,6 +29,6 @@ public class FileNameCommand : ICommand
         return "Позволяет настраивать имя файла при сохранении облака тегов\n" +
                "Параметры:\n" +
                "stirng - filename\n" +
-               $"Актуальное значение {pathSettings.FileName}";
+               $"Актуальное значение {pathSettings.OutFileName}";
     }
 }

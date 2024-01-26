@@ -2,32 +2,43 @@ namespace TagCloud.Domain.Settings;
 
 public class PathSettings
 {
-    private string fileName = "cloud.png";
-    private string pathToFile = "../../../TagCloudImages";
+    private string outFileName = "cloud.png";
+    private string outPathToFile = "../../../TagCloudImages";
+    private string fileFromWithPath = "../../../src/source.txt";
 
-    public string FileName
+    public string OutFileName
     {
-        get => fileName;
+        get => outFileName;
         set
         {
             if (Path.GetInvalidFileNameChars().Any(value.Contains))
                 throw new ArgumentException($"Name {value} is invalid");
 
-            fileName = value;
+            outFileName = value;
         }
     }
 
-    public string PathToFile
+    public string OutPathToFile
     {
-        get => pathToFile;
+        get => outPathToFile;
         set
         {
             if (Path.GetInvalidPathChars().Any(value.Contains))
                 throw new ArgumentException($"Path {value} is invalid");
 
-            pathToFile = value;
+            outPathToFile = value;
         }
     }
 
-    public string FileFrom => "../../../src/source.txt";
+    public string FileFromWithPath
+    {
+        get => fileFromWithPath;
+        set
+        {
+            if (!File.Exists(value))
+                throw new ArgumentException($"There is no file by path {value}");
+
+            fileFromWithPath = value;
+        }
+    }
 }

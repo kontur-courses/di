@@ -29,10 +29,10 @@ public class DrawCommand : ICommand
     
     public bool Execute(string[] parameters)
     {
-        using var image = visualizer.Visualize(wordsService.GetWords(pathSettings.FileFrom));
-        imageWorker.SaveImage(image, pathSettings.PathToFile, pathSettings.FileName);
+        using var image = visualizer.Visualize(wordsService.GetWords(pathSettings.FileFromWithPath));
+        imageWorker.SaveImage(image, pathSettings.OutPathToFile, pathSettings.OutFileName);
         
-        Console.WriteLine($"Изображение было сохранено по пути {Path.GetFullPath(Path.Combine(pathSettings.PathToFile, pathSettings.FileName))}");
+        Console.WriteLine($"Изображение было сохранено по пути {Path.GetFullPath(Path.Combine(pathSettings.OutPathToFile, pathSettings.OutFileName))}");
 
         return true;
     }

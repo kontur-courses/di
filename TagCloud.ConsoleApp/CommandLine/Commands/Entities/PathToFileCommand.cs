@@ -19,7 +19,7 @@ public class PathToFileCommand : ICommand
         if (parameters.Length < 1)
             throw new ArgumentException(GetHelp());
 
-        pathSettings.PathToFile = parameters[0];
+        pathSettings.OutPathToFile = parameters[0];
 
         return false;
     }
@@ -29,6 +29,6 @@ public class PathToFileCommand : ICommand
         return "Позволяет настраивать путь для сохранения файла\n" +
                "Параметры:\n" +
                "string - pathToFile\n" +
-               $"Актуальное значение {pathSettings.PathToFile}";
+               $"Актуальное значение {pathSettings.OutPathToFile}";
     }
 }
