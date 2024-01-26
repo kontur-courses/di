@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagsCloudContainer.DrawingOptions;
+﻿namespace TagsCloudContainer.DrawingOptions;
 
 public class DefaultOptionsProvider : IOptionsProvider
 {

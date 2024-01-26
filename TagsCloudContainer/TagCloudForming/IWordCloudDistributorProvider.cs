@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TagsCloudContainer.Common;
+﻿using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.TagCloudForming;
 

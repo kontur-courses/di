@@ -1,6 +1,4 @@
-﻿using TagsCloudContainer.Common;
-
-namespace TagsCloudContainer.WordProcessing.WordInput;
+﻿namespace TagsCloudContainer.WordProcessing.WordInput;
 
 public interface IWordProvider
 {
