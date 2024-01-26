@@ -13,18 +13,21 @@ public class HelpCommand : ICommand
         if (parameters.Length == 2 && CommandService.TryGetCommand(parameters[0], out var command))
             Console.WriteLine(command.GetHelp());
         else
-            Console.WriteLine("Введите любую из команд ниже:\n"
+            Console.WriteLine("Введите любую из команд ниже:\n\n"
                               + string.Join("\n", CommandService
                                   .GetCommands()
-                                  .Select(c => c.Trigger)) 
-                              + Environment.NewLine
-                              + GetHelp());
+                                  .Select(c => c.GetShortHelp())));
         
         return false;
     }
 
     public string GetHelp()
     {
-        return "Получить помощь по зарегистрированным командам, введите --help после команды";
+        return GetShortHelp();
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " получить помощь по зарегистрированным командам, введите --help после команды";
     }
 }

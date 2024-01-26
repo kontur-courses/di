@@ -1,4 +1,5 @@
 using System.Reflection;
+using Aspose.Drawing;
 using Aspose.Drawing.Imaging;
 
 namespace TagCloud.Utils.Extensions;
@@ -12,5 +13,19 @@ public static class StringExtensions
             ?.GetValue(null) as ImageFormat;
 
         return format is not null;
+    }
+
+    public static bool TryParseFontFamily(this string str, out FontFamily fontFamily)
+    {
+        try
+        {
+            fontFamily = new FontFamily(str);
+            return true;
+        }
+        catch (Exception e)
+        {
+            fontFamily = default;
+            return false;
+        }
     }
 }

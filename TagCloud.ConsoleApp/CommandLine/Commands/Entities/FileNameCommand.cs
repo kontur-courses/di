@@ -26,9 +26,14 @@ public class FileNameCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать имя файла при сохранении облака тегов\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "stirng - filename\n" +
                $"Актуальное значение {fileSettings.OutFileName}";
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать имя файла при сохранении облака тегов";
     }
 }

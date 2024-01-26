@@ -27,9 +27,14 @@ public class FontSizeCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать размер шрифта\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "float - размер шрифта\n" +
                $"Актуальное значение {visualizerSettings.Font.Size}";
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать размер шрифта";
     }
 }

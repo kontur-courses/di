@@ -29,10 +29,15 @@ public class SizeCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать размер выходного изображения\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "int - width\n" +
                "int - height\n" +
                $"Актуальное значение {layoutSettings.Dimensions}";
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать размер выходного изображения";
     }
 }

@@ -12,6 +12,11 @@ public class ExitCommand : ICommand
 
     public string GetHelp()
     {
-        return "Заврешить выполнение программы";
+        return GetShortHelp();
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " завершить выполнение программы";
     }
 }

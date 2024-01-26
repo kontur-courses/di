@@ -6,4 +6,5 @@ public interface ICommand
     
     public bool Execute(string[] parameters);
     public string GetHelp();
+    public string GetShortHelp();
 }

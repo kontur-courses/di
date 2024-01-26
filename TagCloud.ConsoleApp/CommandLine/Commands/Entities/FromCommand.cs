@@ -25,9 +25,14 @@ public class FromCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет указывать файл, из которого брать слова для облака тегов\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "stirng - pathToFIle\n" +
                $"Актуальное значение {fileSettings.FileFromWithPath}";
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет указывать файл, из которого брать слова для облака тегов";
     }
 }

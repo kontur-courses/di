@@ -26,9 +26,14 @@ public class PathToFileCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать путь для сохранения файла\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "string - pathToFile\n" +
                $"Актуальное значение {fileSettings.OutPathToFile}";
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать путь для сохранения файла";
     }
 }

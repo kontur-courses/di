@@ -30,11 +30,16 @@ public class ColorCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать цвет шрифта\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "int - red channel\n" +
                "int - green channel\n" +
                "int - blue channel\n" +
                $"Актуальное значение {visualizerSettings.Color}";
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать цвет шрифта";
     }
 }

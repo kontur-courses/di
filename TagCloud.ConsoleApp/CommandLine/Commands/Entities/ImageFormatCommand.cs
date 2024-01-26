@@ -27,9 +27,14 @@ public class ImageFormatCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать начертание шрифта\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "string - название шрифта\n" +
-               $"Актуальное значение: {fileSettings.ImageFormat}\n";
+               $"Актуальное значение: {fileSettings.ImageFormat}";
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать начертание шрифта";
     }
 }

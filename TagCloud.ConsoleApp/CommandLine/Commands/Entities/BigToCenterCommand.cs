@@ -27,9 +27,14 @@ public class BigToCenterCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать положение более частых слов\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "int - 1(ближе к центру) или 0(в случайном порядке)\n" +
                $"Актуальное значение {layoutSettings.BigToCenter}";
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать положение более частых слов";
     }
 }

@@ -39,7 +39,12 @@ public class DrawCommand : ICommand
 
     public string GetHelp()
     {
-        return "С помощью этой команды будет нарисовано облако тегов\n" +
+        return GetShortHelp() + Environment.NewLine + 
                "Не имеет параметров";
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет нарисовать облако тегов";
     }
 }

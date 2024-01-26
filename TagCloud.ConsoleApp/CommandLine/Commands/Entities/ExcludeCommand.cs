@@ -25,9 +25,14 @@ public class ExcludeCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет исключить слова из облака тегов\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "string[] - список слов, которые надо исключить через пробел\n" +
                "Сейчас исключено " + string.Join(", ", wordSettings.Excluded);
+    }
+    
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет исключить слова из облака тегов";
     }
 }

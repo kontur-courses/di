@@ -1,6 +1,7 @@
 using Aspose.Drawing;
 using TagCloud.ConsoleApp.CommandLine.Commands.Interfaces;
 using TagCloud.Domain.Settings;
+using TagCloud.Utils.Extensions;
 
 namespace TagCloud.ConsoleApp.CommandLine.Commands.Entities;
 
@@ -20,15 +21,8 @@ public class FontFamilyCommand : ICommand
         if (parameters.Length == 0)
             throw new ArgumentException("Введите название шрифта");
         
-        FontFamily fontFamily;
-        try
-        {
-            fontFamily = new FontFamily(parameters[0]);
-        }
-        catch (Exception e)
-        {
-            throw new ArgumentException(e.Message + Environment.NewLine + GetHelp());
-        }
+        if (!parameters[0].TryParseFontFamily(out var fontFamily))
+            throw new ArgumentException("Данный шрифт не поддерживается в системе\n" + GetHelp());
 
         visualizerSettings.Font = new Font(fontFamily, visualizerSettings.Font.Size);
 
@@ -37,10 +31,15 @@ public class FontFamilyCommand : ICommand
 
     public string GetHelp()
     {
-        return "Позволяет настраивать начертание шрифта\n" +
+        return GetShortHelp() + Environment.NewLine +
                "Параметры:\n" +
                "string - название шрифта\n" +
                $"Актуальное значение: {visualizerSettings.Font.FontFamily.Name}\n" +
                "Доступные шрифты в системе: " + string.Join(", ", FontFamily.Families.Select(f => f.Name));
+    }
+
+    public string GetShortHelp()
+    {
+        return Trigger + " позволяет настраивать начертание шрифта";
     }
 }
