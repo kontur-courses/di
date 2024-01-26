@@ -1,4 +1,5 @@
-﻿using TagsCloudContainer.WordProcessing.WordFiltering;
+﻿using TagsCloudContainer.BuildingOptions;
+using TagsCloudContainer.WordProcessing.WordFiltering;
 using TagsCloudContainer.WordProcessing.WordInput;
 
 namespace TagsCloudContainer.WordProcessing.WordGrouping;
@@ -7,10 +8,15 @@ public class DefaultWordProcessor : IProcessedWordProvider
 {
     private readonly string[] _words;
     private readonly IEnumerable<IWordFilter> _filters;
-    
-    public DefaultWordProcessor(IWordProvider words, IEnumerable<IWordFilter> filters)
+
+    public DefaultWordProcessor(ICommonOptionsProvider commonOptionsProvider, IEnumerable<IWordFilter> filters) : this(
+        commonOptionsProvider.CommonOptions.WordProvider, filters)
     {
-        _words = words.Words.Select(w => w.ToLower()).ToArray();
+    }
+
+    public DefaultWordProcessor(IWordProvider wordProvider, IEnumerable<IWordFilter> filters)
+    {
+        _words = wordProvider.Words.Select(w => w.ToLower()).ToArray();
         _filters = filters;
     }
 
@@ -21,7 +27,7 @@ public class DefaultWordProcessor : IProcessedWordProvider
         var filtered = _filters.Aggregate(_words, (current, filter) => filter.FilterWords(current));
         return GroupWords(filtered);
     }
-    
+
     private static Dictionary<string, int> GroupWords(IEnumerable<string> filtered)
     {
         var frequency = new Dictionary<string, int>();

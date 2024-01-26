@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using TagsCloudContainer.BuildingOptions;
 using TagsCloudContainer.Common;
 using TagsCloudContainer.Drawing.Colorers;
-using TagsCloudContainer.DrawingOptions;
 using TagsCloudContainer.TagCloudForming;
 
 namespace TagsCloudContainer.Drawing;
@@ -10,27 +10,31 @@ namespace TagsCloudContainer.Drawing;
 public class DefaultImageDrawer : IImageDrawer
 {
     private readonly IReadOnlyDictionary<string, WordData> _distributedWords;
-    private readonly Options _options;
-    private readonly IWordColorer _colorer;
-    public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider, IOptionsProvider optionsProvider, IWordColorer colorer)
+    private readonly DrawingOptions _drawingOptions;
+    private readonly IWordColorer? _colorer;
+
+    public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider,
+        IDrawingOptionsProvider drawingOptionsProvider, ICommonOptionsProvider commonOptionsProvider)
     {
         _distributedWords = cloudDistributorProvider.DistributedWords;
-        _options = optionsProvider.Options;
-        _colorer = colorer;
+        _drawingOptions = drawingOptionsProvider.DrawingOptions;
+        _colorer = commonOptionsProvider.CommonOptions.WordColorer;
     }
 
     public Bitmap DrawImage()
     {
-        var bitmap = new Bitmap(_options.ImageSize.Width, _options.ImageSize.Height);
-        var offset = new Point(_options.ImageSize.Width / 2, _options.ImageSize.Height / 2);
+        var bitmap = new Bitmap(_drawingOptions.ImageSize.Width, _drawingOptions.ImageSize.Height);
+        var offset = new Point(_drawingOptions.ImageSize.Width / 2, _drawingOptions.ImageSize.Height / 2);
         var graphics = Graphics.FromImage(bitmap);
-        graphics.FillRectangle(new SolidBrush(_options.BackgroundColor), 0, 0, bitmap.Width, bitmap.Height);
+        graphics.FillRectangle(new SolidBrush(_drawingOptions.BackgroundColor), 0, 0, bitmap.Width, bitmap.Height);
 
         foreach (var (value, word) in _distributedWords)
         {
-            var sizeAdd = _options.FrequencyScaling * (word.Frequency - 1);
-            var newFont = new Font(_options.Font.FontFamily, _options.Font.Size + sizeAdd, _options.Font.Style);
-            graphics.DrawString(value, newFont, new SolidBrush(_colorer.GetWordColor(value, word.Frequency)),
+            var sizeAdd = _drawingOptions.FrequencyScaling * (word.Frequency - 1);
+            var newFont = new Font(_drawingOptions.Font.FontFamily, _drawingOptions.Font.Size + sizeAdd,
+                _drawingOptions.Font.Style);
+            var color = _colorer?.GetWordColor(value, word.Frequency) ?? _drawingOptions.FontColor;
+            graphics.DrawString(value, newFont, new SolidBrush(color),
                 word.Rectangle with {X = word.Rectangle.X + offset.X, Y = word.Rectangle.Y + offset.Y});
         }
 
