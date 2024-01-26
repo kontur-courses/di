@@ -5,7 +5,7 @@ using TagsCloudPainter.Tags;
 
 namespace TagsCloudPainter.CloudLayouter;
 
-public class TagsCloudLayouter : ICloudLayouter
+public class TagsCloudLayouter : ICloudLayouter, IResetable
 {
     private readonly IFormPointer formPointer;
     private readonly TagSettings tagSettings;
@@ -14,6 +14,7 @@ public class TagsCloudLayouter : ICloudLayouter
     private TagsCloud Cloud 
     {
         get =>  cloud ??= new TagsCloud(cloudSettings.Value.CloudCenter, []);
+        set => cloud = value;
     }
 
     public TagsCloudLayouter(Lazy<CloudSettings> cloudSettings, IFormPointer formPointer, TagSettings tagSettings)
@@ -54,5 +55,6 @@ public class TagsCloudLayouter : ICloudLayouter
     public void Reset()
     {
         formPointer.Reset();
+        Cloud = new TagsCloud(cloudSettings.Value.CloudCenter, []);
     }
 }

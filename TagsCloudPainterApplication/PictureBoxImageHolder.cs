@@ -6,11 +6,11 @@ namespace TagsCloudPainterApplication;
 
 public class PictureBoxImageHolder : PictureBox, IImageHolder
 {
-    private readonly Lazy<ImageSettings> imageSettings = null!;
+    private readonly Lazy<ImageSettings> imageSettings;
 
     public PictureBoxImageHolder(Lazy<ImageSettings> imageSettings)
     {
-        this.imageSettings = imageSettings;
+        this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
     }
 
     public Size GetImageSize()
@@ -36,7 +36,7 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
 
     public Image GetImage()
     {
-        if (Image == null)
+        if (Image == null || Image.Width != imageSettings.Value.Width || Image.Height != imageSettings.Value.Height)
             Image = new Bitmap(imageSettings.Value.Width, imageSettings.Value.Height, PixelFormat.Format24bppRgb);
 
         return Image;

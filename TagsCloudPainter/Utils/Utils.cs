@@ -22,9 +22,10 @@ public static class Utils
     public static Size GetStringSize(string value, string fontName, float fontSize)
     {
         using var graphics = Graphics.FromHwnd(IntPtr.Zero);
-        var font = new Font(fontName, fontSize);
-        var size = graphics.MeasureString(value, font).ToSize();
-
-        return size;
+        using var font = new Font(fontName, fontSize);
+        {
+            var size = graphics.MeasureString(value, font).ToSize();
+            return size;
+        }
     }
 }
