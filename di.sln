@@ -1,6 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Domain", "TagCloud.Domain\TagCloud.Domain.csproj", "{CC49E0D2-6071-4D50-9622-2D75A5AEC852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Utils", "TagCloud.Utils\TagCloud.Utils.csproj", "{3519EAF3-6EEC-4083-8AFA-FA9E09685945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.ConsoleApp", "TagCloud.ConsoleApp\TagCloud.ConsoleApp.csproj", "{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Tests", "TagCloud.Tests\TagCloud.Tests.csproj", "{3A763004-FE67-4118-8729-8E4B26CE9535}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +14,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC49E0D2-6071-4D50-9622-2D75A5AEC852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC49E0D2-6071-4D50-9622-2D75A5AEC852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC49E0D2-6071-4D50-9622-2D75A5AEC852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC49E0D2-6071-4D50-9622-2D75A5AEC852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3519EAF3-6EEC-4083-8AFA-FA9E09685945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3519EAF3-6EEC-4083-8AFA-FA9E09685945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3519EAF3-6EEC-4083-8AFA-FA9E09685945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3519EAF3-6EEC-4083-8AFA-FA9E09685945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
