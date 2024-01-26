@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloud.Settings;
+namespace TagsCloud.App.Settings;
 
 public class TagSettings
 {

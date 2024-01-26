@@ -15,7 +15,7 @@ public static class WordAnalyzerHelper
         { PartSpeech.Preposition, "предл" },
         { PartSpeech.Interjection, "межд" }
     };
-    
+
     public static List<string> GetConvertedSpeeches(IEnumerable<PartSpeech> speeches)
     {
         return speeches.Select(speech => converter[speech]).ToList();

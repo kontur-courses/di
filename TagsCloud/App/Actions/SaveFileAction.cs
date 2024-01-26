@@ -2,7 +2,7 @@ using System.Windows.Forms;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 
-namespace TagsCloud.Actions;
+namespace TagsCloud.App.Actions;
 
 public class SaveFileAction : IUiAction
 {

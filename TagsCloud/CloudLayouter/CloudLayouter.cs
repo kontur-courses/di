@@ -4,8 +4,6 @@ namespace TagsCloud.CloudLayouter;
 
 public class CloudLayouter : ICloudLayouter
 {
-    public List<Rectangle> Rectangles { get; }
-
     private readonly ISpiral spiral;
 
     public CloudLayouter(ISpiral spiral)
@@ -13,6 +11,8 @@ public class CloudLayouter : ICloudLayouter
         this.spiral = spiral;
         Rectangles = new List<Rectangle>();
     }
+
+    public List<Rectangle> Rectangles { get; }
 
     public Rectangle PutNextRectangle(Size rectangleSize)
     {

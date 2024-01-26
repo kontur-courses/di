@@ -1,5 +1,3 @@
-using Spire.Doc;
-
 namespace TagsCloud;
 
 public interface IParser

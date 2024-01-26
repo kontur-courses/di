@@ -1,40 +1,34 @@
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloud.App.Settings;
 using TagsCloud.CloudLayouter;
-using TagsCloud.Infrastructure;
-using TagsCloud.Settings;
+using TagsCloud.CloudPainter;
 using TagsCloud.WordAnalyzer;
 
-namespace TagsCloud.CloudPainter;
+namespace TagsCloud.CloudVisualizer;
 
-public class TagCloudPainter
+public class TagCloudVisualizer
 {
-    
-    private readonly IImageHolder imageHolder;
+    private readonly Graphics graphics;
+    private readonly Size sizeImage;
     private readonly TagSettings tagSettings;
-    private readonly WordAnalyzer.WordAnalyzer wordAnalyzer;
-    private readonly FileReader fileReader;
 
-    public TagCloudPainter(IImageHolder imageHolder, TagSettings tagSettings, WordAnalyzer.WordAnalyzer wordAnalyzer,
-        FileReader reader)
+    public TagCloudVisualizer(TagSettings tagSettings, Graphics graphics, Size imageSize)
     {
-        this.imageHolder = imageHolder;
+        this.graphics = graphics;
+        sizeImage = imageSize;
         this.tagSettings = tagSettings;
-        this.wordAnalyzer = wordAnalyzer;
-        fileReader = reader;
     }
-    public void Paint(ISpiral spiral, string path)
+
+    public void DrawTagCloud(ISpiral spiral, IEnumerable<WordInfo> wordInfo)
     {
-        using var graphics = imageHolder.StartDrawing();
-        var sizeImage = imageHolder.GetImageSize();
+        spiral.Init(new Point(sizeImage.Width / 2, sizeImage.Height / 2));
         var cloudLayouter = new CloudLayouter.CloudLayouter(spiral);
-        var wordList = fileReader.GetWords(path);
         var background = new SolidBrush(Color.Black);
         graphics.FillRectangle(background, new Rectangle(0, 0, sizeImage.Width, sizeImage.Height));
-        DrawTagsCloud(wordAnalyzer.GetFrequencyList(wordList), graphics, cloudLayouter);
-        imageHolder.UpdateUi();
+        DrawTagsCloud(wordInfo, graphics, cloudLayouter);
     }
-    
+
     private Tag GetTag(WordInfo wordInfo, ICloudLayouter cloudLayouter)
     {
         var font = new Font(tagSettings.FontFamily, wordInfo.Count * tagSettings.Size);
@@ -43,7 +37,7 @@ public class TagCloudPainter
         return new Tag(font, wordInfo.Word, textRectangle, tagSettings.Color);
     }
 
-    private void DrawTagsCloud(IEnumerable<WordInfo>words,Graphics graphics, ICloudLayouter cloudLayouter)
+    private void DrawTagsCloud(IEnumerable<WordInfo> words, Graphics graphics, ICloudLayouter cloudLayouter)
     {
         foreach (var word in words)
         {

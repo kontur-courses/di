@@ -1,8 +1,8 @@
+using TagsCloud.App.Settings;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
-using TagsCloud.Settings;
 
-namespace TagsCloud.Actions;
+namespace TagsCloud.App.Actions;
 
 public class TagSettingsAction : IUiAction
 {

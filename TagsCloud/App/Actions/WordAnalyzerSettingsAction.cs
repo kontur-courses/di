@@ -1,7 +1,8 @@
+using TagsCloud.App.Settings;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 
-namespace TagsCloud.Actions;
+namespace TagsCloud.App.Actions;
 
 public class WordAnalyzerSettingsAction : IUiAction
 {

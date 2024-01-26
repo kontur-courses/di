@@ -4,16 +4,22 @@ namespace TagsCloud.CloudLayouter;
 
 public class Spiral : ISpiral
 {
-    private int counter;
     private readonly float step;
-    private readonly Point center;
+    private Point center;
+    private int counter;
 
     public Spiral(Point center, float step = 0.1f)
     {
-        this.center = center;
+        Init(center);
         if (step == 0)
             throw new ArgumentException("the step must not be equal to 0");
         this.step = step;
+    }
+
+    public void Init(Point center)
+    {
+        counter = 0;
+        this.center = center;
     }
 
     public Point GetPoint()

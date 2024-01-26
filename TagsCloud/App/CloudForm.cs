@@ -1,8 +1,8 @@
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloud.App.Settings;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
-using TagsCloud.Settings;
 
 namespace TagsCloud;
 
@@ -23,9 +23,10 @@ public partial class CloudForm : Form
         pictureBox.Dock = DockStyle.Fill;
         Controls.Add(pictureBox);
     }
+
     protected override void OnShown(EventArgs e)
     {
-                base.OnShown(e);
-                Text = "TagCloud Painter";
+        base.OnShown(e);
+        Text = "TagCloud Painter";
     }
 }

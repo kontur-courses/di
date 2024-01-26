@@ -1,5 +1,6 @@
 using FluentAssertions;
 using TagsCloud;
+using TagsCloud.App.Settings;
 using TagsCloud.WordAnalyzer;
 
 namespace TagsCloudTests;

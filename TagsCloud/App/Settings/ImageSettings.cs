@@ -1,4 +1,4 @@
-namespace TagsCloud.Settings;
+namespace TagsCloud.App.Settings;
 
 public class ImageSettings
 {

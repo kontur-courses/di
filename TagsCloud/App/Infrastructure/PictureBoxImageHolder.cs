@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloud.Settings;
+using TagsCloud.App.Settings;
 
 namespace TagsCloud.Infrastructure;
 
@@ -20,12 +19,6 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
         return Graphics.FromImage(Image);
     }
 
-    private void FailIfNotInitialized()
-    {
-        if (Image == null)
-            throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
-    }
-
     public void UpdateUi()
     {
         Refresh();
@@ -41,5 +34,11 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
         FailIfNotInitialized();
         Image.Save(fileName);
+    }
+
+    private void FailIfNotInitialized()
+    {
+        if (Image == null)
+            throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
     }
 }

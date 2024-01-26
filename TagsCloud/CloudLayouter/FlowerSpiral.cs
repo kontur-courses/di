@@ -4,15 +4,15 @@ namespace TagsCloud.CloudLayouter;
 
 public class FlowerSpiral : ISpiral
 {
-    private int counter;
-    private readonly float step;
-    private readonly Point center;
     private readonly int petalCount;
     private readonly double petalLength;
+    private readonly float step;
+    private Point center;
+    private int counter;
 
-    public FlowerSpiral(Point center, double petalLength = 0.25, int petalCount = 1, float step = 0.1f)
+    public FlowerSpiral(Point center, double petalLength = 0.5, int petalCount = 4, float step = 0.1f)
     {
-        this.center = center;
+        Init(center);
         this.petalLength = petalLength;
         this.petalCount = petalCount;
         if (this.petalCount < 0 || petalLength < 0)
@@ -20,6 +20,12 @@ public class FlowerSpiral : ISpiral
         if (step == 0)
             throw new ArgumentException($"the {nameof(step)} must not be equal to 0");
         this.step = step;
+    }
+
+    public void Init(Point center)
+    {
+        counter = 0;
+        this.center = center;
     }
 
     public Point GetPoint()

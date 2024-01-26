@@ -2,7 +2,7 @@ using System.Windows.Forms;
 using TagsCloud.Infrastructure;
 using TagsCloud.Infrastructure.UiActions;
 
-namespace TagsCloud.Actions;
+namespace TagsCloud.App.Actions;
 
 public class UploadFileAction : IUiAction
 {
@@ -12,10 +12,11 @@ public class UploadFileAction : IUiAction
     {
         this.settings = settings;
     }
+
     public MenuCategory Category => MenuCategory.File;
     public string Name => "Загрузить";
     public string Description => "";
-    
+
     public void Perform()
     {
         var openFileDialog = new OpenFileDialog
@@ -23,10 +24,9 @@ public class UploadFileAction : IUiAction
             Title = "Выберите файл",
             Filter = "Текстовые файлы (*.txt)|*.txt|Документы (*.doc;*.docx)|*.doc;*.docx|Все файлы (*.*)|*.*",
             FilterIndex = 1,
-            RestoreDirectory = true,
+            RestoreDirectory = true
         };
         if (openFileDialog.ShowDialog() != DialogResult.OK) return;
         settings.File = new FileInfo(openFileDialog.FileName);
-        
     }
 }
