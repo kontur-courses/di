@@ -31,27 +31,21 @@ public class VisualizationBuilder
 
                 if (tag.IsRotated)
                 {
-                    var offsetLocation = new PointF(
-                        location.X + tag.BoundRectangle.Width, location.Y);
+                    var offsetLocation = new PointF(location.X + tag.BoundRectangle.Width, location.Y);
                     var options = new DrawingOptions
                     {
-                        Transform =
-                            Matrix3x2Extensions.CreateRotationDegrees(
-                                90, offsetLocation)
+                        Transform = Matrix3x2Extensions.CreateRotationDegrees(90, offsetLocation)
                     };
 
-                    ctx.DrawText(options, tag.InnerText, tag.TextFont,
-                        tag.TextColor, offsetLocation);
+                    ctx.DrawText(options, tag.InnerText, tag.TextFont, tag.TextColor, offsetLocation);
                     return;
                 }
 
-                ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor,
-                    location);
+                ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor, location);
             });
 
             // Only for testing (debug state):
-            tags.ForEach(tag =>
-                ctx.Draw(Color.Black, 1f, tag.BoundRectangle));
+            tags.ForEach(tag => ctx.Draw(Color.Black, 1f, tag.BoundRectangle));
         });
 
         return this;

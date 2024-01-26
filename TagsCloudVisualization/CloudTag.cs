@@ -13,8 +13,7 @@ public class CloudTag
 
     public override bool Equals(object? obj)
     {
-        return obj is CloudTag cloudTag &&
-               cloudTag.InnerText.Equals(InnerText);
+        return obj is CloudTag cloudTag && cloudTag.InnerText.Equals(InnerText);
     }
 
     public override int GetHashCode()

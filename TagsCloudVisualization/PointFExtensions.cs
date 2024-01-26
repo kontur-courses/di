@@ -16,14 +16,12 @@ public static class PointFExtensions
         return point;
     }
 
-    public static PointF PlaceRelativeToCenter(this PointF point,
-        PointF center)
+    public static PointF PlaceRelativeToCenter(this PointF point, PointF center)
     {
         return point.ApplyOffset(center.X, center.Y);
     }
 
-    public static PointF ApplyOffset(this PointF point, float offsetX,
-        float offsetY)
+    public static PointF ApplyOffset(this PointF point, float offsetX, float offsetY)
     {
         point.X += offsetX;
         point.Y += offsetY;

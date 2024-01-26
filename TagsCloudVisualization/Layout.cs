@@ -37,18 +37,13 @@ public class Layout : ILayout
         if (isFirstRectangle)
             return currentRect;
 
-        var toCenter = new Vector2(center.X - currentRect.X,
-            center.Y - currentRect.Y);
-        var length =
-            (float)Math.Sqrt(toCenter.X * toCenter.X +
-                             toCenter.Y * toCenter.Y);
-        var normalized =
-            new Vector2(toCenter.X / length, toCenter.Y / length);
+        var toCenter = new Vector2(center.X - currentRect.X, center.Y - currentRect.Y);
+        var length = (float)Math.Sqrt(toCenter.X * toCenter.X + toCenter.Y * toCenter.Y);
+        var normalized = new Vector2(toCenter.X / length, toCenter.Y / length);
 
         while (true)
         {
-            var point = new PointF(currentRect.X + normalized.X,
-                currentRect.Y + normalized.Y);
+            var point = new PointF(currentRect.X + normalized.X, currentRect.Y + normalized.Y);
             var newRect = new RectangleF(point, currentRect.Size);
 
             if (placedRectangles.Any(rect => rect.IntersectsWith(newRect)))
@@ -64,19 +59,13 @@ public class Layout : ILayout
     {
         while (true)
         {
-            var tempPoint = pointGenerator.GetNextPoint()
-                                          .PlaceRelativeToCenter(center);
+            var tempPoint = pointGenerator.GetNextPoint().PlaceRelativeToCenter(center);
 
             var common = new RectangleF(tempPoint, rectSize);
-            var rotated = common with
-            {
-                Width = common.Height, Height = common.Width
-            };
+            var rotated = common with { Width = common.Height, Height = common.Width };
 
-            var commonPoint = tempPoint.ApplyOffset(-common.Width / 2,
-                -common.Height / 2);
-            var rotatedPoint = tempPoint.ApplyOffset(-rotated.Width / 2,
-                -rotated.Height / 2);
+            var commonPoint = tempPoint.ApplyOffset(-common.Width / 2, -common.Height / 2);
+            var rotatedPoint = tempPoint.ApplyOffset(-rotated.Width / 2, -rotated.Height / 2);
 
             (common.X, common.Y) = (commonPoint.X, commonPoint.Y);
             (rotated.X, rotated.Y) = (rotatedPoint.X, rotatedPoint.Y);
@@ -84,8 +73,7 @@ public class Layout : ILayout
             if (!Intersects(common))
                 return common;
 
-            if (rotated.Width.IsEqualTo(rotated.Height) &&
-                !Intersects(rotated))
+            if (rotated.Width.IsEqualTo(rotated.Height) && !Intersects(rotated))
                 return rotated;
         }
     }
