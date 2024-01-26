@@ -1,9 +1,9 @@
 ﻿using System.Drawing.Imaging;
 using Autofac;
 using TagsCloudConsoleUI.Providers;
-using TagsCloudContainer.BuildingOptions;
-using TagsCloudContainer.Common;
-using TagsCloudContainer.Drawing;
+using TagsCloudCore.BuildingOptions;
+using TagsCloudCore.Common;
+using TagsCloudCore.Drawing;
 
 namespace TagsCloudConsoleUI;
 

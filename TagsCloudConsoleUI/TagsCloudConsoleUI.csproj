@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj" />
+      <ProjectReference Include="..\TagsCloudCore\TagsCloudCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="TagsCloudVisualization">
-        <HintPath>..\TagsCloudContainer\libs\TagsCloudVisualization.dll</HintPath>
+        <HintPath>..\TagsCloudCore\libs\TagsCloudVisualization.dll</HintPath>
       </Reference>
     </ItemGroup>
 

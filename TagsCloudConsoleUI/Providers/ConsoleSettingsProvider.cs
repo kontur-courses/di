@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Text;
 using McMaster.Extensions.CommandLineUtils;
-using TagsCloudContainer.BuildingOptions;
-using TagsCloudContainer.Drawing.Colorers;
-using TagsCloudContainer.Utils;
-using TagsCloudContainer.WordProcessing.WordInput;
+using TagsCloudCore.BuildingOptions;
+using TagsCloudCore.Drawing.Colorers;
+using TagsCloudCore.Utils;
+using TagsCloudCore.WordProcessing.WordInput;
 
 namespace TagsCloudConsoleUI.Providers;
 

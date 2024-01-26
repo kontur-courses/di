@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using TagsCloudContainer.Drawing.Colorers;
+using TagsCloudCore.Drawing.Colorers;
 
 namespace TagsCloudConsoleUI.Providers;
 

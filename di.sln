@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudCore", "TagsCloudCore\TagsCloudCore.csproj", "{D6C7C0D1-2CA2-4F45-8AA5-340A58A45B95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{405FAAB3-6E4C-487C-9429-43529876FB44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudCoreTests", "TagsCloudCoreTests\TagsCloudCoreTests.csproj", "{405FAAB3-6E4C-487C-9429-43529876FB44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudConsoleUI", "TagsCloudConsoleUI\TagsCloudConsoleUI.csproj", "{EB9EA819-7DE4-4B51-83EE-5B7B1380DFBD}"
 EndProject

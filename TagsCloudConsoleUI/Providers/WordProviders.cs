@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.WordProcessing.WordInput;
+﻿using TagsCloudCore.WordProcessing.WordInput;
 
 namespace TagsCloudConsoleUI.Providers;
 
