@@ -7,7 +7,7 @@ namespace TagsCloudPainter.CloudLayouter;
 
 public class TagsCloudLayouter : ICloudLayouter
 {
-    private readonly IFormPointer formPointer = null!;
+    private readonly IFormPointer formPointer;
     private readonly TagSettings tagSettings;
     private readonly Lazy<CloudSettings> cloudSettings;
     private TagsCloud cloud;
@@ -18,9 +18,9 @@ public class TagsCloudLayouter : ICloudLayouter
 
     public TagsCloudLayouter(Lazy<CloudSettings> cloudSettings, IFormPointer formPointer, TagSettings tagSettings)
     {
-        this.cloudSettings = cloudSettings;
-        this.formPointer = null;
-        this.tagSettings = tagSettings;
+        this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
+        this.formPointer = formPointer ?? throw new ArgumentNullException(nameof(formPointer));
+        this.tagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
     }
 
     public Rectangle PutNextTag(Tag tag)

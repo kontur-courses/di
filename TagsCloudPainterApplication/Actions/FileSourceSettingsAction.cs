@@ -8,7 +8,7 @@ public class FileSourceSettingsAction : IUiAction
 
     public FileSourceSettingsAction(FilesSourceSettings filesSourceSettings)
     {
-        this.filesSourceSettings = filesSourceSettings;
+        this.filesSourceSettings = filesSourceSettings ?? throw new ArgumentNullException(nameof(filesSourceSettings));
     }
 
     public string Category => "Настройки";

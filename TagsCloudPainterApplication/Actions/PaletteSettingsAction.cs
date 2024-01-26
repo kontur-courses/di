@@ -9,7 +9,7 @@ public class PaletteSettingsAction : IUiAction
 
     public PaletteSettingsAction(Palette palette)
     {
-        this.palette = palette;
+        this.palette = palette ?? throw new ArgumentNullException(nameof(palette));
     }
 
     public string Category => "Настройки";

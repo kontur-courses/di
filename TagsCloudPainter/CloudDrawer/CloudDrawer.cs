@@ -11,8 +11,8 @@ public class CloudDrawer
 
     public CloudDrawer(TagSettings tagSettings, CloudSettings cloudSettings)
     {
-        this.tagSettings = tagSettings;
-        this.cloudSettings = cloudSettings;
+        this.tagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
+        this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
     }
 
     public Bitmap DrawCloud(TagsCloud cloud, int imageWidth, int imageHeight)

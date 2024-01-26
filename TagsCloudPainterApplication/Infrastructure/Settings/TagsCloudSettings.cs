@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Xml.Linq;
 using TagsCloudPainter.Settings;
 
 namespace TagsCloudPainterApplication.Infrastructure.Settings;
@@ -11,10 +12,10 @@ public class TagsCloudSettings
         SpiralPointerSettings spiralPointerSettings,
         TextSettings textSettings)
     {
-        CloudSettings = cloudSettings;
-        TagSettings = tagSettings;
-        SpiralPointerSettings = spiralPointerSettings;
-        TextSettings = textSettings;
+        CloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
+        TagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
+        SpiralPointerSettings = spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
+        TextSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
         TagFontSize = 32;
         TagFontName = "Arial";
         CloudCenter = new Point(0, 0);
@@ -23,10 +24,10 @@ public class TagsCloudSettings
         PointerAngleConst = 1;
     }
 
-    [Browsable(false)] public CloudSettings CloudSettings { get; } = null!;
-    [Browsable(false)] public TagSettings TagSettings { get; } = null!;
-    [Browsable(false)] public SpiralPointerSettings SpiralPointerSettings { get; } = null!;
-    [Browsable(false)] public TextSettings TextSettings { get; private set; } = null!;
+    [Browsable(false)] public CloudSettings CloudSettings { get; }
+    [Browsable(false)] public TagSettings TagSettings { get; }
+    [Browsable(false)] public SpiralPointerSettings SpiralPointerSettings { get; }
+    [Browsable(false)] public TextSettings TextSettings { get; }
 
     public int TagFontSize
     {

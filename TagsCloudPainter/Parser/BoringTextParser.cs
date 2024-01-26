@@ -9,7 +9,7 @@ public class BoringTextParser : ITextParser
 
     public BoringTextParser(TextSettings textSettings)
     {
-        this.textSettings = textSettings;
+        this.textSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
     }
 
     public List<string> ParseText(string text)

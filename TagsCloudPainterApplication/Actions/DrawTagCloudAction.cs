@@ -3,6 +3,7 @@ using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Drawer;
 using TagsCloudPainter.FileReader;
 using TagsCloudPainter.Parser;
+using TagsCloudPainter.Settings;
 using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
@@ -34,16 +35,16 @@ public class DrawTagCloudAction : IUiAction
         IFileReader fileReader,
         Palette palette)
     {
-        this.cloudDrawer = cloudDrawer;
-        this.cloudLayouter = cloudLayouter;
-        this.tagsBuilder = tagsBuilder;
-        this.textParser = textParser;
-        this.fileReader = fileReader;
-        this.imageSettings = imageSettings;
-        this.tagsCloudSettings = tagsCloudSettings;
-        this.imageHolder = imageHolder;
-        this.filesSourceSettings = filesSourceSettings;
-        this.palette = palette;
+        this.cloudDrawer = cloudDrawer ?? throw new ArgumentNullException(nameof(cloudDrawer));
+        this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
+        this.tagsBuilder = tagsBuilder ?? throw new ArgumentNullException(nameof(tagsBuilder));
+        this.textParser = textParser ?? throw new ArgumentNullException(nameof(textParser));
+        this.fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+        this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
+        this.tagsCloudSettings = tagsCloudSettings ?? throw new ArgumentNullException(nameof(tagsCloudSettings));
+        this.imageHolder = imageHolder ?? throw new ArgumentNullException(nameof(imageHolder));
+        this.filesSourceSettings = filesSourceSettings ?? throw new ArgumentNullException(nameof(filesSourceSettings));
+        this.palette = palette ?? throw new ArgumentNullException(nameof(palette));
     }
 
     public string Category => "Облако тэгов";

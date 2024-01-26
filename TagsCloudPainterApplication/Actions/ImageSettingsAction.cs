@@ -8,7 +8,7 @@ public class ImageSettingsAction : IUiAction
 
     public ImageSettingsAction(ImageSettings imageSettings)
     {
-        this.imageSettings = imageSettings;
+        this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
     }
 
     public string Category => "Настройки";

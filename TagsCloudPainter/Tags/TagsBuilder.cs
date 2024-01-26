@@ -8,7 +8,7 @@ public class TagsBuilder : ITagsBuilder
 
     public TagsBuilder(TagSettings settings)
     {
-        _settings = settings;
+        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     }
 
     public List<Tag> GetTags(List<string> words)

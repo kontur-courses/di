@@ -8,7 +8,7 @@ public class SaveImageAction : IUiAction
 
     public SaveImageAction(IImageHolder imageHolder)
     {
-        this.imageHolder = imageHolder;
+        this.imageHolder = imageHolder ?? throw new ArgumentNullException(nameof(imageHolder));
     }
 
     public string Category => "Файл";
