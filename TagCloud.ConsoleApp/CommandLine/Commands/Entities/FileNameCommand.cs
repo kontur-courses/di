@@ -5,11 +5,11 @@ namespace TagCloud.ConsoleApp.CommandLine.Commands.Entities;
 
 public class FileNameCommand : ICommand
 {
-    private readonly PathSettings pathSettings;
+    private readonly FileSettings fileSettings;
 
-    public FileNameCommand(PathSettings pathSettings)
+    public FileNameCommand(FileSettings fileSettings)
     {
-        this.pathSettings = pathSettings;
+        this.fileSettings = fileSettings;
     }
     
     public string Trigger => "filename";
@@ -19,7 +19,7 @@ public class FileNameCommand : ICommand
         if (parameters.Length < 1)
             throw new ArgumentException(GetHelp());
 
-        pathSettings.OutFileName = parameters[0] + ".png";
+        fileSettings.OutFileName = parameters[0];
 
         return false;
     }
@@ -29,6 +29,6 @@ public class FileNameCommand : ICommand
         return "Позволяет настраивать имя файла при сохранении облака тегов\n" +
                "Параметры:\n" +
                "stirng - filename\n" +
-               $"Актуальное значение {pathSettings.OutFileName}";
+               $"Актуальное значение {fileSettings.OutFileName}";
     }
 }

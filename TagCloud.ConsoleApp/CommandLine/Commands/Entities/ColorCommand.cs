@@ -1,6 +1,6 @@
-using Aspose.Drawing;
 using TagCloud.ConsoleApp.CommandLine.Commands.Interfaces;
 using TagCloud.Domain.Settings;
+using TagCloud.Utils.Extensions;
 
 namespace TagCloud.ConsoleApp.CommandLine.Commands.Entities;
 
@@ -20,10 +20,9 @@ public class ColorCommand : ICommand
         if (parameters.Length < 3
             || !int.TryParse(parameters[0], out var red)
             || !int.TryParse(parameters[1], out var green)
-            || !int.TryParse(parameters[2], out var blue))
+            || !int.TryParse(parameters[2], out var blue)
+            || !(red, green, blue).TryParseColor(out var color))
             throw new ArgumentException(GetHelp());
-
-        var color = Color.FromArgb(1, red, green, blue);
 
         visualizerSettings.Color = color;
         return false;

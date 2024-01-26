@@ -5,11 +5,11 @@ namespace TagCloud.ConsoleApp.CommandLine.Commands.Entities;
 
 public class PathToFileCommand : ICommand
 {
-    private readonly PathSettings pathSettings;
+    private readonly FileSettings fileSettings;
 
-    public PathToFileCommand(PathSettings pathSettings)
+    public PathToFileCommand(FileSettings fileSettings)
     {
-        this.pathSettings = pathSettings;
+        this.fileSettings = fileSettings;
     }
     
     public string Trigger => "path";
@@ -19,7 +19,7 @@ public class PathToFileCommand : ICommand
         if (parameters.Length < 1)
             throw new ArgumentException(GetHelp());
 
-        pathSettings.OutPathToFile = parameters[0];
+        fileSettings.OutPathToFile = parameters[0];
 
         return false;
     }
@@ -29,6 +29,6 @@ public class PathToFileCommand : ICommand
         return "Позволяет настраивать путь для сохранения файла\n" +
                "Параметры:\n" +
                "string - pathToFile\n" +
-               $"Актуальное значение {pathSettings.OutPathToFile}";
+               $"Актуальное значение {fileSettings.OutPathToFile}";
     }
 }

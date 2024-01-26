@@ -1,4 +1,6 @@
-namespace TagCloud.Domain.Extensions;
+using Aspose.Drawing;
+
+namespace TagCloud.Utils.Extensions;
 
 public static class SizeExtensions
 {

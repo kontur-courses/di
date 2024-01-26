@@ -5,11 +5,11 @@ namespace TagCloud.ConsoleApp.CommandLine.Commands.Entities;
 
 public class FromCommand : ICommand
 {
-    private readonly PathSettings pathSettings;
+    private readonly FileSettings fileSettings;
 
-    public FromCommand(PathSettings pathSettings)
+    public FromCommand(FileSettings fileSettings)
     {
-        this.pathSettings = pathSettings;
+        this.fileSettings = fileSettings;
     }
     
     public string Trigger => "from";
@@ -18,7 +18,7 @@ public class FromCommand : ICommand
         if (parameters.Length != 1)
             throw new ArgumentException(GetHelp());
 
-        pathSettings.FileFromWithPath = parameters[0];
+        fileSettings.FileFromWithPath = parameters[0];
 
         return false;
     }
@@ -28,6 +28,6 @@ public class FromCommand : ICommand
         return "Позволяет указывать файл, из которого брать слова для облака тегов\n" +
                "Параметры:\n" +
                "stirng - pathToFIle\n" +
-               $"Актуальное значение {pathSettings.FileFromWithPath}";
+               $"Актуальное значение {fileSettings.FileFromWithPath}";
     }
 }

@@ -1,8 +1,10 @@
+using Aspose.Drawing.Imaging;
+
 namespace TagCloud.Domain.Settings;
 
-public class PathSettings
+public class FileSettings
 {
-    private string outFileName = "cloud.png";
+    private string outFileName = "cloud";
     private string outPathToFile = "../../../TagCloudImages";
     private string fileFromWithPath = "../../../src/source.txt";
 
@@ -41,4 +43,6 @@ public class PathSettings
             fileFromWithPath = value;
         }
     }
+    
+    public ImageFormat ImageFormat { get; set; } = ImageFormat.Png;
 }

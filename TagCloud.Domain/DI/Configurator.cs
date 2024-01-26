@@ -28,7 +28,7 @@ public class Configurator
             .SingleInstance();
 
         builder
-            .RegisterType<PathSettings>()
+            .RegisterType<FileSettings>()
             .AsSelf()
             .SingleInstance();
 

@@ -19,13 +19,18 @@ public class FontFamilyCommand : ICommand
     {
         if (parameters.Length == 0)
             throw new ArgumentException("Введите название шрифта");
-
-        var font = new Font(parameters[0], visualizerSettings.Font.Size);
         
-        if (font.IsSystemFont)
-            throw new ArgumentException($"Шрифт {parameters[0]} не является системным");
+        FontFamily fontFamily;
+        try
+        {
+            fontFamily = new FontFamily(parameters[0]);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException(e.Message + Environment.NewLine + GetHelp());
+        }
 
-        visualizerSettings.Font = font;
+        visualizerSettings.Font = new Font(fontFamily, visualizerSettings.Font.Size);
 
         return false;
     }
@@ -35,6 +40,7 @@ public class FontFamilyCommand : ICommand
         return "Позволяет настраивать начертание шрифта\n" +
                "Параметры:\n" +
                "string - название шрифта\n" +
-               $"Актуальное значение {visualizerSettings.Font.FontFamily.Name}";
+               $"Актуальное значение: {visualizerSettings.Font.FontFamily.Name}\n" +
+               "Доступные шрифты в системе: " + string.Join(", ", FontFamily.Families.Select(f => f.Name));
     }
 }

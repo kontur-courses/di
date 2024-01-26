@@ -1,27 +1,29 @@
-using TagCloud.Domain.Extensions;
 using TagCloud.Domain.Layout.Interfaces;
 using TagCloud.Domain.Layouter.Interfaces;
 using TagCloud.Domain.Settings;
+using TagCloud.Utils.Extensions;
 
 namespace TagCloud.Domain.Layouter;
 
 public class CircularCloudLayouter : ICloudLayouter
 {
+    private readonly LayoutSettings settings;
     private readonly ILayout layout;
     private readonly List<Rectangle> rectangles = new();
+    public Point Center { get; private set; }
 
     public CircularCloudLayouter(LayoutSettings settings, ILayout layout)
     {
+        this.settings = settings;
         this.layout = layout;
-        Center = new Point(settings.Dimensions.GetGreaterHalf());
     }
-
-    public Point Center { get; }
     
     public IReadOnlyCollection<Rectangle> Rectangles => rectangles;
 
     public Rectangle PutNextRectangle(Size rectangleSize)
     {
+        Center = new Point(settings.Dimensions.GetGreaterHalf());
+        
         if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
             throw new ArgumentException("Width and height of rectangle must be positive");
 

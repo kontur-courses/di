@@ -10,18 +10,18 @@ public class DrawCommand : ICommand
 {
     private readonly IVisualizer visualizer;
     private readonly IImageWorker imageWorker;
-    private readonly PathSettings pathSettings;
+    private readonly FileSettings fileSettings;
     private readonly IWordsService wordsService;
 
     public DrawCommand(
         IVisualizer visualizer, 
         IImageWorker imageWorker, 
-        PathSettings pathSettings,
+        FileSettings fileSettings,
         IWordsService wordsService)
     {
         this.visualizer = visualizer;
         this.imageWorker = imageWorker;
-        this.pathSettings = pathSettings;
+        this.fileSettings = fileSettings;
         this.wordsService = wordsService;
     }
     
@@ -29,10 +29,10 @@ public class DrawCommand : ICommand
     
     public bool Execute(string[] parameters)
     {
-        using var image = visualizer.Visualize(wordsService.GetWords(pathSettings.FileFromWithPath));
-        imageWorker.SaveImage(image, pathSettings.OutPathToFile, pathSettings.OutFileName);
+        using var image = visualizer.Visualize(wordsService.GetWords(fileSettings.FileFromWithPath));
+        imageWorker.SaveImage(image, fileSettings.OutPathToFile, fileSettings.ImageFormat, fileSettings.OutFileName);
         
-        Console.WriteLine($"Изображение было сохранено по пути {Path.GetFullPath(Path.Combine(pathSettings.OutPathToFile, pathSettings.OutFileName))}");
+        Console.WriteLine($"Изображение было сохранено по пути {Path.GetFullPath(Path.Combine(fileSettings.OutPathToFile, fileSettings.OutFileName))}");
 
         return true;
     }

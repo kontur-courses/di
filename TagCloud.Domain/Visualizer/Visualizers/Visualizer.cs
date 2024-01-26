@@ -1,9 +1,9 @@
-using TagCloud.Domain.Extensions;
 using TagCloud.Domain.Layouter.Interfaces;
 using TagCloud.Domain.Settings;
 using TagCloud.Domain.Visualizer.Interfaces;
 using TagCloud.Domain.WordEntities;
 using TagCloud.Domain.WordProcessing.Interfaces;
+using TagCloud.Utils.Extensions;
 
 namespace TagCloud.Domain.Visualizer.Visualizers;
 
@@ -71,7 +71,7 @@ public class Visualizer : IVisualizer
     {
         using var brush = new SolidBrush(settings.VisualizerSettings.Color);
         foreach (var word in words) 
-            graphics.DrawString(word.Text, word.Font, brush, word.Rectangle.RectangleF());
+            graphics.DrawString(word.Text, word.Font, brush, word.Rectangle.ToRectangleF());
     }
 
 }

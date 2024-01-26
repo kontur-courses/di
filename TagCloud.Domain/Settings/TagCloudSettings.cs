@@ -2,14 +2,14 @@ namespace TagCloud.Domain.Settings;
 
 public class TagCloudSettings
 {
-    public TagCloudSettings(LayoutSettings layoutSettings, PathSettings pathSettings, VisualizerSettings visualizerSettings)
+    public TagCloudSettings(LayoutSettings layoutSettings, FileSettings fileSettings, VisualizerSettings visualizerSettings)
     {
         LayoutSettings = layoutSettings;
-        PathSettings = pathSettings;
+        FileSettings = fileSettings;
         VisualizerSettings = visualizerSettings;
     }
         
     public LayoutSettings LayoutSettings { get; }
-    public PathSettings PathSettings { get; }
+    public FileSettings FileSettings { get; }
     public VisualizerSettings VisualizerSettings { get; }
 }
