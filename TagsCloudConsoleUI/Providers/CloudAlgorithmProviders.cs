@@ -1,14 +1,13 @@
 ﻿using System.Drawing;
-using Autofac;
 using TagsCloudVisualization;
 
 namespace TagsCloudConsoleUI.Providers;
 
 public static class CloudAlgorithmProviders
 {
-    public static readonly IReadOnlyDictionary<string, Action<ContainerBuilder>> RegisteredProviders = 
-        new Dictionary<string, Action<ContainerBuilder>>
+    public static readonly IReadOnlyDictionary<string, ICloudLayouter> RegisteredProviders = 
+        new Dictionary<string, ICloudLayouter>
     {
-        {"Circular", builder => builder.RegisterInstance(new CircularCloudLayouter(Point.Empty)).As<ICloudLayouter>().SingleInstance()}
+        {"Circular", new CircularCloudLayouter(Point.Empty)}
     };
 }

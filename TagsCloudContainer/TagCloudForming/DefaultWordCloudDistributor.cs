@@ -1,5 +1,5 @@
-﻿using TagsCloudContainer.Common;
-using TagsCloudContainer.DrawingOptions;
+﻿using TagsCloudContainer.BuildingOptions;
+using TagsCloudContainer.Common;
 using TagsCloudContainer.Utils;
 using TagsCloudContainer.WordProcessing.WordGrouping;
 using TagsCloudVisualization;
@@ -10,14 +10,14 @@ public class DefaultWordCloudDistributor : IWordCloudDistributorProvider
 {
     private readonly Dictionary<string, int> _words;
     private readonly ICloudLayouter _cloudLayouter;
-    private readonly Options _options;
+    private readonly DrawingOptions _drawingOptions;
 
-    public DefaultWordCloudDistributor(IProcessedWordProvider processedWord, ICloudLayouter cloudLayouter,
-        IOptionsProvider optionsProvider)
+    public DefaultWordCloudDistributor(IProcessedWordProvider processedWord, ICommonOptionsProvider commonOptionsProvider,
+        IDrawingOptionsProvider drawingOptionsProvider)
     {
         _words = processedWord.ProcessedWords;
-        _cloudLayouter = cloudLayouter;
-        _options = optionsProvider.Options;
+        _cloudLayouter = commonOptionsProvider.CommonOptions.CloudLayouter;
+        _drawingOptions = drawingOptionsProvider.DrawingOptions;
     }
 
     public IReadOnlyDictionary<string, WordData> DistributedWords => DistributeWords().AsReadOnly();
@@ -29,7 +29,7 @@ public class DefaultWordCloudDistributor : IWordCloudDistributorProvider
         foreach (var (word, frequency) in _words)
         {
             var newWord = new WordData(_cloudLayouter.PutNextRectangle(DrawingUtils.GetStringSize(word, frequency,
-                _options.FrequencyScaling, _options.Font)), frequency);
+                _drawingOptions.FrequencyScaling, _drawingOptions.Font)), frequency);
             distributed.Add(word, newWord);
         }
         

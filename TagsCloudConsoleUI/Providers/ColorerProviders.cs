@@ -5,10 +5,10 @@ namespace TagsCloudConsoleUI.Providers;
 
 public static class ColorerProviders
 {
-    public static readonly IReadOnlyDictionary<string, Action<ContainerBuilder>> RegisteredProviders = 
-        new Dictionary<string, Action<ContainerBuilder>>
+    public static readonly IReadOnlyDictionary<string, IWordColorer> RegisteredProviders = 
+        new Dictionary<string, IWordColorer>
     {
-        {"Random", builder => builder.RegisterType<RandomWordColorer>().As<IWordColorer>().SingleInstance()},
-        {"Bicolor", builder => builder.RegisterInstance(new BicolorColorer()).As<IWordColorer>().SingleInstance()}
+        {"Random", new RandomWordColorer()},
+        {"Bicolor", new BicolorColorer()}
     };
 }

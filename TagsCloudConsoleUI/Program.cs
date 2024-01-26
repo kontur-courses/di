@@ -1,4 +1,6 @@
-﻿namespace TagsCloudConsoleUI;
+﻿using TagsCloudContainer.Common;
+
+namespace TagsCloudConsoleUI;
 
 public static class Program
 {
@@ -6,7 +8,7 @@ public static class Program
     {
         try
         {
-            new ConsoleUi().StartUi();
+            new ConsoleUi(DiContainerBuilder.BuildContainer()).StartUi();
         }
         catch (Exception e)
         {
