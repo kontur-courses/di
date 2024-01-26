@@ -23,10 +23,10 @@ public class TagsCloudSettings
         PointerAngleConst = 1;
     }
 
-    [Browsable(false)] public CloudSettings CloudSettings { get; }
-    [Browsable(false)] public TagSettings TagSettings { get; }
-    [Browsable(false)] public SpiralPointerSettings SpiralPointerSettings { get; }
-    [Browsable(false)] public TextSettings TextSettings { get; private set; }
+    [Browsable(false)] public CloudSettings CloudSettings { get; } = null!;
+    [Browsable(false)] public TagSettings TagSettings { get; } = null!;
+    [Browsable(false)] public SpiralPointerSettings SpiralPointerSettings { get; } = null!;
+    [Browsable(false)] public TextSettings TextSettings { get; private set; } = null!;
 
     public int TagFontSize
     {
