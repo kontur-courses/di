@@ -1,8 +1,8 @@
 namespace TagCloud.Domain.WordEntities;
 
-public class WordWithInfo : WordWithCount
+public class WordToVisualize : WordWithCount
 {
-    public WordWithInfo(WordWithCount word, Rectangle rectangle, Font font)
+    public WordToVisualize(WordWithCount word, Rectangle rectangle, Font font)
      : base(word.Text, word.Count)
     {
         Rectangle = rectangle;

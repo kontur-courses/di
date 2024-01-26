@@ -9,7 +9,7 @@ public class LayoutSettings
         get => dimensions;
         set
         {
-            if (value.Width <= 100 || value.Height <= 100)
+            if (value.Width < 100 || value.Height < 100)
                 throw new ArgumentException("Размеры должны быть не менне 100x100");
             
             dimensions = value;

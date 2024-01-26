@@ -4,5 +4,5 @@ namespace TagCloud.Domain.WordProcessing.Interfaces;
 
 public interface IWordProcessor
 {
-    public WordsWithCount GetClearWords(IEnumerable<string> words);
+    public WordsWithCount GetClearWordsWithCount(IEnumerable<string> words);
 }

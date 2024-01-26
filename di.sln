@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Utils", "TagCloud.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.ConsoleApp", "TagCloud.ConsoleApp\TagCloud.ConsoleApp.csproj", "{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Tests", "TagCloud.Tests\TagCloud.Tests.csproj", "{3A763004-FE67-4118-8729-8E4B26CE9535}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD494E88-894F-4953-8EE8-57EC9F5DE0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A763004-FE67-4118-8729-8E4B26CE9535}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -17,8 +17,6 @@ public class CircularCloudLayouter : ICloudLayouter
         this.settings = settings;
         this.layout = layout;
     }
-    
-    public IReadOnlyCollection<Rectangle> Rectangles => rectangles;
 
     public Rectangle PutNextRectangle(Size rectangleSize)
     {

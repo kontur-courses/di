@@ -15,7 +15,7 @@ public class WordProcessor : IWordProcessor
         this.tagCloudSettings = tagCloudSettings;
     }
     
-    public WordsWithCount GetClearWords(IEnumerable<string> words)
+    public WordsWithCount GetClearWordsWithCount(IEnumerable<string> words)
     {
         var (clearWords, minCount, maxCount) = ExtractWords(words);
 

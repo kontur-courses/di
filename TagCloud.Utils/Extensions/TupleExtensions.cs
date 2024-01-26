@@ -13,7 +13,8 @@ public static class TupleExtensions
         }
         catch (Exception e)
         {
-            throw new ArgumentException("Color scheme must be in range [0, 255]");
+            color = default;
+            return false;
         }
     }
 }

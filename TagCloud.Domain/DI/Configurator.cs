@@ -63,7 +63,7 @@ public class Configurator
     private static void ConfigureVisualizer(ContainerBuilder builder)
     {
         builder
-            .RegisterType<Visualizer.Visualizers.Visualizer>()
+            .RegisterType<Visualizer.Visualizers.TagCloudVisualizer>()
             .As<IVisualizer>()
             .SingleInstance();
     }

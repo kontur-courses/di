@@ -7,13 +7,13 @@ using TagCloud.Utils.Extensions;
 
 namespace TagCloud.Domain.Visualizer.Visualizers;
 
-public class Visualizer : IVisualizer
+public class TagCloudVisualizer : IVisualizer
 {
     private readonly IWordProcessor wordProcessor;
     private readonly ICloudLayouter cloudLayouter;
     private readonly TagCloudSettings settings;
 
-    public Visualizer(
+    public TagCloudVisualizer(
         IWordProcessor wordProcessor,
         ICloudLayouter cloudLayouter,
         TagCloudSettings settings)
@@ -25,7 +25,7 @@ public class Visualizer : IVisualizer
 
     public Image Visualize(IEnumerable<string> words)
     {
-        var clearWords = wordProcessor.GetClearWords(words);
+        var clearWords = wordProcessor.GetClearWordsWithCount(words);
         var bitmap = new Bitmap(settings.LayoutSettings.Dimensions.Width,
             settings.LayoutSettings.Dimensions.Height);
         using var graphics = Graphics.FromImage(bitmap);
@@ -38,9 +38,9 @@ public class Visualizer : IVisualizer
         return bitmap;
     }
 
-    private WordWithInfo[] GetWordsWithInfo(WordsWithCount clearWords, Graphics graphics)
+    private WordToVisualize[] GetWordsWithInfo(WordsWithCount clearWords, Graphics graphics)
     {
-        var wordsWithInfo = new WordWithInfo[clearWords.Words.Length]; 
+        var wordsWithInfo = new WordToVisualize[clearWords.Words.Length]; 
 
         for (var i = 0; i < clearWords.Words.Length; i++)
         {
@@ -55,7 +55,7 @@ public class Visualizer : IVisualizer
                 (int)Math.Ceiling(size.Width),
                 (int)Math.Ceiling(size.Height)));
             
-            wordsWithInfo[i] = new WordWithInfo(word, rect, font);
+            wordsWithInfo[i] = new WordToVisualize(word, rect, font);
         }
 
         return wordsWithInfo;
@@ -67,7 +67,7 @@ public class Visualizer : IVisualizer
         graphics.FillRectangle(brush, graphics.VisibleClipBounds);
     }
 
-    private void DrawWordsWithInfo(WordWithInfo[] words, Graphics graphics)
+    private void DrawWordsWithInfo(WordToVisualize[] words, Graphics graphics)
     {
         using var brush = new SolidBrush(settings.VisualizerSettings.Color);
         foreach (var word in words) 
