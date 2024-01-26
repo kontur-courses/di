@@ -41,6 +41,11 @@ public class Configurator
             .RegisterType<VisualizerSettings>()
             .AsSelf()
             .SingleInstance();
+
+        builder
+            .RegisterType<WordSettings>()
+            .AsSelf()
+            .SingleInstance();
     }
 
     private static void ConfigureLayout(ContainerBuilder builder)
