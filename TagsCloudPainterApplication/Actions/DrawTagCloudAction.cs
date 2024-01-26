@@ -84,7 +84,6 @@ public class DrawTagCloudAction : IUiAction
     {
         var tags = tagsBuilder.GetTags(words);
         cloudLayouter.Reset();
-        cloudLayouter.InitializeCloud();
         cloudLayouter.PutTags(tags);
         var cloud = cloudLayouter.GetCloud();
         return cloud;
@@ -93,7 +92,6 @@ public class DrawTagCloudAction : IUiAction
     private void DrawCloud(TagsCloud cloud)
     {
         var bitmap = cloudDrawer.DrawCloud(cloud, imageSettings.Width, imageSettings.Height);
-        imageHolder.RecreateImage(imageSettings);
 
         using (var graphics = imageHolder.StartDrawing())
         {

@@ -13,7 +13,6 @@ public partial class MainForm : Form
         mainMenu.Items.AddRange(actions.ToMenuItems());
         Controls.Add(mainMenu);
 
-        pictureBox.RecreateImage(imageSettings);
         pictureBox.Dock = DockStyle.Fill;
         Controls.Add(pictureBox);
     }

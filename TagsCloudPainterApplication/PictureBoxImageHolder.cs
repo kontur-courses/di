@@ -6,16 +6,21 @@ namespace TagsCloudPainterApplication;
 
 public class PictureBoxImageHolder : PictureBox, IImageHolder
 {
+    private readonly Lazy<ImageSettings> imageSettings = null!;
+
+    public PictureBoxImageHolder(Lazy<ImageSettings> imageSettings)
+    {
+        this.imageSettings = imageSettings;
+    }
+
     public Size GetImageSize()
     {
-        FailIfNotInitialized();
-        return Image.Size;
+        return GetImage().Size;
     }
 
     public Graphics StartDrawing()
     {
-        FailIfNotInitialized();
-        return Graphics.FromImage(Image);
+        return Graphics.FromImage(GetImage());
     }
 
     public void UpdateUi()
@@ -24,20 +29,16 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
         Application.DoEvents();
     }
 
-    public void RecreateImage(ImageSettings imageSettings)
-    {
-        Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
-    }
-
     public void SaveImage(string fileName)
     {
-        FailIfNotInitialized();
-        Image.Save(fileName);
+        GetImage().Save(fileName);
     }
 
-    private void FailIfNotInitialized()
+    public Image GetImage()
     {
         if (Image == null)
-            throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
+            Image = new Bitmap(imageSettings.Value.Width, imageSettings.Value.Height, PixelFormat.Format24bppRgb);
+
+        return Image;
     }
 }

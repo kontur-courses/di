@@ -7,39 +7,39 @@ namespace TagsCloudPainter.CloudLayouter;
 
 public class TagsCloudLayouter : ICloudLayouter
 {
-    private readonly IFormPointer formPointer;
+    private readonly IFormPointer formPointer = null!;
     private readonly TagSettings tagSettings;
+    private readonly Lazy<CloudSettings> cloudSettings;
     private TagsCloud cloud;
-    private readonly CloudSettings cloudSettings;
+    private TagsCloud Cloud 
+    {
+        get =>  cloud ??= new TagsCloud(cloudSettings.Value.CloudCenter, []);
+    }
 
-    public TagsCloudLayouter(CloudSettings cloudSettings, IFormPointer formPointer, TagSettings tagSettings)
+    public TagsCloudLayouter(Lazy<CloudSettings> cloudSettings, IFormPointer formPointer, TagSettings tagSettings)
     {
         this.cloudSettings = cloudSettings;
-        this.formPointer = formPointer;
+        this.formPointer = null;
         this.tagSettings = tagSettings;
     }
 
     public Rectangle PutNextTag(Tag tag)
     {
-        FailIfCloudNotInitialized();
-
         var rectangleSize = Utils.Utils.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
         if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
             throw new ArgumentException("either width or height of rectangle size is not possitive");
 
         var nextRectangle = Utils.Utils.GetRectangleFromCenter(formPointer.GetNextPoint(), rectangleSize);
-        while (cloud.Tags.Values.Any(rectangle => rectangle.IntersectsWith(nextRectangle)))
+        while (Cloud.Tags.Values.Any(rectangle => rectangle.IntersectsWith(nextRectangle)))
             nextRectangle = Utils.Utils.GetRectangleFromCenter(formPointer.GetNextPoint(), rectangleSize);
 
-        cloud.AddTag(tag, nextRectangle);
+        Cloud.AddTag(tag, nextRectangle);
 
         return nextRectangle;
     }
 
     public void PutTags(List<Tag> tags)
     {
-        FailIfCloudNotInitialized();
-
         if (tags.Count == 0)
             throw new ArgumentException("пустые размеры");
         foreach (var tag in tags)
@@ -48,22 +48,11 @@ public class TagsCloudLayouter : ICloudLayouter
 
     public TagsCloud GetCloud()
     {
-        return new TagsCloud(cloud.Center, cloud.Tags);
-    }
-
-    public void InitializeCloud()
-    {
-        cloud = new TagsCloud(cloudSettings.CloudCenter, []);
+        return new TagsCloud(Cloud.Center, Cloud.Tags);
     }
 
     public void Reset()
     {
         formPointer.Reset();
-    }
-
-    public void FailIfCloudNotInitialized()
-    {
-        if (cloud is null)
-            throw new InvalidOperationException("Initialize cloud before other method call!");
     }
 }
