@@ -12,7 +12,7 @@ public class LayoutTests
     [SetUp]
     public void SetUp()
     {
-        var layoutFunction = new Spiral(random.Next(1, 25), random.NextSingle());
+        var layoutFunction = new SpiralPointGenerator(random.Next(1, 25), random.NextSingle());
         var screenCenter = new PointF((float)WindowWidth / 2, (float)WindowHeight / 2);
         layout = new Layout(layoutFunction, screenCenter);
 
@@ -29,7 +29,7 @@ public class LayoutTests
     public void PutNextRectangle_ShouldNot_SkipRectangles()
     {
         var rectCount = random.Next(1, 250);
-        PutNRectanglesInLayout(rectCount);
+        PutRectanglesInLayout(rectCount);
 
         layout.RectangleCount.Should().Be(rectCount);
     }
@@ -38,14 +38,14 @@ public class LayoutTests
     public void PlacedRectangles_ShouldNot_HaveIntersections()
     {
         var rectCount = random.Next(1, 250);
-        PutNRectanglesInLayout(rectCount);
+        PutRectanglesInLayout(rectCount);
 
         CurrentRectanglesHaveIntersections().Should().Be(false);
     }
 
-    private void PutNRectanglesInLayout(int amount)
+    private void PutRectanglesInLayout(int rectanglesCount)
     {
-        for (var i = 0; i < amount; i++)
+        for (var i = 0; i < rectanglesCount; i++)
         {
             var size = new SizeF(random.Next(1, 250), random.Next(1, 250));
             currentRectangles.Add(layout.PutNextRectangle(size));
@@ -54,10 +54,8 @@ public class LayoutTests
 
     private bool CurrentRectanglesHaveIntersections()
     {
-        return (from current in currentRectangles
-            from another in currentRectangles
-            where current != another
-            where current.IntersectsWith(another)
-            select current).Any();
+        return currentRectangles.SelectMany(
+            curr => currentRectangles.Where(other => curr != other && curr.IntersectsWith(other)),
+            (current, _) => current).Any();
     }
 }

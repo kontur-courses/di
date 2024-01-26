@@ -4,6 +4,6 @@ namespace TagsCloud.Contracts;
 
 public interface IImageOptions
 {
-    public Color BackgroundColor { get; set; }
-    public Size ImageSize { get; set; }
+    Color BackgroundColor { get; set; }
+    Size  ImageSize       { get; set; }
 }

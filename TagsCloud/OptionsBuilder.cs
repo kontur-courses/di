@@ -33,20 +33,20 @@ public class OptionsBuilder
 
     public OptionsBuilder SetCastPolitics(bool castWordsToInfinitive)
     {
-        options.CastWordsToInfinitive = castWordsToInfinitive;
+        options.ToInfinitive = castWordsToInfinitive;
         return this;
     }
 
-    public OptionsBuilder SetImportantLanguageParts(string[] parts)
+    public OptionsBuilder SetImportantLanguageParts(HashSet<string> parts)
     {
         if (parts.Any(part => !languageParts.Contains(part)))
             throw new ArgumentException("Unknown language part!");
 
-        options.ImportantLanguageParts = parts;
+        options.LanguageParts = parts;
         return this;
     }
 
-    public OptionsBuilder SetExcludedWords(string[] excludedWords)
+    public OptionsBuilder SetExcludedWords(HashSet<string> excludedWords)
     {
         options.ExcludedWords = excludedWords;
         return this;
@@ -70,7 +70,10 @@ public class OptionsBuilder
         var colorizer = ColorizerHelper.GetAppropriateColorizer(colors, strategy);
 
         if (colorizer == null)
-            throw new ArgumentException("Unknown colorizer type! Candidates are: OneVsRest, AllRandom");
+        {
+            var strategies = string.Join(", ", Enum.GetNames<ColoringStrategy>());
+            throw new ArgumentException($"Unknown colorizer type! Got {strategy}, but candidates are: " + strategies);
+        }
 
         options.Colorizer = colorizer;
         return this;
@@ -86,8 +89,7 @@ public class OptionsBuilder
         }
         else
         {
-            using var fontStream = Assembly
-                .GetExecutingAssembly()
+            using var fontStream = Assembly.GetExecutingAssembly()
                 .GetManifestResourceStream("TagsCloud.Fonts.Vollkorn-SemiBold.ttf");
 
             collection.Add(fontStream!);

@@ -5,12 +5,12 @@ namespace TagsCloud.Colorizers;
 
 public abstract class ColorizerBase
 {
-    protected readonly Color[] colors;
+    protected readonly IList<Color> colors;
 
-    protected ColorizerBase(Color[] colors)
+    protected ColorizerBase(IList<Color> colors)
     {
         this.colors = colors;
     }
 
-    public abstract void Colorize(Dictionary<CloudTag, int> frequencyStatistics);
+    public abstract void Colorize(IDictionary<CloudTag, int> frequencyStatistics);
 }

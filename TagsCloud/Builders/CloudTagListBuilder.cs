@@ -1,26 +1,26 @@
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using TagsCloud.Contracts;
+using TagsCloud.Entities;
 using TagsCloudVisualization;
 
-namespace TagsCloud.Factories;
+namespace TagsCloud.Builders;
 
-public class CloudTagFactory : CloudTagFactoryBase
+public class CloudTagListBuilder : CloudTagListBuilderBase
 {
-    private const int minFontSize = 25;
-    private const int maxFontSize = 90;
+    private const int minFontSize = 30;
+    private const int maxFontSize = 100;
 
     private readonly Dictionary<CloudTag, int> frequencyStatistics;
 
-    public CloudTagFactory(IFactoryOptions options, List<string> words)
-        : base(options, words)
+    public CloudTagListBuilder(IFactoryOptions options, List<WordToStatus> words) : base(options, words)
     {
-        frequencyStatistics = words
+        frequencyStatistics = words.Where(word => !word.IsTrash).Select(word => word.Word)
             .GroupBy(word => new CloudTag { InnerText = word })
             .ToDictionary(group => group.Key, group => group.Count());
     }
 
-    public override CloudTagFactoryBase AdjustFonts()
+    public override CloudTagListBuilderBase AdjustFonts()
     {
         var maxFrequency = frequencyStatistics.Values.Max();
 
@@ -33,13 +33,13 @@ public class CloudTagFactory : CloudTagFactoryBase
         return this;
     }
 
-    public override CloudTagFactoryBase AdjustColors()
+    public override CloudTagListBuilderBase AdjustColors()
     {
         options.Colorizer.Colorize(frequencyStatistics);
         return this;
     }
 
-    public override CloudTagFactoryBase AdjustPositions()
+    public override CloudTagListBuilderBase AdjustPositions()
     {
         var layout = options.Layout;
 

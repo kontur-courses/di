@@ -8,18 +8,17 @@ namespace TagsCloud.Colorizers;
 [ColorizerName(ColoringStrategy.AllRandom)]
 public class AllRandomColorizer : ColorizerBase
 {
-    private readonly Random random;
+    private readonly Random random = new();
 
-    public AllRandomColorizer(Color[] colors) : base(colors)
+    public AllRandomColorizer(IList<Color> colors) : base(colors)
     {
-        random = new Random();
     }
 
-    public override void Colorize(Dictionary<CloudTag, int> frequencyStatistics)
+    public override void Colorize(IDictionary<CloudTag, int> frequencyStatistics)
     {
         foreach (var pair in frequencyStatistics)
         {
-            var index = random.Next(0, colors.Length);
+            var index = random.Next(0, colors.Count);
             pair.Key.TextColor = colors[index];
         }
     }

@@ -1,5 +1,6 @@
 using TagsCloud.Contracts;
 using TagsCloud.CustomAttributes;
+using TagsCloud.Entities;
 
 namespace TagsCloud.Filters;
 
@@ -10,20 +11,12 @@ public class ExcludedFilter : FilterBase
     {
     }
 
-    public override void Apply(List<string> words)
+    public override void Apply(List<WordToStatus> words)
     {
-        if (options.ExcludedWords.Length == 0)
+        if (options.ExcludedWords.Count == 0)
             return;
 
-        for (var i = 0; i < words.Count;)
-        {
-            if (options.ExcludedWords.Contains(words[i]))
-            {
-                words.RemoveAt(i);
-                continue;
-            }
-
-            i++;
-        }
+        foreach (var word in words.Where(word => options.ExcludedWords.Contains(word.Word)))
+            word.IsTrash = true;
     }
 }

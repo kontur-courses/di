@@ -4,8 +4,8 @@ namespace TagsCloud.Contracts;
 
 public interface IFilterOptions
 {
-    public CaseType WordsCase { get; set; }
-    public bool CastWordsToInfinitive { get; set; }
-    public string[] ImportantLanguageParts { get; set; }
-    public string[] ExcludedWords { get; set; }
+    CaseType        WordsCase     { get; set; }
+    bool            ToInfinitive  { get; set; }
+    HashSet<string> LanguageParts { get; set; }
+    HashSet<string> ExcludedWords { get; set; }
 }

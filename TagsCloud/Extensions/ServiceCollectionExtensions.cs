@@ -10,11 +10,8 @@ public static class ServiceCollectionExtensions
 {
     public static ServiceCollection AddFiltersWithOptions(this ServiceCollection collection, IFilterOptions options)
     {
-        var filters = Assembly
-            .GetExecutingAssembly()
-            .GetTypes()
-            .Where(type => type.IsClass)
-            .Where(type => type.IsSubclassOf(typeof(FilterBase)));
+        var filters = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(type => type.IsClass && type.IsSubclassOf(typeof(FilterBase)));
 
         foreach (var filterType in filters)
             collection.AddSingleton(typeof(FilterBase), filterType);

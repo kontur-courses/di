@@ -4,9 +4,9 @@ using TagsCloud.Entities;
 
 namespace TagsCloud.TextAnalysisTools;
 
-public static class TextAnalyzer
+public class TextAnalyzer
 {
-    public static IEnumerable<TextAnalysis> GetTextAnalysis(List<string> textLines)
+    public static IEnumerable<WordInfo> GetTextAnalysis(List<string> textLines)
     {
         using var process = new Process
         {
@@ -24,9 +24,9 @@ public static class TextAnalyzer
         textLines.ForEach(line => process.StandardInput.Write(line + ' '));
         process.StandardInput.Close();
 
-        var analysis = JsonSerializer.Deserialize<List<TextAnalysis>>(process.StandardOutput.ReadToEnd());
+        var analysis = JsonSerializer.Deserialize<List<WordInfo>>(process.StandardOutput.ReadToEnd());
         process.WaitForExit();
 
-        return analysis!;
+        return analysis;
     }
 }

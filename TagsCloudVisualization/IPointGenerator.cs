@@ -2,7 +2,7 @@ using SixLabors.ImageSharp;
 
 namespace TagsCloudVisualization;
 
-public interface ILayoutFunction
+public interface IPointGenerator
 {
     public PointF GetNextPoint();
 }

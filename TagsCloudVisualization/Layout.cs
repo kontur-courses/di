@@ -5,14 +5,16 @@ namespace TagsCloudVisualization;
 
 public class Layout : ILayout
 {
-    private readonly PointF center;
-    private readonly ILayoutFunction layoutFunction;
-    private readonly IList<RectangleF> placedRectangles;
+    public const float Accuracy = 1e-3f;
 
-    public Layout(ILayoutFunction layoutFunction, PointF center)
+    private readonly PointF center;
+    private readonly IList<RectangleF> placedRectangles;
+    private readonly IPointGenerator pointGenerator;
+
+    public Layout(IPointGenerator pointGenerator, PointF center)
     {
         this.center = center;
-        this.layoutFunction = layoutFunction;
+        this.pointGenerator = pointGenerator;
         placedRectangles = new List<RectangleF>();
     }
 
@@ -30,9 +32,9 @@ public class Layout : ILayout
     private RectangleF GetMovedToCenterRectangle(RectangleF rectangle)
     {
         var currentRect = rectangle;
+        var isFirstRectangle = placedRectangles.Count == 0;
 
-        // Skip 1-st rectangle, because it's already in (0, 0) point.
-        if (placedRectangles.Count == 0)
+        if (isFirstRectangle)
             return currentRect;
 
         var toCenter = new Vector2(center.X - currentRect.X, center.Y - currentRect.Y);
@@ -57,7 +59,7 @@ public class Layout : ILayout
     {
         while (true)
         {
-            var tempPoint = layoutFunction.GetNextPoint().Center(center);
+            var tempPoint = pointGenerator.GetNextPoint().PlaceRelativeToCenter(center);
 
             var common = new RectangleF(tempPoint, rectSize);
             var rotated = common with { Width = common.Height, Height = common.Width };
@@ -71,7 +73,7 @@ public class Layout : ILayout
             if (!Intersects(common))
                 return common;
 
-            if (Math.Abs(rotated.Width - rotated.Height) > 1e-3 && !Intersects(rotated))
+            if (rotated.Width.IsEqualTo(rotated.Height) && !Intersects(rotated))
                 return rotated;
         }
     }

@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
+using TagsCloud.Builders;
 using TagsCloud.Contracts;
 using TagsCloud.Conveyors;
+using TagsCloud.Entities;
 using TagsCloud.Extensions;
-using TagsCloud.Factories;
 using TagsCloud.Helpers;
 using TagsCloudVisualization;
 
@@ -19,26 +20,23 @@ public class TagCloudFacade
 
     public List<CloudTag> GenerateCloudTagList(string filePath)
     {
-        var lines = FileHelper.GetLinesFromFile(filePath);
-        StartFilterConveyor(lines);
+        var words = FileHelper.GetLinesFromFile(filePath).Select(word => new WordToStatus { Word = word }).ToList();
 
-        var factory = new CloudTagFactory(options, lines);
+        StartFilterConveyor(words);
+        var builder = new CloudTagListBuilder(options, words);
 
-        return CloudTagCreator.CreateCloudTagList(factory);
+        return CloudTagCreator.CreateCloudTagList(builder);
     }
 
     public void GenerateTagCloudImage(List<CloudTag> cloudTags, string filename)
     {
-        new VisualizationBuilder(options.ImageSize, options.BackgroundColor)
-            .CreateImageFrom(cloudTags)
+        new VisualizationBuilder(options.ImageSize, options.BackgroundColor).CreateImageFrom(cloudTags)
             .SaveAs(filename);
     }
 
-    private void StartFilterConveyor(List<string> words)
+    private void StartFilterConveyor(List<WordToStatus> words)
     {
-        var provider = new ServiceCollection()
-            .AddFiltersWithOptions(options)
-            .BuildServiceProvider();
+        var provider = new ServiceCollection().AddFiltersWithOptions(options).BuildServiceProvider();
 
         var filterConveyor = provider.GetService<FilterConveyor>();
         filterConveyor!.ApplyFilters(words);

@@ -8,13 +8,13 @@ namespace TagsCloud.Colorizers;
 [ColorizerName(ColoringStrategy.OneVsRest)]
 public class OneVsRestColorizer : ColorizerBase
 {
-    public OneVsRestColorizer(Color[] colors) : base(colors)
+    public OneVsRestColorizer(IList<Color> colors) : base(colors)
     {
-        if (colors.Length != 2)
+        if (colors.Count != 2)
             throw new ArgumentException("Must be exactly 2 colors!");
     }
 
-    public override void Colorize(Dictionary<CloudTag, int> frequencyStatistics)
+    public override void Colorize(IDictionary<CloudTag, int> frequencyStatistics)
     {
         var maxFrequency = frequencyStatistics.Values.Max();
 

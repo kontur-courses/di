@@ -6,7 +6,7 @@ namespace TagsCloud.Helpers;
 
 public static class FileHelper
 {
-    public static readonly char[] Separators = { ' ', '=', ';', ',', '.', ':', '!', '?' };
+    private static readonly char[] separators = { ' ', '=', ';', ',', '.', ':', '!', '?' };
 
     public static List<string> GetLinesFromFile(string filename)
     {
@@ -16,22 +16,14 @@ public static class FileHelper
         if (reader == null)
             throw new NotSupportedException("Unknown file extension!");
 
-        var lines = reader
-            .ReadContent(filename)
-            .Where(line => !string.IsNullOrWhiteSpace(line))
-            .ToList();
+        var lines = reader.ReadContent(filename).Where(line => !string.IsNullOrWhiteSpace(line)).ToList();
 
         return RemoveExcess(lines);
     }
 
-    private static IFileReader? FindAppropriateReader(string fileExtension)
+    private static IFileReader FindAppropriateReader(string fileExtension)
     {
-        var readerType = Assembly
-            .GetExecutingAssembly()
-            .GetTypes()
-            .Where(type => type.IsClass)
-            .Where(type => type.GetInterfaces().Any(inter => inter == typeof(IFileReader)))
-            .Where(type => Attribute.IsDefined(type, typeof(SupportedExtensionAttribute)))
+        var readerType = Assembly.GetExecutingAssembly().GetTypes().Where(IsCorrectFileReaderType)
             .FirstOrDefault(type =>
                 type.GetCustomAttribute<SupportedExtensionAttribute>()!.FileExtension.Equals(fileExtension));
 
@@ -41,15 +33,16 @@ public static class FileHelper
         return (Activator.CreateInstance(readerType) as IFileReader)!;
     }
 
+    private static bool IsCorrectFileReaderType(Type readerType)
+    {
+        return readerType.IsClass && readerType.GetInterfaces().Any(inter => inter == typeof(IFileReader)) &&
+               Attribute.IsDefined(readerType, typeof(SupportedExtensionAttribute));
+    }
+
     private static List<string> RemoveExcess(List<string> lines)
     {
         for (var i = 0; i < lines.Count; i++)
-        {
-            if (!Separators.Any(sep => lines[i].Contains(sep)))
-                continue;
-
-            lines[i] = lines[i].Split(Separators, StringSplitOptions.RemoveEmptyEntries)[0];
-        }
+            lines[i] = lines[i].Split(separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
         return lines;
     }

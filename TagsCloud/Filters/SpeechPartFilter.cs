@@ -1,7 +1,6 @@
 using TagsCloud.Contracts;
 using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
-using TagsCloud.Helpers;
 using TagsCloud.TextAnalysisTools;
 
 namespace TagsCloud.Filters;
@@ -13,37 +12,31 @@ public class SpeechPartFilter : FilterBase
     {
     }
 
-    public override void Apply(List<string> words)
+    public override void Apply(List<WordToStatus> words)
     {
-        var analysis = TextAnalyzer.GetTextAnalysis(words).ToList();
+        var rawWords = words.Select(word => word.Word).ToList();
+        var analyses = TextAnalyzer.GetTextAnalysis(rawWords).ToList();
 
-        for (int i = 0, j = 0; i < analysis.Count; i++)
+        for (var i = 0; i < analyses.Count; i++)
         {
-            string? finalWord = null;
-            var analysisItem = analysis[i];
+            string finalWord;
+            var wordInfo = analyses[i];
 
-            // If english word appeared in text.
-            if (analysisItem.AnalysisItems.Count == 0)
+            if (!wordInfo.IsRussian)
             {
-                finalWord = analysisItem.Text;
+                finalWord = wordInfo.InitialWord;
             }
             else
             {
-                var wordAnalysis = analysisItem.AnalysisItems.First();
-                var actualPart = wordAnalysis.Grammar
-                    .Split(FileHelper.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
+                var wordAnalysis = wordInfo.Analyses.First();
 
-                if (options.ImportantLanguageParts.Contains(actualPart))
-                    finalWord = options.CastWordsToInfinitive ? wordAnalysis.Lexico : analysisItem.Text;
+                if (!options.LanguageParts.Contains(wordAnalysis.LanguagePart))
+                    words[i].IsTrash = true;
+
+                finalWord = options.ToInfinitive ? wordAnalysis.Infinitive : wordInfo.InitialWord;
             }
 
-            if (finalWord == null)
-            {
-                words.RemoveAt(j);
-                continue;
-            }
-
-            words[j++] = options.WordsCase == CaseType.Lower ? finalWord.ToLower() : finalWord.ToUpper();
+            words[i].Word = options.WordsCase == CaseType.Lower ? finalWord.ToLower() : finalWord.ToUpper();
         }
     }
 }

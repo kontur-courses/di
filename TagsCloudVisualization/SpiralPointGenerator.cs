@@ -2,12 +2,12 @@ using SixLabors.ImageSharp;
 
 namespace TagsCloudVisualization;
 
-public class Spiral : ILayoutFunction
+public class SpiralPointGenerator : IPointGenerator
 {
     private readonly float distanceDelta, angleDelta;
     private float currentAngle;
 
-    public Spiral(float distanceDelta, float angleDelta)
+    public SpiralPointGenerator(float distanceDelta, float angleDelta)
     {
         this.distanceDelta = distanceDelta;
         this.angleDelta = angleDelta;
