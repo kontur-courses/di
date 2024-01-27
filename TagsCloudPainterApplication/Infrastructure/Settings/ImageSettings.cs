@@ -1,7 +1,14 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure.Settings;
+﻿using TagsCloudPainterApplication.Properties;
+
+namespace TagsCloudPainterApplication.Infrastructure.Settings;
 
 public class ImageSettings
 {
-    public int Width { get; set; } = Properties.Settings.Default.imageWidth;
-    public int Height { get; set; } = Properties.Settings.Default.imageHeight;
+    public ImageSettings(AppSettings settings) 
+    {
+        Width = settings.imageWidth;
+        Height = settings.imageHeight;
+    }
+    public int Width { get; set; }
+    public int Height { get; set; }
 }

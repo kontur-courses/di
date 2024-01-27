@@ -1,13 +1,14 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure.Settings;
+﻿using TagsCloudPainterApplication.Properties;
+
+namespace TagsCloudPainterApplication.Infrastructure.Settings;
 
 public class FilesSourceSettings
 {
     private string boringTextFilePath;
 
-    public FilesSourceSettings()
+    public FilesSourceSettings(AppSettings settings)
     {
-        BoringTextFilePath = @$"{Environment.CurrentDirectory}..\..\..\..\" +
-                             Properties.Settings.Default.boringTextFilePath;
+        BoringTextFilePath = @$"{Environment.CurrentDirectory}..\..\..\..\" + settings.boringTextFilePath;
     }
 
     public string BoringTextFilePath

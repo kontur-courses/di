@@ -9,6 +9,7 @@ using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication.Actions;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Properties;
 
 namespace TagsCloudPainterApplication;
 
@@ -45,6 +46,7 @@ public class ApplicationModule : Module
         builder.RegisterType<FileSourceSettingsAction>().As<IUiAction>();
         builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
         builder.RegisterType<DrawTagCloudAction>().As<IUiAction>();
+        builder.RegisterType<AppSettings>().AsSelf();
         builder.RegisterType<MainForm>().AsSelf();
     }
 }

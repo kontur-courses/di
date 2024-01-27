@@ -15,11 +15,11 @@ public class TagsCloudSettings
         TagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
         SpiralPointerSettings = spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
         TextSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
-        TagFontSize = Properties.Settings.Default.tagFontSize;
-        TagFontName = Properties.Settings.Default.tagFontName;
-        PointerStep = Properties.Settings.Default.pointerStep;
-        PointerRadiusConst = Properties.Settings.Default.pointerRadiusConst;
-        PointerAngleConst = Properties.Settings.Default.pointerAngleConst;
+        TagFontSize = Properties.AppSettings.Default.tagFontSize;
+        TagFontName = Properties.AppSettings.Default.tagFontName;
+        PointerStep = Properties.AppSettings.Default.pointerStep;
+        PointerRadiusConst = Properties.AppSettings.Default.pointerRadiusConst;
+        PointerAngleConst = Properties.AppSettings.Default.pointerAngleConst;
     }
 
     [Browsable(false)] public CloudSettings CloudSettings { get; }
