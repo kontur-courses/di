@@ -4,7 +4,14 @@ namespace TagsCloudVisualization.FileReaders;
 
 public class DocReader : IFileReader
 {
-    public string ReadText(string path)
+    private readonly string path;
+
+    public DocReader(string path)
+    {
+        this.path = path;
+    }
+
+    public string ReadText()
     {
         var doc = new Document();
         doc.LoadFromFile(path);

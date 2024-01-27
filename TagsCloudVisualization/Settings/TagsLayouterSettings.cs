@@ -2,17 +2,15 @@
 
 namespace TagsCloudVisualization.Settings;
 
-public class FontSettings
+public class TagsLayouterSettings
 {
     public FontFamily FontFamily { get; }
-    public string Color { get; }
     public int MinSize { get; }
     public int MaxSize { get; }
 
-    public FontSettings(string font, string color, int minSize, int maxSize) 
+    public TagsLayouterSettings(string font, int minSize, int maxSize) 
     {
         FontFamily = GetFontFamily(font);
-        Color = color;
         MinSize = minSize;
         MaxSize = maxSize;
     }

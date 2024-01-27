@@ -1,9 +1,7 @@
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using System.Drawing;
 using TagsCloudVisualization.CloudLayouters;
-using TagsCloudVisualization.ImageSavers;
-using TagsCloudVisualization.Visualizers;
 using TagsCloudVisualization.PointCreators;
 using TagsCloudVisualization.Settings;
 
@@ -13,22 +11,22 @@ namespace TagsCloudVisualizationTests;
 public class CircularCloudLayouterTests
 {
     private Point center = new(250, 250);
-    private ImageSettings imageSettings = new ImageSettings(500, 500, "red");
+    private ImageSettings imageSettings = new ImageSettings(500, 500);
     private SpiralSettings spiralSettings = new SpiralSettings(0.05, 0.1);
-    private IPointCreator pointCreator;
     private CircularCloudLayouter sut;
+    private IPointCreator pointCreator;
 
     [SetUp]
     public void SetUp()
     {
         pointCreator = new Spiral(imageSettings, spiralSettings);
-        sut = new CircularCloudLayouter(imageSettings, pointCreator);
+        sut = new CircularCloudLayouter(pointCreator);
     }
 
     [Test]
     public void Constructor_NotTrows()
     {
-        var action = () => new CircularCloudLayouter(imageSettings, pointCreator);
+        var action = () => new CircularCloudLayouter(pointCreator);
         action.Should().NotThrow();
     }
 
@@ -98,23 +96,6 @@ public class CircularCloudLayouterTests
 
         HasIntersectedRectangles(sut.Rectangles).Should().BeFalse();
     }
-
-    /*[TearDown]
-    public void SaveImageWhenTestFails()
-    {
-        if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
-        {
-            var saver = new ImageSaver();
-            var pathToTestsFailsImages = @"..\..\..\FailsTests";
-            if (!Directory.Exists(pathToTestsFailsImages))
-            {
-                Directory.CreateDirectory(pathToTestsFailsImages);
-            }
-            var image = Visualizer.Visualize(sut.Rectangles, 500, 500);
-            var fileName = $"{TestContext.CurrentContext.Test.Name}.png";
-            saver.SaveImage(image, fileName, pathToTestsFailsImages);
-        }
-    }*/
 
     private bool HasIntersectedRectangles(IList<Rectangle> rectangles)
     {

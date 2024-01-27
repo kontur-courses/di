@@ -6,9 +6,9 @@ namespace TagsCloudVisualization.ImageSavers;
 
 public class ImageSaver : IImageSaver
 {
-    private readonly FileSettings settings;
+    private readonly ImageSaverSettings settings;
     
-    public ImageSaver(FileSettings fileSettings) 
+    public ImageSaver(ImageSaverSettings fileSettings) 
     {
         settings = fileSettings;
     }

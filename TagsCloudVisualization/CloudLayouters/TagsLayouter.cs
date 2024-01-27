@@ -10,9 +10,9 @@ public class TagsLayouter : ITagLayouter
     private readonly ICloudLayouter cloudLayouter;
     private readonly ITextHandler textHandler;
     private readonly Graphics graphics;
-    private readonly FontSettings fontSettings;
+    private readonly TagsLayouterSettings fontSettings;
 
-    public TagsLayouter(ICloudLayouter cloudLayouter, ITextHandler textHandler, FontSettings fontSettings) 
+    public TagsLayouter(ICloudLayouter cloudLayouter, ITextHandler textHandler, TagsLayouterSettings fontSettings) 
     {
         this.cloudLayouter = cloudLayouter;
         this.textHandler = textHandler;
@@ -32,7 +32,8 @@ public class TagsLayouter : ITagLayouter
             var fontSize = GetFontSize(minWordCount, maxWordCount, wordWithCount.Value);
             yield return new Tag(wordWithCount.Key, 
                 fontSize,
-                cloudLayouter.PutNextRectangle(GetWordSize(wordWithCount.Key, fontSize)));
+                cloudLayouter.PutNextRectangle(GetWordSize(wordWithCount.Key, fontSize)),
+                fontSettings.FontFamily);
         }
     }
 

@@ -15,7 +15,7 @@ public class SpiralTests
     [SetUp]
     public void SetUp()
     {
-        var imageSettings = new ImageSettings(20, 20, "red");
+        var imageSettings = new ImageSettings(20, 20);
         var spiralSettings = new SpiralSettings(0.1, 0.1);
         sut = new Spiral(imageSettings, spiralSettings);
     }
@@ -26,7 +26,7 @@ public class SpiralTests
     [TestCase(0.1, 0, TestName = "Constructor_DeltaRadiusZero_ThrowsArgumentException")]
     public void Constructor_IncorrectArguments_ThrowsArgumentException(double deltaAngle, double deltaRadius)
     {
-        var imageSettings = new ImageSettings(20, 20, "red");
+        var imageSettings = new ImageSettings(20, 20);
         var spiralSettings = new SpiralSettings(deltaAngle, deltaRadius);
 
         var action = () => new Spiral(imageSettings, spiralSettings);
@@ -36,7 +36,7 @@ public class SpiralTests
     [Test]
     public void Constructor_DeltaAngleAndDeltaRadiusPositive_NotThrow()
     {
-        var imageSettings = new ImageSettings(20, 20, "red");
+        var imageSettings = new ImageSettings(20, 20);
         var spiralSettings = new SpiralSettings(0.1, 0.1);
         var action = () => new Spiral(imageSettings, spiralSettings);
         action.Should().NotThrow<ArgumentException>();

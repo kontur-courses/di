@@ -9,10 +9,12 @@ public class TextHandler : ITextHandler
     private readonly IEnumerable<string> words;
     private readonly HashSet<string> boringWords;
 
-    public TextHandler(IFileReader fileReader, FileSettings settings)
+    public TextHandler(IFileReaderFactory factory, TextHandlerSettings settings)
     {
-        words = GetWords(fileReader.ReadText(settings.PathToText));
-        boringWords = GetWords(fileReader.ReadText(settings.PathToBoringWords).ToLower()).ToHashSet();
+        var wordsReader = factory.Create(settings.PathToText);
+        var boringWordsReader = factory.Create(settings.PathToBoringWords);
+        words = GetWords(wordsReader.ReadText());
+        boringWords = GetWords(boringWordsReader.ReadText().ToLower()).ToHashSet();
     }
 
     public TextHandler(string text, string boringWords)

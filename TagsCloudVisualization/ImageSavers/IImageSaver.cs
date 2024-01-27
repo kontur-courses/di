@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.ImageSavers;
 
-interface IImageSaver
+public interface IImageSaver
 {
     void SaveImage(Bitmap bitmap);
 }

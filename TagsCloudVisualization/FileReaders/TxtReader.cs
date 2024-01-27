@@ -2,7 +2,14 @@
 
 public class TxtReader : IFileReader
 {
-    public string ReadText(string path)
+    private readonly string path;
+
+    public TxtReader(string path)
+    {
+        this.path = path;
+    }
+
+    public string ReadText()
     {
         return File.ReadAllText(path);
     }
