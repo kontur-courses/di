@@ -14,17 +14,17 @@ namespace TagsCloudVisualization
         private readonly Graphics graphics;
         private readonly Image image;
         public ICollection<Rectangle> Cloud { get; private set; }
-        public TagsCloudLayouter(Point center, IPointsProvider pointsProvider, CloudDrawingSettings drawingSettings, IEnumerable<(string, int)> words)
+        public TagsCloudLayouter(Size size, IPointsProvider pointsProvider, CloudDrawingSettings drawingSettings, IEnumerable<(string, int)> words)
         {
-            if (center.X <= 0 || center.Y <= 0)
-                throw new ArgumentException("Central point coordinates should be in positive");
+            if (size.Width <= 0 || size.Height <= 0)
+                throw new ArgumentException("Size should be in positive");
 
-            this.center = center;
+            this.center = new Point(size.Width / 2, size.Height / 2);
             this.pointsProvider = pointsProvider;
             this.drawingSettings = drawingSettings;
             this.words = words;
 
-            image = new Bitmap(center.X * 2, center.Y * 2);
+            image = new Bitmap(size.Width, size.Height);
             graphics = Graphics.FromImage(image);
         }
 

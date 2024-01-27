@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Drawing;
+﻿using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.CLI;
 using TagsCloudContainer.FrequencyAnalyzers;
+using TagsCloudContainer.SettingsClasses;
 using TagsCloudContainer.TextTools;
 using TagsCloudVisualization;
 
@@ -17,29 +18,23 @@ namespace TagsCloudContainer
             var reader = serviceProvider.GetService<TextFileReader>();
             var analyzer = serviceProvider.GetService<FrequencyAnalyzer>();
 
-            if (args.Length < 1)
-            {
-                CommandLineArgs.PrintUsage();
-                return;
-            }
+            var appSettings = new AppSettings();
 
-            var settings = CommandLineArgs.CreateSettingsObject(args);
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(o => appSettings = CommandLineOptions.ParseArgs(o));
 
-            CommandLineArgs.ParseCommandLineArguments(settings.Item1, settings.Item2, args);
-
-
-            string text = reader.ReadText(settings.Item2.textFile);
+            string text = reader.ReadText(appSettings.TextFile);
 
             analyzer.Analyze(text);
 
-            var center = new Point(settings.Item1.Size.Width / 2, settings.Item1.Size.Height / 2);
+            var layouter = new TagsCloudLayouter(
+                appSettings.DrawingSettings.Size,
+                appSettings.DrawingSettings.PointsProvider,
+                appSettings.DrawingSettings,
+                analyzer.GetAnalyzedText());
 
-            var pointsProvider = new SpiralPointsProvider(center);
-
-            var layouter = new TagsCloudLayouter(center, pointsProvider, settings.Item1, analyzer.GetAnalyzedText());
-
-            layouter.ToImage().Save(settings.Item2.outImagePath);
-            Console.WriteLine("Resulting image saved to " + settings.Item2.outImagePath);
+            layouter.ToImage().Save(appSettings.OutImagePath);
+            Console.WriteLine("Resulting image saved to " + appSettings.OutImagePath);
         }
     }
 }

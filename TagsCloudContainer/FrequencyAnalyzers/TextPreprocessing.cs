@@ -3,7 +3,6 @@
     public class TextPreprocessing
     {
         private readonly HashSet<string> excludedWords = new HashSet<string>();
-        //private const string excludedWordsPath = "excludedWords.txt";
         public TextPreprocessing(string excludedWordsPath)
         {
             if (File.Exists(excludedWordsPath))

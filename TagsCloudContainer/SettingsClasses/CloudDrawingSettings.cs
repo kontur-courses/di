@@ -10,10 +10,5 @@ namespace TagsCloudContainer.SettingsClasses
         public IList<Color> Colors = new List<Color>() { Color.AliceBlue };
         public Size Size = new Size(600, 600);
         public IPointsProvider PointsProvider;
-
-        public CloudDrawingSettings()
-        {
-
-        }
     }
 }

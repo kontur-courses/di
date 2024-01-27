@@ -2,8 +2,9 @@
 {
     public class AppSettings
     {
-        public string textFile;
-
-        public string outImagePath = "cloud.png";
+        public string TextFile;
+        public string OutImagePath;
+        public string FilterFile;
+        public CloudDrawingSettings DrawingSettings;
     }
 }
