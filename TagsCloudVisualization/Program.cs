@@ -14,27 +14,36 @@ public class Program
 
     [Argument(1)] [Required] public string OutputFilePath { get; set; }
 
-    [Option("-w")] public int ImageWidth { get; set; } = 1000;
+    [Option("-w")] private int ImageWidth { get; set; } = 1000;
 
-    [Option("-h")] public int ImageHeight { get; set; } = 1000;
+    [Option("-h")] private int ImageHeight { get; set; } = 1000;
 
-    [Option("-bc")] public Color BackgroundColor { get; set; } = Color.Wheat;
+    [Option("-bc")] private Color BackgroundColor { get; set; } = Color.Wheat;
 
-    [Option("-tc")] public Color TextColor { get; set; } = Color.Black;
+    [Option("-tc")] private Color TextColor { get; set; } = Color.Black;
 
-    [Option("-ff")] public string FontFamily { get; set; }
+    [Option("-ff")] private string FontFamily { get; set; } = "Arial";
 
-    [Option("-fs")] public int FontSize { get; set; } = 50;
+    [Option("-fs")] private int FontSize { get; set; } = 50;
+
+    [Option("-if")] private ImageFormat SaveImageFormat { get; set; } = ImageFormat.Png;
+
+    [Option("-ef")] private string ExcludedWordsFile { get; set; } = "ExcludedWords.txt";
+
+    [Option("-rp")]
+    private HashSet<string> RemovedPartsOfSpeech { get; set; } = new()
+        { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
 
     private void OnExecute()
     {
         var services = new ServiceCollection();
-        services.AddTransient<Font>(x => new Font(FontFamily, FontSize, FontStyle.Regular));
+        services.AddTransient<Font>(x => new Font(FontFamily, FontSize));
         services.AddTransient<Palette>(x => new Palette(TextColor, BackgroundColor));
         services.AddTransient<IPointGenerator, SpiralPointGenerator>();
-        services.AddTransient<IDullWordChecker, NoWordsDullChecker>();
-        services.AddTransient<IInterestingWordsParser, InterestingWordsParser>();
+        services.AddTransient<IDullWordChecker>(x =>
+            new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
+        services.AddTransient<IInterestingWordsParser, MystemWordsParser>();
         services.AddTransient<IRectangleLayouter, RectangleLayouter>();
         services.AddTransient<LayoutDrawer>();
 
@@ -43,6 +52,6 @@ public class Program
         var layoutDrawer = provider.GetRequiredService<LayoutDrawer>();
         layoutDrawer
             .CreateLayoutImageFromFile(InputFilePath, new Size(ImageWidth, ImageHeight))
-            .SaveImage(OutputFilePath, ImageFormat.Png);
+            .SaveImage(OutputFilePath, SaveImageFormat);
     }
 }

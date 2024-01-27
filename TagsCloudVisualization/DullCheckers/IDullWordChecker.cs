@@ -2,5 +2,5 @@
 
 public interface IDullWordChecker
 {
-    public bool Check(string word);
+    public bool Check(WordAnalysis word);
 }

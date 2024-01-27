@@ -24,11 +24,17 @@
     <None Update="WordDictionaries\en-us.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TextSamples\TestText.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="TextSamples\RuWords.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TextSamples\LoremText.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="mystem.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TextSamples\RuText.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExcludedWords.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
