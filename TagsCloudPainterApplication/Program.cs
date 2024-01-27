@@ -1,4 +1,6 @@
 using Autofac;
+using Autofac.Core;
+using Autofac.Core.Registration;
 using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Drawer;
 using TagsCloudPainter.FileReader;
@@ -23,30 +25,45 @@ internal static class Program
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         var builder = new ContainerBuilder();
+        builder.RegisterModule(new TagsCloudPainterModule());
+        builder.RegisterModule(new ApplicationModule());
+        var container = builder.Build();
+        Application.Run(container.Resolve<MainForm>());
+    }
+}
 
+public class ApplicationModule: Module
+{
+    protected override void Load(ContainerBuilder builder)
+    {
         builder.RegisterType<Palette>().AsSelf().SingleInstance();
         builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
-        builder.RegisterType<TextSettings>().AsSelf().SingleInstance();
-        builder.RegisterType<TagSettings>().AsSelf().SingleInstance();
-        builder.RegisterType<SpiralPointerSettings>().AsSelf().SingleInstance();
-        builder.RegisterType<CloudSettings>().AsSelf().SingleInstance();
         builder.RegisterType<FilesSourceSettings>().AsSelf().SingleInstance();
         builder.RegisterType<TagsCloudSettings>().AsSelf().SingleInstance();
         builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
-        builder.RegisterType<CloudDrawer>().AsSelf().SingleInstance();
-        builder.RegisterType<ArchimedeanSpiralPointer>().As<IFormPointer>();
-        builder.RegisterType<TagsCloudLayouter>().As<ICloudLayouter>();
-        builder.RegisterType<TagsBuilder>().As<ITagsBuilder>().SingleInstance();
-        builder.RegisterType<BoringTextParser>().As<ITextParser>().SingleInstance();
-        builder.RegisterType<TextFileReader>().As<IFileReader>().SingleInstance();
         builder.RegisterType<SaveImageAction>().As<IUiAction>();
         builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
         builder.RegisterType<FileSourceSettingsAction>().As<IUiAction>();
         builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
         builder.RegisterType<DrawTagCloudAction>().As<IUiAction>();
         builder.RegisterType<MainForm>().AsSelf();
+    }
+}
 
-        var container = builder.Build();
-        Application.Run(container.Resolve<MainForm>());
+public class TagsCloudPainterModule : Module
+{
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder.RegisterType<TextSettings>().AsSelf().SingleInstance();
+        builder.RegisterType<TagSettings>().AsSelf().SingleInstance();
+        builder.RegisterType<SpiralPointerSettings>().AsSelf().SingleInstance();
+        builder.RegisterType<CloudSettings>().AsSelf().SingleInstance();
+
+        builder.RegisterType<CloudDrawer>().AsSelf().SingleInstance();
+        builder.RegisterType<ArchimedeanSpiralPointer>().As<IFormPointer>();
+        builder.RegisterType<TagsCloudLayouter>().As<ICloudLayouter>();
+        builder.RegisterType<TagsBuilder>().As<ITagsBuilder>().SingleInstance();
+        builder.RegisterType<BoringTextParser>().As<ITextParser>().SingleInstance();
+        builder.RegisterType<TextFileReader>().As<IFileReader>().SingleInstance();
     }
 }
