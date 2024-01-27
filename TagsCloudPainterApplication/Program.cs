@@ -1,6 +1,4 @@
 using Autofac;
-using Autofac.Core;
-using Autofac.Core.Registration;
 using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Drawer;
 using TagsCloudPainter.FileReader;
@@ -24,8 +22,9 @@ internal static class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
+
         var builder = new ContainerBuilder();
-        builder.RegisterModule(new TagsCloudPainterModule());
+        builder.RegisterModule(new TagsCloudPainterLibModule());
         builder.RegisterModule(new ApplicationModule());
         var container = builder.Build();
         Application.Run(container.Resolve<MainForm>());
@@ -50,7 +49,7 @@ public class ApplicationModule: Module
     }
 }
 
-public class TagsCloudPainterModule : Module
+public class TagsCloudPainterLibModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

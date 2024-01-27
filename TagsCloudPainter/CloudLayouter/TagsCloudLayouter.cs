@@ -5,7 +5,7 @@ using TagsCloudPainter.Tags;
 
 namespace TagsCloudPainter.CloudLayouter;
 
-public class TagsCloudLayouter : ICloudLayouter, IResetable
+public class TagsCloudLayouter : ICloudLayouter
 {
     private readonly IFormPointer formPointer;
     private readonly TagSettings tagSettings;
