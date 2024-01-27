@@ -1,5 +1,3 @@
-using TagsCloudPainterApplication.Infrastructure.Settings;
-
 namespace TagsCloudPainterApplication.Infrastructure;
 
 public interface IImageHolder

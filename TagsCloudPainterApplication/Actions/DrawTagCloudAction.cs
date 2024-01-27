@@ -3,7 +3,6 @@ using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Drawer;
 using TagsCloudPainter.FileReader;
 using TagsCloudPainter.Parser;
-using TagsCloudPainter.Settings;
 using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;

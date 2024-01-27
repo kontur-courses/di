@@ -31,7 +31,7 @@ internal static class Program
     }
 }
 
-public class ApplicationModule: Module
+public class ApplicationModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

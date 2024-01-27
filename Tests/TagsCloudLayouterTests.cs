@@ -14,7 +14,7 @@ public class TagsCloudLayouterTests
     [SetUp]
     public void Setup()
     {
-        var cloudSettings = new Lazy<CloudSettings> (new CloudSettings { CloudCenter = new Point(0, 0) });
+        var cloudSettings = new Lazy<CloudSettings>(new CloudSettings { CloudCenter = new Point(0, 0) });
         tagSettings = new TagSettings { TagFontSize = 32 };
         var pointerSettings = new SpiralPointerSettings { AngleConst = 1, RadiusConst = 0.5, Step = 0.1 };
         var formPointer = new ArchimedeanSpiralPointer(cloudSettings.Value, pointerSettings);

@@ -16,7 +16,8 @@ public class ArchimedeanSpiralPointer : IFormPointer
             || spiralPointerSettings.AngleConst <= 0)
             throw new ArgumentException("either step or radius or angle is not possitive");
         this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
-        this.spiralPointerSettings = spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
+        this.spiralPointerSettings =
+            spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
         сurrentDifference = 0;
     }
 

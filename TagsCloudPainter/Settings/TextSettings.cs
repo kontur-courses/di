@@ -2,5 +2,5 @@
 
 public class TextSettings
 {
-    public string BoringText { get; set; }
+    public string BoringText { get; set; } = string.Empty;
 }

@@ -10,11 +10,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="8.0.0" />
+        <PackageReference Include="Autofac" Version="8.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TagsCloudPainter\TagsCloudPainter.csproj" />
+        <ProjectReference Include="..\TagsCloudPainter\TagsCloudPainter.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -36,7 +36,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Data\" />
+        <Folder Include="Data\"/>
     </ItemGroup>
 
 </Project>

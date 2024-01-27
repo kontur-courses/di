@@ -2,11 +2,17 @@
 
 public class FilesSourceSettings
 {
-    public string BoringTextFilePath { get; set; }
+    private string boringTextFilePath;
 
     public FilesSourceSettings()
     {
-        BoringTextFilePath = @$"{Environment.CurrentDirectory}..\..\..\..\" + Properties.Settings.Default.boringTextFilePath;
+        BoringTextFilePath = @$"{Environment.CurrentDirectory}..\..\..\..\" +
+                             Properties.Settings.Default.boringTextFilePath;
     }
 
+    public string BoringTextFilePath
+    {
+        get => boringTextFilePath;
+        set => boringTextFilePath = value ?? boringTextFilePath;
+    }
 }

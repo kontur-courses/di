@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
 using TagsCloudPainter.Settings;
 
 namespace TagsCloudPainterApplication.Infrastructure.Settings;
@@ -37,7 +36,7 @@ public class TagsCloudSettings
     public string TagFontName
     {
         get => TagSettings.TagFontName;
-        set => TagSettings.TagFontName = value;
+        set => TagSettings.TagFontName = value ?? TagSettings.TagFontName;
     }
 
     public Point CloudCenter
