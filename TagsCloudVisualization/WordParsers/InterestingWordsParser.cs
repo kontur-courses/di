@@ -2,9 +2,16 @@
 
 namespace TagsCloudVisualization;
 
-public class WordParser : IWordParser
+public class InterestingWordsParser : IInterestingWordsParser
 {
-    public IEnumerable<string> GetInterestingWords(string path, IDullWordChecker dullWordChecker)
+    private IDullWordChecker dullWordChecker;
+
+    public InterestingWordsParser(IDullWordChecker dullWordChecker)
+    {
+        this.dullWordChecker = dullWordChecker;
+    }
+    
+    public IEnumerable<string> GetInterestingWords(string path)
     {
         var readText = File.ReadAllText(path);
         var removedPunctuation = Regex.Replace(readText, @"[^\w\d\s]+", "");

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using System.Drawing.Imaging;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,12 +12,10 @@ public class Program
 
     [Argument(0)] [Required] public string InputFilePath { get; set; }
 
-    [Argument(1)] [Required] public string OutputFileName { get; set; }
-
-    [Option("-o")] public string? OutputDirectory { get; set; }
+    [Argument(1)] [Required] public string OutputFilePath { get; set; }
 
     [Option("-w")] public int ImageWidth { get; set; } = 1000;
-    
+
     [Option("-h")] public int ImageHeight { get; set; } = 1000;
 
     [Option("-bc")] public Color BackgroundColor { get; set; } = Color.Wheat;
@@ -31,23 +30,19 @@ public class Program
     private void OnExecute()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<Font>(x => new Font(FontFamily, FontSize));
-        services.AddSingleton<Palette>(x => new Palette(TextColor, BackgroundColor));
-        services.AddSingleton<IPointGenerator, SwampPointGenerator>();
-        services.AddSingleton<IWordParser, WordParser>();
-        services.AddSingleton<IDullWordChecker, NoWordsDullChecker>();
-        services.AddSingleton<ICloudLayouter>(x =>
-            new CloudLayouter(x.GetRequiredService<IPointGenerator>(),
-                x.GetRequiredService<Font>(),
-                x.GetRequiredService<IWordParser>()
-                    .GetInterestingWords(InputFilePath, x.GetRequiredService<IDullWordChecker>())));
+        services.AddTransient<Font>(x => new Font(FontFamily, FontSize, FontStyle.Regular));
+        services.AddTransient<Palette>(x => new Palette(TextColor, BackgroundColor));
+        services.AddTransient<IPointGenerator, SpiralPointGenerator>();
+        services.AddTransient<IDullWordChecker, NoWordsDullChecker>();
+        services.AddTransient<IInterestingWordsParser, InterestingWordsParser>();
+        services.AddTransient<IRectangleLayouter, RectangleLayouter>();
+        services.AddTransient<LayoutDrawer>();
 
         using var provider = services.BuildServiceProvider();
 
-        LayoutDrawer.CreateLayoutImage(provider.GetRequiredService<ICloudLayouter>().CreateLayout(),
-            new Size(ImageWidth, ImageHeight),
-            provider.GetRequiredService<Palette>(),
-            OutputFileName,
-            OutputDirectory);
+        var layoutDrawer = provider.GetRequiredService<LayoutDrawer>();
+        layoutDrawer
+            .CreateLayoutImageFromFile(InputFilePath, new Size(ImageWidth, ImageHeight))
+            .SaveImage(OutputFilePath, ImageFormat.Png);
     }
 }

@@ -3,33 +3,52 @@ using System.Drawing;
 
 namespace TagsCloudVisualization;
 
-public static class LayoutDrawer
+public class LayoutDrawer
 {
-    public static void CreateLayoutImage(IEnumerable<TextRectangle> createdTextRectangles,
-        Size imageSize,
+    private IInterestingWordsParser interestingWordsParser;
+    private IRectangleLayouter rectangleLayouter;
+    private Palette palette;
+    private Font font;
+
+    public LayoutDrawer(IInterestingWordsParser interestingWordsParser,
+        IRectangleLayouter rectangleLayouter,
         Palette palette,
-        string fileName,
-        string? filePath)
+        Font font)
     {
-        using var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+        this.interestingWordsParser = interestingWordsParser;
+        this.rectangleLayouter = rectangleLayouter;
+        this.palette = palette;
+        this.font = font;
+    }
+
+    public Bitmap CreateLayoutImageFromFile(string inputFilePath,
+        Size imageSize)
+    {
+        var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);
+
+        inputFilePath = Path.GetFullPath(inputFilePath);
+
+        var sortedWordsCount = interestingWordsParser.GetInterestingWords(inputFilePath)
+            .GroupBy(s => s)
+            .Select(group => new { Word = group.Key, Count = group.Count() })
+            .OrderByDescending(wordCount => wordCount.Count);
+        var mostWordOccurrencies = sortedWordsCount.Max(arg => arg.Count);
 
         graphics.Clear(palette.BackgroundColor);
 
         using var brush = new SolidBrush(palette.TextColor);
-        foreach (var textRectangle in createdTextRectangles)
+        foreach (var wordCount in sortedWordsCount)
         {
-            var x = textRectangle.Rectangle.X + imageSize.Width / 2;
-            var y = textRectangle.Rectangle.Y + imageSize.Height / 2;
-            graphics.DrawString(textRectangle.Text, textRectangle.Font, brush, x, y);
+            var rectangleFont = new Font(font.FontFamily, font.Size * wordCount.Count / mostWordOccurrencies);
+            var rectangleSize = graphics.MeasureString(wordCount.Word, rectangleFont);
+
+            var textRectangle = rectangleLayouter.PutNextRectangle(rectangleSize);
+            var x = textRectangle.X + imageSize.Width / 2;
+            var y = textRectangle.Y + imageSize.Height / 2;
+            graphics.DrawString(wordCount.Word, rectangleFont, brush, x, y);
         }
 
-        filePath ??= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-
-        Directory.CreateDirectory(filePath);
-
-        bitmap.Save(Path.Combine(filePath, $"{fileName}.png"), ImageFormat.Png);
-
-        Console.WriteLine($"Image is saved to {filePath}" + @$"\{fileName}.png");
+        return bitmap;
     }
 }
