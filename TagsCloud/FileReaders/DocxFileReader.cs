@@ -1,13 +1,13 @@
 using TagsCloud.Contracts;
-using TagsCloud.CustomAttributes;
 
 namespace TagsCloud.FileReaders;
 
 // TODO: Implement this reader in future
-[SupportedExtension("docx")]
 public class DocxFileReader : IFileReader
 {
-    public IEnumerable<string> ReadContent(string filename)
+    public string SupportedExtension => "docx";
+
+    public IEnumerable<string> ReadContent(string filename, IPostFormatter postFormatter = null)
     {
         throw new NotImplementedException();
     }

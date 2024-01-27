@@ -1,6 +1,9 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using SixLabors.Fonts;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TagsCloud.Entities;
 using TagsCloudVisualization;
 
@@ -11,10 +14,16 @@ namespace TagsCloud;
 public class Program
 {
     [Option]
-    public CaseType WordsCase { get; } = CaseType.Lower;
+    public CaseType WordsCase { get; }
 
     [Option]
     public bool Infinitive { get; }
+
+    [Option("-mafs|--max-font-size")]
+    public int MaxFontSize { get; } = 100;
+
+    [Option("-mifs|--min-font-size")]
+    public int MinFontSize { get; } = 30;
 
     [Option("-wi|--width"), Required]
     public int? Width { get; }
@@ -28,7 +37,7 @@ public class Program
     [Option(CommandOptionType.MultipleValue)]
     public HashSet<string> Excluded { get; } = new();
 
-    [Option(CommandOptionType.MultipleValue), Required]
+    [Option(CommandOptionType.MultipleValue)]
     public HashSet<string> Colors { get; } = new();
 
     [Option]
@@ -40,8 +49,8 @@ public class Program
     [Option]
     public float AngleDelta { get; } = (float)Math.PI / 180;
 
-    [Option, Required]
-    public string BackgroundColor { get; set; }
+    [Option]
+    public string BackgroundColor { get; set; } = string.Empty;
 
     [Option]
     public string FontPath { get; } = string.Empty;
@@ -59,27 +68,56 @@ public class Program
 
     private void OnExecute()
     {
-        var spiral = new SpiralPointGenerator(DistanceDelta, AngleDelta);
-        var layout = new Layout(spiral, new PointF((float)Width!.Value / 2, (float)Height!.Value / 2));
+        var spiralGenerator = new SpiralPointGenerator(DistanceDelta, AngleDelta);
+        var center = new PointF((float)Width!.Value / 2, (float)Height!.Value / 2);
 
-        var colors = Colors!.Select(color => Color.ParseHex(color)).ToArray();
+        var layout = new Layout(spiralGenerator, center);
 
-        var options = new OptionsBuilder()
-                      .SetColorizer(colors, Strategy)
-                      .SetWordsCase(WordsCase)
-                      .SetCastPolitics(Infinitive)
-                      .SetExcludedWords(Excluded)
-                      .SetImportantLanguageParts(TextParts)
-                      .SetFontFamily(FontPath)
-                      .SetImageSettings(Color.ParseHex(BackgroundColor), new Size(Width.Value, Height.Value))
-                      .SetLayout(layout)
-                      .Build();
+        var textOptions = new InputProcessorOptions
+        {
+            ToInfinitive = Infinitive, WordsCase = WordsCase, ExcludedWords = Excluded, LanguageParts = TextParts
+        };
 
-        var facade = new TagCloudFacade(options);
-        var tagList = facade.GenerateCloudTagList(InputFile);
+        var cloudOptions = new CloudProcessorOptions
+        {
+            ColoringStrategy = Strategy,
+            Colors = InputParser.ParseTagColors(Colors),
+            MinFontSize = MinFontSize,
+            MaxFontSize = MaxFontSize,
+            Layout = layout,
+            FontFamily = LoadFontFamily(FontPath)
+        };
 
-        facade.GenerateTagCloudImage(tagList, OutputFile);
+        var outputOptions = new OutputProcessorOptions
+        {
+            BackgroundColor = InputParser.ParseBackgroundColor(BackgroundColor),
+            ImageSize = new Size(Width!.Value, Height!.Value),
 
-        Console.WriteLine("TagsCloud image saved to " + OutputFile);
+            // Expansion point here!
+            ImageEncoder = new PngEncoder()
+        };
+
+        var engine = new TagCloudEngine(textOptions, cloudOptions, outputOptions);
+        engine.GenerateTagCloud(InputFile, OutputFile);
+
+        Console.WriteLine("Tag cloud image saved to file " + OutputFile);
+    }
+
+    private static FontFamily LoadFontFamily(string fontPath)
+    {
+        var fontCollection = new FontCollection();
+
+        if (File.Exists(fontPath))
+        {
+            fontCollection.Add(fontPath);
+        }
+        else
+        {
+            const string fontName = nameof(TagsCloud) + ".Fonts.Vollkorn-SemiBold.ttf";
+            var fontStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fontName);
+            fontCollection.Add(fontStream!);
+        }
+
+        return fontCollection.Families.First();
     }
 }

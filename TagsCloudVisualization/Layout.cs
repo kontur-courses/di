@@ -5,8 +5,6 @@ namespace TagsCloudVisualization;
 
 public class Layout : ILayout
 {
-    public const float Accuracy = 1e-3f;
-
     private readonly PointF center;
     private readonly IList<RectangleF> placedRectangles;
     private readonly IPointGenerator pointGenerator;

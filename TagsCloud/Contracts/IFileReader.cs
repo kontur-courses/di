@@ -2,5 +2,6 @@ namespace TagsCloud.Contracts;
 
 public interface IFileReader
 {
-    IEnumerable<string> ReadContent(string filename);
+    string SupportedExtension { get; }
+    IEnumerable<string> ReadContent(string filename, IPostFormatter postFormatter = null);
 }

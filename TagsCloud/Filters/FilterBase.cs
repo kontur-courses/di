@@ -1,5 +1,5 @@
 using TagsCloud.Contracts;
-using TagsCloud.Entities;
+using TagsCloudVisualization;
 
 namespace TagsCloud.Filters;
 
@@ -12,5 +12,5 @@ public abstract class FilterBase
         this.options = options;
     }
 
-    public abstract void Apply(List<WordToStatus> words);
+    public abstract void Apply(HashSet<WordTagGroup> wordGroups);
 }

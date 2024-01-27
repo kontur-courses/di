@@ -4,5 +4,6 @@ namespace TagsCloudVisualization;
 
 public interface ILayout
 {
-    public RectangleF PutNextRectangle(SizeF rectSize);
+    const float Accuracy = 1e-3f;
+    RectangleF PutNextRectangle(SizeF rectSize);
 }

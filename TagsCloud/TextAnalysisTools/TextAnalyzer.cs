@@ -1,32 +1,51 @@
 using System.Diagnostics;
 using System.Text.Json;
 using TagsCloud.Entities;
+using TagsCloudVisualization;
 
 namespace TagsCloud.TextAnalysisTools;
 
 public class TextAnalyzer
 {
-    public static IEnumerable<WordInfo> GetTextAnalysis(List<string> textLines)
+    public static void FillWithAnalysis(HashSet<WordTagGroup> wordGroups)
     {
-        using var process = new Process
+        using var process = new Process();
+        process.StartInfo = new ProcessStartInfo
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "mystem",
-                Arguments = "-i --format=json",
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true
-            }
+            FileName = "mystem",
+            Arguments = "-i --format=json",
+            UseShellExecute = false,
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true
         };
 
         process.Start();
-        textLines.ForEach(line => process.StandardInput.Write(line + ' '));
+
+        foreach (var group in wordGroups)
+            process.StandardInput.Write(group.WordInfo.Text + ' ');
+
         process.StandardInput.Close();
 
-        var analysis = JsonSerializer.Deserialize<List<WordInfo>>(process.StandardOutput.ReadToEnd());
+        var analyses = JsonSerializer.Deserialize<List<WordSummary>>(process.StandardOutput.ReadToEnd());
         process.WaitForExit();
 
-        return analysis;
+        var analysisIndex = 0;
+
+        foreach (var group in wordGroups)
+        {
+            var analysis = analyses[analysisIndex].Analyses.FirstOrDefault();
+
+            if (analysis == null)
+            {
+                group.WordInfo.IsRussian = false;
+            }
+            else
+            {
+                group.WordInfo.Infinitive = analysis.Infinitive;
+                group.WordInfo.LanguagePart = analysis.LanguagePart;
+            }
+
+            analysisIndex++;
+        }
     }
 }

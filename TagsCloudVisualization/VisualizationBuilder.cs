@@ -19,39 +19,49 @@ public class VisualizationBuilder
         this.backgroundColor = backgroundColor;
     }
 
-    public VisualizationBuilder CreateImageFrom(List<CloudTag> tags)
+    public VisualizationBuilder CreateImageFrom(HashSet<WordTagGroup> wordGroups)
     {
         image = new Image<Rgba32>(canvasSize.Width, canvasSize.Height);
         image.Mutate(ctx =>
         {
             ctx.Clear(backgroundColor);
-            tags.ForEach(tag =>
-            {
-                var location = tag.BoundRectangle.Location;
 
-                if (tag.IsRotated)
+            foreach (var group in wordGroups)
+            {
+                var location = group.VisualInfo.BoundsRectangle.Location;
+
+                if (group.VisualInfo.IsRotated)
                 {
-                    var offsetLocation = new PointF(location.X + tag.BoundRectangle.Width, location.Y);
+                    var offsetLocation = new PointF(location.X + group.VisualInfo.BoundsRectangle.Width, location.Y);
                     var options = new DrawingOptions
                     {
                         Transform = Matrix3x2Extensions.CreateRotationDegrees(90, offsetLocation)
                     };
 
-                    ctx.DrawText(options, tag.InnerText, tag.TextFont, tag.TextColor, offsetLocation);
+                    ctx.DrawText(
+                        options, 
+                        group.WordInfo.Text, 
+                        group.VisualInfo.TextFont, 
+                        group.VisualInfo.TextColor, 
+                        offsetLocation);
+                    
                     return;
                 }
 
-                ctx.DrawText(tag.InnerText, tag.TextFont, tag.TextColor, location);
-            });
-
-            // Only for testing (debug state):
-            tags.ForEach(tag => ctx.Draw(Color.Black, 1f, tag.BoundRectangle));
+                ctx.DrawText(
+                    group.WordInfo.Text, 
+                    group.VisualInfo.TextFont, 
+                    group.VisualInfo.TextColor, 
+                    location);
+                
+                ctx.Draw(Color.Black, 1f, group.VisualInfo.BoundsRectangle);
+            }
         });
 
         return this;
     }
 
-    public void SaveAs(string filename, IImageEncoder? encoder = null)
+    public void SaveAs(string filename, IImageEncoder encoder = null)
     {
         encoder ??= new PngEncoder();
         image.Save(filename, encoder);

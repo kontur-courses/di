@@ -1,13 +1,16 @@
 using TagsCloud.Contracts;
-using TagsCloud.CustomAttributes;
 
 namespace TagsCloud.FileReaders;
 
-[SupportedExtension("txt")]
 public class TxtFileReader : IFileReader
 {
-    public IEnumerable<string> ReadContent(string filename)
+    public string SupportedExtension => "txt";
+
+    public IEnumerable<string> ReadContent(string filename, IPostFormatter postFormatter = null)
     {
-        return File.ReadLines(filename);
+        return File
+               .ReadLines(filename)
+               .Where(line => !string.IsNullOrEmpty(line))
+               .Select(line => postFormatter is null ? line : postFormatter.Format(line));
     }
 }

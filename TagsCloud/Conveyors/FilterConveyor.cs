@@ -1,7 +1,5 @@
-using System.Reflection;
-using TagsCloud.CustomAttributes;
-using TagsCloud.Entities;
 using TagsCloud.Filters;
+using TagsCloudVisualization;
 
 namespace TagsCloud.Conveyors;
 
@@ -11,32 +9,12 @@ public sealed class FilterConveyor
 
     public FilterConveyor(IEnumerable<FilterBase> filters)
     {
-        this.filters = filters.Order(new FilterComparer());
+        this.filters = filters;
     }
 
-    public void ApplyFilters(List<WordToStatus> words)
+    public void ApplyFilters(HashSet<WordTagGroup> wordGroups)
     {
         foreach (var filter in filters)
-            filter.Apply(words);
-    }
-
-    private class FilterComparer : IComparer<FilterBase>
-    {
-        public int Compare(FilterBase filter, FilterBase another)
-        {
-            if (filter == null || another == null)
-                throw new ArgumentException("Can't compare null filters!");
-
-            var filterOrder = GetFilterPriority(filter);
-            var anotherOrder = GetFilterPriority(another);
-
-            return filterOrder - anotherOrder;
-        }
-
-        private static int GetFilterPriority(FilterBase filter)
-        {
-            var attribute = filter.GetType().GetCustomAttribute<FilterOrderAttribute>();
-            return attribute!.Order;
-        }
+            filter.Apply(wordGroups);
     }
 }
