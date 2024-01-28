@@ -3,13 +3,9 @@ using TagsCloudVisualization;
 
 namespace TagsCloud.Filters;
 
-public class ExcludedFilter : FilterBase
+public class ExcludedFilter : IFilter
 {
-    public ExcludedFilter(IFilterOptions options) : base(options)
-    {
-    }
-
-    public override void Apply(HashSet<WordTagGroup> wordGroups)
+    public void Apply(HashSet<WordTagGroup> wordGroups, IFilterOptions options)
     {
         if (options.ExcludedWords.Count == 0)
             return;

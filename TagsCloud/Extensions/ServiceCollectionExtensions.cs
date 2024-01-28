@@ -2,26 +2,17 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TagsCloud.Contracts;
 using TagsCloud.Conveyors;
-using TagsCloud.Filters;
 using TagsCloud.Processors;
 
 namespace TagsCloud.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static ServiceCollection AddFilters(this ServiceCollection collection)
+    private static readonly Type[] assemblyTypes;
+
+    static ServiceCollectionExtensions()
     {
-        var filters = Assembly
-                      .GetExecutingAssembly()
-                      .GetTypes()
-                      .Where(type => type.IsSubclassOf(typeof(FilterBase)));
-
-        foreach (var filterType in filters)
-            collection.AddSingleton(typeof(FilterBase), filterType);
-
-        collection.AddSingleton<FilterConveyor>();
-
-        return collection;
+        assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
     }
 
     public static ServiceCollection AddProcessors(this ServiceCollection collection)
@@ -33,29 +24,44 @@ public static class ServiceCollectionExtensions
         return collection;
     }
 
+    public static ServiceCollection AddFilters(this ServiceCollection collection)
+    {
+        var filterType = typeof(IFilter);
+        var filters = GetTypesByInterface(filterType);
+
+        foreach (var filter in filters)
+            collection.AddSingleton(filterType, filter);
+
+        collection.AddSingleton<FilterConveyor>();
+
+        return collection;
+    }
+
     public static ServiceCollection AddReaders(this ServiceCollection collection)
     {
-        var readers = Assembly
-                      .GetExecutingAssembly()
-                      .GetTypes()
-                      .Where(type => type.GetInterfaces().Any(inter => inter == typeof(IFileReader)));
+        var readerType = typeof(IFileReader);
+        var readers = GetTypesByInterface(readerType);
 
         foreach (var reader in readers)
-            collection.AddSingleton(typeof(IFileReader), reader);
+            collection.AddSingleton(readerType, reader);
 
         return collection;
     }
 
     public static ServiceCollection AddPainters(this ServiceCollection collection)
     {
-        var painters = Assembly
-                       .GetExecutingAssembly()
-                       .GetTypes()
-                       .Where(type => type.GetInterfaces().Any(inter => inter == typeof(IPainter)));
+        var painterType = typeof(IPainter);
+        var painters = GetTypesByInterface(painterType);
 
         foreach (var painter in painters)
-            collection.AddSingleton(typeof(IPainter), painter);
+            collection.AddSingleton(painterType, painter);
 
         return collection;
+    }
+
+    private static IEnumerable<Type> GetTypesByInterface(Type interfaceType)
+    {
+        return assemblyTypes
+            .Where(type => type.GetInterfaces().Any(inter => inter == interfaceType));
     }
 }

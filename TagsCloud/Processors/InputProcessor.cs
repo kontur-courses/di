@@ -8,27 +8,27 @@ namespace TagsCloud.Processors;
 
 public class InputProcessor
 {
-    private readonly IFileReader[] fileReaders;
-    private readonly FilterConveyor filterConveyor;
     private readonly IInputProcessorOptions inputOptions;
+    private readonly IEnumerable<IFileReader> fileReaders;
     private readonly IPostFormatter postFormatter;
+    private readonly FilterConveyor filterConveyor;
 
     public InputProcessor(
         IInputProcessorOptions inputOptions,
-        IPostFormatter postFormatter,
         IEnumerable<IFileReader> fileReaders,
-        FilterConveyor filterConveyor)
+        IEnumerable<IFilter> filters,
+        IPostFormatter postFormatter)
     {
         this.inputOptions = inputOptions;
+        this.fileReaders = fileReaders;
         this.postFormatter = postFormatter;
-        this.filterConveyor = filterConveyor;
-        this.fileReaders = fileReaders.ToArray();
+        filterConveyor = new FilterConveyor(filters, inputOptions);
     }
 
     public HashSet<WordTagGroup> CollectWordGroupsFromFile(string filename)
     {
         var extension = filename.Split('.', StringSplitOptions.RemoveEmptyEntries)[^1];
-        var reader = FindAppropriateFileReader(extension);
+        var reader = FindFileReader(extension);
 
         if (reader == null)
         {
@@ -77,7 +77,7 @@ public class InputProcessor
         return string.Join(", ", fileReaders.Select(reader => reader.SupportedExtension));
     }
 
-    private IFileReader FindAppropriateFileReader(string extension)
+    private IFileReader FindFileReader(string extension)
     {
         return fileReaders.SingleOrDefault(reader => reader.SupportedExtension.Equals(extension));
     }

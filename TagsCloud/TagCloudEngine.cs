@@ -21,10 +21,9 @@ public class TagCloudEngine
                           .AddFilters()
                           .AddPainters()
                           .AddSingleton(inputOptions)
-                          .AddSingleton<IFilterOptions>(inputOptions)
-                          .AddSingleton<IPostFormatter>(new DefaultPostFormatter())
                           .AddSingleton(cloudOptions)
                           .AddSingleton(outputOptions)
+                          .AddSingleton<IPostFormatter, DefaultPostFormatter>()
                           .BuildServiceProvider();
     }
 
