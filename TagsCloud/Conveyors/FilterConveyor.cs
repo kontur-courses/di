@@ -5,8 +5,8 @@ namespace TagsCloud.Conveyors;
 
 public sealed class FilterConveyor
 {
-    private readonly IEnumerable<IFilter> filters;
     private readonly IFilterOptions filterOptions;
+    private readonly IEnumerable<IFilter> filters;
 
     public FilterConveyor(IEnumerable<IFilter> filters, IFilterOptions filterOptions)
     {

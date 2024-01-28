@@ -7,10 +7,10 @@ public class WordAnalysis
     private readonly char[] grammarSeparators = { ',', '=' };
 
     [JsonPropertyName("lex")]
-    public string Infinitive { get; set; }
+    public string Infinitive { get; }
 
     [JsonPropertyName("gr")]
-    public string Grammar { get; set; }
+    public string Grammar { get; }
 
     public string LanguagePart => Grammar.Split(grammarSeparators)[0];
 }

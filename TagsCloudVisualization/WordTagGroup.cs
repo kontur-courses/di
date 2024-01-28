@@ -2,16 +2,16 @@ namespace TagsCloudVisualization;
 
 public class WordTagGroup
 {
-    public WordInfo WordInfo { get; } = new();
-    public VisualInfo VisualInfo { get; } = new();
-    public int Count { get; }
-
     public WordTagGroup(string text, int count)
     {
         WordInfo.Text = text;
         Count = count;
     }
-    
+
+    public WordInfo WordInfo { get; } = new();
+    public VisualInfo VisualInfo { get; } = new();
+    public int Count { get; }
+
     public override int GetHashCode()
     {
         return WordInfo.Text.GetHashCode();

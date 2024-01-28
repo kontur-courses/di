@@ -39,22 +39,20 @@ public class VisualizationBuilder
                     };
 
                     ctx.DrawText(
-                        options, 
-                        group.WordInfo.Text, 
-                        group.VisualInfo.TextFont, 
-                        group.VisualInfo.TextColor, 
+                        options,
+                        group.WordInfo.Text,
+                        group.VisualInfo.TextFont,
+                        group.VisualInfo.TextColor,
                         offsetLocation);
-                    
-                    return;
                 }
-
-                ctx.DrawText(
-                    group.WordInfo.Text, 
-                    group.VisualInfo.TextFont, 
-                    group.VisualInfo.TextColor, 
-                    location);
-                
-                ctx.Draw(Color.Black, 1f, group.VisualInfo.BoundsRectangle);
+                else
+                {
+                    ctx.DrawText(
+                        group.WordInfo.Text,
+                        group.VisualInfo.TextFont,
+                        group.VisualInfo.TextColor,
+                        location);
+                }
             }
         });
 

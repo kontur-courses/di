@@ -71,7 +71,7 @@ public class Layout : ILayout
             if (!Intersects(common))
                 return common;
 
-            if (rotated.Width.IsEqualTo(rotated.Height) && !Intersects(rotated))
+            if (!rotated.Width.IsEqualTo(rotated.Height) && !Intersects(rotated))
                 return rotated;
         }
     }

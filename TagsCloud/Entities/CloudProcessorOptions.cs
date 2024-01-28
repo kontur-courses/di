@@ -11,6 +11,8 @@ public class CloudProcessorOptions : ICloudProcessorOptions
     public Color[] Colors { get; init; }
     public FontFamily FontFamily { get; init; }
     public ILayout Layout { get; init; }
+    public MeasurerType MeasurerType { get; init; }
+    public SortType Sort { get; init; }
     public int MaxFontSize { get; init; }
     public int MinFontSize { get; init; }
 }

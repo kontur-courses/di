@@ -11,6 +11,8 @@ public interface ICloudProcessorOptions
     Color[] Colors { get; }
     FontFamily FontFamily { get; }
     ILayout Layout { get; }
+    MeasurerType MeasurerType { get; }
+    SortType Sort { get; }
     int MaxFontSize { get; }
     int MinFontSize { get; }
 }

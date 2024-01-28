@@ -20,6 +20,7 @@ public class TagCloudEngine
                           .AddReaders()
                           .AddFilters()
                           .AddPainters()
+                          .AddMeasurers()
                           .AddSingleton(inputOptions)
                           .AddSingleton(cloudOptions)
                           .AddSingleton(outputOptions)

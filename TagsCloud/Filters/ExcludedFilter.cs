@@ -10,7 +10,7 @@ public class ExcludedFilter : IFilter
         if (options.ExcludedWords.Count == 0)
             return;
 
-        var excluded = options.LanguageParts;
+        var excluded = options.ExcludedWords;
         wordGroups.RemoveWhere(group => excluded.Contains(group.WordInfo.Text));
     }
 }

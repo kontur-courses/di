@@ -1,11 +1,8 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using SixLabors.Fonts;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+using TagsCloud.Builders;
 using TagsCloud.Entities;
-using TagsCloudVisualization;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -32,13 +29,22 @@ public class Program
     public int? Height { get; }
 
     [Option(CommandOptionType.MultipleValue)]
-    public HashSet<string> TextParts { get; } = new();
+    public IEnumerable<string> TextParts { get; } = Array.Empty<string>();
 
     [Option(CommandOptionType.MultipleValue)]
-    public HashSet<string> Excluded { get; } = new();
+    public IEnumerable<string> Excluded { get; } = Array.Empty<string>();
 
     [Option(CommandOptionType.MultipleValue)]
     public HashSet<string> Colors { get; } = new();
+
+    [Option]
+    public bool Russian { get; } = false;
+
+    [Option("-so|--sort")]
+    public SortType Sort { get; } = SortType.Preserve;
+
+    [Option("-me|--measurer")]
+    public MeasurerType MeasurerType { get; } = MeasurerType.Linear;
 
     [Option]
     public ColoringStrategy Strategy { get; } = ColoringStrategy.AllRandom;
@@ -48,6 +54,12 @@ public class Program
 
     [Option]
     public float AngleDelta { get; } = (float)Math.PI / 180;
+
+    [Option]
+    public ImageFormat OutputFormat { get; } = ImageFormat.Png;
+
+    [Option]
+    public PointGeneratorType Generator { get; } = PointGeneratorType.Spiral;
 
     [Option]
     public string BackgroundColor { get; } = string.Empty;
@@ -66,60 +78,40 @@ public class Program
         return CommandLineApplication.Execute<Program>(args);
     }
 
+    // ReSharper disable once UnusedMember.Local
     private void OnExecute()
     {
-        var spiralGenerator = new SpiralPointGenerator(DistanceDelta, AngleDelta);
-        var center = new PointF((float)Width!.Value / 2, (float)Height!.Value / 2);
+        var inputOptions = new InputOptionsBuilder()
+                           .SetWordsCase(WordsCase)
+                           .SetCastPolitics(Infinitive)
+                           .SetExcludedWords(Excluded)
+                           .SetLanguageParts(TextParts)
+                           .SetLanguagePolitics(Russian)
+                           .BuildOptions();
 
-        var layout = new Layout(spiralGenerator, center);
+        var cloudOptions = new CloudOptionsBuilder()
+                           .SetColors(Colors)
+                           .SetLayout(
+                               Generator,
+                               new PointF((float)Width!.Value / 2, (float)Height!.Value / 2),
+                               DistanceDelta,
+                               AngleDelta)
+                           .SetColoringStrategy(Strategy)
+                           .SetMeasurerType(MeasurerType)
+                           .SetFontFamily(FontPath)
+                           .SetSortingType(Sort)
+                           .SetFontSizeBounds(MinFontSize, MaxFontSize)
+                           .BuildOptions();
 
-        var textOptions = new InputProcessorOptions
-        {
-            ToInfinitive = Infinitive,
-            WordsCase = WordsCase,
-            ExcludedWords = Excluded,
-            LanguageParts = TextParts
-        };
-        
-        var cloudOptions = new CloudProcessorOptions
-        {
-            ColoringStrategy = Strategy,
-            Colors = InputParser.ParseTagColors(Colors),
-            MinFontSize = MinFontSize,
-            MaxFontSize = MaxFontSize,
-            Layout = layout,
-            FontFamily = LoadFontFamily(FontPath)
-        };
+        var outputOptions = new OutputOptionsBuilder()
+                            .SetImageFormat(OutputFormat)
+                            .SetImageSize(new Size(Width!.Value, Height!.Value))
+                            .SetImageBackgroundColor(BackgroundColor)
+                            .BuildOptions();
 
-        var outputOptions = new OutputProcessorOptions
-        {
-            BackgroundColor = InputParser.ParseBackgroundColor(BackgroundColor),
-            ImageSize = new Size(Width!.Value, Height!.Value),
-            // Expansion point here!
-            ImageEncoder = new PngEncoder()
-        };
-
-        var engine = new TagCloudEngine(textOptions, cloudOptions, outputOptions);
+        var engine = new TagCloudEngine(inputOptions, cloudOptions, outputOptions);
         engine.GenerateTagCloud(InputFile, OutputFile);
 
         Console.WriteLine("Tag cloud image saved to file " + OutputFile);
-    }
-
-    private static FontFamily LoadFontFamily(string fontPath)
-    {
-        var fontCollection = new FontCollection();
-
-        if (File.Exists(fontPath))
-        {
-            fontCollection.Add(fontPath);
-        }
-        else
-        {
-            const string fontName = nameof(TagsCloud) + ".Fonts.Vollkorn-SemiBold.ttf";
-            var fontStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fontName);
-            fontCollection.Add(fontStream!);
-        }
-
-        return fontCollection.Families.First();
     }
 }

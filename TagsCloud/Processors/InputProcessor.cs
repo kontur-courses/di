@@ -8,10 +8,10 @@ namespace TagsCloud.Processors;
 
 public class InputProcessor
 {
-    private readonly IInputProcessorOptions inputOptions;
     private readonly IEnumerable<IFileReader> fileReaders;
-    private readonly IPostFormatter postFormatter;
     private readonly FilterConveyor filterConveyor;
+    private readonly IInputProcessorOptions inputOptions;
+    private readonly IPostFormatter postFormatter;
 
     public InputProcessor(
         IInputProcessorOptions inputOptions,

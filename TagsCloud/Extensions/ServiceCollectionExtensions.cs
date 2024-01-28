@@ -53,8 +53,18 @@ public static class ServiceCollectionExtensions
         var painterType = typeof(IPainter);
         var painters = GetTypesByInterface(painterType);
 
-        foreach (var painter in painters)
-            collection.AddSingleton(painterType, painter);
+        foreach (var painter in painters) collection.AddSingleton(painterType, painter);
+
+        return collection;
+    }
+
+    public static ServiceCollection AddMeasurers(this ServiceCollection collection)
+    {
+        var measurerType = typeof(IFontMeasurer);
+        var measurers = GetTypesByInterface(measurerType);
+
+        foreach (var measurer in measurers)
+            collection.AddSingleton(measurerType, measurer);
 
         return collection;
     }
