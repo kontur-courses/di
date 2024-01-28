@@ -16,7 +16,7 @@ public class Options
     [Option('c', "color", HelpText = "Set color.", Default = "random")]
     public string ColorScheme { get; set; }
     
-    [Option('f', "font", HelpText = "Set font.", Default = "Comic Sans")]
+    [Option('f', "font", HelpText = "Set font.", Default = "Arial")]
     public string Font { get; set; }
     
     [Option("size", HelpText = "Set font size.", Default = 20)]

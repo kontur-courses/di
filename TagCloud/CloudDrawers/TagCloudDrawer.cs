@@ -9,17 +9,15 @@ public class TagCloudDrawer : ICloudDrawer
     private readonly string path;
     private readonly IColorSelector selector;
     private readonly string name;
-    private readonly int fontSize;
+    private readonly Font font;
 
-    private TagCloudDrawer(string path, string name, IColorSelector selector, int fontSize)
+    private TagCloudDrawer(string path, string name, IColorSelector selector, Font font)
     {
         this.path = path;
         this.selector = selector;
-        this.fontSize = fontSize;
+        this.font = font;
         this.name = name;
     }
-
-    public int FontSize => fontSize;
 
     public void Draw(List<TextRectangle> rectangles)
     {
@@ -43,13 +41,6 @@ public class TagCloudDrawer : ICloudDrawer
         SaveToFile(bitmap);
     }
 
-    public Size GetTextRectangleSize(string text, int size)
-    {
-        using var graphics = Graphics.FromImage(new Bitmap(1,1));
-        var sizeF = graphics.MeasureString(text, new Font(FontFamily.GenericSerif, size));
-        return new Size((int)sizeF.Width, (int)sizeF.Height);
-    }
-
     private void SaveToFile(Bitmap bitmap)
     {
         var pathToFile = @$"{path}\{name}.jpg";
@@ -57,10 +48,10 @@ public class TagCloudDrawer : ICloudDrawer
         Console.WriteLine($"Tag cloud visualization saved to file {path}");
     }
 
-    public static TagCloudDrawer Create(string path, string name, int size, IColorSelector selector)
+    public static TagCloudDrawer Create(string path, string name, Font font, IColorSelector selector)
     {
         if (!Directory.Exists(path))
             throw new ArgumentException("Directory does not exist");
-        return new TagCloudDrawer(path, name, selector, size);
+        return new TagCloudDrawer(path, name, selector, font);
     }
 }

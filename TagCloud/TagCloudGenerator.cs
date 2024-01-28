@@ -11,12 +11,14 @@ public class TagCloudGenerator
     private readonly ITextHandler handler;
     private readonly CircularCloudLayouter layouter;
     private readonly ICloudDrawer drawer;
+    private readonly TextMeasurer measurer;
 
-    public TagCloudGenerator(ITextHandler handler, CircularCloudLayouter layouter, ICloudDrawer drawer)
+    public TagCloudGenerator(ITextHandler handler, CircularCloudLayouter layouter, ICloudDrawer drawer, TextMeasurer measurer)
     {
         this.handler = handler;
         this.layouter = layouter;
         this.drawer = drawer;
+        this.measurer = measurer;
     }
 
     public void Generate()
@@ -25,12 +27,11 @@ public class TagCloudGenerator
         
         foreach (var (word, count) in handler.Handle().OrderByDescending(pair => pair.Value))
         {
-            var fontSize = drawer.FontSize * count;
-            var size = drawer.GetTextRectangleSize(word, fontSize);
+            var (size, font) = measurer.GetTextRectangleSize(word, count);
             rectangles.Add(new TextRectangle(
                 layouter.PutNextRectangle(size),
                 word,
-                new Font(FontFamily.GenericSerif, fontSize)
+                font
             ));
         }
         drawer.Draw(rectangles);

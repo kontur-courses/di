@@ -31,7 +31,7 @@ public class TagCloudDrawerTests
         drawer = TagCloudDrawer.Create(
             path, 
             TestContext.CurrentContext.Test.Name, 
-            size: 1,
+            new Font(FontFamily.GenericSerif, 1),
             new ConstantColorSelector(Color.Black)
         );
     }
@@ -48,7 +48,7 @@ public class TagCloudDrawerTests
         Assert.Throws<ArgumentException>(() => TagCloudDrawer.Create(
             path: "PathDontExist",
             name: "xxx",
-            size: 1,
+            new Font(FontFamily.GenericSerif, 1),
             new ConstantColorSelector(Color.Black))
         );
     }

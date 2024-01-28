@@ -19,10 +19,12 @@ public static class TagCloudServicesFactory
         services.AddSingleton<ICloudShaper>(provider => SpiralCloudShaper.Create(new Point(0, 0)));
         services.AddSingleton<CircularCloudLayouter>();
         
+        services.AddScoped<Font>(provider => new Font(new FontFamily(options.Font), options.FontSize));
+        services.AddSingleton<TextMeasurer>();
         services.AddSingleton<ICloudDrawer>(provider => TagCloudDrawer.Create(
                 options.DestinationPath, 
                 options.Name, 
-                options.FontSize,
+                provider.GetService<Font>(),
                 provider.GetService<IColorSelector>()
             )
         );
