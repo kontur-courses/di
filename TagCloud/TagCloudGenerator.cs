@@ -23,7 +23,7 @@ public class TagCloudGenerator
     {
         var rectangles = new List<TextRectangle>();
         
-        foreach (var (word, count) in handler.Handle().OrderByDescending(tuple => tuple.count))
+        foreach (var (word, count) in handler.Handle().OrderByDescending(pair => pair.Value))
         {
             var fontSize = drawer.FontSize * count;
             var size = drawer.GetTextRectangleSize(word, fontSize);
@@ -34,43 +34,5 @@ public class TagCloudGenerator
             ));
         }
         drawer.Draw(rectangles);
-    }
-    
-    public static ServiceCollection ConfigureService(Options options)
-    {
-        var services = new ServiceCollection();
-        
-        services.AddScoped<TagCloudGenerator>();
-                
-        services.AddScoped<ICloudShaper>(provider => SpiralCloudShaper.Create(new Point(0, 0)));
-        services.AddScoped<CircularCloudLayouter>(provider => new CircularCloudLayouter(
-                new Point(0,0),
-                provider.GetService<ICloudShaper>()
-            )
-        );
-        
-        services.AddScoped<ICloudDrawer>(provider => TagCloudDrawer.Create(
-                options.DestinationPath, 
-                options.Name, 
-                options.FontSize,
-                provider.GetService<IColorSelector>()
-            )
-        );
-        if (options.ColorScheme == "random")
-            services.AddScoped<IColorSelector, RandomColorSelector>();
-        else
-            services.AddScoped<IColorSelector>(provider => new ConstantColorSelector(Color.Black));
-                
-        services.AddScoped<ITextHandler>(provider => 
-            new FileTextHandler(File.Open(options.SourcePath, FileMode.Open))
-        );
-        return services;
-    }
-
-    public static bool ConfigureServiceAndTryGet<T>(Options option, out T value)
-    {
-        using var serviceProvider = ConfigureService(option).BuildServiceProvider();
-        value = serviceProvider.GetService<T>();
-        return value != null;
     }
 }

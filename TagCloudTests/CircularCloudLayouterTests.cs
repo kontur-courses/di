@@ -1,59 +1,59 @@
 using System.Drawing;
-using FluentAssertions;
 using TagCloud;
+using TagCloud.Extensions;
 
 namespace TagCloudTests;
 
 public class CircularCloudLayouterTests
 {
     private CircularCloudLayouter layouter;
-    private Point center;
     private ICloudDrawer drawer;
+    private Point center;
 
     [SetUp]
     public void Setup()
     {
         center = new Point(0, 0);
-        layouter = new CircularCloudLayouter(center, SpiralCloudShaper.Create(center));
+        layouter = new CircularCloudLayouter(SpiralCloudShaper.Create(center));
     }
 
     [Test]
-    public void ReturnEmptyList_WhenCreated()
+    public void Rectangles_ReturnEmptyList_WhenCreated()
     {
         layouter.Rectangles.Should().BeEmpty();
     }
 
     [Test]
-    public void ReturnOneElementList_WhenAddOne()
+    public void Rectangles_ReturnOneElementList_WhenAddOne()
     {
         layouter.PutNextRectangle(new Size(1, 1));
         layouter.Rectangles.Count().Should().Be(1);
     }
 
     [Test]
-    public void ReturnTwoElementList_WhenAddTwo()
+    public void Rectangles_ReturnTwoElementList_WhenAddTwo()
     {
         layouter.PutNextRectangle(new Size(1, 1));
         layouter.PutNextRectangle(new Size(1, 1));
         layouter.Rectangles.Count().Should().Be(2);
-        NotIntersectedAssert(layouter.Rectangles);
+        NotIntersectedAssertion(layouter.Rectangles);
     }
-
+    
     [TestCase(1, 1, 500, 0.77D, TestName = "WithSquareShape")]
     [TestCase(20, 10, 500, 0.67D, TestName = "WithRectangleShape")]
-    public void AddManyNotIntersectedRectangles_WithConstantSize_ByCloudShape(int width, int height, int count, double accuracy)
+    public void Layouter_ShouldLocateConstantSizeRectangles_ByCircleShapeAndWithoutIntersection(int width, int height, int count, double accuracy)
     {
         var size = new Size(width, height);
         for (int i = 0; i < count; i++)
             layouter.PutNextRectangle(size);
 
         layouter.Rectangles.Count().Should().Be(count);
-        NotIntersectedAssert(layouter.Rectangles);
+        NotIntersectedAssertion(layouter.Rectangles);
         CircleShapeAssertion(layouter.Rectangles, accuracy);
     }
 
     [Test]
-    public void AddManyNotIntersectedRectangles_WithVariableSize_ByCloudShape()
+    public void Layouter_ShouldLocateVariableSizeRectangles_ByCircleShapeAndWithoutIntersection()
     {
         var rnd = new Random(DateTime.Now.Microsecond);
 
@@ -64,14 +64,14 @@ public class CircularCloudLayouterTests
         }
 
         layouter.Rectangles.Count().Should().Be(200);
-        NotIntersectedAssert(layouter.Rectangles);
+        NotIntersectedAssertion(layouter.Rectangles);
         CircleShapeAssertion(layouter.Rectangles, 0.6D);
     }
 
     [TestCase(-1, 1, TestName = "WithNegativeWidth")]
     [TestCase(1, -1, TestName = "WithNegativeHeight")]
     [TestCase(-1, -1, TestName = "WithNegativeWidthAndHeight")]
-    public void Throw_ThenTryPutRectangle(int width, int height)
+    public void PutNextRectangle_ShouldThrow_ThenTryPutRectangle(int width, int height)
     {
         Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(new Size(width, height)));
     }
@@ -93,7 +93,7 @@ public class CircularCloudLayouterTests
         Assert.GreaterOrEqual(rectanglesTotalArea / containingCircleRadius, accuracy);
     }
 
-    public static void NotIntersectedAssert(IEnumerable<Rectangle> rectangles)
+    public static void NotIntersectedAssertion(IEnumerable<Rectangle> rectangles)
     {
         rectangles
             .HasIntersectedRectangles()

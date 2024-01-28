@@ -27,23 +27,4 @@ public class Options
     
     [Option("height", HelpText = "Set height.", Default = 100)]
     public int Height { get; set; }
-
-    public static Options Default
-    {
-        get
-        {
-            var options = new Options();
-            foreach (var property in typeof(Options).GetProperties())
-            {
-                var option = property
-                    .GetCustomAttributes(typeof(OptionAttribute), false)
-                    .Cast<OptionAttribute>()
-                    .FirstOrDefault();
-                if (option != null && option.Default != null)
-                    property.SetValue(options, option.Default);
-            }
-
-            return options;
-        }
-    }
 }

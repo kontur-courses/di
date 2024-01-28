@@ -2,5 +2,5 @@
 
 public interface ITextHandler
 {
-    IEnumerable<(string word, int count)> Handle();
+    Dictionary<string, int> Handle();
 }

@@ -11,8 +11,10 @@ class Program
         Parser.Default.ParseArguments<Options>(args)
             .WithParsed(option =>
             {
-                using var serviceProvider = TagCloudGenerator.ConfigureService(option).BuildServiceProvider();
-                serviceProvider.GetService<TagCloudGenerator>().Generate();
+                if (TagCloudServicesFactory.ConfigureServiceAndTryGet<TagCloudGenerator>(option, out var generator))
+                    generator.Generate();
+                else
+                    throw new Exception("Can't configure service");
             });
     }
 }

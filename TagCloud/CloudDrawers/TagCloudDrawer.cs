@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagCloud.Extensions;
 using TagCloudTests;
 
 namespace TagCloud;
@@ -20,29 +21,22 @@ public class TagCloudDrawer : ICloudDrawer
 
     public int FontSize => fontSize;
 
-    public void Draw(IEnumerable<TextRectangle> rectangles)
+    public void Draw(List<TextRectangle> rectangles)
     {
-        if (rectangles.Count() == 0)
+        if (rectangles.Count == 0)
             throw new ArgumentException("Empty rectangles list");
+        
+        var containingRect = rectangles
+            .Select(r => r.Rectangle)
+            .GetMinimalContainingRectangle();
 
-        var minX = rectangles.Min(rect => rect.X);
-        var maxX = rectangles.Max(rect => rect.Right);
-        var minY = rectangles.Min(rect => rect.Top);
-        var maxY = rectangles.Max(rect => rect.Bottom);
-
-        using var bitmap = new Bitmap(maxX - minX + 2, maxY - minY + 2);
+        using var bitmap = new Bitmap(containingRect.Width + 2, containingRect.Height + 2);
         using var graphics = Graphics.FromImage(bitmap);
-        graphics.DrawRectangles(
-            selector, 
-            rectangles
-                .Select(rect => rect with { X = -minX + rect.X, Y = -minY + rect.Y })
-                .Select(rect => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height))
-                .ToArray()
-        );
+
         graphics.DrawStrings(
             selector, 
             rectangles
-                .Select(rect => rect with { X = -minX + rect.X, Y = -minY + rect.Y })
+                .Select(rect => rect.OnLocation(-containingRect.X + rect.X, -containingRect.Y + rect.Y))
                 .ToArray()
         );
         
@@ -51,7 +45,7 @@ public class TagCloudDrawer : ICloudDrawer
 
     public Size GetTextRectangleSize(string text, int size)
     {
-        var graphics = Graphics.FromImage(new Bitmap(1,1));
+        using var graphics = Graphics.FromImage(new Bitmap(1,1));
         var sizeF = graphics.MeasureString(text, new Font(FontFamily.GenericSerif, size));
         return new Size((int)sizeF.Width, (int)sizeF.Height);
     }

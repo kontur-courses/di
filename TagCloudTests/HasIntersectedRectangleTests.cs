@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using FluentAssertions;
+using TagCloud.Extensions;
 using TagCloudTests.TestData;
 
 namespace TagCloudTests;

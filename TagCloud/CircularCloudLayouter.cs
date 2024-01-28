@@ -5,14 +5,12 @@ namespace TagCloud;
 public class CircularCloudLayouter
 {
     private List<Rectangle> rectangles;
-    private Point center;
     private ICloudShaper shaper;
 
-    public IEnumerable<Rectangle> Rectangles => rectangles;
+    public IReadOnlyList<Rectangle> Rectangles => rectangles;
 
-    public CircularCloudLayouter(Point center, ICloudShaper shaper)
+    public CircularCloudLayouter(ICloudShaper shaper)
     {
-        this.center = center;
         rectangles = new List<Rectangle>();
         this.shaper = shaper;
     }
