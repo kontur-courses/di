@@ -1,24 +1,35 @@
 ﻿using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;
 using TagCloudGenerator;
 using TagsCloudVisualization;
 using TagsCloudVisualization.PointDistributors;
 
 public class Program
-{
-    static TagCloudDrawer tagCloudDrawer = new TagCloudDrawer();
-    
+{    
     public static void Main(string[] args)
-    {
+    {             
+        var drawer = InitializeDrawer();
         var visualizingSettings = new VisualizingSettings();
 
         Parser.Default.ParseArguments<Options>(args)
                  .WithParsed<Options>(o =>
                  {
                      AddSettings(o, visualizingSettings);
-                     var image = tagCloudDrawer.DrawWordsCloud(o.Path, visualizingSettings);
-                     tagCloudDrawer.SaveImage(image, visualizingSettings, o.Path);
+                     var image = drawer.DrawWordsCloud(o.Path, visualizingSettings);
+                     drawer.SaveImage(image, visualizingSettings, o.Path);
                  });
+    }
+
+    public static TagCloudDrawer InitializeDrawer()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<TagCloudDrawer>();
+        services.AddTransient<ITextProcessor, TextProcessor>();
+        services.AddTransient<WordCounter>();
+        var container = services.BuildServiceProvider();
+
+        return container.GetRequiredService<TagCloudDrawer>();
     }
 
     private static void AddSettings(Options options, VisualizingSettings visualizingSettings)
@@ -38,10 +49,17 @@ public class Program
         if (options.Font != null)
             visualizingSettings.Font = options.Font;
 
-        if (!options.Center.IsEmpty && options.Step != 0 && options.DeltaAngle != 0)
-            visualizingSettings.PointDistributor = new Spiral(options.Center, options.Step, options.DeltaAngle);
+        var center = new Point(visualizingSettings.ImageSize.Width / 2, visualizingSettings.ImageSize.Height / 2);
+        var step = 1;
+        var deltaAngle = 0.1;
 
-        else
-            visualizingSettings.PointDistributor = new Spiral(new Point(visualizingSettings.ImageSize.Width/2, visualizingSettings.ImageSize.Height/2));
+        if (!options.Center.IsEmpty) 
+            center = options.Center;
+        if (options.Step != 0)
+            step = options.Step;
+        if (options.DeltaAngle != 0)
+            deltaAngle = options.DeltaAngle;
+
+        visualizingSettings.PointDistributor = new Spiral(center, step, deltaAngle);
     }
 }

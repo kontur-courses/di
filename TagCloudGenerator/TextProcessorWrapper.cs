@@ -9,7 +9,7 @@ namespace TagCloudGenerator
             this.textProcessor = textProcessor; 
         }
 
-        public IEnumerable<string> ProcessText(IEnumerable<string> file)
+        public virtual IEnumerable<string> ProcessText(IEnumerable<string> file)
         {
             return textProcessor.ProcessText(file);
         }

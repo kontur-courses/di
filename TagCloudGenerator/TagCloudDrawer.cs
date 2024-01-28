@@ -8,16 +8,23 @@ namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
+        private ITextProcessor textProcessor;
+        private WordCounter wordCounter;
+
+        public TagCloudDrawer(WordCounter wordCounter, ITextProcessor textProcessor) 
+        {
+            this.textProcessor = textProcessor;
+            this.wordCounter = wordCounter;
+        }
+
         public Bitmap DrawWordsCloud(string filePath, VisualizingSettings visualizingSettings)
         {          
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
-
-            var textProcessor = new TextProcessor();
+           
             var words = ReadTextFromFile(filePath);
             words = textProcessor.ProcessText(words);
-
-            WordCounter wordCounter = new WordCounter();
+       
             var wordsWithCount = wordCounter.CountWords(words);
             var orderedWords = wordsWithCount
                 .OrderByDescending(x => x.Value)
@@ -108,17 +115,15 @@ namespace TagCloudGenerator
         private Bitmap Draw(Dictionary<string, int> text, VisualizingSettings settings)
         {
             var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            var center = new System.Drawing.Point(settings.ImageSize.Width/2, settings.ImageSize.Height/2);
-
+            var center = new Point(settings.ImageSize.Width/2, settings.ImageSize.Height/2);
             var distributor = settings.PointDistributor;
             var layouter = new CircularCloudLayouter(center, distributor);
-
             var brush = new SolidBrush(settings.PenColor);
             var graphics = Graphics.FromImage(bitmap);
 
             foreach(var line in text)
             {
-                var font = new System.Drawing.Font(settings.Font, 24 + (line.Value * 6));
+                var font = new Font(settings.Font, 24 + (line.Value * 6));
                 SizeF size = graphics.MeasureString(line.Key, font);
                 var rect = layouter.PutNextRectangle(size.ToSize());          
 
