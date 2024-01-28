@@ -7,12 +7,12 @@ public class LayoutDrawer
 {
     private IInterestingWordsParser interestingWordsParser;
     private IRectangleLayouter rectangleLayouter;
-    private IPallete palette;
+    private IPalette palette;
     private Font font;
 
     public LayoutDrawer(IInterestingWordsParser interestingWordsParser,
         IRectangleLayouter rectangleLayouter,
-        IPallete palette,
+        IPalette palette,
         Font font)
     {
         this.interestingWordsParser = interestingWordsParser;
@@ -22,7 +22,8 @@ public class LayoutDrawer
     }
 
     public Bitmap CreateLayoutImageFromFile(string inputFilePath,
-        Size imageSize)
+        Size imageSize,
+        int minimumFontSize)
     {
         var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);
@@ -39,7 +40,8 @@ public class LayoutDrawer
         
         foreach (var wordCount in sortedWordsCount)
         {
-            var rectangleFont = new Font(font.FontFamily, font.Size * wordCount.Count / mostWordOccurrencies);
+            var rectangleFont = new Font(font.FontFamily, 
+                Math.Max(font.Size * wordCount.Count / mostWordOccurrencies, minimumFontSize));
             var rectangleSize = graphics.MeasureString(wordCount.Word, rectangleFont);
 
             var textRectangle = rectangleLayouter.PutNextRectangle(rectangleSize);

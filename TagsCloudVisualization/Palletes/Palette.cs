@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization;
 
-public class Palette : IPallete
+public class Palette : IPalette
 {
     public Palette(Color[] textColor, Color backgroundColor)
     {

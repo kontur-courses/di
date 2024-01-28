@@ -5,13 +5,24 @@ namespace TagsCloudVisualization;
 public class MystemDullWordChecker : IDullWordChecker
 {
     private HashSet<string> removedPartOfSpeech;
-    private HashSet<string> excludedWords;
+    private HashSet<string> excludedWords = new();
 
-    public MystemDullWordChecker(HashSet<string> removedPartOfSpeech, string excludedWordsFile)
+    public MystemDullWordChecker(HashSet<string> removedPartOfSpeech, string? excludedWordsFile)
     {
         this.removedPartOfSpeech = removedPartOfSpeech;
-        excludedWords =
-            new HashSet<string>(File.ReadAllText(excludedWordsFile, Encoding.UTF8).Split(Environment.NewLine));
+        if (excludedWordsFile is null)
+            return;
+
+        try
+        {
+            excludedWords =
+                new HashSet<string>(File.ReadAllText(excludedWordsFile, Encoding.UTF8).Split(Environment.NewLine));
+        }
+        catch (FileNotFoundException e)
+        {
+            Console.WriteLine($"Could not find specified excluded words file {excludedWordsFile}. " +
+                              $"No words will be excluded.");
+        }
     }
 
     public bool Check(WordAnalysis wordAnalysis)

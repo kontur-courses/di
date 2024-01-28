@@ -10,27 +10,46 @@ public class Program
 {
     public static int Main(string[] args) => CommandLineApplication.Execute<Program>(args);
 
-    [Argument(0)] [Required] public string InputFilePath { get; set; }
+    [Argument(0, Description = "Path to txt file with words")] 
+    [Required(ErrorMessage = "Expected to get path to file with words as first positional argument." +
+                             "\nExample: C:\\PathTo\\File.txt\nOr relative to exe: PathTo\\File.txt")] 
+    public string InputFilePath { get; set; }
 
-    [Argument(1)] [Required] public string OutputFilePath { get; set; }
+    [Argument(1, Description = "Path to output file")]
+    [Required(ErrorMessage = "Expected to get output file path as second positional argument." +
+                             "\nExample: C:\\PathTo\\File\nOr relative to exe: PathTo\\File")]
+    public string OutputFilePath { get; set; }
 
-    [Option("-w")] private int ImageWidth { get; set; } = 1000;
+    [Option("-w", Description = "Image width in pixels")] 
+    private int ImageWidth { get; set; } = 1000;
 
-    [Option("-h")] private int ImageHeight { get; set; } = 1000;
+    [Option("-h", Description = "Image height in pixels")] 
+    private int ImageHeight { get; set; } = 1000;
 
-    [Option("-bc")] private Color BackgroundColor { get; set; } = Color.Wheat;
+    [Option("-bc", Description = "Image background color from KnownColor enum")] 
+    private Color BackgroundColor { get; set; } = Color.Wheat;
 
-    [Option("-tc")] private Color[] TextColor { get; set; } = { Color.Black };
+    [Option("-tc", Description = "Image words colors sequence array from KnownColor enum. " +
+                                 "Can be set multiple times for sequence. Example: -tc black -tc white")] 
+    private Color[] TextColor { get; set; } = { Color.Black };
 
-    [Option("-ff")] private string FontFamily { get; set; } = "Arial";
+    [Option("-ff", Description = "Font used for words")] 
+    private string FontFamily { get; set; } = "Arial";
 
-    [Option("-fs")] private int FontSize { get; set; } = 50;
+    [Option("-fs", Description = "Max font size in em")] 
+    private int FontSize { get; set; } = 50;
 
-    [Option("-img")] private ImageFormat SaveImageFormat { get; set; } = ImageFormat.Png;
+    [Option("-mfs", Description = "Min font size in em")] 
+    private int MinimalFontSize { get; set; } = 0;
 
-    [Option("-ef")] private string ExcludedWordsFile { get; set; } = "ExcludedWords.txt";
+    [Option("-img", Description = "Output image format. Choosen from ImageFormat")] 
+    private ImageFormat SaveImageFormat { get; set; } = ImageFormat.Png;
 
-    [Option("-rp")]
+    [Option("-ef", Description = "Txt file with words to exclude. 1 word in line. Words must be lexems.")] 
+    private string ExcludedWordsFile { get; set; }
+
+    [Option("-rp", Description = "Parts of speech abbreviations that are excluded from parsed words. " +
+                                 "More info here https://yandex.ru/dev/mystem/doc/ru/grammemes-values")]
     private HashSet<string> RemovedPartsOfSpeech { get; set; } = new()
         { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
@@ -39,7 +58,7 @@ public class Program
     {
         var services = new ServiceCollection();
         services.AddTransient<Font>(x => new Font(FontFamily, FontSize));
-        services.AddTransient<IPallete>(x => new Palette(TextColor, BackgroundColor));
+        services.AddTransient<IPalette>(x => new Palette(TextColor, BackgroundColor));
         services.AddTransient<IPointGenerator, SpiralPointGenerator>();
         services.AddTransient<IDullWordChecker>(x =>
             new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
@@ -48,10 +67,27 @@ public class Program
         services.AddTransient<LayoutDrawer>();
 
         using var provider = services.BuildServiceProvider();
-
+        
         var layoutDrawer = provider.GetRequiredService<LayoutDrawer>();
-        layoutDrawer
-            .CreateLayoutImageFromFile(InputFilePath, new Size(ImageWidth, ImageHeight))
-            .SaveImage(OutputFilePath, SaveImageFormat);
+        try
+        {
+            layoutDrawer
+                .CreateLayoutImageFromFile(InputFilePath, new Size(ImageWidth, ImageHeight), MinimalFontSize)
+                .SaveImage(OutputFilePath, SaveImageFormat);
+        }
+        catch (Exception ex)
+        {
+            if (ex is FileNotFoundException or DirectoryNotFoundException)
+            {
+                Console.WriteLine(ex.Message);
+                if (!Path.IsPathRooted(InputFilePath))
+                    Console.WriteLine("Relative paths are searched realative to .exe file. " +
+                                      "Try giving an absolute path.");   
+            }
+            else
+            {
+                throw;
+            }
+        }
     }
 }

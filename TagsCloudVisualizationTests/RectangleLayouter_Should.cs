@@ -4,14 +4,14 @@ using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTests;
 
-public class CloudLayouter_Should
+public class RectangleLayouter_Should
 {
-    private RectangleLayouter? circularCloudLayouter;
+    private RectangleLayouter? rectangleLayouter;
 
     [SetUp]
     public void SetCircularCloudFieldToNull()
     {
-        circularCloudLayouter = null;
+        rectangleLayouter = null;
     }
     
     [TestCase(-1, 0, TestName = "Negative width")]
@@ -19,9 +19,9 @@ public class CloudLayouter_Should
     [TestCase(-5, -5, TestName = "Negative width and height")]
     public void PutNextRectangleThrowsArgumentException_WhenNegativeParameters(int rectWidth, int rectHeight)
     {
-        circularCloudLayouter = new RectangleLayouter(new SpiralPointGenerator());
+        rectangleLayouter = new RectangleLayouter(new SpiralPointGenerator());
         var rectangleSize = new Size(rectWidth, rectHeight);
-        var rectangleCreation = () => circularCloudLayouter.PutNextRectangle(rectangleSize);
+        var rectangleCreation = () => rectangleLayouter.PutNextRectangle(rectangleSize);
         rectangleCreation.Should().Throw<ArgumentException>();
     }
 
@@ -30,17 +30,17 @@ public class CloudLayouter_Should
         IPointGenerator pointGenerator,
         int closestRectangleMaxDistance)
     {
-        circularCloudLayouter = new RectangleLayouter(pointGenerator);
+        rectangleLayouter = new RectangleLayouter(pointGenerator);
         var squareSide = 20;
         var rectangleSize = new Size(squareSide, squareSide);
         var rectanglesWithoutCurrent = new List<Rectangle>();
 
-        var firstRectangle = circularCloudLayouter.PutNextRectangle(rectangleSize);
+        var firstRectangle = rectangleLayouter.PutNextRectangle(rectangleSize);
         rectanglesWithoutCurrent.Add(firstRectangle);
 
         for (var i = 1; i < 15; i++)
         {
-            var currentRectangle = circularCloudLayouter.PutNextRectangle(rectangleSize);
+            var currentRectangle = rectangleLayouter.PutNextRectangle(rectangleSize);
 
             var closestRectangleDistance = rectanglesWithoutCurrent
                 .Min(existingRectangle => CalculateDistanceBetweenRectangles(currentRectangle, existingRectangle));

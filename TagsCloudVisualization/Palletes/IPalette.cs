@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization;
 
-public interface IPallete
+public interface IPalette
 {
     public Color GetNextWordColor();
 
