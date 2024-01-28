@@ -1,4 +1,5 @@
 using TagsCloud.Contracts;
+using Xceed.Words.NET;
 
 namespace TagsCloud.FileReaders;
 
@@ -9,6 +10,9 @@ public class DocxFileReader : IFileReader
 
     public IEnumerable<string> ReadContent(string filename, IPostFormatter postFormatter = null)
     {
-        throw new NotImplementedException();
+        using var document = DocX.Load(filename);
+        var paragraphs = document.Paragraphs;
+
+        return paragraphs.Select(para => postFormatter is null ? para.Text : postFormatter.Format(para.Text));
     }
 }
