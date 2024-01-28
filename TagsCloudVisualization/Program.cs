@@ -54,7 +54,7 @@ public class Program
         { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
     [Option("-square", Description = "Will use another algorithm to generate square tag cloud instead of circular.")]
-    private bool SqareAlgorithm { get; set; }
+    private bool SquareAlgorithm { get; set; }
 
 
     private void OnExecute()
@@ -62,7 +62,7 @@ public class Program
         var services = new ServiceCollection();
         services.AddTransient<Font>(x => new Font(FontFamily, FontSize));
         services.AddTransient<IPalette>(x => new Palette(TextColor, BackgroundColor));
-        if (SqareAlgorithm)
+        if (SquareAlgorithm)
             services.AddTransient<IPointGenerator, LissajousCurvePointGenerator>();
         else
             services.AddTransient<IPointGenerator, SpiralPointGenerator>();
