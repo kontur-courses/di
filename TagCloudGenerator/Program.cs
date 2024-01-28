@@ -10,19 +10,22 @@ public class Program
     
     public static void Main(string[] args)
     {
-        var visualizingSettings = new VisualizingSettings();    
+        var visualizingSettings = new VisualizingSettings();
 
         Parser.Default.ParseArguments<Options>(args)
                  .WithParsed<Options>(o =>
                  {
                      AddSettings(o, visualizingSettings);
                      var image = tagCloudDrawer.DrawWordsCloud(o.Path, visualizingSettings);
-                     tagCloudDrawer.SaveImage(image);
+                     tagCloudDrawer.SaveImage(image, visualizingSettings, o.Path);
                  });
     }
 
     private static void AddSettings(Options options, VisualizingSettings visualizingSettings)
     {      
+        if (options.ImageName != null)
+            visualizingSettings.ImageName = options.ImageName;
+
         if (!options.Size.IsEmpty)
             visualizingSettings.ImageSize = options.Size;
 

@@ -20,6 +20,9 @@ namespace TagCloudGenerator
         [Option('c', "wordsColor", Required = false, HelpText = "The color of the words in the image.")]
         public Color ForegroundColor { get; set; }
 
+        [Option('n', "imageName", Required = false, HelpText = "The relative path to the saved image and image format.")]
+        public string ImageName { get; set; }
+
         [Option("deltaAngle", Required = false, HelpText = "Specify the delta of the angle for the spiral.")]
         public double DeltaAngle { get; set; }
 

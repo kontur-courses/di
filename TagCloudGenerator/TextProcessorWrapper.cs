@@ -11,12 +11,7 @@ namespace TagCloudGenerator
 
         public IEnumerable<string> ProcessText(IEnumerable<string> file)
         {
-            throw new NotImplementedException();
+            return textProcessor.ProcessText(file);
         }
-
-        //public virtual string[] ProcessText(string[] file)
-        //{
-        //   return textProcessor.ProcessText(file);
-        //}  
     }
 }
