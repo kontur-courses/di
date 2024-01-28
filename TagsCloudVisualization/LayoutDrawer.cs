@@ -7,12 +7,12 @@ public class LayoutDrawer
 {
     private IInterestingWordsParser interestingWordsParser;
     private IRectangleLayouter rectangleLayouter;
-    private Palette palette;
+    private IPallete palette;
     private Font font;
 
     public LayoutDrawer(IInterestingWordsParser interestingWordsParser,
         IRectangleLayouter rectangleLayouter,
-        Palette palette,
+        IPallete palette,
         Font font)
     {
         this.interestingWordsParser = interestingWordsParser;
@@ -35,9 +35,8 @@ public class LayoutDrawer
             .OrderByDescending(wordCount => wordCount.Count);
         var mostWordOccurrencies = sortedWordsCount.Max(arg => arg.Count);
 
-        graphics.Clear(palette.BackgroundColor);
-
-        using var brush = new SolidBrush(palette.TextColor);
+        graphics.Clear(palette.GetBackgroundColor());
+        
         foreach (var wordCount in sortedWordsCount)
         {
             var rectangleFont = new Font(font.FontFamily, font.Size * wordCount.Count / mostWordOccurrencies);
@@ -46,6 +45,8 @@ public class LayoutDrawer
             var textRectangle = rectangleLayouter.PutNextRectangle(rectangleSize);
             var x = textRectangle.X + imageSize.Width / 2;
             var y = textRectangle.Y + imageSize.Height / 2;
+
+            using var brush = new SolidBrush(palette.GetNextWordColor());
             graphics.DrawString(wordCount.Word, rectangleFont, brush, x, y);
         }
 

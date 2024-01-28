@@ -20,13 +20,13 @@ public class Program
 
     [Option("-bc")] private Color BackgroundColor { get; set; } = Color.Wheat;
 
-    [Option("-tc")] private Color TextColor { get; set; } = Color.Black;
+    [Option("-tc")] private Color[] TextColor { get; set; } = { Color.Black };
 
     [Option("-ff")] private string FontFamily { get; set; } = "Arial";
 
     [Option("-fs")] private int FontSize { get; set; } = 50;
 
-    [Option("-if")] private ImageFormat SaveImageFormat { get; set; } = ImageFormat.Png;
+    [Option("-img")] private ImageFormat SaveImageFormat { get; set; } = ImageFormat.Png;
 
     [Option("-ef")] private string ExcludedWordsFile { get; set; } = "ExcludedWords.txt";
 
@@ -39,7 +39,7 @@ public class Program
     {
         var services = new ServiceCollection();
         services.AddTransient<Font>(x => new Font(FontFamily, FontSize));
-        services.AddTransient<Palette>(x => new Palette(TextColor, BackgroundColor));
+        services.AddTransient<IPallete>(x => new Palette(TextColor, BackgroundColor));
         services.AddTransient<IPointGenerator, SpiralPointGenerator>();
         services.AddTransient<IDullWordChecker>(x =>
             new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
