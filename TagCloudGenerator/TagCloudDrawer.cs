@@ -1,24 +1,38 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.PointDistributors;
 using TagsCloudVisualization;
-using System.Reflection;
 
 namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
-        public VisualizingSettings settings;
-        public void DrawWordsCloud(string filePath)
-        {
-            var tagCloudDrawer = new TagCloudDrawer();
-            
-            var words = ReadTextFromFile(filePath);           
-            tagCloudDrawer.Draw(words);
+        public Bitmap DrawWordsCloud(string filePath, VisualizingSettings visualizingSettings)
+        {          
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
 
-            Console.WriteLine($"The tag cloud is drawn, the path to the image: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)}");
+            var words = ReadTextFromFile(filePath);
+
+            WordCounter wordCounter = new WordCounter();
+            var wordsWithCount = wordCounter.CountWords(words);
+            var orderedWords = wordsWithCount
+                .OrderByDescending(x => x.Value)
+                .ToDictionary(x => x.Key, x => x.Value);
+
+            Console.WriteLine($"The tag cloud is drawn");
+
+            return Draw(orderedWords, visualizingSettings);
         }
 
-        private string[] ReadTextFromFile(string filePath)
+        public void SaveImage(Bitmap bitmap)
+        {
+            if (bitmap == null) 
+                return;
+
+            bitmap.Save("TagCloud.png");
+            Console.WriteLine("The image is saved, the path to the image: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)}");
+        }
+
+        private IEnumerable<string> ReadTextFromFile(string filePath)
         {
             TextProcessor textProcessor = new TextProcessor();
 
@@ -26,29 +40,27 @@ namespace TagCloudGenerator
             return textProcessor.ProcessText(text);
         }
 
-        private void Draw(string[] text)
+        private Bitmap Draw(Dictionary<string, int> text, VisualizingSettings settings)
         {
-            var center = new Point(500, 500);
-            var distributor = new Spiral(1,center, 0.1);
+            var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            var center = new Point(settings.ImageSize.Width/2, settings.ImageSize.Height/2);
+
+            var distributor = settings.PointDistributor;
             var layouter = new CircularCloudLayouter(center, distributor);
-            var brush = new SolidBrush(Color.Aqua);
-            var font = new Font("Arial", 24);
 
-            var bitmap = new Bitmap(1000, 1000);
+            var brush = new SolidBrush(settings.PenColor);
             var graphics = Graphics.FromImage(bitmap);
-          
-            for (var i = 0; i < text.Length; i++)
+
+            foreach(var line in text)
             {
-                SizeF size = graphics.MeasureString(text[i], font);
-                var rect = layouter.PutNextRectangle(size.ToSize());
+                var font = new Font(settings.Font, 24 + (line.Value * 6));
+                SizeF size = graphics.MeasureString(line.Key, font);
+                var rect = layouter.PutNextRectangle(size.ToSize());          
 
-                if (i == 0 )
-                    distributor.centerOnPoint = true;
-
-                graphics.DrawString(text[i], font, brush, rect.X, rect.Y);
+                graphics.DrawString(line.Key, font, brush, rect.X, rect.Y);
             }
-           
-            bitmap.Save("Test33.png");
-        }
+
+           return bitmap;
+        }  
     }
 }

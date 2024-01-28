@@ -5,26 +5,19 @@ namespace TagsCloudVisualization.PointDistributors
 {
     public class Spiral : IPointDistributor
     {
-        public Spiral()
-        {
-            step = 1;
-            deltaAngle = 0.1;
-            center = new Point(0, 0);
-        }
-
-        public Spiral(int step, Point center, double deltaAngle)
+        private readonly int step;
+        private double angle;
+        private double deltaAngle;
+        private Point center;
+        public bool centerOnPoint = false;
+       
+        public Spiral(Point center, int step = 1, double deltaAngle = 0.1)
         {
             this.step = step;
             this.center = center;
             this.deltaAngle = deltaAngle;
         }
-
-        private readonly int step;
-        private double angle;
-        private readonly double deltaAngle;
-        private Point center;
-        public bool centerOnPoint;
-
+         
         public Point GetPosition()
         {
             if (!centerOnPoint)

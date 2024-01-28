@@ -1,9 +1,19 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.PointDistributors;
 
 namespace TagsCloudVisualization
 {
     public class VisualizingSettings
     {
+        public string ImageName = "TagCloud";
+        public Size ImageSize = new Size(1000, 1000);
+        public Color BackgroundColor = Color.Black;
+        public Color PenColor = Color.DarkOrange;
+        public FontFamily Font = new FontFamily("Arial");
+        public IPointDistributor PointDistributor;
+    
+        public VisualizingSettings() { }
+
         public VisualizingSettings(string imageName, Size imageSize)
         {
             ImageName = imageName;
@@ -19,10 +29,5 @@ namespace TagsCloudVisualization
             BackgroundColor = backgroundColor;
             PenColor = penColor;
         }
-
-        public readonly string ImageName;
-        public readonly Size ImageSize;
-        public readonly Color BackgroundColor;
-        public readonly Color PenColor;
     }
 }

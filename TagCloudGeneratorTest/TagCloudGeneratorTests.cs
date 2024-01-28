@@ -1,7 +1,6 @@
-using FluentAssertions;
+Ôªøusing FluentAssertions;
 using NUnit.Framework;
 using TagCloudGenerator;
-using System.IO;
 using System;
 
 namespace TagCloudGeneratorTest
@@ -9,34 +8,34 @@ namespace TagCloudGeneratorTest
     public class Tests
     {
         private TextProcessor textProcessor;
+        private WordCounter counter;
 
         [SetUp]
         public void Setup()
         {
-            var processor = new TextProcessor();
-            textProcessor = processor;
+            textProcessor = new TextProcessor();
+            counter = new WordCounter();
         }
 
         [Test]
         public void WhenPassWordsInUppercase_ShouldReturnWordsInLowerCase()
         {
-            var filePath = @"C:\Users\lholy\Documents\GitHub\di\TagCloudGeneratorTest\TestsData\test1.txt";
-            var file = File.ReadAllLines(filePath);
-
-            var fileText = textProcessor.ProcessText(file);
+            var text = textProcessor.ProcessText(new[] { "–û–±–ª–∞–∫–æ", "–¢–µ–≥–æ–≤" });
 
             var result = "";
-            for(var i = 0; i < fileText.Length; i++)
-            {
-                if (i == fileText.Length - 1)
-                {
-                    result += fileText[i];
-                    continue;
-                }
-                result += (fileText[i] + Environment.NewLine);
-            }
+            foreach (var word in text)
+                result += (word + Environment.NewLine);
+            
+            result.Should().Be("–æ–±–ª–∞–∫–æ\r\n—Ç–µ–≥–æ–≤\r\n");
+        }
 
-            result.Should().Be("ÒÓÁ‰‡ÌËÂ\r\nÓ·Î‡Í‡\r\nÚÂ„Ó‚\r\nËÁ\r\nÙ‡ÈÎ‡");
+        [Test]
+        public void WhenWordIsRepeatedSeveralTimesInText_ItShouldBeOutputOneTime()
+        {
+            var text = textProcessor.ProcessText(new[] { "–û–±–ª–∞–∫–æ", "–¢–µ–≥–æ–≤", "–û–±–ª–∞–∫–æ"});
+            var dictionary = counter.CountWords(text);
+
+            dictionary["–æ–±–ª–∞–∫–æ"].Should().Be(2);
         }
     }
 }

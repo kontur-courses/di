@@ -1,4 +1,5 @@
-﻿namespace TagCloudGenerator
+﻿
+namespace TagCloudGenerator
 {
     public abstract class TextProcessorWrapper : ITextProcessor
     {
@@ -8,9 +9,14 @@
             this.textProcessor = textProcessor; 
         }
 
-        public virtual string[] ProcessText(string[] file)
+        public IEnumerable<string> ProcessText(IEnumerable<string> file)
         {
-           return textProcessor.ProcessText(file);
-        }  
+            throw new NotImplementedException();
+        }
+
+        //public virtual string[] ProcessText(string[] file)
+        //{
+        //   return textProcessor.ProcessText(file);
+        //}  
     }
 }

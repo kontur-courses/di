@@ -2,13 +2,11 @@
 {
     public class WordCounter
     {
-        public Dictionary<string, int> words;
-        
-        public Dictionary<string, int> CountWords(string text)
+        public Dictionary<string, int> CountWords(IEnumerable<string> text)
         {
-            words = new Dictionary<string, int>();
+            var words = new Dictionary<string, int>();
 
-            foreach (string word in text.Split(' '))
+            foreach (string word in text)
             {
                 if (words.ContainsKey(word))
                     words[word]++;
