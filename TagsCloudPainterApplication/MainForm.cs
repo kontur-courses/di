@@ -8,8 +8,6 @@ public partial class MainForm : Form
     public MainForm(IUiAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
     {
         ArgumentNullException.ThrowIfNull(actions);
-        if (actions.Count() == 0)
-            throw new ArgumentException(nameof(actions));
         ArgumentNullException.ThrowIfNull(imageSettings);
         ArgumentNullException.ThrowIfNull(pictureBox);
 
