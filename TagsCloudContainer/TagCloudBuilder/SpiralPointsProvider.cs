@@ -7,16 +7,16 @@ namespace TagsCloudVisualization
         private int pointNumber = 0;
         private readonly float angleStep = (float)Math.PI / 21;
         private readonly float SpiralRadius = 50;
-        private readonly Point Center;
+        private Point Center;
+        private const int maxPonitsCount = 10000000;
 
-        public SpiralPointsProvider(Point center)
+        public SpiralPointsProvider()
         {
-            Center = center;
         }
 
         public IEnumerable<Point> Points()
         {
-            while (pointNumber < 10000000) // Limit number of returned points for safety reason
+            while (pointNumber < maxPonitsCount)
             {
                 var r = Math.Sqrt(SpiralRadius * pointNumber);
                 var angle = angleStep * pointNumber;
@@ -28,9 +28,9 @@ namespace TagsCloudVisualization
             throw new ArgumentException("Reach end of placing points");
         }
 
-        public void Reset()
+        public void Initialize(Point center)
         {
-            pointNumber = 0;
+            Center = center;
         }
     }
 }

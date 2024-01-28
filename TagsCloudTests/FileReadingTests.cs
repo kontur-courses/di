@@ -44,7 +44,7 @@ namespace TagsCloudTests
             // Arrange
             var filePath = tempFilePath;
             var expectedText = testText;
-            var sut = serviceProvider.GetRequiredService<TextFileReader>();
+            var sut = serviceProvider.GetRequiredService<ITextReader>();
 
             // Act
             var actualText = sut.ReadText(filePath);
@@ -58,7 +58,7 @@ namespace TagsCloudTests
         {
             // Arrange
             var filePath = "nonexistent_file.txt";
-            var sut = serviceProvider.GetRequiredService<TextFileReader>();
+            var sut = serviceProvider.GetRequiredService<ITextReader>();
 
             // Act & Assert
             Assert.Throws<FileNotFoundException>(() => sut.ReadText(filePath));

@@ -8,7 +8,7 @@ namespace TagsCloudTests
     [TestFixture]
     public class FrequencyAnalyzerTests
     {
-        private FrequencyAnalyzer sut;
+        private IAnalyzer sut;
         private ServiceProvider serviceProvider;
 
         [SetUp]
@@ -16,7 +16,7 @@ namespace TagsCloudTests
         {
             var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
             serviceProvider = services.BuildServiceProvider();
-            sut = serviceProvider.GetRequiredService<FrequencyAnalyzer>();
+            sut = serviceProvider.GetRequiredService<IAnalyzer>();
         }
 
         [Test]

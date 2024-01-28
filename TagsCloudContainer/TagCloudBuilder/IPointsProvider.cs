@@ -5,6 +5,6 @@ namespace TagsCloudVisualization
     public interface IPointsProvider
     {
         public IEnumerable<Point> Points();
-        public void Reset();
+        public void Initialize(Point center);
     }
 }

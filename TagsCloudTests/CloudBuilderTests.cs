@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;
+using TagsCloudContainer;
 using TagsCloudContainer.SettingsClasses;
 using TagsCloudVisualization;
 
@@ -7,19 +9,26 @@ namespace TagsCloudTests
 {
     internal class CloudBuilderTests
     {
+        private ServiceProvider serviceProvider;
         private TagsCloudLayouter sut;
         private List<(string, int)> words;
 
         [SetUp]
         public void Setup()
         {
+            var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
+            serviceProvider = services.BuildServiceProvider();
+
             var center = new Point(100, 100);
-            var pointsProvider = new SpiralPointsProvider(center);
-            var drawingSettings = new CloudDrawingSettings();
+            var pointsProvider = new SpiralPointsProvider();
+            var drawingSettings = serviceProvider.GetService<CloudDrawingSettings>();
+
             drawingSettings.Size = new Size(center.X * 2, center.Y * 2);
+            drawingSettings.PointsProvider = pointsProvider;
             words = new() { ("TestWord1", 1), ("TestWord2", 2), ("TestWord3", 3) };
 
-            sut = new TagsCloudLayouter(drawingSettings.Size, pointsProvider, drawingSettings, words);
+            sut = new TagsCloudLayouter();
+            sut.Initialize(drawingSettings, words);
             sut.ToImage();
         }
 

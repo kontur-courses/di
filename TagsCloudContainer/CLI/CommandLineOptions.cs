@@ -54,20 +54,22 @@ namespace TagsCloudContainer.CLI
         private static IPointsProvider GetPointsProvider(string layout, Size size)
         {
             var center = new Point(size.Width / 2, size.Height / 2);
+            var pointProvider = new SpiralPointsProvider();
 
             if (layout.ToLowerInvariant() == "random")
             {
-                return new RandomPointsProvider(center);
+                var p = new RandomPointsProvider();
             }
 
-            return new SpiralPointsProvider(center);
+            pointProvider.Initialize(center);
+            return pointProvider;
         }
 
         private static FontFamily GetFontFamily(string fontName)
         {
             try
             {
-                FontFamily fontFamily = new FontFamily(fontName);
+                var fontFamily = new FontFamily(fontName);
                 return fontFamily;
             }
             catch (ArgumentException)

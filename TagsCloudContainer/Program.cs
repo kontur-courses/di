@@ -15,23 +15,20 @@ namespace TagsCloudContainer
             var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
             var serviceProvider = services.BuildServiceProvider();
 
-            var reader = serviceProvider.GetService<TextFileReader>();
-            var analyzer = serviceProvider.GetService<FrequencyAnalyzer>();
+            var reader = serviceProvider.GetService<ITextReader>();
+            var analyzer = serviceProvider.GetService<IAnalyzer>();
 
             var appSettings = new AppSettings();
 
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o => appSettings = CommandLineOptions.ParseArgs(o));
 
-            string text = reader.ReadText(appSettings.TextFile);
+            var text = reader.ReadText(appSettings.TextFile);
+            var layouter = serviceProvider.GetService<TagsCloudLayouter>();
 
-            analyzer.Analyze(appSettings.TextFile, appSettings.FilterFile);
+            analyzer.Analyze(text, appSettings.FilterFile);
 
-            var layouter = new TagsCloudLayouter(
-                appSettings.DrawingSettings.Size,
-                appSettings.DrawingSettings.PointsProvider,
-                appSettings.DrawingSettings,
-                analyzer.GetAnalyzedText());
+            layouter.Initialize(appSettings.DrawingSettings, analyzer.GetAnalyzedText());
 
             layouter.ToImage().Save(appSettings.OutImagePath);
             Console.WriteLine("Resulting image saved to " + appSettings.OutImagePath);
