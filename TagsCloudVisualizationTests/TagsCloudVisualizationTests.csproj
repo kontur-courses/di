@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TextSamples\TestText.txt" />
     <None Update="TextFiles\RuWords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
