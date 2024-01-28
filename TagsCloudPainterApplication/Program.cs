@@ -41,12 +41,12 @@ public class ApplicationModule : Module
         builder.RegisterType<FilesSourceSettings>().AsSelf().SingleInstance();
         builder.RegisterType<TagsCloudSettings>().AsSelf().SingleInstance();
         builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
+        builder.RegisterType<AppSettings>().AsSelf().SingleInstance();
         builder.RegisterType<SaveImageAction>().As<IUiAction>();
         builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
         builder.RegisterType<FileSourceSettingsAction>().As<IUiAction>();
         builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
         builder.RegisterType<DrawTagCloudAction>().As<IUiAction>();
-        builder.RegisterType<AppSettings>().AsSelf();
         builder.RegisterType<MainForm>().AsSelf();
     }
 }

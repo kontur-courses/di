@@ -10,6 +10,7 @@ using TagsCloudPainterApplication;
 using TagsCloudPainterApplication.Actions;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Properties;
 
 namespace TagsCloudPainterApplicationTests;
 
@@ -57,7 +58,8 @@ public class DependencyInjectionTests
         new TestCaseData(typeof(FilesSourceSettings)),
         new TestCaseData(typeof(TagsCloudSettings)),
         new TestCaseData(typeof(PictureBoxImageHolder)),
-        new TestCaseData(typeof(IImageHolder))
+        new TestCaseData(typeof(IImageHolder)),
+        new TestCaseData(typeof(AppSettings))
     };
 
     [TestCaseSource(nameof(SingleInstanceDependencesTypes))]
