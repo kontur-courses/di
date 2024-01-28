@@ -4,25 +4,14 @@ namespace TagsCloudContainer.UI;
 
 public class ApplicationArguments
 {
-    public void DefaultInit()
-    {
-        Format = "jpg";
-        FontSize = 30;
-        Resolution = [1920, 1080];
-        Center = [960, 540];
-        Background = [255, 255, 255];
-        Scheme = [0, 0, 0, 255];
-        Exclude = Utility.GetRelativeFilePath("src/boringWords.txt");
-    }
-
-    public string Input { get; private set; }
-    public string Output { get; private set; }
-    public string FontPath { get; private set; }
-    public string Format { get; private set; }
-    public int FontSize { get; private set; }
-    public List<int> Resolution { get; private set; }
-    public List<int> Center { get; private set; }
-    public List<int> Background { get; private set; }
-    public List<int> Scheme { get; private set; }
-    public string Exclude { get; private set; }
+    public string Input { get; set; } = null!;
+    public string Output { get; set; } = null!;
+    public string FontPath { get; set; } = null!;
+    public string Format { get; set; } = "jpg";
+    public int FontSize { get; set; } = 30;
+    public List<int> Resolution { get; set; } = [1920, 1080];
+    public List<int> Center { get; set; } = [960, 540];
+    public List<int> Background { get; set; } = [255, 255, 255];
+    public List<int> Scheme { get; set; } = [0, 0, 0, 255];
+    public string Exclude { get; set; } = Utility.GetAbsoluteFilePath("src/boringWords.txt");
 }

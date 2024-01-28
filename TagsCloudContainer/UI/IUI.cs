@@ -2,6 +2,6 @@ namespace TagsCloudContainer.UI;
 
 public interface IUI
 {
-    ApplicationArguments? Setup();
-    void View();
+    ApplicationArguments Setup(string[] args);
+    void View(string output);
 }

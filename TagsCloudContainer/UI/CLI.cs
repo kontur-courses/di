@@ -4,11 +4,9 @@ using TagsCloudContainer.utility;
 
 namespace TagsCloudContainer.UI;
 
-public class CLI(string[] args) : IUI
+public class CLI : IUI
 {
-    private string output = null!;
-    
-    public ApplicationArguments? Setup()
+    public ApplicationArguments Setup(string[] args)
     {
         var p = new FluentCommandLineParser<ApplicationArguments>();
 
@@ -59,28 +57,28 @@ public class CLI(string[] args) : IUI
 
         p.Setup(arg => arg.Exclude)
             .As('e', "exclude")
-            .SetDefault(Utility.GetRelativeFilePath("src/boringWords.txt"))
+            .SetDefault(Utility.GetAbsoluteFilePath("src/boringWords.txt"))
             .WithDescription("Exclude words path");
 
         p.SetupHelp("?", "help")
             .Callback(text => Console.WriteLine(text));
 
         var result = p.Parse(args);
-        
-        if (result.HasErrors || result.HelpCalled) return null;
+
+        if (result.HelpCalled) Environment.Exit(0);
+        if (result.HasErrors) throw new ArgumentNullException();
 
         var obj = p.Object;
-
-        output = obj.Output + "." + obj.Format;
 
         return obj;
     }
 
-    public void View()
+    public void View(string output)
     {
-        using var fileopener = new Process();
-        fileopener.StartInfo.FileName = output;
-        fileopener.StartInfo.UseShellExecute = true;
-        fileopener.Start();
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = output,
+            UseShellExecute = true
+        }); 
     }
 }

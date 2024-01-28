@@ -1,10 +1,8 @@
-﻿using System.Drawing;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.Image;
 using TagsCloudContainer.TagCloud;
 using TagsCloudContainer.UI;
 using TagsCloudContainer.utility;
-using Color = SixLabors.ImageSharp.Color;
 
 namespace TagsCloudContainer;
 
@@ -17,76 +15,28 @@ public static class Program
      */
     public static void Main(string[] args)
     {
-        using var uiContainer = UIContainerInit(args);
-
-        var ui = uiContainer.GetService<IUI>()!;
-        var obj = ui.Setup();
-        if (obj == null) return;
-
-        using var container = MainContainerInit(obj);
-
-        container.GetService<TagCloudVisualizer>()!
-            .GenerateTagCloud(container.GetService<WordHandler>()!
-                .Preprocessing(container.GetService<WordDataSet>()!
-                    .CreateFrequencyDict(container.GetService<ITextHandler>()!.ReadText()
-                    )
-                )
-            );
-
-        ui.View();
+        using var container = ContainerInit(args);
+        
+        container.GetService<Application>()!.Run(container.GetService<ApplicationArguments>()!);
     }
 
-    private static ServiceProvider UIContainerInit(string[] args)
+    private static ServiceProvider ContainerInit(string[] args)
     {
         ServiceCollection services = [];
+        
+        services.AddSingleton<IUI, CLI>();
+        
+        services.AddSingleton(new CLI().Setup(args));
 
-        services.AddSingleton<IUI>(_ => new CLI(args));
-
-        return services.BuildServiceProvider();
-    }
-
-    private static ServiceProvider MainContainerInit(ApplicationArguments args)
-    {
-        ServiceCollection services = [];
-
-        services.AddTransient<ICircularCloudLayouter>(_ => new CircularCloudLayouter(
-            new Point(args.Center[0], args.Center[1])
-        ));
-
-        var format = args.Format switch
-        {
-            "bmp" => ImageEncodings.Bmp,
-            "gif" => ImageEncodings.Gif,
-            "jpg" => ImageEncodings.Jpg,
-            "png" => ImageEncodings.Png,
-            "tiff" => ImageEncodings.Tiff,
-            _ => ImageEncodings.Jpg
-        };
-        services.AddTransient<ImageGenerator>(_ =>
-            new ImageGenerator(
-                args.Output, format,
-                args.FontPath,
-                args.FontSize, args.Resolution[0], args.Resolution[1],
-                Color.FromRgb(
-                    (byte)args.Background[0],
-                    (byte)args.Background[1],
-                    (byte)args.Background[2]),
-                (_, _) => (
-                    (byte)args.Scheme[0],
-                    (byte)args.Scheme[1],
-                    (byte)args.Scheme[2],
-                    (byte)args.Scheme[3])
-            )
-        );
-
+        services.AddTransient<ICircularCloudLayouter, CircularCloudLayouter>();
+        services.AddTransient<ImageGenerator>();
         services.AddTransient<TagCloudVisualizer>();
 
-        services.AddSingleton<ITextHandler>(_ => new FileTextHandler(args.Input));
-        services.AddSingleton<WordHandler>(_ => new WordHandler(
-            new FileTextHandler(args.Exclude),
-            w => w.Length > 3)
-        );
+        services.AddSingleton<ITextHandler, FileTextHandler>();
+        services.AddSingleton<WordHandler>();
         services.AddTransient<WordDataSet>();
+        
+        services.AddSingleton<Application>();
 
         return services.BuildServiceProvider();
     }

@@ -1,15 +1,16 @@
 namespace TagsCloudContainer.utility;
 
-public class WordHandler(ITextHandler? excludeSource = null, Predicate<string>? excludeRule = null)
+public class WordHandler
 { 
-    public IEnumerable<(string word, int count)> Preprocessing(IEnumerable<(string word, int count)> frequencyDict)
+    public IEnumerable<(string word, int count)> Preprocessing(IEnumerable<(string word, int count)> frequencyDict, 
+        string? excludeWords = null, Predicate<string>? excludeRule = null)
     {
         frequencyDict = frequencyDict.Select(kvp => (kvp.word.ToLower(), kvp.count));
 
-        if (excludeSource != null)
+        if (excludeWords != null)
         {
             var boringDict = new WordDataSet()
-                .CreateFrequencyDict(excludeSource.ReadText())
+                .CreateFrequencyDict(excludeWords)
                 .Select(kvp => kvp.word.ToLower());
             frequencyDict = frequencyDict.Where(kvp => !boringDict.Contains(kvp.word));
         }

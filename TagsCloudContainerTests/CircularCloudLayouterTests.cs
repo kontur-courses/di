@@ -4,21 +4,26 @@ using FluentAssertions;
 using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Image;
 using TagsCloudContainer.TagCloud;
+using TagsCloudContainer.UI;
 using TagsCloudContainer.utility;
 
 namespace TagsCloudContainerTests;
 
+[TestFixture]
 public class CircularCloudLayouterTests
 {
     private CircularCloudLayouter circularCloudLayouter = null!;
     private const string FailOutputName = "failFile";
-    private Point center;
+    private List<int> center = null!;
 
     [SetUp]
     public void CircularCloudLayouterSetUp()
     {
-        center = new Point(960, 540);
-        circularCloudLayouter = new CircularCloudLayouter(center);
+        var args = new ApplicationArguments();
+
+        center = args.Center;
+
+        circularCloudLayouter = new CircularCloudLayouter(args);
     }
 
     [TearDown]
@@ -26,14 +31,12 @@ public class CircularCloudLayouterTests
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
         {
-            using var imageGenerator = new ImageGenerator(
-                Utility.GetRelativeFilePath($"out/{FailOutputName}"), ImageEncodings.Png,
-                Utility.GetRelativeFilePath("src/JosefinSans-Regular.ttf"),
-                30, 1920, 1080
-            );
+            var args = new ApplicationArguments { Output = $"out/{FailOutputName}" };
+            using var imageGenerator = new ImageGenerator(args);
+            
             imageGenerator.DrawLayout(circularCloudLayouter.PlacedRectangles);
             Console.WriteLine("Tag cloud visualization saved to file " +
-                              Utility.GetRelativeFilePath($"out/{FailOutputName}.jpg"));
+                              Utility.GetAbsoluteFilePath($"out/{FailOutputName}.jpg"));
         }
     }
 
@@ -43,8 +46,8 @@ public class CircularCloudLayouterTests
         var size = new Size(10, 10);
         var actual = circularCloudLayouter.PutNextRectangle(size);
         var expected = new Rectangle(new Point(
-            center.X - size.Width / 2,
-            center.Y - size.Height / 2
+            center[0] - size.Width / 2,
+            center[1] - size.Height / 2
         ), size);
         actual.Should().Be(expected);
     }
@@ -64,7 +67,9 @@ public class CircularCloudLayouterTests
 
         sw.Start();
 
-        var tmpLayouter = new CircularCloudLayouter(center);
+        var args = new ApplicationArguments();
+
+        var tmpLayouter = new CircularCloudLayouter(args);
 
         for (var _ = 0; _ < count; _++)
             tmpLayouter.PutNextRectangle(new Size(45, 15));
@@ -95,24 +100,30 @@ public class CircularCloudLayouterTests
 
         var cloudArea = circularCloudLayouter.PlacedRectangles.Sum(rectangle => rectangle.Height * rectangle.Width);
 
+        var distToCenter = new Func<Point, List<int>, double>(
+            (coord, cntr) => Math.Sqrt(
+                (coord.X - cntr[0]) * (coord.X - cntr[0]) +
+                (coord.Y - cntr[1]) * (coord.Y - cntr[1])
+            ));
+
         var maxRadius = circularCloudLayouter.PlacedRectangles.Max(
             rectangle => Math.Max(
                 Math.Max(
-                    PointMath.DistanceToCenter(
+                    distToCenter(
                         rectangle.Location,
                         center),
-                    PointMath.DistanceToCenter(
+                    distToCenter(
                         new Point(
                             rectangle.Location.X + rectangle.Width,
                             rectangle.Location.Y),
                         center)),
                 Math.Max(
-                    PointMath.DistanceToCenter(
+                    distToCenter(
                         new Point(
                             rectangle.Location.X,
                             rectangle.Location.Y + rectangle.Height),
                         center),
-                    PointMath.DistanceToCenter(
+                    distToCenter(
                         new Point(
                             rectangle.Location.X + rectangle.Width,
                             rectangle.Location.Y + rectangle.Height),

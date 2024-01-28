@@ -1,9 +1,10 @@
 using System.Drawing;
+using TagsCloudContainer.UI;
 using TagsCloudContainer.utility;
 
 namespace TagsCloudContainer.TagCloud;
 
-public class CircularCloudLayouter(Point center) : ICircularCloudLayouter
+public class CircularCloudLayouter(ApplicationArguments args) : ICircularCloudLayouter
 {
     private int radius;
     private int minDimension = int.MaxValue;
@@ -44,34 +45,34 @@ public class CircularCloudLayouter(Point center) : ICircularCloudLayouter
         {
             if (movableX)
             {
-                if (center.X == target.X + target.Width / 2)
+                if (args.Center[0] == target.X + target.Width / 2)
                 {
                     movableX = false;
                     continue;
                 }
 
-                target.X += Math.Sign(center.X - (target.X + target.Width / 2));
+                target.X += Math.Sign(args.Center[0] - (target.X + target.Width / 2));
 
                 if (IntersectWithPlaced(target))
                 {
-                    target.X -= Math.Sign(center.X - (target.X + target.Width / 2));
+                    target.X -= Math.Sign(args.Center[0] - (target.X + target.Width / 2));
                     movableX = false;
                 }
             }
 
             if (movableY)
             {
-                if (center.Y == target.Y + target.Height / 2)
+                if (args.Center[1] == target.Y + target.Height / 2)
                 {
                     movableY = false;
                     continue;
                 }
 
-                target.Y += Math.Sign(center.Y - (target.Y + target.Height / 2));
+                target.Y += Math.Sign(args.Center[1] - (target.Y + target.Height / 2));
 
                 if (IntersectWithPlaced(target))
                 {
-                    target.Y -= Math.Sign(center.Y - (target.Y + target.Height / 2));
+                    target.Y -= Math.Sign(args.Center[1] - (target.Y + target.Height / 2));
                     movableY = false;
                 }
             }
@@ -85,7 +86,7 @@ public class CircularCloudLayouter(Point center) : ICircularCloudLayouter
         {
             var angle = rnd.Next(360);
             for (var i = 0; i < 360; angle++, i++)
-                yield return PointMath.PolarToCartesian(radius, angle, center);
+                yield return PointMath.PolarToCartesian(radius, angle, args.Center[0], args.Center[1]);
             radius += minDimension;
         }
     }

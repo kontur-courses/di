@@ -2,17 +2,18 @@ using Spire.Doc;
 
 namespace TagsCloudContainer.utility;
 
-public class FileTextHandler(string filePath) : ITextHandler
+public class FileTextHandler : ITextHandler
 {
-    public string ReadText()
+    public string ReadText(string filePath)
     {
         if (filePath.Contains("doc"))
         {
             var document = new Document();
             document.LoadFromFile(filePath);
-            return document.GetText();
+            var text = document.GetText();
+            return text[(text.IndexOf('\n') + 1)..].Trim();
         }
-        
+
         return File.ReadAllText(filePath);
     }
 }

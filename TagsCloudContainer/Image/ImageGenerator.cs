@@ -4,6 +4,7 @@ using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TagsCloudContainer.UI;
 using Color = SixLabors.ImageSharp.Color;
 using PointF = SixLabors.ImageSharp.PointF;
 using Rectangle = System.Drawing.Rectangle;
@@ -17,41 +18,37 @@ public class ImageGenerator : IDisposable
     private readonly int fontSize;
     private readonly FontFamily family;
     private readonly ImageEncoder encoder;
-    private readonly Func<string, int, (byte r, byte g, byte b, byte a)> scheme;
+    private readonly Color scheme;
 
-    public ImageGenerator(string outputPath, (ImageEncoder encoding, string ext) encoder,
-        string fontPath, int fontSize, int width, int height)
-        : this(outputPath, encoder, fontPath, fontSize, width, height, Color.FromRgb(7, 42, 22),
-            (w, freq) => (211, 226, 157, (byte)Math.Min(255, 100 + freq * 10)))
+    public ImageGenerator(ApplicationArguments args)
     {
-    }
+        var format = args.Format switch
+        {
+            "bmp" => ImageEncodings.Bmp,
+            "gif" => ImageEncodings.Gif,
+            "jpg" => ImageEncodings.Jpg,
+            "png" => ImageEncodings.Png,
+            "tiff" => ImageEncodings.Tiff,
+            _ => ImageEncodings.Jpg
+        };
 
-    public ImageGenerator(string outputPath, (ImageEncoder encoding, string ext) encoder,
-        string fontPath, int fontSize, int width, int height, Color bg)
-        : this(outputPath, encoder, fontPath, fontSize, width, height, bg,
-            (w, freq) => (211, 226, 157, (byte)Math.Min(255, 100 + freq * 10)))
-    {
-    }
+        image = new Image<Rgba32>(args.Resolution[0], args.Resolution[1]);
+        outputPath = args.Output + "." + format.ext;
+        encoder = format.encoding;
+        scheme = Color.FromRgba(
+            (byte)args.Scheme[0],
+            (byte)args.Scheme[1],
+            (byte)args.Scheme[2],
+            (byte)args.Scheme[3]
+        );
+        fontSize = args.FontSize;
+        family = new FontCollection().Add(args.FontPath);
 
-    public ImageGenerator(string outputPath, (ImageEncoder encoding, string ext) encoder,
-        string fontPath, int fontSize, int width, int height, Func<string, int, (byte r, byte g, byte b, byte a)> scheme)
-        : this(outputPath, encoder, fontPath, fontSize, width, height,
-            Color.FromRgb(7, 42, 22), scheme)
-    {
-    }
-
-    public ImageGenerator(string outputPath, (ImageEncoder encoding, string ext) encoder,
-        string fontPath, int fontSize, int width, int height,
-        Color bg, Func<string, int, (byte r, byte g, byte b, byte a)> scheme)
-    {
-        image = new Image<Rgba32>(width, height);
-        this.outputPath = outputPath + "." + encoder.ext;
-        this.encoder = encoder.encoding;
-        this.fontSize = fontSize;
-        this.scheme = scheme;
-        family = new FontCollection().Add(fontPath);
-
-        SetBackground(bg);
+        SetBackground(Color.FromRgb(
+            (byte)args.Background[0],
+            (byte)args.Background[1],
+            (byte)args.Background[2])
+        );
     }
 
     private Font FontCreator(int size)
@@ -66,11 +63,8 @@ public class ImageGenerator : IDisposable
 
     private void DrawWord(string word, int frequency, Rectangle rectangle)
     {
-        var color = scheme(word, frequency);
         image.Mutate(x => x.DrawText(
-            word, FontCreator(fontSize + frequency),
-            Color.FromRgba(color.r, color.g, color.b, color.a),
-            new PointF(rectangle.X, rectangle.Y))
+            word, FontCreator(fontSize + frequency), scheme, new PointF(rectangle.X, rectangle.Y))
         );
     }
 
