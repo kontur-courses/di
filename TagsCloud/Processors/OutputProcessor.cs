@@ -16,6 +16,6 @@ public class OutputProcessor
     {
         new VisualizationBuilder(outputOptions.ImageSize, outputOptions.BackgroundColor)
             .CreateImageFrom(wordGroups)
-            .SaveAs(filename);
+            .SaveAs(filename, outputOptions.ImageEncoder);
     }
 }

@@ -2,8 +2,8 @@ namespace TagsCloudVisualization;
 
 public class WordTagGroup
 {
-    public WordInfo WordInfo { get; set; } = new();
-    public VisualInfo VisualInfo { get; set; } = new();
+    public WordInfo WordInfo { get; } = new();
+    public VisualInfo VisualInfo { get; } = new();
     public int Count { get; }
 
     public WordTagGroup(string text, int count)

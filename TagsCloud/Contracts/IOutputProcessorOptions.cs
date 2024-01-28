@@ -5,7 +5,7 @@ namespace TagsCloud.Contracts;
 
 public interface IOutputProcessorOptions
 {
-    IImageEncoder ImageEncoder { get; set; }
-    Size ImageSize { get; set; }
-    Color BackgroundColor { get; set; }
+    IImageEncoder ImageEncoder { get; }
+    Size ImageSize { get; }
+    Color BackgroundColor { get; }
 }

@@ -50,7 +50,7 @@ public class Program
     public float AngleDelta { get; } = (float)Math.PI / 180;
 
     [Option]
-    public string BackgroundColor { get; set; } = string.Empty;
+    public string BackgroundColor { get; } = string.Empty;
 
     [Option]
     public string FontPath { get; } = string.Empty;
@@ -75,9 +75,12 @@ public class Program
 
         var textOptions = new InputProcessorOptions
         {
-            ToInfinitive = Infinitive, WordsCase = WordsCase, ExcludedWords = Excluded, LanguageParts = TextParts
+            ToInfinitive = Infinitive,
+            WordsCase = WordsCase,
+            ExcludedWords = Excluded,
+            LanguageParts = TextParts
         };
-
+        
         var cloudOptions = new CloudProcessorOptions
         {
             ColoringStrategy = Strategy,
@@ -92,7 +95,6 @@ public class Program
         {
             BackgroundColor = InputParser.ParseBackgroundColor(BackgroundColor),
             ImageSize = new Size(Width!.Value, Height!.Value),
-
             // Expansion point here!
             ImageEncoder = new PngEncoder()
         };

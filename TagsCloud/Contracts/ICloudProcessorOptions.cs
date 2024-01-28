@@ -7,10 +7,10 @@ namespace TagsCloud.Contracts;
 
 public interface ICloudProcessorOptions
 {
-    ColoringStrategy ColoringStrategy { get; init; }
-    Color[] Colors { get; init; }
-    FontFamily FontFamily { get; init; }
-    ILayout Layout { get; init; }
-    int MaxFontSize { get; init; }
-    int MinFontSize { get; init; }
+    ColoringStrategy ColoringStrategy { get; }
+    Color[] Colors { get; }
+    FontFamily FontFamily { get; }
+    ILayout Layout { get; }
+    int MaxFontSize { get; }
+    int MinFontSize { get; }
 }
