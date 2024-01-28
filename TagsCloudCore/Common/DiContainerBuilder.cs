@@ -14,7 +14,7 @@ public static class DiContainerBuilder
         var containerBuilder = new ContainerBuilder();
         
         containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
-        containerBuilder.RegisterInstance(new DefaultWordFilter(new TxtFileWordParser("../../../../TagsCloudCore/Resources/filter.txt")))
+        containerBuilder.RegisterInstance(new DefaultWordFilter(new TxtFileWordParser(AppSettings.PathToBoringWordsFilter)))
             .As<IWordFilter>()
             .SingleInstance();
         containerBuilder.RegisterType<DefaultWordProcessor>().As<IProcessedWordProvider>().SingleInstance();
