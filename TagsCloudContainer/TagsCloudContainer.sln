@@ -5,7 +5,12 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsCloudContainer.csproj", "{8C76265D-1A38-42F4-B80E-81C5DFB85F6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTests", "..\TagsCloudTests\TagsCloudTests.csproj", "{D305BEA5-475D-49DD-AB71-2AF65F057DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudTests", "..\TagsCloudTests\TagsCloudTests.csproj", "{D305BEA5-475D-49DD-AB71-2AF65F057DDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "..\WinFormsApp\WinFormsApp.csproj", "{FEABFB80-4A0A-4A55-9533-0D4AE9E6651F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C76265D-1A38-42F4-B80E-81C5DFB85F6D} = {8C76265D-1A38-42F4-B80E-81C5DFB85F6D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{D305BEA5-475D-49DD-AB71-2AF65F057DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D305BEA5-475D-49DD-AB71-2AF65F057DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D305BEA5-475D-49DD-AB71-2AF65F057DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEABFB80-4A0A-4A55-9533-0D4AE9E6651F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEABFB80-4A0A-4A55-9533-0D4AE9E6651F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEABFB80-4A0A-4A55-9533-0D4AE9E6651F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEABFB80-4A0A-4A55-9533-0D4AE9E6651F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
