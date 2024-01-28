@@ -8,8 +8,8 @@ public class WordHandler(ITextHandler? excludeSource = null, Predicate<string>? 
 
         if (excludeSource != null)
         {
-            var boringDict = new WordDataSet(excludeSource)
-                .CreateFrequencyDict()
+            var boringDict = new WordDataSet()
+                .CreateFrequencyDict(excludeSource.ReadText())
                 .Select(kvp => kvp.word.ToLower());
             frequencyDict = frequencyDict.Where(kvp => !boringDict.Contains(kvp.word));
         }

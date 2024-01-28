@@ -2,7 +2,7 @@ using System.Drawing;
 using FluentAssertions;
 using TagsCloudContainer.utility;
 
-namespace TagsCloudContainerTests;
+namespace TagsCloudContainerTests.UtilityTests;
 
 public class Tests
 {

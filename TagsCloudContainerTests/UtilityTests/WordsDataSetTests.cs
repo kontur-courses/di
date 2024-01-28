@@ -1,7 +1,7 @@
 using FluentAssertions;
 using TagsCloudContainer.utility;
 
-namespace TagsCloudContainerTests;
+namespace TagsCloudContainerTests.UtilityTests;
 
 [TestFixture]
 public class WordsDataSetTests
@@ -18,16 +18,8 @@ public class WordsDataSetTests
             { "Three", 3 }
         }.Select(kv => (kv.Key, kv.Value));
 
-        var actual = new WordDataSet(new StringTextHandler(testString)).CreateFrequencyDict();
+        var actual = new WordDataSet().CreateFrequencyDict(testString);
 
         actual.Should().Equal(expected);
-    }
-
-    private class StringTextHandler(string text) : ITextHandler
-    {
-        public string ReadText()
-        {
-            return text;
-        }
     }
 }

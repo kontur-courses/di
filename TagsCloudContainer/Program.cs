@@ -27,9 +27,12 @@ public static class Program
 
         container.GetService<TagCloudVisualizer>()!
             .GenerateTagCloud(container.GetService<WordHandler>()!
-                .Preprocessing(container.GetService<WordDataSet>()!.CreateFrequencyDict())
+                .Preprocessing(container.GetService<WordDataSet>()!
+                    .CreateFrequencyDict(container.GetService<ITextHandler>()!.ReadText()
+                    )
+                )
             );
-        
+
         ui.View();
     }
 
