@@ -2,7 +2,7 @@
 {
     public class TextPreprocessing
     {
-        private readonly HashSet<string> excludedWords = new HashSet<string>();
+        private readonly HashSet<string> excludedWords = new();
         public TextPreprocessing(string excludedWordsPath)
         {
             if (File.Exists(excludedWordsPath))

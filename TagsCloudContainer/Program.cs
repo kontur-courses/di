@@ -25,7 +25,7 @@ namespace TagsCloudContainer
 
             string text = reader.ReadText(appSettings.TextFile);
 
-            analyzer.Analyze(text);
+            analyzer.Analyze(appSettings.TextFile, appSettings.FilterFile);
 
             var layouter = new TagsCloudLayouter(
                 appSettings.DrawingSettings.Size,

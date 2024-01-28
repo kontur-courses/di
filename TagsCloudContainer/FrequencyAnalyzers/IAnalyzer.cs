@@ -2,7 +2,7 @@
 {
     public interface IAnalyzer
     {
-        public abstract void Analyze(string text);
-        public abstract IEnumerable<(string, int)> GetAnalyzedText();
+        public void Analyze(string text, string exclude);
+        public IEnumerable<(string, int)> GetAnalyzedText();
     }
 }

@@ -19,7 +19,7 @@ namespace TagsCloudTests
             drawingSettings.Size = new Size(center.X * 2, center.Y * 2);
             words = new() { ("TestWord1", 1), ("TestWord2", 2), ("TestWord3", 3) };
 
-            sut = new TagsCloudLayouter(center, pointsProvider, drawingSettings, words);
+            sut = new TagsCloudLayouter(drawingSettings.Size, pointsProvider, drawingSettings, words);
             sut.ToImage();
         }
 
