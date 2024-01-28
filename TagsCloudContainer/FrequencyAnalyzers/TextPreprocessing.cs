@@ -3,15 +3,19 @@
     public class TextPreprocessing
     {
         private readonly HashSet<string> excludedWords = new();
+
         public TextPreprocessing(string excludedWordsPath)
         {
-            if (File.Exists(excludedWordsPath))
+            if (!File.Exists(excludedWordsPath))
             {
-                StreamReader reader = new StreamReader(excludedWordsPath);
-                excludedWords = reader.ReadToEnd()
-                    .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToHashSet();
+                return;
             }
+
+            var reader = new StreamReader(excludedWordsPath);
+            excludedWords = reader.ReadToEnd()
+                .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToHashSet();
         }
+
         public IEnumerable<string> Preprocess(string text)
         {
             var words = text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
