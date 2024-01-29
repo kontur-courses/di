@@ -61,8 +61,11 @@ public static class DiContainerBuilder
 
         builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
         builder.RegisterType<TagsLayouter>().As<ITagLayouter>();
-        builder.RegisterType<ColorGeneratorFactory>().As<IColorGeneratorFactory>();
-        builder.RegisterType<FileReaderFactory>().As<IFileReaderFactory>();
+        builder.RegisterType<RandomColorGenerator>().As<IColorGenerator>();
+        builder.RegisterType<DefaultColorGenerator>().As<IColorGenerator>();
+        builder.RegisterType<TxtReader>().As<IFileReader>();
+        builder.RegisterType<DocReader>().As<IFileReader>();
+        builder.RegisterType<DocxReader>().As<IFileReader>();
         builder.RegisterType<ImageSaver>().As<IImageSaver>();
         builder.RegisterType<Spiral>().As<IPointCreator>();
         builder.RegisterType<TextHandler>().As<ITextHandler>();

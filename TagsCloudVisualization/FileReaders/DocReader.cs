@@ -1,17 +1,16 @@
 ﻿using Spire.Doc;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.FileReaders;
 
 public class DocReader : IFileReader
 {
-    private readonly string path;
-
-    public DocReader(string path)
+    public bool CanRead(string path)
     {
-        this.path = path;
+        return path.Split('.')[^1] == "doc";
     }
 
-    public string ReadText()
+    public string ReadText(string path)
     {
         var doc = new Document();
         doc.LoadFromFile(path);

@@ -9,12 +9,12 @@ public class Visualizer : IVisualizer
 {
     private readonly ImageSettings imageSettings;
     private readonly BackgroundSettings backgroundSettings;
-    private readonly IColorGenerator colorGenerator;
+    private readonly IColorGenerator[] colorGenerators;
 
-    public Visualizer(ImageSettings imageSettings, BackgroundSettings backgroundSettings, IColorGeneratorFactory factory)
+    public Visualizer(ImageSettings imageSettings, BackgroundSettings backgroundSettings, IColorGenerator[] generators)
     {
         this.imageSettings = imageSettings;
-        colorGenerator = factory.Create();
+        colorGenerators = generators;
         this.backgroundSettings = backgroundSettings;
     }
 
@@ -28,9 +28,17 @@ public class Visualizer : IVisualizer
         {
             graphics.DrawString(tag.Content, 
                 new Font(tag.Font, tag.Size), 
-                new SolidBrush(colorGenerator.GetColor()), 
+                new SolidBrush(GetColorIfMatch()), 
                 tag.Rectangle);
         }
         return bitmap;
+    }
+
+    public Color GetColorIfMatch()
+    {
+        var generator = colorGenerators.Where(g => g.Match()).FirstOrDefault();
+        return generator is null 
+            ? throw new ArgumentException("Can't find color") 
+            : generator.GetColor();
     }
 }

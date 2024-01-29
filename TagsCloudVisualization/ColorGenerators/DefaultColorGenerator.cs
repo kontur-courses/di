@@ -1,14 +1,16 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.ColorGenerators;
 
 public class DefaultColorGenerator : IColorGenerator
 {
     private readonly Color color;
+    private readonly bool isMatch;
 
-    public DefaultColorGenerator(string color)
+    public DefaultColorGenerator(ColorGeneratorSettings settings)
     {
-        this.color = GetColorFromString(color);
+        isMatch = TryGetColorFromString(settings.Color, out color);
     }
 
     public Color GetColor()
@@ -16,15 +18,22 @@ public class DefaultColorGenerator : IColorGenerator
         return color;
     }
 
-    public Color GetColorFromString(string color)
+    public bool TryGetColorFromString(string color, out Color resultColor)
     {
+        resultColor = Color.Black;
         try
         {
-            return Color.FromName(color);
+            resultColor = Color.FromName(color);
+            return true;
         }
         catch
         {
-            throw new ArgumentException($"Color with name {color} doesn't supported");
+            return false;
         }
+    }
+
+    public bool Match()
+    {
+        return isMatch;
     }
 }

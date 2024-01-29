@@ -4,14 +4,12 @@ namespace TagsCloudVisualization.FileReaders;
 
 public class DocxReader : IFileReader
 {
-    private readonly string path;
-
-    public DocxReader(string path)
+    public bool CanRead(string path)
     {
-        this.path = path;
+        return path.Split('.')[^1] == "docx";
     }
 
-    public string ReadText()
+    public string ReadText(string path)
     {
         var doc = DocX.Load(path);
         return string.Join(" ", doc.Paragraphs.Select(p => p.Text));

@@ -8,13 +8,15 @@ public class TextHandler : ITextHandler
 {
     private readonly IEnumerable<string> words;
     private readonly HashSet<string> boringWords;
+    private readonly IFileReader[] readers;
 
-    public TextHandler(IFileReaderFactory factory, TextHandlerSettings settings)
+    public TextHandler(IFileReader[] readers, TextHandlerSettings settings)
     {
-        var wordsReader = factory.Create(settings.PathToText);
-        var boringWordsReader = factory.Create(settings.PathToBoringWords);
-        words = GetWords(wordsReader.ReadText());
-        boringWords = GetWords(boringWordsReader.ReadText().ToLower()).ToHashSet();
+        this.readers = readers;
+        var wordsReader = GetReader(settings.PathToText);
+        var boringWordsReader = GetReader(settings.PathToBoringWords);
+        words = GetWords(wordsReader.ReadText(settings.PathToText));
+        boringWords = GetWords(boringWordsReader.ReadText(settings.PathToBoringWords).ToLower()).ToHashSet();
     }
 
     public TextHandler(string text, string boringWords)
@@ -45,5 +47,13 @@ public class TextHandler : ITextHandler
 
         foreach (var word in pattern.Matches(boringWords).ToHashSet())
             yield return word.Value;
+    }
+
+    public IFileReader GetReader(string path)
+    {
+        var reader = readers.Where(r => r.CanRead(path)).FirstOrDefault();
+        return reader is null 
+            ? throw new ArgumentException($"Can't read file with path {path}") 
+            : reader;
     }
 }

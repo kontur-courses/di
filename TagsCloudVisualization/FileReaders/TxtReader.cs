@@ -2,14 +2,12 @@
 
 public class TxtReader : IFileReader
 {
-    private readonly string path;
-
-    public TxtReader(string path)
+    public bool CanRead(string path)
     {
-        this.path = path;
+        return path.Split('.')[^1] == "txt";
     }
 
-    public string ReadText()
+    public string ReadText(string path)
     {
         return File.ReadAllText(path);
     }
