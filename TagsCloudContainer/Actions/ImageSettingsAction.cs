@@ -1,4 +1,3 @@
-using TagsCloudContainer.Client;
 using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;
@@ -11,8 +10,8 @@ namespace TagsCloudContainer.Actions
         private PictureBox pictureBox;
 
         public ImageSettingsAction(ImageSettings settings, PictureBox pictureBox)
-        { 
-            this.imageSettings = settings;  
+        {
+            this.imageSettings = settings;
             this.pictureBox = pictureBox;
         }
 

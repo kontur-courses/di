@@ -17,7 +17,7 @@ namespace TagsCloudContainer.Algorithm
             var wordFrequencies = new Dictionary<string, int>();
             var interestingWords = GetInterestingWords(sourceFilePath, boringFilePath);
 
-            foreach(var word in interestingWords)
+            foreach (var word in interestingWords)
             {
                 if (!wordFrequencies.ContainsKey(word))
                     wordFrequencies.Add(word, 0);

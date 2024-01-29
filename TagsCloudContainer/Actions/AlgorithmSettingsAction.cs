@@ -1,5 +1,3 @@
-using TagsCloudContainer.Client;
-using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;
 
@@ -10,7 +8,7 @@ namespace TagsCloudContainer.Actions
         private AlgorithmSettings algorithmSettings;
 
         public AlgorithmSettingsAction(AlgorithmSettings settings)
-        { 
+        {
             this.algorithmSettings = settings;
         }
 

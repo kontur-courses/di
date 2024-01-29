@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Actions
         private readonly ICloudLayouter cloudLayouter;
         private IWordProcessor wordProcessor;
 
-        public GUITagCloudClient(PictureBox pictureBox, ImageSettings imageSettings, 
+        public GUITagCloudClient(PictureBox pictureBox, ImageSettings imageSettings,
             IDrawer drawer, ICloudLayouter cloudLayouter, IWordProcessor wordProcessor)
         {
             this.pictureBox = pictureBox;

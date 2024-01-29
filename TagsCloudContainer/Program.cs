@@ -1,9 +1,9 @@
 using Autofac;
 using TagsCloudContainer.Actions;
-using TagsCloudContainer.Infrastucture.Settings;
-using TagsCloudContainer.Infrastucture.UiActions;
 using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Client;
+using TagsCloudContainer.Infrastucture.Settings;
+using TagsCloudContainer.Infrastucture.UiActions;
 using TagsCloudContainer.Infrastucture.Visualization;
 
 namespace TagsCloudContainer

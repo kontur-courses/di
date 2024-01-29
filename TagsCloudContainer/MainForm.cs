@@ -1,4 +1,3 @@
-using System.Drawing.Printing;
 using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;

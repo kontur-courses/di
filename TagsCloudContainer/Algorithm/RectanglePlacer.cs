@@ -3,7 +3,7 @@ using TagsCloudContainer.Infrastucture.Settings;
 
 namespace TagsCloudContainer.Algorithm
 {
-    public sealed class RectanglePlacer: IRectanglePlacer
+    public sealed class RectanglePlacer : IRectanglePlacer
     {
         private Point center;
         private double radius;

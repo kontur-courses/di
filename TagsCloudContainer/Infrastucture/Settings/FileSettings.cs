@@ -11,11 +11,13 @@ namespace TagsCloudContainer.Infrastucture.Settings
             get => imagePath;
             set => imagePath = File.Exists(value) ? value : imagePath;
         }
+
         public string SourceFilePath
         {
             get => sourceFilePath;
             set => sourceFilePath = File.Exists(value) ? value : sourceFilePath;
         }
+
         public string BoringFilePath
         {
             get => boringFilePath;

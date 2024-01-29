@@ -1,4 +1,3 @@
-using TagsCloudContainer.Client;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;
 
@@ -9,8 +8,8 @@ namespace TagsCloudContainer.Actions
         private FileSettings fileSettings;
 
         public SelectSourceFileAction(FileSettings settings)
-        { 
-            this.fileSettings = settings;  
+        {
+            this.fileSettings = settings;
         }
 
         public string Category => "Файлы";
@@ -30,7 +29,6 @@ namespace TagsCloudContainer.Actions
                 FileName = "source.txt",
                 Filter = "Текстовые файлы (*.txt)|*.txt"
             };
-
             var res = dialog.ShowDialog();
 
             if (res == DialogResult.OK)

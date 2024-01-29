@@ -10,8 +10,8 @@ namespace TagsCloudContainer.Actions
         private ITagCloudClient tagCloudClient;
 
         public SaveImageAction(FileSettings settings, ITagCloudClient tagCloudClient)
-        { 
-            this.fileSettings = settings;  
+        {
+            this.fileSettings = settings;
             this.tagCloudClient = tagCloudClient;
         }
 
@@ -31,7 +31,6 @@ namespace TagsCloudContainer.Actions
                 FileName = "image.png",
                 Filter = "Изображения (*.png)|*.png|Изображения (*.jpg)|*.jpg|Изображения (*.bmp)|*.bmp"
             };
-
             var res = dialog.ShowDialog();
 
             if (res == DialogResult.OK)

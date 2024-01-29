@@ -13,7 +13,7 @@ namespace TagsCloudContainer.Infrastucture.Visualization
             this.pictureBox = pictureBox;
             this.imageSettings = imageSettings;
         }
-        
+
         public void Draw(List<TextRectangle> rectangles)
         {
             using (var graphics = pictureBox.StartDrawing())
@@ -24,7 +24,7 @@ namespace TagsCloudContainer.Infrastucture.Visualization
                 using var rectBorderPen = new Pen(imageSettings.RectangleBordersColor);
                 using var rectBackgroundBrush = new SolidBrush(imageSettings.RectangleBackgroundColor);
 
-                foreach(var rect in rectangles)
+                foreach (var rect in rectangles)
                 {
                     graphics.FillRectangle(rectBackgroundBrush, rect.Rectangle);
                     graphics.DrawRectangle(rectBorderPen, rect.Rectangle);

@@ -18,9 +18,8 @@ namespace TagsCloudContainer.Algorithm
         public List<TextRectangle> GetRectangles(Dictionary<string, int> wordFrequencies)
         {
             var rectanglePlacer = new RectanglePlacer(
-                algorithmSettings, 
+                algorithmSettings,
                 new Point(imageSettings.Width / 2, imageSettings.Height / 2));
-
             var rectangles = new List<TextRectangle>();
             var bitmap = new Bitmap(imageSettings.Width, imageSettings.Height);
             var graphics = Graphics.FromImage(bitmap);

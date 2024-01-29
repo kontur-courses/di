@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Algorithm
                 }
                 words.Add(lineWords[0]);
             }
-            
+
             return words;
         }
 

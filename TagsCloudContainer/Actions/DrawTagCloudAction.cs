@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Actions
         private ITagCloudClient tagCloudClient;
 
         public DrawTagCloudAction(FileSettings fileSettings, ITagCloudClient tagCloudClient)
-        { 
+        {
             this.tagCloudClient = tagCloudClient;
             this.fileSettings = fileSettings;
         }
