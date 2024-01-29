@@ -81,10 +81,8 @@ namespace TagsCloudContainer.CLI
 
         private static IList<Color> GetColors(string colors)
         {
-            var c = new List<Color>();
-
-            colors.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => Color.FromName(x)).ToList();
+            var a = colors.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var c = a.Select(x => Color.FromName(x)).ToList();
 
             if (c.Count > 0)
             {

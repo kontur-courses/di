@@ -37,6 +37,8 @@ namespace TagsCloudVisualization
         {
             Cloud = new List<Rectangle>();
 
+            var colors = ColorMapper.MapColors(words.Select(x => x.Item2), drawingSettings.Colors);
+
             foreach (var word in words)
             {
                 var font = new Font(drawingSettings.FontFamily, drawingSettings.FontSize + word.Item2);
@@ -45,7 +47,8 @@ namespace TagsCloudVisualization
                 var rect = PutNextRectangle(size);
                 Cloud.Add(rect);
 
-                var textImage = new TextImage(word.Item1, font, size, drawingSettings.Colors.First(), new Point(rect.X, rect.Y));
+                var textImage = new TextImage(
+                    word.Item1, font, size, colors[word.Item2], new Point(rect.X, rect.Y));
 
                 yield return textImage;
             }

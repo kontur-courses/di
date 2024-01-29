@@ -2,7 +2,7 @@
   "profiles": {
     "TagsCloudContainer": {
       "commandName": "Project",
-      "commandLineArgs": "-f sample.txt -o testout.png --exclude excludedWords.txt --font Calibri --colors LightGoldenrodYellow,PeachPuff,AliceBlue --layout SpiralPointsProvider --fontsize 12 --size 500,500"
+      "commandLineArgs": "-f sample.txt -o testout.png --exclude excludedWords.txt --font Calibri --colors Gold,Pink,LightGoldenrodYellow --layout SpiralPointsProvider --fontsize 12 --size 500,500"
     }
   }
 }

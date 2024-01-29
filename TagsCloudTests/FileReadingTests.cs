@@ -31,13 +31,6 @@ namespace TagsCloudTests
             tempFilePath = CreateTempFile();
         }
 
-        [TearDown]
-        public void Cleanup()
-        {
-            File.Delete(tempFilePath);
-        }
-
-
         [Test]
         public void ReadTextFromFile_ShouldReturnCorrectText()
         {

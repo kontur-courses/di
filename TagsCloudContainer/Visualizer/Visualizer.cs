@@ -10,13 +10,11 @@ namespace TagsCloudContainer.Drawer
             var image = new Bitmap(size.Width, size.Height);
             var gr = Graphics.FromImage(image);
 
-            var brush = new SolidBrush(Color.White);
-
             gr.Clear(Color.Black);
 
             foreach (var textImage in textImages)
             {
-                gr.DrawString(textImage.Text, textImage.Font, brush, textImage.Position);
+                gr.DrawString(textImage.Text, textImage.Font, new SolidBrush(textImage.Color), textImage.Position);
             }
 
             return image;
