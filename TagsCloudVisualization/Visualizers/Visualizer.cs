@@ -22,23 +22,24 @@ public class Visualizer : IVisualizer
     {
         var bitmap = new Bitmap(imageSettings.Width, imageSettings.Height);
         var graphics = Graphics.FromImage(bitmap);
+        var generator = GetColorGenerator();
         graphics.Clear(backgroundSettings.BackgroundColor);
 
         foreach (var tag in tags)
         {
             graphics.DrawString(tag.Content, 
                 new Font(tag.Font, tag.Size), 
-                new SolidBrush(GetColorIfMatch()), 
+                new SolidBrush(generator.GetColor()),
                 tag.Rectangle);
         }
         return bitmap;
     }
 
-    public Color GetColorIfMatch()
+    public IColorGenerator GetColorGenerator()
     {
         var generator = colorGenerators.Where(g => g.Match()).FirstOrDefault();
         return generator is null 
             ? throw new ArgumentException("Can't find color") 
-            : generator.GetColor();
+            : generator;
     }
 }
