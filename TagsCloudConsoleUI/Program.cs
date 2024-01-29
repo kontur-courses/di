@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using Autofac;
 using TagsCloudConsoleUI.Providers;
 using TagsCloudCore.BuildingOptions;

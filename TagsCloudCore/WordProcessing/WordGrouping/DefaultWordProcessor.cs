@@ -1,6 +1,5 @@
 ﻿using TagsCloudCore.BuildingOptions;
 using TagsCloudCore.WordProcessing.WordFiltering;
-using TagsCloudCore.WordProcessing.WordInput;
 
 namespace TagsCloudCore.WordProcessing.WordGrouping;
 
@@ -9,14 +8,9 @@ public class DefaultWordProcessor : IProcessedWordProvider
     private readonly string[] _words;
     private readonly IEnumerable<IWordFilter> _filters;
 
-    public DefaultWordProcessor(ICommonOptionsProvider commonOptionsProvider, IEnumerable<IWordFilter> filters) : this(
-        commonOptionsProvider.CommonOptions.WordProvider, filters)
+    public DefaultWordProcessor(ICommonOptionsProvider commonOptionsProvider, IEnumerable<IWordFilter> filters)
     {
-    }
-
-    public DefaultWordProcessor(IWordProvider wordProvider, IEnumerable<IWordFilter> filters)
-    {
-        _words = wordProvider.Words.Select(w => w.ToLower()).ToArray();
+        _words = commonOptionsProvider.CommonOptions.WordProvider.Words.Select(w => w.ToLower()).ToArray();
         _filters = filters;
     }
 

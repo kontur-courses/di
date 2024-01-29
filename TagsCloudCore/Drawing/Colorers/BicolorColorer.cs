@@ -10,4 +10,6 @@ public class BicolorColorer : IWordColorer
 
     public Color GetWordColor(string word, int wordFrequency)
         => Random.Next(0, 2) == 0 ? _first : _second;
+
+    public string Name => "Bicolor";
 }

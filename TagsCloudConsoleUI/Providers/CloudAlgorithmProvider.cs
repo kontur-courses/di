@@ -3,7 +3,7 @@ using TagsCloudVisualization;
 
 namespace TagsCloudConsoleUI.Providers;
 
-public static class CloudAlgorithmProviders
+public static class CloudAlgorithmProvider
 {
     public static readonly IReadOnlyDictionary<string, ICloudLayouter> RegisteredProviders = 
         new Dictionary<string, ICloudLayouter>

@@ -24,4 +24,10 @@
       <ProjectReference Include="..\TagsCloudCore\TagsCloudCore.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="TagsCloudVisualization">
+        <HintPath>..\TagsCloudCore\libs\TagsCloudVisualization.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
