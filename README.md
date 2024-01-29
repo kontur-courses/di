@@ -1,5 +1,5 @@
 
-![Getting Started](./TEST.png)
+![Getting Started](./TagCloud.png)
 
 # Dependency Injection Container
 

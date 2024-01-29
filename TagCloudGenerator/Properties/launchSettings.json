@@ -2,7 +2,7 @@
   "profiles": {
     "TagCloudGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "-p \"C:\\Users\\lholy\\Documents\\GitHub\\di\\TagCloudGeneratorTest\\TestsData\\test3.txt\""
+      "commandLineArgs": "-p \"C:\\Users\\lholy\\Documents\\GitHub\\di\\TagCloudGeneratorTest\\TestsData\\test7.txt\" -s 1500,1500 -c HotPink -n \"TagCloud3.png\" -b Bisque"
     }
   }
 }

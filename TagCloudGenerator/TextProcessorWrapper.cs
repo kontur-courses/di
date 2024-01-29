@@ -1,5 +1,4 @@
-﻿
-namespace TagCloudGenerator
+﻿namespace TagCloudGenerator
 {
     public abstract class TextProcessorWrapper : ITextProcessor
     {

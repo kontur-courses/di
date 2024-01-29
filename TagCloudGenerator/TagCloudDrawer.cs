@@ -3,15 +3,16 @@ using System.Reflection;
 using TagsCloudVisualization;
 using DocumentFormat.OpenXml.Packaging;
 using System.Drawing.Imaging;
+using WeCantSpell.Hunspell;
 
 namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
-        private ITextProcessor textProcessor;
+        private TextProcessor textProcessor;
         private WordCounter wordCounter;
 
-        public TagCloudDrawer(WordCounter wordCounter, ITextProcessor textProcessor) 
+        public TagCloudDrawer(WordCounter wordCounter, TextProcessor textProcessor) 
         {
             this.textProcessor = textProcessor;
             this.wordCounter = wordCounter;
@@ -22,13 +23,14 @@ namespace TagCloudGenerator
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
            
-            var words = ReadTextFromFile(filePath);
-            words = textProcessor.ProcessText(words);
-       
+            var words = ReadTextFromFile(filePath);        
+            var deleteBoringWords = new TextProcessorRemovingBoringWords(textProcessor);
+            words = deleteBoringWords.ProcessText(words);
+
             var wordsWithCount = wordCounter.CountWords(words);
             var orderedWords = wordsWithCount
                 .OrderByDescending(x => x.Value)
-                .ToDictionary(x => x.Key, x => x.Value);
+                .ToDictionary(x => x.Key, x => x.Value);            
 
             Console.WriteLine("The tag cloud is drawn");
 
@@ -120,13 +122,15 @@ namespace TagCloudGenerator
             var layouter = new CircularCloudLayouter(center, distributor);
             var brush = new SolidBrush(settings.PenColor);
             var graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(settings.BackgroundColor);
 
-            foreach(var line in text)
+            foreach (var line in text)
             {
                 var font = new Font(settings.Font, 24 + (line.Value * 6));
                 SizeF size = graphics.MeasureString(line.Key, font);
-                var rect = layouter.PutNextRectangle(size.ToSize());          
+                var rect = layouter.PutNextRectangle(size.ToSize());
 
+               
                 graphics.DrawString(line.Key, font, brush, rect.X, rect.Y);
             }
 

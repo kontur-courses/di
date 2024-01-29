@@ -4427,10 +4427,10 @@ Hymen/M
 Hyperion/M
 Hyundai/M
 Hz/M
-I'd
-I'll
-I'm
-I've
+I'd/ po:pronoun
+I'll/ po:pronoun
+I'm/ po:pronoun
+I've/ po:pronoun
 I/M
 IA
 IBM/M
@@ -10391,7 +10391,7 @@ Zworykin/M
 Zyrtec/M
 Zyuganov/M
 Zzz
-a/S
+a/S po:determiner
 aah
 aardvark/SM
 ab/SDY
@@ -10480,7 +10480,7 @@ abortion/MS
 abortionist/MS
 abortive/Y
 abound/DSG
-about
+about/ po:preposition
 above/M
 aboveboard
 abracadabra/M
@@ -11352,7 +11352,7 @@ alternate/DSMYGNVX
 alternation/M
 alternative/MYS
 alternator/SM
-although
+although/ po:conjunction
 altimeter/MS
 altitude/MS
 alto/SM
@@ -11501,7 +11501,7 @@ amuse/LGDS
 amusement/MS
 amusing/Y
 amylase/M
-an/CS
+an/CS po:determiner
 anabolism/M
 anachronism/SM
 anachronistic
@@ -11562,7 +11562,7 @@ anchovy/SM
 ancient/SPMRYT
 ancientness/M
 ancillary/SM
-and
+and/ po:conjunction
 andante/SM
 andiron/SM
 androgen/M
@@ -12392,7 +12392,7 @@ asymptomatic
 asymptotic
 asymptotically
 asynchronous/Y
-at
+at/ po:preposition
 atavism/M
 atavist/SM
 atavistic
@@ -13303,7 +13303,7 @@ befitting/Y
 befog/S
 befogged
 befogging
-before
+before/ po:conjunction
 beforehand
 befoul/DGS
 befriend/SGD
@@ -13348,7 +13348,7 @@ beheld
 behemoth/M
 behemoths
 behest/MS
-behind/MS
+behind/MS po:preposition
 behindhand
 behold/NRZGS
 beholder/M
@@ -13397,7 +13397,7 @@ bellyful/MS
 belong/JDGS
 belonging/M
 beloved/SM
-below
+below/ po:preposition
 belt/SGMD
 beltway/SM
 beluga/MS
@@ -13462,7 +13462,7 @@ beseeching/Y
 beseem/DSG
 beset/S
 besetting
-beside/S
+beside/S po:preposition
 besiege/ZGDRS
 besieger/M
 besmear/DSG
@@ -14897,7 +14897,7 @@ busy/DRSTGP
 busybody/SM
 busyness/M
 busywork/M
-but/ACS
+but/ACS po:conjunction
 butane/M
 butch/MRSZ
 butcher/MDG
@@ -14936,7 +14936,7 @@ buzzer/M
 buzzword/SM
 bx
 bxs
-by/M
+by/M po:preposition
 bye/SM
 bygone/SM
 bylaw/SM
@@ -20987,7 +20987,7 @@ eightieths
 eighty/SMH
 einsteinium/M
 eisteddfod/S
-either
+either/ po:conjunction
 ejaculate/GNXDS
 ejaculation/M
 ejaculatory
@@ -23405,7 +23405,7 @@ fop/SM
 foppery/M
 foppish/P
 foppishness/M
-for/H
+for/H po:preposition
 fora
 forage/DRSMZG
 forager/M
@@ -23838,7 +23838,7 @@ frolicked
 frolicker/SM
 frolicking
 frolicsome
-from
+from/ po:preposition
 frond/SM
 front's
 front/FSDG
@@ -25726,9 +25726,9 @@ haziness/M
 hazing/M
 hazy/RTP
 hdqrs
-he'd
-he'll
-he/M
+he'd/ po:pronoun
+he'll/ po:pronoun
+he/M po:pronoun
 head/MDRZGJS
 headache/MS
 headband/MS
@@ -25977,7 +25977,7 @@ heppest
 heptagon/MS
 heptagonal
 heptathlon/SM
-her/M
+her/M po:pronoun
 herald/SMDG
 heralded/U
 heraldic
@@ -26140,7 +26140,7 @@ hillside/SM
 hilltop/MS
 hilly/PRT
 hilt/MS
-him/SM
+him/SM po:pronoun
 himself
 hind/MRZS
 hinder/GD
@@ -26847,7 +26847,7 @@ hysteria/M
 hysteric/SM
 hysterical/Y
 hysterics/M
-i/US
+i/US po:pronoun
 iPad/M
 iPhone/M
 iPod/M
@@ -26936,7 +26936,7 @@ idolize/GDS
 idyll/SM
 idyllic
 idyllically
-if/SM
+if/SM po:conjunction
 iffiness/M
 iffy/RTP
 igloo/SM
@@ -27289,7 +27289,7 @@ impure/RYT
 impurity/SM
 imputation/SM
 impute/BDSG
-in/ASM
+in/ASM po:preposition
 inaccuracy/S
 inaction/M
 inadequacy/S
@@ -27761,7 +27761,7 @@ insertion/AM
 insertions
 insetting
 inshore
-inside/RSMZ
+inside/RSMZ po:preposition
 insider/M
 insidious/YP
 insidiousness/M
@@ -28281,9 +28281,9 @@ issue/ADSMG
 issuer/MS
 isthmian
 isthmus/MS
-it'd
-it'll
-it/USM
+it'd/ po:pronoun
+it'll/ po:pronoun
+it/USM po:pronoun
 ital
 italic/SM
 italicization/M
@@ -30760,7 +30760,7 @@ mayst
 maze/MS
 mazurka/MS
 mdse
-me/DS
+me/DS po:pronoun
 mead/M
 meadow/MS
 meadowlark/MS
@@ -32415,7 +32415,7 @@ naysayer/MS
 ne'er
 neanderthal/MS
 neap/MS
-near/DRYSPTG
+near/DRYSPTG po:preposition
 nearby
 nearness/M
 nearside
@@ -32498,7 +32498,7 @@ neighbor/SMDYG
 neighborhood/SM
 neighborliness/M
 neighs
-neither
+neither/ po:conjunction
 nelson/SM
 nematode/SM
 nemeses
@@ -33486,7 +33486,7 @@ oedipal
 oenology/M
 oenophile/SM
 oeuvre/MS
-of
+of/ po:preposition
 off/SZGDRJ
 offal/M
 offbeat/MS
@@ -33601,8 +33601,8 @@ omniscient
 omnivore/MS
 omnivorous/PY
 omnivorousness/M
-on/Y
-once/M
+on/Y po:preposition
+once/M po:conjunction
 oncogene/SM
 oncologist/SM
 oncology/M
@@ -33721,7 +33721,7 @@ optometry/M
 opulence/M
 opulent/Y
 opus/MS
-or
+or/ po:conjunction
 oracle/SM
 oracular
 oral/MYS
@@ -33873,11 +33873,11 @@ ouch
 ought
 oughtn't
 ounce/MS
-our/S
+our/S po:determiner
 ourselves
 oust/ZGDRS
 ouster/M
-out/SJGMDR
+out/SJGMDR po:preposition
 outage/SM
 outargue/GDS
 outback/MS
@@ -40550,9 +40550,9 @@ shaver/M
 shaving/M
 shawl/MS
 shay/MS
-she'd
-she'll
-she/DSM
+she'd/ po:pronoun
+she'll/ po:pronoun
+she/DSM po:pronoun
 sheaf/M
 shear/MDRSZG
 shearer/M
@@ -40996,7 +40996,7 @@ simulcast/GMDS
 simultaneity/M
 simultaneous/Y
 sin/ASM
-since
+since/ po:conjunction
 sincere/IYT
 sincerer
 sincerity/IM
@@ -41606,7 +41606,7 @@ snuggest
 snugging
 snuggle/MGDS
 snugness/M
-so
+so/ po:conjunction
 soak/MDGSJ
 soaking/M
 soap/MDGS
@@ -44381,7 +44381,7 @@ thalami
 thalamus/M
 thalidomide/M
 thallium/M
-than
+than/ po:preposition
 thane/SM
 thank/SDG
 thankful/YP
@@ -44389,12 +44389,12 @@ thankfulness/M
 thankless/PY
 thanklessness/M
 thanksgiving/SM
-that/M
+that/M po:conjunction
 thatch/MDRSZG
 thatcher/M
 thatching/M
 thaw/MDGS
-the/JG
+the/JG po:determiner
 theater/SM
 theatergoer/SM
 theatrical/YS
@@ -44407,7 +44407,7 @@ their/S
 theism/M
 theist/SM
 theistic
-them
+them/ po:pronoun
 thematic
 thematically
 theme/DSM
@@ -44469,16 +44469,16 @@ thermostatic
 thermostatically
 thesauri
 thesaurus/MS
-these/S
+these/S po:determiner
 thesis/M
 thespian/SM
 theta/SM
 thew/MS
-they
-they'd
-they'll
-they're
-they've
+they/ po:pronoun
+they'd/ po:pronoun
+they'll/ po:pronoun
+they're/ po:pronoun
+they've/ po:pronoun
 thiamine/M
 thick/PMNRYXT
 thicken/DRJZG
@@ -44527,7 +44527,7 @@ thirteenths
 thirtieth/M
 thirtieths
 thirty/HSM
-this
+this/ po:determiner
 thistle/MS
 thistledown/M
 thither
@@ -44545,7 +44545,7 @@ thoroughbred/MS
 thoroughfare/MS
 thoroughgoing
 thoroughness/M
-those
+those/ po:determiner
 thou/MS
 though
 thought/SM
@@ -44608,7 +44608,7 @@ throne/S
 throng/GSMD
 throttle/DRSMZG
 throttler/M
-through
+through/ po:preposition
 throughout
 throughput/M
 throw/SMRZG
@@ -44836,7 +44836,7 @@ tizz
 tizzy/SM
 tn
 tnpk
-to/IU
+to/IU po:preposition
 toad/MS
 toadded
 toadding
@@ -45969,7 +45969,7 @@ undaunted/Y
 undecided/SM
 undemonstrative/Y
 undeniably
-under
+under/ po:preposition
 underachieve/LZGDRS
 underachiever/M
 underact/SDG
@@ -46315,7 +46315,7 @@ untactful
 unthinkably
 unthinking/Y
 untidy/PTR
-until
+until/ po:conjunction
 untimely/T
 untiring/Y
 untouchable/MS
@@ -46792,7 +46792,7 @@ vexation/SM
 vexatious/Y
 vhf
 vi
-via
+via/ po:preposition
 viability/M
 viable
 viably
@@ -47368,11 +47368,11 @@ wayside/SM
 wayward/PY
 waywardness/M
 wazoo/S
-we
-we'd
-we'll
-we're
-we've
+we/ po:pronoun
+we'd/ po:pronoun
+we'll/ po:pronoun
+we're/ po:pronoun
+we've/ po:pronoun
 weak/PNRYXT
 weaken/DRZG
 weakener/M
@@ -47555,13 +47555,13 @@ wheezy/PRT
 whelk/SMD
 whelm/SDG
 whelp/SMDG
-when/MS
+when/MS po:conjunction
 whence
 whenever
 whensoever
 where/SM
 whereabouts/M
-whereas
+whereas/ po:conjunction
 whereat
 whereby
 wherefore/MS
@@ -47586,7 +47586,7 @@ which
 whichever
 whiff/SMDG
 whiffletree/MS
-while/DSMG
+while/DSMG po:conjunction
 whilom
 whilst
 whim/MS
@@ -47657,11 +47657,11 @@ whizzbang/MS
 whizzed
 whizzes
 whizzing
-who'd
-who'll
-who're
-who've
-who/M
+who'd/ po:pronoun
+who'll/ po:pronoun
+who're/ po:pronoun
+who've/ po:pronoun
+who/M po:pronoun
 whoa
 whodunit/MS
 whoever
@@ -47880,7 +47880,7 @@ wit/SM
 witch/MDSG
 witchcraft/M
 witchery/M
-with
+with/ po:preposition
 withal
 withdraw/SG
 withdrawal/MS
@@ -48328,11 +48328,11 @@ yon
 yonder
 yonks
 yore/M
-you'd
-you'll
-you're
-you've
-you/SMH
+you'd/ po:pronoun
+you'll/ po:pronoun
+you're/ po:pronoun
+you've/ po:pronoun
+you/SMH po:pronoun
 young/TMR
 youngish
 youngster/MS
