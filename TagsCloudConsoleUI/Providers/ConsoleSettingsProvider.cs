@@ -2,6 +2,7 @@
 using System.Text;
 using McMaster.Extensions.CommandLineUtils;
 using TagsCloudCore.BuildingOptions;
+using TagsCloudCore.Common;
 using TagsCloudCore.Drawing.Colorers;
 using TagsCloudCore.Utils;
 using TagsCloudCore.WordProcessing.WordInput;
@@ -116,7 +117,7 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
                 continue;
             }
 
-            if (colorer.Name != "Default")
+            if (colorer.Name != AppSettings.DefaultColorerName)
                 _isCustomColoringUsed = true;
             return colorer;
         }

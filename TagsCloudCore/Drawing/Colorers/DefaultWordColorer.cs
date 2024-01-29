@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TagsCloudCore.BuildingOptions;
+using TagsCloudCore.Common;
 
 namespace TagsCloudCore.Drawing.Colorers;
 
@@ -15,5 +16,5 @@ public class DefaultWordColorer : IWordColorer
     public Color GetWordColor(string word, int wordFrequency)
         => _drawingOptionsProvider.Value.DrawingOptions.FontColor;
 
-    public string Name => "Default";
+    public string Name => AppSettings.DefaultColorerName;
 }
