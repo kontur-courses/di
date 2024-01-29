@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using TagCloud.Excluders;
 using TagCloud.TextHandlers;
 using TagCloud.WordFilters;
 using TagCloudApplication;
 using TagCloudTests;
+using ColorConverter = TagCloud.Extensions.ColorConverter;
 
 namespace TagCloud;
 
@@ -28,8 +30,12 @@ public static class TagCloudServicesFactory
                 provider.GetService<IColorSelector>()
             )
         );
+        
+        
         if (options.ColorScheme == "random")
             services.AddSingleton<IColorSelector, RandomColorSelector>();
+        else if (ColorConverter.TryConvert(options.ColorScheme, out var color))
+            services.AddSingleton<IColorSelector>(provider => new ConstantColorSelector(color));
         else
             services.AddSingleton<IColorSelector>(provider => new ConstantColorSelector(Color.Black));
 

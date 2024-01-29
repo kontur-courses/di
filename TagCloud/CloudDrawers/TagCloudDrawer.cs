@@ -43,7 +43,7 @@ public class TagCloudDrawer : ICloudDrawer
 
     private void SaveToFile(Bitmap bitmap)
     {
-        var pathToFile = @$"{path}\{name}.jpg";
+        var pathToFile = @$"{path}\{name}";
         bitmap.Save(pathToFile);
         Console.WriteLine($"Tag cloud visualization saved to file {path}");
     }
