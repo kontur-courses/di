@@ -13,50 +13,39 @@ namespace TagsCloudVisualization
         private Graphics graphics;
         private Image image;
 
-        public ICollection<Rectangle> Cloud { get; private set; }
+        private ICollection<Rectangle> Cloud { get; set; }
 
         public TagsCloudLayouter()
         {
         }
+
         public void Initialize(CloudDrawingSettings drawingSettings, IEnumerable<(string, int)> words)
         {
             if (drawingSettings.Size.Width <= 0 || drawingSettings.Size.Height <= 0)
                 throw new ArgumentException("Size should be in positive");
 
-            this.center = new Point(drawingSettings.Size.Width / 2, drawingSettings.Size.Height / 2);
-            this.pointsProvider = drawingSettings.PointsProvider;
+            center = new Point(drawingSettings.Size.Width / 2, drawingSettings.Size.Height / 2);
+            pointsProvider = drawingSettings.PointsProvider;
             this.drawingSettings = drawingSettings;
             this.words = words;
+
             image = new Bitmap(drawingSettings.Size.Width, drawingSettings.Size.Height);
             graphics = Graphics.FromImage(image);
         }
 
-        public Image ToImage()
+        public IEnumerable<TextImage> GetTextImages()
         {
-            var brush = new SolidBrush(Color.White);
-
-            graphics.Clear(Color.Black);
-
             Cloud = new List<Rectangle>();
 
-            foreach (var textImage in GetTextImages(words))
-            {
-                var rect = PutNextRectangle(textImage.Size);
-                Cloud.Add(rect);
-
-                graphics.DrawString(textImage.Text, textImage.Font, brush, rect);
-            }
-
-            return image;
-        }
-
-        private IEnumerable<TextImage> GetTextImages(IEnumerable<(string, int)> words)
-        {
             foreach (var word in words)
             {
                 var font = new Font(drawingSettings.FontFamily, drawingSettings.FontSize + word.Item2);
-                var size = (graphics.MeasureString(word.Item1, font) + new SizeF(1, 0)).ToSize(); ;
-                var textImage = new TextImage(word.Item1, font, size, drawingSettings.Colors.First());
+                var size = (graphics.MeasureString(word.Item1, font) + new SizeF(1, 0)).ToSize();
+
+                var rect = PutNextRectangle(size);
+                Cloud.Add(rect);
+
+                var textImage = new TextImage(word.Item1, font, size, drawingSettings.Colors.First(), new Point(rect.X, rect.Y));
 
                 yield return textImage;
             }
@@ -68,13 +57,7 @@ namespace TagsCloudVisualization
                 rectangle.Right > canvasSize.Width)
                 return false;
 
-            foreach (var previous in Cloud)
-            {
-                if (rectangle.IntersectsWith(previous))
-                    return false;
-            }
-
-            return true;
+            return !Cloud.Any(x => x.IntersectsWith(rectangle));
         }
 
         private Rectangle PutNextRectangle(Size rectangleSize)

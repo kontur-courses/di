@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.CLI;
+using TagsCloudContainer.Drawer;
 using TagsCloudContainer.FrequencyAnalyzers;
 using TagsCloudContainer.SettingsClasses;
 using TagsCloudContainer.TextTools;
@@ -30,7 +31,8 @@ namespace TagsCloudContainer
 
             layouter.Initialize(appSettings.DrawingSettings, analyzer.GetAnalyzedText());
 
-            layouter.ToImage().Save(appSettings.OutImagePath);
+            Visualizer.Draw(appSettings.DrawingSettings.Size,
+                            layouter.GetTextImages()).Save(appSettings.OutImagePath);
             Console.WriteLine("Resulting image saved to " + appSettings.OutImagePath);
         }
     }

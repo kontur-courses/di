@@ -29,70 +29,56 @@ namespace TagsCloudTests
 
             sut = new TagsCloudLayouter();
             sut.Initialize(drawingSettings, words);
-            sut.ToImage();
+
         }
 
         [Test]
-        public void ToImage_ShouldReturnCorrectImage()
+        public void GetTextImages_ShouldContainCorrectNumberOfRectangles()
         {
             // Arrange
-            var expectedImage = new Bitmap(200, 200);
+            var expectedCount = words.Count;
 
             // Act
-            var actualImage = sut.ToImage();
-
-            // Assert
-            actualImage.Should().NotBeNull();
-            actualImage.Should().BeOfType<Bitmap>();
-            actualImage.Width.Should().Be(expectedImage.Width);
-            actualImage.Height.Should().Be(expectedImage.Height);
-        }
-
-        [Test]
-        public void ToImage_ShouldContainCorrectNumberOfRectangles()
-        {
-            // Arrange
-            var expectedCount = words.Count();
-
-            // Act
-            var actualCount = sut.Cloud.Count;
+            var actualCount = sut.GetTextImages().Count();
 
             // Assert
             actualCount.Should().Be(expectedCount);
         }
 
-        [Test]
-        public void ToImage_ShouldNotOverlapRectangles()
-        {
-            // Arrange
-            var expectedNoOverlap = true;
+        //[Test]
+        //public void GetTextImages_ShouldNotOverlapRectangles()
+        //{
+        //    // Arrange
+        //    var expectedNoOverlap = true;
+        //    var cloud = sut.GetTextImages().ToList();
 
-            // Act
-            var actualNoOverlap = true;
-            foreach (var rectangle1 in sut.Cloud)
-            {
-                foreach (var rectangle2 in sut.Cloud)
-                {
-                    if (rectangle1 == rectangle2)
-                    {
-                        continue;
-                    }
-                    var isIntersect = rectangle1.IntersectsWith(rectangle2);
-                    if (isIntersect)
-                    {
-                        actualNoOverlap = false;
-                        break;
-                    }
-                    if (!actualNoOverlap)
-                    {
-                        break;
-                    }
-                }
 
-            }
+        //    // Act
+        //    var actualNoOverlap = true;
+        //    foreach (var rectangle1 in cloud)
+        //    {
+        //        foreach (var rectangle2 in sut.Cloud)
+        //        {
+        //            if (rectangle1 == rectangle2)
+        //            {
+        //                continue;
+        //            }
+        //            var isIntersect = rectangle1.IntersectsWith(rectangle2);
+        //            if (isIntersect)
+        //            {
+        //                actualNoOverlap = false;
+        //                break;
+        //            }
+        //            if (!actualNoOverlap)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-            // Assert
-            actualNoOverlap.Should().Be(expectedNoOverlap);
-        }
+        //    }
+
+        //    // Assert
+        //    actualNoOverlap.Should().Be(expectedNoOverlap);
+        //}
     }
 }

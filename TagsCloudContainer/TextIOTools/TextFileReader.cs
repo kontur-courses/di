@@ -6,10 +6,8 @@
         {
             try
             {
-                using (StreamReader reader = new StreamReader(filePath))
-                {
-                    return reader.ReadToEnd();
-                }
+                var reader = new StreamReader(filePath);
+                return reader.ReadToEnd();
             }
             catch
             {
