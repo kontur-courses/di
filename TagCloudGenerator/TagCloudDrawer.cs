@@ -129,8 +129,7 @@ namespace TagCloudGenerator
                 var font = new Font(settings.Font, 24 + (line.Value * 6));
                 SizeF size = graphics.MeasureString(line.Key, font);
                 var rect = layouter.PutNextRectangle(size.ToSize());
-
-               
+              
                 graphics.DrawString(line.Key, font, brush, rect.X, rect.Y);
             }
 

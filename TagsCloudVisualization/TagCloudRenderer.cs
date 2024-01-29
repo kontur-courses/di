@@ -19,22 +19,28 @@ namespace TagsCloudVisualization
             if (unscaledImageSize.Height <= settings.ImageSize.Height &&
                 unscaledImageSize.Width <= settings.ImageSize.Width)
             {
-                bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-                CustomizeGraphics(settings);
-                DrawRealSizeCloud(settings, rectangles);
-                return;
+                using (bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height))
+                {
+                    CustomizeGraphics(settings);
+                    DrawRealSizeCloud(settings, rectangles);
+                    return;
+                }                
             }
 
-            bitmap = new Bitmap(unscaledImageSize.Width, unscaledImageSize.Height);
-            CustomizeGraphics(settings);
-            DrawScaleCloud(settings, rectangles, unscaledImageSize, smallestSizeOfRectangles);
+            using (bitmap = new Bitmap(unscaledImageSize.Width, unscaledImageSize.Height))
+            {
+                CustomizeGraphics(settings);
+                DrawScaleCloud(settings, rectangles, unscaledImageSize, smallestSizeOfRectangles);
+            }              
         }
 
         private void CustomizeGraphics(VisualizingSettings settings)
         {
-            pen = new Pen(settings.PenColor);
-            graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(settings.BackgroundColor);
+            using (graphics = Graphics.FromImage(bitmap))
+            {
+                pen = new Pen(settings.PenColor);
+                graphics.Clear(settings.BackgroundColor);
+            }               
         }
 
         private void DrawScaleCloud(
