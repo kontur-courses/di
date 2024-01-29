@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{4C58CF1F-0076-4F83-96AF-9F56EB502E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{F44C977A-4F00-4015-968C-61E690B582A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudApplication", "TagCloudApplication\TagCloudApplication.csproj", "{8294E791-881C-4E31-8DE0-24425F5B05F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C58CF1F-0076-4F83-96AF-9F56EB502E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C58CF1F-0076-4F83-96AF-9F56EB502E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C58CF1F-0076-4F83-96AF-9F56EB502E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C58CF1F-0076-4F83-96AF-9F56EB502E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F44C977A-4F00-4015-968C-61E690B582A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F44C977A-4F00-4015-968C-61E690B582A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F44C977A-4F00-4015-968C-61E690B582A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F44C977A-4F00-4015-968C-61E690B582A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8294E791-881C-4E31-8DE0-24425F5B05F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8294E791-881C-4E31-8DE0-24425F5B05F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8294E791-881C-4E31-8DE0-24425F5B05F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8294E791-881C-4E31-8DE0-24425F5B05F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
