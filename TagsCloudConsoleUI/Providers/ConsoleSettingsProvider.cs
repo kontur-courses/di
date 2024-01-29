@@ -20,6 +20,12 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
 
     private bool _isCustomColoringUsed;
 
+    private readonly IEnumerable<IWordColorer> _registeredWordColorers;
+    public ConsoleSettingsProvider(IEnumerable<IWordColorer> registeredWordColorers)
+    {
+        _registeredWordColorers = registeredWordColorers;
+    }
+    
     private DrawingOptions GetDrawingOptions()
     {
         var font = GetFont();
@@ -44,9 +50,9 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
     {
         var wordProvider = GetWordProvider();
         var wordColorer = GetWordColorer();
-        var cloudLayouter = GetAlgorithm(CloudAlgorithmProviders.RegisteredProviders,
+        var cloudLayouter = GetAlgorithm(CloudAlgorithmProvider.RegisteredProviders,
             "Choose the cloud forming algorithm:");
-
+        
         return new CommonOptions(wordProvider, wordColorer, cloudLayouter);
     }
 
@@ -94,13 +100,26 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
         }
     }
 
-    private IWordColorer? GetWordColorer()
+    private IWordColorer GetWordColorer()
     {
-        if (!Prompt.GetYesNo("Would you like to use a custom coloring algorithm?", false, ConsoleColor.DarkGreen))
-            return null;
+        var sb = new StringBuilder("Choose coloring algorithm:\n");
+        foreach (var registeredWordColorer in _registeredWordColorers)
+            sb.AppendLine(registeredWordColorer.Name);
 
-        _isCustomColoringUsed = true;
-        return GetAlgorithm(ColorerProviders.RegisteredProviders, "Choose the algorithm:");
+        while (true)
+        {
+            var input = Prompt.GetString(sb.ToString(), "", promptColor: ConsoleColor.DarkGreen);
+            var colorer = _registeredWordColorers.SingleOrDefault(c => c.Match(input!));
+            if (colorer is null)
+            {
+                Console.WriteLine("The provided algorithm does not exist. Try again.");
+                continue;
+            }
+
+            if (colorer.Name != "Default")
+                _isCustomColoringUsed = true;
+            return colorer;
+        }
     }
 
     private static T GetAlgorithm<T>(IReadOnlyDictionary<string, T> registeredAlgorithms,

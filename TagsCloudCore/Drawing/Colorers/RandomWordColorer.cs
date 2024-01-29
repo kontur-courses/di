@@ -8,4 +8,6 @@ public class RandomWordColorer : IWordColorer
     
     public Color GetWordColor(string word, int wordFrequency)
         => Color.FromArgb(Random.Next(0, 256), Random.Next(0, 256), Random.Next(0, 256));
+
+    public string Name => "Random";
 }

@@ -5,13 +5,15 @@ namespace TagsCloudCore.Drawing.Colorers;
 
 public class DefaultWordColorer : IWordColorer
 {
-    private readonly Color _color;
+    private readonly Lazy<IDrawingOptionsProvider> _drawingOptionsProvider;
     
-    public DefaultWordColorer(IDrawingOptionsProvider drawingOptionsProvider)
+    public DefaultWordColorer(Lazy<IDrawingOptionsProvider> drawingOptionsProvider)
     {
-        _color = drawingOptionsProvider.DrawingOptions.FontColor;
+        _drawingOptionsProvider = drawingOptionsProvider;
     }
 
     public Color GetWordColor(string word, int wordFrequency)
-        => _color;
+        => _drawingOptionsProvider.Value.DrawingOptions.FontColor;
+
+    public string Name => "Default";
 }
