@@ -15,10 +15,6 @@ namespace TagsCloudVisualization
 
         private ICollection<Rectangle> Cloud { get; set; }
 
-        public TagsCloudLayouter()
-        {
-        }
-
         public void Initialize(CloudDrawingSettings drawingSettings, IEnumerable<(string, int)> words)
         {
             if (drawingSettings.Size.Width <= 0 || drawingSettings.Size.Height <= 0)

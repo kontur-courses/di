@@ -10,10 +10,6 @@ namespace TagsCloudVisualization
         private Point Center;
         private const int maxPonitsCount = 10000000;
 
-        public SpiralPointsProvider()
-        {
-        }
-
         public IEnumerable<Point> Points()
         {
             while (pointNumber < maxPonitsCount)

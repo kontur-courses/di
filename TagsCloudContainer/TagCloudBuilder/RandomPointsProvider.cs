@@ -10,10 +10,6 @@ namespace TagsCloudContainer.TagCloudBuilder
         private int pointNumber = 0;
         private const int maxPonitsCount = 10000000;
 
-        public RandomPointsProvider()
-        {
-        }
-
         public IEnumerable<Point> Points()
         {
             while (pointNumber < maxPonitsCount)
