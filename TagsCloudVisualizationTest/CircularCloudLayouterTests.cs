@@ -15,7 +15,7 @@ namespace TagsCloudVisualizationTest
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(Center, new Spiral());
+        private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(Center, new Spiral(new Point(0,0), 1, 0.1));
         private static readonly Point Center = new Point(50, 50);
         private RectangleF[] currentRectangles;
 
@@ -36,7 +36,7 @@ namespace TagsCloudVisualizationTest
 
         [Test]
         public static void CircularCloudLayouterCtor_WhenPassValidArguments_DoesNotThrowException() =>
-            Assert.DoesNotThrow(() => new CircularCloudLayouter(Center, new Spiral()));
+            Assert.DoesNotThrow(() => new CircularCloudLayouter(Center, new Spiral(new Point(0,0), 1, 0.1)));
 
         public static TestCaseData[] InvalidArguments =
         {

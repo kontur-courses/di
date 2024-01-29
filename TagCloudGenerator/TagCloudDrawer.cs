@@ -1,9 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
 using TagsCloudVisualization;
-using DocumentFormat.OpenXml.Packaging;
 using System.Drawing.Imaging;
-using WeCantSpell.Hunspell;
 
 namespace TagCloudGenerator
 {
@@ -11,11 +9,13 @@ namespace TagCloudGenerator
     {
         private TextProcessor textProcessor;
         private WordCounter wordCounter;
+        private TextReader textReader;
 
-        public TagCloudDrawer(WordCounter wordCounter, TextProcessor textProcessor) 
+        public TagCloudDrawer(WordCounter wordCounter, TextProcessor textProcessor, TextReader textReader) 
         {
             this.textProcessor = textProcessor;
             this.wordCounter = wordCounter;
+            this.textReader = textReader;
         }
 
         public Bitmap DrawWordsCloud(string filePath, VisualizingSettings visualizingSettings)
@@ -23,21 +23,17 @@ namespace TagCloudGenerator
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
            
-            var words = ReadTextFromFile(filePath);        
-            var deleteBoringWords = new TextProcessorRemovingBoringWords(textProcessor);
+            var words = textReader.ReadTextFromFile(filePath);        
+            var deleteBoringWords = new BoringWordsTextProcessor(textProcessor);
             words = deleteBoringWords.ProcessText(words);
-
             var wordsWithCount = wordCounter.CountWords(words);
-            var orderedWords = wordsWithCount
-                .OrderByDescending(x => x.Value)
-                .ToDictionary(x => x.Key, x => x.Value);            
 
             Console.WriteLine("The tag cloud is drawn");
 
-            return Draw(orderedWords, visualizingSettings);
+            return Draw(wordsWithCount, visualizingSettings);
         }
 
-        public void SaveImage(Bitmap bitmap, VisualizingSettings visualizingSettings, string filePath)
+        public void SaveImage(Bitmap bitmap, VisualizingSettings visualizingSettings)
         {
             if (bitmap == null) 
                 return;
@@ -86,32 +82,6 @@ namespace TagCloudGenerator
                 default:
                     throw new NotImplementedException();
             }
-        }
-
-        private IEnumerable<string> ReadTextFromFile(string filePath)
-        {
-            var extension = Path.GetExtension(filePath);
-
-            if (extension == ".docx")
-            {
-                using (WordprocessingDocument wordDocument = 
-                    WordprocessingDocument.Open(filePath, false))
-                { 
-                    var body = wordDocument.MainDocumentPart.Document.Body;
-                    var paragraphs = body.ChildElements;
-                        
-                    var text = new List<string>(paragraphs.Count);
-                    foreach (var paragraph in paragraphs)
-                    {
-                        if (paragraph.InnerText != "")
-                            text.Add(paragraph.InnerText);
-                    }
-
-                    return text;
-                }
-            }
-       
-            return File.ReadAllLines(filePath);
         }
 
         private Bitmap Draw(Dictionary<string, int> text, VisualizingSettings settings)

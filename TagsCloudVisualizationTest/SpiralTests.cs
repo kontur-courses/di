@@ -13,7 +13,7 @@ namespace TagsCloudVisualizationTest
         [TestOf(nameof(Spiral.GetPosition))]
         public void WhenPassFirstPoint_ShouldBeInCenter()
         {
-            var spiral = new Spiral(5, new Point(0, 0), 1.5);
+            var spiral = new Spiral(new Point(0, 0), 5, 1.5);
 
             var newPosition = spiral.GetPosition();
 
@@ -51,7 +51,7 @@ namespace TagsCloudVisualizationTest
         [TestCaseSource(nameof(ArgumentsForSpiralTests))]
         public void WhenGetFewPoints_ShouldDrawSpiral(Point center, List<Point> expectedPoints)
         {
-            var spiral = new Spiral(5, center, 1.5);
+            var spiral = new Spiral(center, 5, 1.5);
             var actualPositions = new Point[8];
 
             for (var i = 0; i < expectedPoints.Count; i++)

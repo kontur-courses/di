@@ -13,7 +13,9 @@
                 else words[word] = 1;
             }
 
-            return words;
+            return words
+                .OrderByDescending(x => x.Value)
+                .ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace TagCloudGenerator
 {
-    public class TextProcessorRemovingBoringWords : TextProcessorWrapper
+    public class BoringWordsTextProcessor : TextProcessorWrapper
     {
-        public TextProcessorRemovingBoringWords(ITextProcessor textProcessor) : base(textProcessor) { }
+        public BoringWordsTextProcessor(ITextProcessor textProcessor) : base(textProcessor) { }
 
         public override IEnumerable<string> ProcessText(IEnumerable<string> text)
         {
@@ -14,10 +14,10 @@ namespace TagCloudGenerator
                 "../../../Dictionaries/English (American).dic",
                 "../../../Dictionaries/English (American).aff");
             
-            foreach (var item in text)
+            foreach (var word in text)
             {               
-                var details = wordList.CheckDetails(item);
-                var wordEntryDetails = wordList[string.IsNullOrEmpty(details.Root) ? item : details.Root];
+                var details = wordList.CheckDetails(word);
+                var wordEntryDetails = wordList[string.IsNullOrEmpty(details.Root) ? word : details.Root];
               
                 if (wordEntryDetails.Length != 0 && wordEntryDetails[0].Morphs.Count != 0)
                 {
@@ -28,7 +28,7 @@ namespace TagCloudGenerator
                         continue;
                 }
                 
-                yield return item;
+                yield return word;
             }
         }
     }

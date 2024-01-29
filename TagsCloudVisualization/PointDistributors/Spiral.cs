@@ -10,7 +10,7 @@ namespace TagsCloudVisualization.PointDistributors
         private double deltaAngle;
         private Point center;
         public bool centerOnPoint = false;
-       
+
         public Spiral(Point center, int step, double deltaAngle)
         {
             this.step = step;

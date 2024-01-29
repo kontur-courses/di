@@ -17,7 +17,7 @@ public class Program
                  {
                      AddSettings(o, visualizingSettings);
                      var image = drawer.DrawWordsCloud(o.Path, visualizingSettings);
-                     drawer.SaveImage(image, visualizingSettings, o.Path);
+                     drawer.SaveImage(image, visualizingSettings);
                  });
     }
 
@@ -27,6 +27,7 @@ public class Program
         services.AddTransient<TagCloudDrawer>();
         services.AddTransient<TextProcessor>();
         services.AddTransient<WordCounter>();
+        services.AddTransient<TagCloudGenerator.TextReader>();
         var container = services.BuildServiceProvider();
 
         return container.GetRequiredService<TagCloudDrawer>();
