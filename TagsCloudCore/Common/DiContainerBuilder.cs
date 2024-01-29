@@ -15,16 +15,18 @@ public static class DiContainerBuilder
         var containerBuilder = new ContainerBuilder();
 
         containerBuilder.RegisterAssemblyTypes(typeof(IWordColorer).Assembly).As<IWordColorer>().SingleInstance();
-        
+
+        containerBuilder.RegisterAssemblyTypes(typeof(IWordProvider).Assembly).As<IWordProvider>().SingleInstance();
+
         containerBuilder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>().SingleInstance();
-        
+
         containerBuilder
-            .RegisterInstance(new DefaultWordFilter(new TxtFileWordParser(AppSettings.PathToBoringWordsFilter)))
+            .RegisterInstance(new DefaultWordFilter(new TxtFileWordParser(), AppSettings.PathToBoringWordsFilter))
             .As<IWordFilter>()
             .SingleInstance();
-        
+
         containerBuilder.RegisterType<DefaultWordProcessor>().As<IProcessedWordProvider>().SingleInstance();
-        
+
         containerBuilder.RegisterType<DefaultWordCloudDistributor>().As<IWordCloudDistributorProvider>()
             .SingleInstance();
 

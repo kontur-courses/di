@@ -2,47 +2,39 @@
 using System.Text;
 using McMaster.Extensions.CommandLineUtils;
 using TagsCloudCore.BuildingOptions;
-using TagsCloudCore.Common;
-using TagsCloudCore.Drawing.Colorers;
+using TagsCloudCore.Common.Enums;
 using TagsCloudCore.Utils;
 using TagsCloudCore.WordProcessing.WordInput;
 
-namespace TagsCloudConsoleUI.Providers;
+namespace TagsCloudConsoleUI;
 
 public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsProvider
 {
-    public DrawingOptions DrawingOptions => _drawingOptions ??= GetDrawingOptions();
-
-    public CommonOptions CommonOptions => _commonOptions ??= GetCommonOptions();
+    private CommonOptions? _commonOptions;
 
     private DrawingOptions? _drawingOptions;
 
-    private CommonOptions? _commonOptions;
-
     private bool _isCustomColoringUsed;
 
-    private readonly IEnumerable<IWordColorer> _registeredWordColorers;
-    public ConsoleSettingsProvider(IEnumerable<IWordColorer> registeredWordColorers)
-    {
-        _registeredWordColorers = registeredWordColorers;
-    }
-    
+    public CommonOptions CommonOptions => _commonOptions ??= GetCommonOptions();
+    public DrawingOptions DrawingOptions => _drawingOptions ??= GetDrawingOptions();
+
     private DrawingOptions GetDrawingOptions()
     {
         var font = GetFont();
         var backgroundColor = GetRgbColor("Enter background color in RGB format separated by space");
 
         var fontColor = GetFontColor();
-        
+
         var imageSide = GetInteger(
             "Enter the image's desired size in px. The image will be a square. It must range from 500 px to 5000 px.",
             500, 5000);
-        
+
         var imageSize = new Size(imageSide, imageSide);
-        
+
         var frequencyScaling = GetInteger(
-                "Enter the frequency scaling (a positive integer). It Determines the scale to word frequency ratio.", 
-                1, 100);
+            "Enter the frequency scaling (a positive integer). It Determines the scale to word frequency ratio.",
+            1, 100);
 
         return new DrawingOptions(fontColor, backgroundColor, imageSize, font, frequencyScaling);
     }
@@ -51,19 +43,18 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
     {
         var wordProvider = GetWordProvider();
         var wordColorer = GetWordColorer();
-        var cloudLayouter = GetAlgorithm(CloudAlgorithmProvider.RegisteredProviders,
-            "Choose the cloud forming algorithm:");
-        
+        var cloudLayouter = GetCloudBuildingAlgorithm();
+
         return new CommonOptions(wordProvider, wordColorer, cloudLayouter);
     }
 
     private Color GetFontColor()
     {
-        return _isCustomColoringUsed 
-            ? Color.White 
+        return _isCustomColoringUsed
+            ? Color.White
             : GetRgbColor("Enter font color in RGB format separated by space");
     }
-    
+
     private static int GetInteger(string prompt, int lowerAllowedBoundary, int upperAllowedBoundary)
     {
         while (true)
@@ -81,7 +72,7 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
         while (true)
         {
             var colorString = Prompt.GetString(prompt, "",
-                promptColor: ConsoleColor.DarkGreen);
+                ConsoleColor.DarkGreen);
             if (DrawingUtils.TryParseRgb(colorString!, out var color))
                 return color;
             Console.WriteLine("Ivalid color format. Try again.");
@@ -101,46 +92,43 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
         }
     }
 
-    private IWordColorer GetWordColorer()
+    private WordColorerAlgorithm GetWordColorer()
     {
         var sb = new StringBuilder("Choose coloring algorithm:\n");
-        foreach (var registeredWordColorer in _registeredWordColorers)
-            sb.AppendLine(registeredWordColorer.Name);
+        foreach (var registeredWordColorer in Enum.GetNames(typeof(WordColorerAlgorithm)))
+            sb.AppendLine(registeredWordColorer);
 
         while (true)
         {
-            var input = Prompt.GetString(sb.ToString(), "", promptColor: ConsoleColor.DarkGreen);
-            var colorer = _registeredWordColorers.SingleOrDefault(c => c.Match(input!));
-            if (colorer is null)
+            var input = Prompt.GetString(sb.ToString(), "", ConsoleColor.DarkGreen);
+            if (Enum.TryParse(input, out WordColorerAlgorithm algorithm))
             {
-                Console.WriteLine("The provided algorithm does not exist. Try again.");
-                continue;
+                if (algorithm != WordColorerAlgorithm.Default)
+                    _isCustomColoringUsed = true;
+                return algorithm;
             }
 
-            if (colorer.Name != AppSettings.DefaultColorerName)
-                _isCustomColoringUsed = true;
-            return colorer;
+            Console.WriteLine("The provided word colorer does not exist. Try again.");
         }
     }
 
-    private static T GetAlgorithm<T>(IReadOnlyDictionary<string, T> registeredAlgorithms,
-        string prompt)
+    private static CloudBuildingAlgorithm GetCloudBuildingAlgorithm()
     {
-        var sb = new StringBuilder($"{prompt}\n");
-        foreach (var algorithmProvider in registeredAlgorithms.Keys)
-            sb.AppendLine(algorithmProvider);
+        var sb = new StringBuilder("Choose cloud forming algorithm:\n");
+        foreach (var algorithm in Enum.GetNames(typeof(CloudBuildingAlgorithm)))
+            sb.AppendLine(algorithm);
 
         while (true)
         {
-            var algorithm = Prompt.GetString(sb.ToString(), "", promptColor: ConsoleColor.DarkGreen);
-            if (registeredAlgorithms.TryGetValue(algorithm!, out var provider))
-                return provider;
+            var input = Prompt.GetString(sb.ToString(), "", ConsoleColor.DarkGreen);
+            if (Enum.TryParse(input, out CloudBuildingAlgorithm algorithm))
+                return algorithm;
 
-            Console.WriteLine("Specified algorithm isn't supported. Try again.");
+            Console.WriteLine("The provided algorithm does not exist. Try again.");
         }
     }
 
-    private static IWordProvider GetWordProvider()
+    private static WordProviderInfo GetWordProvider()
     {
         while (true)
         {
@@ -151,9 +139,9 @@ public class ConsoleSettingsProvider : IDrawingOptionsProvider, ICommonOptionsPr
                 continue;
             }
 
-            var ext = Path.GetExtension(path);
-            if (WordProviders.RegisteredProviders.TryGetValue(ext, out var provider))
-                return provider(path);
+            var ext = Path.GetExtension(path)[1..];
+            if (Enum.TryParse(ext, ignoreCase: true, out WordProviderType type))
+                return new WordProviderInfo(type, path);
 
             Console.WriteLine("This extension is not supported. Try again.");
         }

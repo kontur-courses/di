@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using TagsCloudCore.BuildingOptions;
 using TagsCloudCore.Common;
+using TagsCloudCore.Common.Enums;
 using TagsCloudCore.Drawing.Colorers;
 using TagsCloudCore.TagCloudForming;
 
@@ -11,17 +12,17 @@ public class DefaultImageDrawer : IImageDrawer
 {
     private readonly IReadOnlyDictionary<string, WordData> _distributedWords;
     private readonly DrawingOptions _drawingOptions;
-    private readonly IWordColorer? _colorer;
+    private readonly IEnumerable<IWordColorer> _wordColorers;
 
     public DefaultImageDrawer(IWordCloudDistributorProvider cloudDistributorProvider,
-        IDrawingOptionsProvider drawingOptionsProvider, ICommonOptionsProvider commonOptionsProvider)
+        IDrawingOptionsProvider drawingOptionsProvider, IEnumerable<IWordColorer> wordColorers)
     {
         _distributedWords = cloudDistributorProvider.DistributedWords;
         _drawingOptions = drawingOptionsProvider.DrawingOptions;
-        _colorer = commonOptionsProvider.CommonOptions.WordColorer;
+        _wordColorers = wordColorers;
     }
 
-    public Bitmap DrawImage()
+    public Bitmap DrawImage(WordColorerAlgorithm colorerAlgorithm)
     {
         var bitmap = new Bitmap(_drawingOptions.ImageSize.Width, _drawingOptions.ImageSize.Height);
         var offset = new Point(_drawingOptions.ImageSize.Width / 2, _drawingOptions.ImageSize.Height / 2);
@@ -33,7 +34,12 @@ public class DefaultImageDrawer : IImageDrawer
             var sizeAdd = _drawingOptions.FrequencyScaling * (word.Frequency - 1);
             var newFont = new Font(_drawingOptions.Font.FontFamily, _drawingOptions.Font.Size + sizeAdd,
                 _drawingOptions.Font.Style);
-            var color = _colorer?.GetWordColor(value, word.Frequency) ?? _drawingOptions.FontColor;
+
+            var colorer = _wordColorers.SingleOrDefault(c => c.Match(colorerAlgorithm));
+            var color = colorer!.AlgorithmName == WordColorerAlgorithm.Default
+                ? _drawingOptions.FontColor
+                : colorer.GetWordColor(value, word.Frequency);
+
             graphics.DrawString(value, newFont, new SolidBrush(color),
                 word.Rectangle with {X = word.Rectangle.X + offset.X, Y = word.Rectangle.Y + offset.Y});
         }

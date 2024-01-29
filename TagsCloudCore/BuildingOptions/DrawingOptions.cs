@@ -4,12 +4,6 @@ namespace TagsCloudCore.BuildingOptions;
 
 public class DrawingOptions
 {
-    public Color FontColor { get; }
-    public Color BackgroundColor { get; }
-    public Size ImageSize { get; }
-    public Font Font { get; }
-    public int FrequencyScaling { get; }
-
     public DrawingOptions(Color fontColor, Color backgroundColor, Size imageSize, Font font, int frequencyScaling)
     {
         FontColor = fontColor;
@@ -18,4 +12,10 @@ public class DrawingOptions
         Font = font;
         FrequencyScaling = frequencyScaling;
     }
+
+    public Color FontColor { get; }
+    public Color BackgroundColor { get; }
+    public Size ImageSize { get; }
+    public Font Font { get; }
+    public int FrequencyScaling { get; }
 }

@@ -8,17 +8,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagsCloudCore\TagsCloudCore.csproj" />
+        <ProjectReference Include="..\TagsCloudCore\TagsCloudCore.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="TagsCloudVisualization">
-        <HintPath>..\TagsCloudCore\libs\TagsCloudVisualization.dll</HintPath>
-      </Reference>
+        <Reference Include="TagsCloudVisualization">
+            <HintPath>..\TagsCloudCore\libs\TagsCloudVisualization.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.0" />
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.0"/>
     </ItemGroup>
 
 </Project>

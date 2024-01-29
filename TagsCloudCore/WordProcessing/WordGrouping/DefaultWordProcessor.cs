@@ -1,16 +1,20 @@
 ﻿using TagsCloudCore.BuildingOptions;
 using TagsCloudCore.WordProcessing.WordFiltering;
+using TagsCloudCore.WordProcessing.WordInput;
 
 namespace TagsCloudCore.WordProcessing.WordGrouping;
 
 public class DefaultWordProcessor : IProcessedWordProvider
 {
-    private readonly string[] _words;
     private readonly IEnumerable<IWordFilter> _filters;
+    private readonly WordProviderInfo _wordProviderInfo;
+    private readonly IEnumerable<IWordProvider> _wordProviders;
 
-    public DefaultWordProcessor(ICommonOptionsProvider commonOptionsProvider, IEnumerable<IWordFilter> filters)
+    public DefaultWordProcessor(ICommonOptionsProvider commonOptionsProvider, IEnumerable<IWordFilter> filters,
+        IEnumerable<IWordProvider> wordProviders)
     {
-        _words = commonOptionsProvider.CommonOptions.WordProvider.Words.Select(w => w.ToLower()).ToArray();
+        _wordProviderInfo = commonOptionsProvider.CommonOptions.WordProviderInfo;
+        _wordProviders = wordProviders;
         _filters = filters;
     }
 
@@ -18,7 +22,9 @@ public class DefaultWordProcessor : IProcessedWordProvider
 
     private Dictionary<string, int> ProcessWords()
     {
-        var filtered = _filters.Aggregate(_words, (current, filter) => filter.FilterWords(current));
+        var provider = _wordProviders.SingleOrDefault(p => p.Match(_wordProviderInfo.Type));
+        var words = provider!.GetWords(_wordProviderInfo.ResourceLocation).Select(w => w.ToLower()).ToArray();
+        var filtered = _filters.Aggregate(words, (current, filter) => filter.FilterWords(current));
         return GroupWords(filtered);
     }
 

@@ -1,21 +1,21 @@
-﻿using TagsCloudCore.Drawing.Colorers;
-using TagsCloudCore.WordProcessing.WordInput;
-using TagsCloudVisualization;
+﻿using TagsCloudCore.Common.Enums;
+using WordProviderInfo = TagsCloudCore.WordProcessing.WordInput.WordProviderInfo;
 
 namespace TagsCloudCore.BuildingOptions;
 
 public class CommonOptions
 {
-    public IWordProvider WordProvider { get; }
-    
-    public IWordColorer? WordColorer { get; }
-    
-    public ICloudLayouter CloudLayouter { get; }
-
-    public CommonOptions(IWordProvider wordProvider, IWordColorer? wordColorer, ICloudLayouter cloudLayouter)
+    public CommonOptions(WordProviderInfo wordProviderInfo, WordColorerAlgorithm wordColorer,
+        CloudBuildingAlgorithm cloudBuildingAlgorithm)
     {
-        WordProvider = wordProvider;
+        WordProviderInfo = wordProviderInfo;
         WordColorer = wordColorer;
-        CloudLayouter = cloudLayouter;
+        CloudBuildingAlgorithm = cloudBuildingAlgorithm;
     }
+
+    public WordProviderInfo WordProviderInfo { get; }
+
+    public WordColorerAlgorithm WordColorer { get; }
+
+    public CloudBuildingAlgorithm CloudBuildingAlgorithm { get; }
 }

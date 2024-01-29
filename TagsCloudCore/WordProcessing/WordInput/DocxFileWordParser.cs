@@ -1,31 +1,30 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using TagsCloudCore.Common.Enums;
 
 namespace TagsCloudCore.WordProcessing.WordInput;
 
 public class DocxFileWordParser : IWordProvider
 {
-    private readonly string _filePath;
-    
-    public DocxFileWordParser(string filePath)
+    public string[] GetWords(string resourceLocation)
     {
-        _filePath = filePath;
-    }
-    
-    public string[] Words => Parse();
+        using var wordDocument = WordprocessingDocument.Open(resourceLocation, false);
 
-    private string[] Parse()
-    {
-        using var wordDocument = WordprocessingDocument.Open(_filePath, false);
-        
         var body = wordDocument.MainDocumentPart?.Document.Body;
 
         if (body is null)
             throw new IOException(
-                $"Failed to read from file {_filePath} Most likely the file path is incorrect or the file is corrupted.");
+                $"Failed to read from file {resourceLocation} Most likely the file path is incorrect or the file is corrupted.");
 
         return body.Elements<Paragraph>()
             .Select(paragraph => paragraph.InnerText)
             .ToArray();
+    }
+
+    public WordProviderType Info => WordProviderType.Docx;
+
+    public bool Match(WordProviderType info)
+    {
+        return info == Info || info == WordProviderType.Doc;
     }
 }
