@@ -18,7 +18,7 @@ public static class TagCloudServicesFactory
         
         services.AddSingleton<TagCloudGenerator>();
                 
-        services.AddSingleton<ICloudShaper>(provider => SpiralCloudShaper.Create(new Point(0, 0)));
+        services.AddSingleton<ICloudShaper>(provider => SpiralCloudShaper.Create(new Point(0, 0), coefficient: options.Density));
         services.AddSingleton<CircularCloudLayouter>();
         
         services.AddScoped<Font>(provider => new Font(new FontFamily(options.Font), options.FontSize));

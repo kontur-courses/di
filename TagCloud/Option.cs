@@ -49,8 +49,12 @@ public class Options
         Default = new[] { "PR", "PART", "CONJ", "INTJ" })]
     public string[] UnusedPartsOfSpeech { get; set; }
     
+    [Option("density", HelpText = "Set density.", Default = 0.1)]
+    public double Density { get; set; }
+    
     [Option("width", HelpText = "Set width.", Default = 100)]
     public int Width { get; set; }
+    
     
     [Option("height", HelpText = "Set height.", Default = 100)]
     public int Height { get; set; }
