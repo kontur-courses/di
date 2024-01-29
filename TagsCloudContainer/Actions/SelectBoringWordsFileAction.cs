@@ -7,12 +7,10 @@ namespace TagsCloudContainer.Actions
     public class SelectBoringWordsFileAction : IUiAction
     {
         private FileSettings fileSetting;
-        private ITagCloudClient tagCloudClient;
 
-        public SelectBoringWordsFileAction(FileSettings settings, ITagCloudClient tagCloudClient)
+        public SelectBoringWordsFileAction(FileSettings settings)
         { 
             this.fileSetting = settings;  
-            this.tagCloudClient = tagCloudClient;
         }
 
         public string Category => "Файлы";
@@ -23,7 +21,22 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            fileSetting.BoringFilePath = tagCloudClient.SetBoringFilePath(fileSetting.BoringFilePath);
+            var filePath = fileSetting.BoringFilePath;
+            var dialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                InitialDirectory = Path.GetFullPath(filePath),
+                DefaultExt = "txt",
+                FileName = "boring.txt",
+                Filter = "Текстовые файлы (*.txt)|*.txt"
+            };
+
+            var res = dialog.ShowDialog();
+
+            if (res == DialogResult.OK)
+                filePath = dialog.FileName;
+
+            fileSetting.BoringFilePath = filePath;
         }
     }
 }

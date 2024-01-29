@@ -1,4 +1,5 @@
 using TagsCloudContainer.Client;
+using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;
 
@@ -7,12 +8,12 @@ namespace TagsCloudContainer.Actions
     public class ImageSettingsAction : IUiAction
     {
         private ImageSettings imageSettings;
-        private ITagCloudClient tagCloudClient;
+        private PictureBox pictureBox;
 
-        public ImageSettingsAction(ImageSettings settings, ITagCloudClient tagCloudClient)
+        public ImageSettingsAction(ImageSettings settings, PictureBox pictureBox)
         { 
             this.imageSettings = settings;  
-            this.tagCloudClient = tagCloudClient;
+            this.pictureBox = pictureBox;
         }
 
         public string Category => "Настроить";
@@ -23,7 +24,8 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            tagCloudClient.SetSettings(imageSettings);
+            SettingsForm.For(imageSettings).ShowDialog();
+            pictureBox.RecreateImage(imageSettings);
         }
     }
 }

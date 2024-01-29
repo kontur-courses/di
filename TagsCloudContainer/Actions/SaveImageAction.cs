@@ -23,7 +23,19 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            tagCloudClient.SaveImage(fileSettings.ImagePath);
+            var dialog = new SaveFileDialog
+            {
+                CheckFileExists = false,
+                InitialDirectory = Path.GetFullPath(fileSettings.ImagePath),
+                DefaultExt = "png",
+                FileName = "image.png",
+                Filter = "Изображения (*.png)|*.png|Изображения (*.jpg)|*.jpg|Изображения (*.bmp)|*.bmp"
+            };
+
+            var res = dialog.ShowDialog();
+
+            if (res == DialogResult.OK)
+                tagCloudClient.SaveImage(dialog.FileName);
         }
     }
 }

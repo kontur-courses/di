@@ -6,14 +6,12 @@ namespace TagsCloudContainer.Actions
 {
     public class DrawTagCloudAction : IUiAction
     {
-        private ImageSettings imageSettings;
         private FileSettings fileSettings;
         private ITagCloudClient tagCloudClient;
 
-        public DrawTagCloudAction(ImageSettings imageSettings, FileSettings fileSettings, ITagCloudClient tagCloudClient)
+        public DrawTagCloudAction(FileSettings fileSettings, ITagCloudClient tagCloudClient)
         { 
             this.tagCloudClient = tagCloudClient;
-            this.imageSettings = imageSettings;
             this.fileSettings = fileSettings;
         }
 
@@ -26,7 +24,7 @@ namespace TagsCloudContainer.Actions
         public void Perform()
         {
             tagCloudClient.DrawImage(fileSettings.SourceFilePath,
-                fileSettings.BoringFilePath, imageSettings.Width, imageSettings.Height);
+                fileSettings.BoringFilePath);
         }
     }
 }

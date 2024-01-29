@@ -7,12 +7,10 @@ namespace TagsCloudContainer.Actions
     public class SelectSourceFileAction : IUiAction
     {
         private FileSettings fileSettings;
-        private ITagCloudClient tagCloudClient;
 
-        public SelectSourceFileAction(FileSettings settings, ITagCloudClient tagCloudClient)
+        public SelectSourceFileAction(FileSettings settings)
         { 
             this.fileSettings = settings;  
-            this.tagCloudClient = tagCloudClient;
         }
 
         public string Category => "Файлы";
@@ -23,7 +21,22 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            fileSettings.SourceFilePath = tagCloudClient.SetSourceFilePath(fileSettings.SourceFilePath);
+            var filePath = fileSettings.SourceFilePath;
+            var dialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                InitialDirectory = Path.GetFullPath(filePath),
+                DefaultExt = "txt",
+                FileName = "source.txt",
+                Filter = "Текстовые файлы (*.txt)|*.txt"
+            };
+
+            var res = dialog.ShowDialog();
+
+            if (res == DialogResult.OK)
+                filePath = dialog.FileName;
+
+            fileSettings.SourceFilePath = filePath;
         }
     }
 }

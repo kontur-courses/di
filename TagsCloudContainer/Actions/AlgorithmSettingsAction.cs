@@ -1,4 +1,5 @@
 using TagsCloudContainer.Client;
+using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.UiActions;
 
@@ -7,12 +8,10 @@ namespace TagsCloudContainer.Actions
     public class AlgorithmSettingsAction : IUiAction
     {
         private AlgorithmSettings algorithmSettings;
-        private ITagCloudClient tagCloudClient;
 
-        public AlgorithmSettingsAction(AlgorithmSettings settings, ITagCloudClient tagCloudClient)
+        public AlgorithmSettingsAction(AlgorithmSettings settings)
         { 
-            this.algorithmSettings = settings;  
-            this.tagCloudClient = tagCloudClient;
+            this.algorithmSettings = settings;
         }
 
         public string Category => "Настроить";
@@ -23,7 +22,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            tagCloudClient.SetSettings(algorithmSettings);
+            SettingsForm.For(algorithmSettings).ShowDialog();
         }
     }
 }
