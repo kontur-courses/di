@@ -15,8 +15,8 @@ public class LayouterTests
     [SetUp]
     public void SetUp()
     {
-        spiral = new Spiral(new Point(10, 10));
-        sut = new CloudLayouter(spiral);
+        spiral = new Spiral();
+        sut = new CloudLayouter(spiral, new Point(10, 10));
     }
 
 

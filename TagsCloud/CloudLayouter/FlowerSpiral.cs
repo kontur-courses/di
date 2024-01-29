@@ -7,12 +7,9 @@ public class FlowerSpiral : ISpiral
     private readonly int petalCount;
     private readonly double petalLength;
     private readonly float step;
-    private Point center;
     private int counter;
-
-    public FlowerSpiral(Point center, double petalLength = 0.5, int petalCount = 4, float step = 0.1f)
+    public FlowerSpiral(double petalLength = 0.5, int petalCount = 4, float step = 0.1f)
     {
-        Init(center);
         this.petalLength = petalLength;
         this.petalCount = petalCount;
         if (this.petalCount < 0 || petalLength < 0)
@@ -22,20 +19,17 @@ public class FlowerSpiral : ISpiral
         this.step = step;
     }
 
-    public void Init(Point center)
+    public IEnumerable<Point> GetPoints(Point center)
     {
         counter = 0;
-        this.center = center;
-    }
-
-    public Point GetPoint()
-    {
-        var angle = step * counter;
-        var radius = angle * petalLength * Math.Sin(petalCount * angle);
-        var xOffset = (float)(radius * Math.Cos(angle));
-        var yOffset = (float)(radius * Math.Sin(angle));
-        var point = new Point((int)Math.Round(center.X + xOffset), (int)Math.Round(center.Y + yOffset));
-        counter += 1;
-        return point;
+        while (true)
+        {
+            var angle = step * counter;
+            var radius = angle * petalLength * Math.Sin(petalCount * angle);
+            var xOffset = (float)(radius * Math.Cos(angle));
+            var yOffset = (float)(radius * Math.Sin(angle));
+            yield return new Point((int)Math.Round(center.X + xOffset), (int)Math.Round(center.Y + yOffset));
+            counter += 1;
+        }
     }
 }

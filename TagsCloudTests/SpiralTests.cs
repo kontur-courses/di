@@ -1,6 +1,5 @@
 using System.Drawing;
 using FluentAssertions;
-using TagsCloud;
 using TagsCloud.CloudLayouter;
 
 namespace TagsCloudTests;
@@ -28,7 +27,7 @@ public class SpiralTests
     [Test]
     public void Spiral_StepAngleEquals0_ShouldBeThrowException()
     {
-        Action action = () => new Spiral(center, 0);
+        Action action = () => new Spiral(0);
         action.Should().Throw<ArgumentException>()
             .WithMessage("the step must not be equal to 0");
     }
@@ -37,11 +36,7 @@ public class SpiralTests
     public void Spiral_GetNextPoint_CreatePointsWithCustomAngle_ReturnsCorrectPoints(float angleStep,
         Point[] expectedPoints)
     {
-        var spiral = new Spiral(new Point(10, 10), angleStep);
-        var resultPoints = new Point[expectedPoints.Length];
-        for (var i = 0; i < resultPoints.Length; i++)
-            resultPoints[i] = spiral.GetPoint();
-
-        resultPoints.Should().BeEquivalentTo(expectedPoints);
+        var spiral = new Spiral(angleStep);
+        spiral.GetPoints(center).Take(expectedPoints.Length).Should().BeEquivalentTo(expectedPoints);
     }
 }

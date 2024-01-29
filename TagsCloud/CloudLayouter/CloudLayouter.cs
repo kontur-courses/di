@@ -4,11 +4,11 @@ namespace TagsCloud.CloudLayouter;
 
 public class CloudLayouter : ICloudLayouter
 {
-    private readonly ISpiral spiral;
+    private readonly IEnumerator<Point> iterator;
 
-    public CloudLayouter(ISpiral spiral)
+    public CloudLayouter(ISpiral spiral, Point center)
     {
-        this.spiral = spiral;
+        iterator = spiral.GetPoints(center).GetEnumerator();
         Rectangles = new List<Rectangle>();
     }
 
@@ -25,12 +25,12 @@ public class CloudLayouter : ICloudLayouter
 
     private Rectangle CreateNextRectangle(Size rectangleSize)
     {
-        var point = spiral.GetPoint();
-        var rectangle = new Rectangle(point, rectangleSize);
+        iterator.MoveNext();
+        var rectangle = new Rectangle(iterator.Current, rectangleSize);
         while (!HasNoIntersections(rectangle))
         {
-            point = spiral.GetPoint();
-            rectangle = new Rectangle(point, rectangleSize);
+            iterator.MoveNext();
+            rectangle = new Rectangle(iterator.Current, rectangleSize);
         }
 
         return rectangle;

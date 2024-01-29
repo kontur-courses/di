@@ -30,17 +30,8 @@ public static class ProgramConstructor
         containerBuilder.RegisterType<WordAnalyzer.WordAnalyzer>();
         containerBuilder.RegisterType<TagCloudPainter>();
         containerBuilder.RegisterType<WordAnalyzerSettings>().AsSelf().SingleInstance();
-        containerBuilder.Register<FlowerSpiral>(c =>
-        {
-            var appSettings = c.Resolve<ImageSettings>();
-            return new FlowerSpiral(new Point(appSettings.Width / 2, appSettings.Height / 2));
-        }).AsSelf();
-
-        containerBuilder.Register<Spiral>(c =>
-        {
-            var imageSettings = c.Resolve<ImageSettings>();
-            return new Spiral(new Point(imageSettings.Width / 2, imageSettings.Height / 2));
-        }).AsSelf();
+        containerBuilder.RegisterType<FlowerSpiral>();
+        containerBuilder.RegisterType<Spiral>();
         return containerBuilder.Build();
     }
 }
