@@ -62,6 +62,6 @@ public class DrawingUtilsTests
     {
         _ = DrawingUtils.TryParseRgb("123 43 5", out var color);
 
-        CollectionAssert.AreEqual(new []{123, 43, 5}, new []{color.R, color.G, color.B});
+        CollectionAssert.AreEqual(new[] {123, 43, 5}, new[] {color.R, color.G, color.B});
     }
 }

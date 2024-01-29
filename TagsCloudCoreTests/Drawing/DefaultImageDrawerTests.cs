@@ -14,6 +14,7 @@ public class DefaultImageDrawerTests
     [TestCase(@"\:\", "filename")]
     public void SaveImage_ThrowsArgumentException_OnInvalidParameters(string dirPath, string filename)
     {
-        Assert.Throws<ArgumentException>(() => DefaultImageDrawer.SaveImage(new Bitmap(1, 1), dirPath, filename, ImageFormat.Png));
+        Assert.Throws<ArgumentException>(() =>
+            DefaultImageDrawer.SaveImage(new Bitmap(1, 1), dirPath, filename, ImageFormat.Png));
     }
 }

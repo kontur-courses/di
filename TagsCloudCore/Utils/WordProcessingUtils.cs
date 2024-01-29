@@ -3,7 +3,9 @@
 public static class WordProcessingUtils
 {
     public static HashSet<string> RemoveDuplicates(IEnumerable<string> lines)
-        => lines
+    {
+        return lines
             .Distinct()
             .ToHashSet();
+    }
 }

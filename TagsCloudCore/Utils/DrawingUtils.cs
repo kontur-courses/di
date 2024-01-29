@@ -5,14 +5,14 @@ namespace TagsCloudCore.Utils;
 public static class DrawingUtils
 {
     private static readonly Graphics Graphics = Graphics.FromImage(new Bitmap(1, 1));
-    
+
     public static Size GetStringSize(string word, int frequency, int frequencyScaling, Font font)
     {
         if (frequency < 1)
             throw new ArgumentException("Frequency must be a positive integer");
         if (frequencyScaling < 1)
             throw new ArgumentException("Frequncy scaling must be a positive integer");
-            
+
         var sizeIncrement = frequencyScaling * (frequency - 1);
         var newFont = new Font(font.FontFamily, font.Size + sizeIncrement, font.Style);
         return Size.Ceiling(Graphics.MeasureString(word, newFont));
