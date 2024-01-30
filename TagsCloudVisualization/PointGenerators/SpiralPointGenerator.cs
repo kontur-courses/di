@@ -10,6 +10,8 @@ public class SpiralPointGenerator : IPointGenerator
     public int RadiusDelta { get; private set; } = 1;
     public double AngleDelta { get; private set; } = Math.PI / 60;
 
+    public string Name { get; } = "Spiral";
+
     public Point GetNextPoint()
     {
         var x = (int)Math.Round(Center.X + Radius * Math.Cos(Angle));

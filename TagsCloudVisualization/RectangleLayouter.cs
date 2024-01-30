@@ -7,9 +7,9 @@ public class RectangleLayouter : IRectangleLayouter
     private readonly IPointGenerator pointGenerator;
     private readonly List<Rectangle> createdRectangles = new();
 
-    public RectangleLayouter(IPointGenerator pointGenerator)
+    public RectangleLayouter(TagLayoutSettings tagLayoutSettings, IEnumerable<IPointGenerator> pointGenerators)
     {
-        this.pointGenerator = pointGenerator;
+        pointGenerator = pointGenerators.First(generator => generator.Name == tagLayoutSettings.Algorithm);
     }
 
     public Rectangle PutNextRectangle(Size rectangleSize)

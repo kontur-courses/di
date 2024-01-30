@@ -54,7 +54,7 @@ public class Program
         { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
     [Option("-alg", Description = "Choose algorithm to generate tag cloud. Available: Spiral, Square")]
-    private PointGenerator PointGenerator { get; set; } = PointGenerator.Spiral;
+    private string Algorithm { get; set; } = "Spiral";
 
 
     private void OnExecute()
@@ -62,13 +62,13 @@ public class Program
         var services = new ServiceCollection();
         services.AddScoped<Font>(x => new Font(FontFamily, FontSize));
         services.AddScoped<IPalette>(x => new Palette(TextColor, BackgroundColor));
-        services.AddKeyedScoped<IPointGenerator, LissajousCurvePointGenerator>(PointGenerator.Square);
-        services.AddKeyedScoped<IPointGenerator, SpiralPointGenerator>(PointGenerator.Spiral);
+        services.AddScoped<TagLayoutSettings>(x => new TagLayoutSettings(Algorithm));
+        services.AddScoped<IPointGenerator, LissajousCurvePointGenerator>();
+        services.AddScoped<IPointGenerator, SpiralPointGenerator>();
         services.AddScoped<IDullWordChecker>(x =>
             new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
         services.AddScoped<IInterestingWordsParser, MystemWordsParser>();
-        services.AddScoped<IRectangleLayouter>(
-            x => new RectangleLayouter(x.GetKeyedService<IPointGenerator>(PointGenerator)));
+        services.AddScoped<IRectangleLayouter, RectangleLayouter>();
         services.AddScoped<LayoutDrawer>();
 
         using var provider = services.BuildServiceProvider();

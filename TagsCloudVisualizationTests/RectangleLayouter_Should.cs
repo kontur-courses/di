@@ -7,11 +7,15 @@ namespace TagsCloudVisualizationTests;
 public class RectangleLayouter_Should
 {
     private RectangleLayouter? rectangleLayouter;
+    private TagLayoutSettings tagLayoutSettings;
+    private IEnumerable<IPointGenerator> pointGenerators;
 
     [SetUp]
     public void SetCircularCloudFieldToNull()
     {
         rectangleLayouter = null;
+        tagLayoutSettings = new TagLayoutSettings("Spiral");
+        pointGenerators = new[] { new SpiralPointGenerator() };
     }
     
     [TestCase(-1, 0, TestName = "Negative width")]
@@ -19,7 +23,7 @@ public class RectangleLayouter_Should
     [TestCase(-5, -5, TestName = "Negative width and height")]
     public void PutNextRectangleThrowsArgumentException_WhenNegativeParameters(int rectWidth, int rectHeight)
     {
-        rectangleLayouter = new RectangleLayouter(new SpiralPointGenerator());
+        rectangleLayouter = new RectangleLayouter(tagLayoutSettings, pointGenerators);
         var rectangleSize = new Size(rectWidth, rectHeight);
         var rectangleCreation = () => rectangleLayouter.PutNextRectangle(rectangleSize);
         rectangleCreation.Should().Throw<ArgumentException>();
@@ -30,7 +34,7 @@ public class RectangleLayouter_Should
         IPointGenerator pointGenerator,
         int closestRectangleMaxDistance)
     {
-        rectangleLayouter = new RectangleLayouter(pointGenerator);
+        rectangleLayouter = new RectangleLayouter(tagLayoutSettings, pointGenerators);
         var squareSide = 20;
         var rectangleSize = new Size(squareSide, squareSide);
         var rectanglesWithoutCurrent = new List<Rectangle>();

@@ -11,6 +11,8 @@ public class LissajousCurvePointGenerator : IPointGenerator
     private double delta = Math.PI / 2;
     private double parameter = 0;
 
+    public string Name { get; } = "Square";
+
     public Point GetNextPoint()
     {
         parameter += 0.01;
