@@ -31,13 +31,9 @@ public class TagCloudVisualizer
 
     private Tag GetTag(WordInfo wordInfo, ICloudLayouter cloudLayouter)
     {
-        var f = new Stopwatch();
         var font = new Font(tagSettings.FontFamily, wordInfo.Count * tagSettings.Size);
         var textSize = TextRenderer.MeasureText(wordInfo.Word, font);
-        f.Start();
         var textRectangle = cloudLayouter.PutNextRectangle(new Size(textSize.Width, textSize.Height));
-        f.Stop();
-        Console.WriteLine(f.Elapsed);
         return new Tag(font, wordInfo.Word, textRectangle, tagSettings.Color);
     }
 
