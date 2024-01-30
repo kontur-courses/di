@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.0.0" />
+      <PackageReference Include="CommandLineParser" Version="2.9.1" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.1" />
+      <PackageReference Include="DocX" Version="3.0.0" />
+      <PackageReference Include="Xceed.Words.NET" Version="3.0.23523.1209" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Images\Rectangles863.Png" />
+      <None Remove="Images\Rectangles858.Png" />
+      <None Remove="Images\Rectangles305.Png" />
+    </ItemGroup>
+
+</Project>
