@@ -13,7 +13,6 @@ public class TxtFileReader : IFileReader
     {
         return File
                .ReadLines(filename)
-               .Where(line => !string.IsNullOrEmpty(line))
                .Select(line => postFormatter is null ? line : postFormatter.Format(line));
     }
 }

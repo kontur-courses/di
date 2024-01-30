@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
 using TagsCloud.Extensions;
+using TagsCloudVisualization;
 
 namespace TagsCloud;
 
@@ -21,7 +22,7 @@ public class TagCloudEngine
                           .BuildServiceProvider();
     }
 
-    public void GenerateTagCloud(string inputFile, string outputFile)
+    public HashSet<WordTagGroup> GenerateTagCloud(string inputFile, string outputFile)
     {
         var textProcessor = serviceProvider.GetRequiredService<IInputProcessor>();
         var cloudProcessor = serviceProvider.GetRequiredService<ICloudProcessor>();
@@ -34,5 +35,7 @@ public class TagCloudEngine
         cloudProcessor.SetColors(groups);
 
         outputProcessor.SaveVisualization(groups, outputFile);
+
+        return groups;
     }
 }

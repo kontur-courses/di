@@ -18,6 +18,22 @@
 
     <ItemGroup>
         <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj"/>
+        <ProjectReference Include="..\TagsCloud\TagsCloud.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="TestData\test_data.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\test_data.docx">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\test_data.csv">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\data.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

@@ -33,9 +33,13 @@ public class InputProcessor : IInputProcessor
         var reader = FindFileReader(filename);
         var wordGroups = reader
                          .ReadContent(filename, postFormatter)
+                         .Where(line => !string.IsNullOrEmpty(line))
                          .GroupBy(line => line)
                          .Select(group => new WordTagGroup(group.Key, group.Count()))
                          .ToHashSet();
+
+        if (wordGroups.Count == 0)
+            throw new ArgumentException("No words found! Check file structure.");
 
         TextAnalyzer.FillWithAnalysis(wordGroups);
         filterConveyor.ApplyFilters(wordGroups);

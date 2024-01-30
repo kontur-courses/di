@@ -9,8 +9,10 @@ public class DefaultPostFormatter : IPostFormatter
 {
     public string Format(string input)
     {
-        var idx = GetFirstNonLetterIndex(input);
-        return idx == -1 ? input : input[..idx];
+        var trimmedInput = input.TrimStart();
+        var endIdx = GetFirstNonLetterIndex(trimmedInput);
+        
+        return endIdx == -1 ? trimmedInput : trimmedInput[..endIdx];
     }
 
     private static int GetFirstNonLetterIndex(string line)
