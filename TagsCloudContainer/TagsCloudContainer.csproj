@@ -19,4 +19,10 @@
       <Folder Include="Images\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Images\Rectangles863.Png" />
+      <None Remove="Images\Rectangles858.Png" />
+      <None Remove="Images\Rectangles305.Png" />
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudContainer;
 
@@ -9,4 +10,5 @@ public class Settings
     public Color Color { get; set; }
     public string File { get; set; }
     public string BoringWordsFileName { get; set; }
+    public string ImageFormat { get; set; }
 }

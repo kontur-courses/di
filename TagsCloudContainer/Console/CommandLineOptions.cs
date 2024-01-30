@@ -1,4 +1,7 @@
 ﻿//NuGet CommandLineParser
+
+using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 using CommandLine;
 
 namespace TagsCloudContainer;
@@ -26,4 +29,7 @@ public class CommandLineOptions
 
     [Option('y', "CenterY", Required = false, HelpText = "Координата у для центра")]
     public int CenterY { get; set; } = 0;
+    
+    [Option('o', "ImageFormat", Required = false, HelpText = "Формат изображения", Default = "png")]
+    public string ImageFormat { get; set; }
 }

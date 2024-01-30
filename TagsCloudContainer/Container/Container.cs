@@ -21,7 +21,8 @@ public static class Container
                 FontName = options.FontName,
                 FontSize = options.FontSize,
                 File = options.PathToInputFile,
-                BoringWordsFileName = options.PathToBoringWordsFile
+                BoringWordsFileName = options.PathToBoringWordsFile,
+                ImageFormat = options.ImageFormat
             })
             .As<Settings>();
         builder.RegisterType<FileReaderFactory>().AsSelf();

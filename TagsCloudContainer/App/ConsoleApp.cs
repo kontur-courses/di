@@ -1,5 +1,4 @@
 ﻿using System.Drawing.Imaging;
-using System.IO;
 using TagsCloudContainer.App.Extensions;
 using TagsCloudContainer.App.Interfaces;
 using TagsCloudContainer.DrawRectangle.Interfaces;
@@ -32,9 +31,20 @@ public class ConsoleApp : IApp
         var bitmap = _draw.CreateImage(words);
         var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
         var rnd = new Random();
-        bitmap.Save(projectDirectory + "\\Images", $"Rectangles{rnd.Next(1, 1000)}", ImageFormat.Png);
+        bitmap.Save(projectDirectory + "\\Images", $"Rectangles{rnd.Next(1, 1000)}", GetImageFormat(_settings.ImageFormat));
+       
     }
 
+    private ImageFormat GetImageFormat(string imageFormat)
+    {
+        return imageFormat.ToLower() switch
+        {
+            "png" => ImageFormat.Png,
+            "jpeg" => ImageFormat.Jpeg,
+            _ => throw new NotSupportedException("Unsupported image format.")
+        };
+    }
+    
     private string GetText(string filename)
     {
         if (!File.Exists(filename))

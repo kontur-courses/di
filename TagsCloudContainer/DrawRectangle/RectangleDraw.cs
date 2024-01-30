@@ -10,15 +10,11 @@ public class RectangleDraw : IDraw
 {
     private readonly Settings _settings;
     private readonly CircularCloudLayouter _layouter;
-    // private Bitmap _bitmap;
-    // private readonly Size shiftToBitmapCenter;
     
     public RectangleDraw(CircularCloudLayouter layouter, Settings settings)
     {
         _layouter = layouter;
         _settings = settings;
-        // _bitmap = new Bitmap(width, height);
-        // shiftToBitmapCenter = new Size(_bitmap.Width / 2, _bitmap.Height / 2);
     }
 
     private Bitmap CreateBitmap(List<Rectangle> rectangles)
