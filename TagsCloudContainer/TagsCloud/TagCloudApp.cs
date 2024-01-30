@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.Utility;
-using TagsCloudContainer.Readers;
+using System.IO;
 
 namespace TagsCloudContainer.TagsCloud
 {
@@ -9,13 +9,19 @@ namespace TagsCloudContainer.TagsCloud
     {
         private readonly IPreprocessor _preprocessor;
         private readonly IImageSettings _imageSettings;
+        private readonly FileReader _fileReader;
         private string _fontName;
+        private string outputDirectory = @"..\..\..\output";
+        private const double DefaultAngleStep = 0.02;
+        private const double DefaultRadiusStep = 0.04;
 
-        public TagCloudApp(IPreprocessor preprocessor, IImageSettings imageSettings)
+        public TagCloudApp(IPreprocessor preprocessor, IImageSettings imageSettings, FileReader fileReader)
         {
             _preprocessor = preprocessor;
             _imageSettings = imageSettings;
+            _fileReader = fileReader;
         }
+
 
         public void SetFontName(string fontName)
         {
@@ -24,41 +30,43 @@ namespace TagsCloudContainer.TagsCloud
 
         public void Run(CommandLineOptions options)
         {
-            Color fontColor = Color.FromName(options.FontColor);
-            Color highlightColor = Color.FromName(options.HighlightColor);
+            SetFontAndImageSettings(options.FontName, options.ImageWidth, options.ImageHeight);
 
-            SetFontName(options.FontName);
-            _imageSettings.UpdateImageSettings(options.ImageWidth, options.ImageHeight);
-
-            var words = ReadFile(options.TextFilePath);
+            var words = _fileReader.ReadFile(options.TextFilePath);
             var processedWords = _preprocessor.Process(words, options.BoringWordsFilePath);
+            var uniqueWordCount = CountUniqueWords(processedWords);
+
+            var (fontColor, highlightColor) = GetColors(options.FontColor, options.HighlightColor);
 
             var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
 
-            tagCloudImage.Save(@"..\..\..\output\tagsCloud.png");
+            SaveTagCloudImage(tagCloudImage, outputDirectory, uniqueWordCount);
         }
 
-        private IEnumerable<string> ReadFile(string filePath)
+        private (Color fontColor, Color highlightColor) GetColors(string fontColorName, string highlightColorName)
         {
-            var fileReader = GetFileReader(filePath);
-            return fileReader.ReadWords(filePath);
+            return (Color.FromName(fontColorName), Color.FromName(highlightColorName));
         }
 
-        private IFileReader GetFileReader(string filePath)
+        private void SetFontAndImageSettings(string fontName, int imageWidth, int imageHeight)
         {
-            string fileExtension = Path.GetExtension(filePath)?.ToLower();
+            SetFontName(fontName);
+            _imageSettings.UpdateImageSettings(imageWidth, imageHeight);
+        }
 
-            switch (fileExtension)
-            {
-                case ".doc":
-                    return new DocReader();
-                case ".docx":
-                    return new DocxReader();
-                case ".txt":
-                    return new TxtReader();
-                default:
-                    throw new InvalidOperationException("Unsupported file extension");
-            }
+        public void SaveTagCloudImage(Bitmap tagCloudImage, string outputDirectory, int uniqueWordCount)
+        {
+            var outputFileName = $"{uniqueWordCount}-tagsCloud.png";
+            var outputPath = Path.Combine(outputDirectory, outputFileName);
+            tagCloudImage.Save(outputPath);
+
+            Console.WriteLine($"Tag cloud image saved to {outputPath}. Original word count: {uniqueWordCount}");
+        }
+
+        private int CountUniqueWords(IEnumerable<string> words)
+        {
+            var uniqueWords = new HashSet<string>(words, StringComparer.OrdinalIgnoreCase);
+            return uniqueWords.Count;
         }
 
         private Bitmap GenerateTagCloud(IEnumerable<string> words, string fontName, Color fontColor, Color highlightColor, double percentageToHighlight)
@@ -67,17 +75,37 @@ namespace TagsCloudContainer.TagsCloud
             var uniqueWords = new HashSet<string>();
             var wordFrequencies = CalculateWordFrequencies(words);
 
-            var mostPopularWord = wordFrequencies.OrderByDescending(pair => pair.Value).FirstOrDefault().Key;
+            var mostPopularWord = GetMostPopularWord(wordFrequencies);
 
-            var sortedWords = words.OrderByDescending(word => wordFrequencies[word]);
+            var sortedWords = SortWordsByFrequency(words, wordFrequencies);
 
+            var fontSizes = CalculateAndPutRectangles(layouter, sortedWords, uniqueWords, wordFrequencies, mostPopularWord, fontName);
+
+            var rectangles = layouter.Rectangles.ToList();
+
+            return Visualizer.VisualizeRectangles(rectangles, uniqueWords, _imageSettings.ImageWidth, _imageSettings.ImageHeight,
+                fontSizes, _fontName, fontColor, highlightColor, percentageToHighlight, wordFrequencies: wordFrequencies);
+        }
+
+        private string GetMostPopularWord(Dictionary<string, int> wordFrequencies)
+        {
+            return wordFrequencies.OrderByDescending(pair => pair.Value).FirstOrDefault().Key;
+        }
+
+        private IEnumerable<string> SortWordsByFrequency(IEnumerable<string> words, Dictionary<string, int> wordFrequencies)
+        {
+            return words.OrderByDescending(word => wordFrequencies[word]);
+        }
+
+        private List<int> CalculateAndPutRectangles(CircularCloudLayouter layouter, IEnumerable<string> sortedWords, HashSet<string> uniqueWords, Dictionary<string, int> wordFrequencies, string mostPopularWord, string fontName)
+        {
             var fontSizes = new List<int>();
 
             foreach (var word in sortedWords)
             {
                 if (uniqueWords.Add(word))
                 {
-                    var fontSize = CalculateFontSize(word, wordFrequencies, mostPopularWord);
+                    var fontSize = CalculateWordFontSize(word, wordFrequencies);
                     fontSizes.Add(fontSize);
 
                     var font = new Font(fontName, fontSize);
@@ -85,11 +113,28 @@ namespace TagsCloudContainer.TagsCloud
                 }
             }
 
-            var rectangles = layouter.Rectangles.ToList();
-
-            return Visualizer.VisualizeRectangles(rectangles, uniqueWords,  _imageSettings.ImageWidth, _imageSettings.ImageHeight, 
-                fontSizes, _fontName, fontColor, highlightColor, percentageToHighlight, wordFrequencies: wordFrequencies);
+            return fontSizes;
         }
+
+        /// <summary>
+        /// Расчитывает размер шрифта для заданного слова на основе его частоты встречаемости.
+        /// </summary>
+        /// <param name="word">Строка, представляющая слово, для которого необходимо определить размер шрифта.</param>
+        /// <param name="wordFrequencies">Словарь, содержащий частоту встречаемости каждого слова в тексте.</param>
+        /// <returns>Размер шрифта для заданного слова.</returns>      
+
+        private const int BaseFontSize = 30;
+        private const int FontSizeMultiplier = 2;
+        private const int DefaultFontSize = 10;
+        private int CalculateWordFontSize(string word, Dictionary<string, int> wordFrequencies)
+        {
+            if (wordFrequencies.TryGetValue(word, out var frequency))
+            {
+                return Math.Max(BaseFontSize, BaseFontSize + frequency * FontSizeMultiplier);
+            }
+            return DefaultFontSize;
+        }
+
 
         private Dictionary<string, int> CalculateWordFrequencies(IEnumerable<string> words)
         {
@@ -104,20 +149,11 @@ namespace TagsCloudContainer.TagsCloud
             return wordFrequencies;
         }
 
-        private CircularCloudLayouter CreateLayouter()
+        private CircularCloudLayouter CreateLayouter(double angleStep = DefaultAngleStep, double radiusStep = DefaultRadiusStep)
         {
             var center = new Point(_imageSettings.ImageWidth / 2, _imageSettings.ImageHeight / 2);
-            var spiral = new Spiral(center, 0.02, 0.04);
+            var spiral = new Spiral(center, angleStep, radiusStep);
             return new CircularCloudLayouter(center, spiral);
-        }
-
-        private int CalculateFontSize(string word, Dictionary<string, int> wordFrequencies, string mostPopularWord)
-        {
-            if (wordFrequencies.TryGetValue(word, out var frequency))
-            {
-                return Math.Max(30, 30 + frequency * 2);
-            }
-            return 10;
         }
     }
 }

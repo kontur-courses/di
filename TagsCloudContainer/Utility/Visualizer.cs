@@ -35,15 +35,6 @@ namespace TagsCloudContainer.Utility
             return uniqueWords.OrderByDescending(word => wordFrequencies[word]).Take(countToHighlight).ToList();
         }
 
-        //private static void DrawRectangles(IEnumerable<Rectangle> rectangles, Graphics graphics)
-        //{
-        //    var pen = new Pen(Color.Green);
-        //    foreach (var rect in rectangles)
-        //    {
-        //        graphics.DrawRectangle(pen, rect);
-        //    }
-        //}
-
         public static void SaveBitmap(Bitmap bitmap, string fileName, string pathToDirectory)
         {
             EnsureDirectoryExists(pathToDirectory);

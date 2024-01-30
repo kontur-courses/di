@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using System.ComponentModel.DataAnnotations;
 
 namespace TagsCloudContainer.Utility
 {
@@ -29,7 +30,8 @@ namespace TagsCloudContainer.Utility
         public string OutputFilePath { get; set; }
 
         [Option('p', "percentageToHighlight", Required = false, Default=0.2, HelpText = "Percentage To Highlight popular words")]
-        public double PercentageToHighLight { get; set; }
+        public double PercentageToHighLight { get; set; }      
+
 
     }
 }

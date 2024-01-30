@@ -35,12 +35,21 @@ namespace TagsCloudContainer.TagsCloud
             return PutNextRectangle(textSize);
         }
 
+        private const int MinPositiveValue = 1;
         private Size MeasureTextSize(string text, Font font)
         {
-            using (var temporaryBitmap = new Bitmap(1, 1))
-            using (var temporaryGraphics = Graphics.FromImage(temporaryBitmap))
+            // размер минимального временного изображения для измерения текста
+            var imageSizeForTextMeasurement = new Size(MinPositiveValue, MinPositiveValue);
+
+            // временное изображение с заданным размером
+            using (var temporaryBitmap = new Bitmap(imageSizeForTextMeasurement.Width, imageSizeForTextMeasurement.Height))
             {
-                return Size.Ceiling(temporaryGraphics.MeasureString(text, font));
+                using (var temporaryGraphics = Graphics.FromImage(temporaryBitmap))
+                {
+                    var textSize = Size.Ceiling(temporaryGraphics.MeasureString(text, font));
+
+                    return textSize;
+                }
             }
         }
 
