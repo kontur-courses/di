@@ -53,24 +53,23 @@ public class Program
     private HashSet<string> RemovedPartsOfSpeech { get; set; } = new()
         { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
-    [Option("-square", Description = "Will use another algorithm to generate square tag cloud instead of circular.")]
-    private bool SquareAlgorithm { get; set; }
+    [Option("-alg", Description = "Choose algorithm to generate tag cloud. Available: Spiral, Square")]
+    private PointGenerator PointGenerator { get; set; } = PointGenerator.Spiral;
 
 
     private void OnExecute()
     {
         var services = new ServiceCollection();
-        services.AddTransient<Font>(x => new Font(FontFamily, FontSize));
-        services.AddTransient<IPalette>(x => new Palette(TextColor, BackgroundColor));
-        if (SquareAlgorithm)
-            services.AddTransient<IPointGenerator, LissajousCurvePointGenerator>();
-        else
-            services.AddTransient<IPointGenerator, SpiralPointGenerator>();
-        services.AddTransient<IDullWordChecker>(x =>
+        services.AddScoped<Font>(x => new Font(FontFamily, FontSize));
+        services.AddScoped<IPalette>(x => new Palette(TextColor, BackgroundColor));
+        services.AddKeyedScoped<IPointGenerator, LissajousCurvePointGenerator>(PointGenerator.Square);
+        services.AddKeyedScoped<IPointGenerator, SpiralPointGenerator>(PointGenerator.Spiral);
+        services.AddScoped<IDullWordChecker>(x =>
             new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
-        services.AddTransient<IInterestingWordsParser, MystemWordsParser>();
-        services.AddTransient<IRectangleLayouter, RectangleLayouter>();
-        services.AddTransient<LayoutDrawer>();
+        services.AddScoped<IInterestingWordsParser, MystemWordsParser>();
+        services.AddScoped<IRectangleLayouter>(
+            x => new RectangleLayouter(x.GetKeyedService<IPointGenerator>(PointGenerator)));
+        services.AddScoped<LayoutDrawer>();
 
         using var provider = services.BuildServiceProvider();
 
