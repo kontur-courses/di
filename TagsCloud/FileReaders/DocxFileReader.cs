@@ -1,9 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 using Xceed.Words.NET;
 
 namespace TagsCloud.FileReaders;
 
-// TODO: Implement this reader in future
+[Injection(ServiceLifetime.Singleton)]
 public class DocxFileReader : IFileReader
 {
     public string SupportedExtension => "docx";

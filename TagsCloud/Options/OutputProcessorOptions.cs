@@ -2,7 +2,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using TagsCloud.Contracts;
 
-namespace TagsCloud.Entities;
+namespace TagsCloud.Options;
 
 public class OutputProcessorOptions : IOutputProcessorOptions
 {

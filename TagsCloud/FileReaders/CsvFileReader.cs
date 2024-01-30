@@ -1,11 +1,14 @@
 using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
 
 namespace TagsCloud.FileReaders;
 
+[Injection(ServiceLifetime.Singleton)]
 public class CsvFileReader : IFileReader
 {
     public string SupportedExtension => "csv";
@@ -21,6 +24,6 @@ public class CsvFileReader : IFileReader
         using var csv = new CsvReader(reader, configuration);
 
         foreach (var cell in csv.GetRecords<TableCell>())
-            yield return cell.Word;
+            yield return postFormatter is null ? cell.Word : postFormatter.Format(cell.Word);
     }
 }

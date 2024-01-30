@@ -5,5 +5,5 @@ namespace TagsCloud.Contracts;
 public interface IFontMeasurer
 {
     MeasurerType Type { get; }
-    int GetFontSize(int count, int maxCount, int minCount, int maxSize, int minSize);
+    int GetFontSize(int wordFrequency, int minFrequency, int maxFrequency, int minFontSize, int maxFontSize);
 }

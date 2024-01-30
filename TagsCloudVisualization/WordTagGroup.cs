@@ -19,6 +19,7 @@ public class WordTagGroup
 
     public override bool Equals(object obj)
     {
-        return obj is WordTagGroup group && group.WordInfo.Text.Equals(WordInfo.Text);
+        return obj is WordTagGroup group
+               && group.WordInfo.Text.Equals(WordInfo.Text, StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -1,10 +1,13 @@
+using Microsoft.Extensions.DependencyInjection;
 using SixLabors.ImageSharp;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Painters;
 
+[Injection(ServiceLifetime.Singleton)]
 public class AllRandomPainter : IPainter
 {
     private readonly Random random = new();

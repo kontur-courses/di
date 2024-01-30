@@ -1,9 +1,12 @@
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Processors;
 
-public class OutputProcessor
+[Injection(ServiceLifetime.Singleton)]
+public class OutputProcessor : IOutputProcessor
 {
     private readonly IOutputProcessorOptions outputOptions;
 

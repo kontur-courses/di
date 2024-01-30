@@ -1,5 +1,6 @@
 using TagsCloud.Contracts;
 using TagsCloud.Entities;
+using TagsCloud.Options;
 
 namespace TagsCloud.Builders;
 

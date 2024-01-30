@@ -1,8 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
 using TagsCloud.Extensions;
-using TagsCloud.Formatters;
-using TagsCloud.Processors;
 
 namespace TagsCloud;
 
@@ -16,23 +14,18 @@ public class TagCloudEngine
         IOutputProcessorOptions outputOptions)
     {
         serviceProvider = new ServiceCollection()
-                          .AddProcessors()
-                          .AddReaders()
-                          .AddFilters()
-                          .AddPainters()
-                          .AddMeasurers()
+                          .AddAllInjections()
                           .AddSingleton(inputOptions)
                           .AddSingleton(cloudOptions)
                           .AddSingleton(outputOptions)
-                          .AddSingleton<IPostFormatter, DefaultPostFormatter>()
                           .BuildServiceProvider();
     }
 
     public void GenerateTagCloud(string inputFile, string outputFile)
     {
-        var textProcessor = serviceProvider.GetRequiredService<InputProcessor>();
-        var cloudProcessor = serviceProvider.GetRequiredService<CloudProcessor>();
-        var outputProcessor = serviceProvider.GetRequiredService<OutputProcessor>();
+        var textProcessor = serviceProvider.GetRequiredService<IInputProcessor>();
+        var cloudProcessor = serviceProvider.GetRequiredService<ICloudProcessor>();
+        var outputProcessor = serviceProvider.GetRequiredService<IOutputProcessor>();
 
         var groups = textProcessor.CollectWordGroupsFromFile(inputFile);
 

@@ -1,12 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
 using TagsCloud.Conveyors;
+using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
 using TagsCloud.TextAnalysisTools;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Processors;
 
-public class InputProcessor
+[Injection(ServiceLifetime.Singleton)]
+public class InputProcessor : IInputProcessor
 {
     private readonly IEnumerable<IFileReader> fileReaders;
     private readonly FilterConveyor filterConveyor;
@@ -27,16 +30,7 @@ public class InputProcessor
 
     public HashSet<WordTagGroup> CollectWordGroupsFromFile(string filename)
     {
-        var extension = filename.Split('.', StringSplitOptions.RemoveEmptyEntries)[^1];
-        var reader = FindFileReader(extension);
-
-        if (reader == null)
-        {
-            var extensions = GetSupportedExtensions();
-            throw new NotSupportedException(
-                $"Unknown file extension! Got {extension}, but candidates are: {extensions}");
-        }
-
+        var reader = FindFileReader(filename);
         var wordGroups = reader
                          .ReadContent(filename, postFormatter)
                          .GroupBy(line => line)
@@ -72,13 +66,27 @@ public class InputProcessor
                 : group.WordInfo.Text.ToLower();
     }
 
+    private static string GetFileExtension(string filename)
+    {
+        return filename.Split('.', StringSplitOptions.RemoveEmptyEntries)[^1];
+    }
+
     private string GetSupportedExtensions()
     {
         return string.Join(", ", fileReaders.Select(reader => reader.SupportedExtension));
     }
 
-    private IFileReader FindFileReader(string extension)
+    private IFileReader FindFileReader(string filename)
     {
-        return fileReaders.SingleOrDefault(reader => reader.SupportedExtension.Equals(extension));
+        var extension = GetFileExtension(filename);
+        var reader = fileReaders.SingleOrDefault(reader => reader.SupportedExtension.Equals(extension));
+
+        if (reader != null)
+            return reader;
+
+        var extensions = GetSupportedExtensions();
+
+        throw new NotSupportedException(
+            $"Unknown file extension! Got {extension}, but candidates are: {extensions}");
     }
 }

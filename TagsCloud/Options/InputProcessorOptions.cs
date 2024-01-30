@@ -1,6 +1,7 @@
 using TagsCloud.Contracts;
+using TagsCloud.Entities;
 
-namespace TagsCloud.Entities;
+namespace TagsCloud.Options;
 
 public class InputProcessorOptions : IInputProcessorOptions
 {

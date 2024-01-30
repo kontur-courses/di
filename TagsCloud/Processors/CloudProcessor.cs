@@ -1,12 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 using TagsCloud.Entities;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Processors;
 
-public class CloudProcessor
+[Injection(ServiceLifetime.Singleton)]
+public class CloudProcessor : ICloudProcessor
 {
     private readonly ICloudProcessorOptions cloudOptions;
     private readonly IEnumerable<IFontMeasurer> fontMeasurers;
@@ -18,16 +21,15 @@ public class CloudProcessor
         IEnumerable<IFontMeasurer> fontMeasurers)
     {
         this.cloudOptions = cloudOptions;
-        this.painters = painters;
         this.fontMeasurers = fontMeasurers;
+        this.painters = painters;
     }
 
     public void SetPositions(HashSet<WordTagGroup> wordGroups)
     {
         var layout = cloudOptions.Layout;
-        wordGroups = GetSortedGroups(wordGroups);
 
-        foreach (var group in wordGroups)
+        foreach (var group in GetSortedGroups(wordGroups))
         {
             var textOptions = new TextOptions(group.VisualInfo.TextFont);
             var fontRect = TextMeasurer.MeasureAdvance(group.WordInfo.Text, textOptions);
@@ -42,11 +44,8 @@ public class CloudProcessor
 
     public void SetFonts(HashSet<WordTagGroup> wordGroups)
     {
-        var minFontSize = cloudOptions.MinFontSize;
-        var maxFontSize = cloudOptions.MaxFontSize;
-
-        var maxFrequency = wordGroups.Max(group => group.Count);
-        var minFrequency = wordGroups.Min(group => group.Count);
+        var (minFontSize, maxFontSize) = (cloudOptions.MinFontSize, cloudOptions.MaxFontSize);
+        var (minFrequency, maxFrequency) = GetMinMaxValues(wordGroups);
 
         var measurer = FindFontMeasurer();
 
@@ -54,10 +53,10 @@ public class CloudProcessor
         {
             var fontSize = measurer.GetFontSize(
                 group.Count,
-                maxFrequency,
                 minFrequency,
-                maxFontSize,
-                minFontSize);
+                maxFrequency,
+                minFontSize,
+                maxFontSize);
 
             group.VisualInfo.TextFont = cloudOptions.FontFamily.CreateFont(fontSize, FontStyle.Regular);
         }
@@ -65,24 +64,37 @@ public class CloudProcessor
 
     public void SetColors(HashSet<WordTagGroup> wordGroups)
     {
-        var painter = painters
-            .SingleOrDefault(colorizer => colorizer.Strategy == cloudOptions.ColoringStrategy);
+        var painter = painters.Single(painter => painter.Strategy == cloudOptions.ColoringStrategy);
+        painter.Colorize(wordGroups, cloudOptions.Colors);
+    }
 
-        painter!.Colorize(wordGroups, cloudOptions.Colors);
+    private static (int minValue, int maxValue) GetMinMaxValues(IEnumerable<WordTagGroup> wordGroups)
+    {
+        var (minValue, maxValue) = (int.MaxValue, int.MinValue);
+
+        foreach (var currentCount in wordGroups.Select(group => group.Count))
+        {
+            minValue = currentCount < minValue ? currentCount : minValue;
+            maxValue = currentCount > maxValue ? currentCount : maxValue;
+        }
+
+        return (minValue, maxValue);
+    }
+
+    private IEnumerable<WordTagGroup> GetSortedGroups(IEnumerable<WordTagGroup> wordGroups)
+    {
+        var sortedGroups = cloudOptions.Sort switch
+        {
+            SortType.Ascending => wordGroups.OrderBy(group => group.Count),
+            SortType.Descending => wordGroups.OrderByDescending(group => group.Count),
+            _ => wordGroups
+        };
+
+        return sortedGroups.Select(group => group);
     }
 
     private IFontMeasurer FindFontMeasurer()
     {
-        return fontMeasurers.SingleOrDefault(measurer => measurer.Type == cloudOptions.MeasurerType);
-    }
-
-    private HashSet<WordTagGroup> GetSortedGroups(HashSet<WordTagGroup> wordGroups)
-    {
-        return cloudOptions.Sort switch
-        {
-            SortType.Ascending => wordGroups.OrderBy(group => group.Count).ToHashSet(),
-            SortType.Descending => wordGroups.OrderByDescending(group => group.Count).ToHashSet(),
-            _ => wordGroups
-        };
+        return fontMeasurers.Single(measurer => measurer.Type == cloudOptions.MeasurerType);
     }
 }

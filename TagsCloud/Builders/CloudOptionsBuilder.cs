@@ -3,6 +3,7 @@ using SixLabors.ImageSharp;
 using System.Reflection;
 using TagsCloud.Contracts;
 using TagsCloud.Entities;
+using TagsCloud.Options;
 using TagsCloudVisualization;
 
 namespace TagsCloud.Builders;

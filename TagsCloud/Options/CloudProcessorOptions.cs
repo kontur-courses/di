@@ -1,9 +1,10 @@
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using TagsCloud.Contracts;
+using TagsCloud.Entities;
 using TagsCloudVisualization;
 
-namespace TagsCloud.Entities;
+namespace TagsCloud.Options;
 
 public class CloudProcessorOptions : ICloudProcessorOptions
 {

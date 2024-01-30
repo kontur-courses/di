@@ -1,7 +1,10 @@
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 
 namespace TagsCloud.FileReaders;
 
+[Injection(ServiceLifetime.Singleton)]
 public class TxtFileReader : IFileReader
 {
     public string SupportedExtension => "txt";

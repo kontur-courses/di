@@ -1,13 +1,24 @@
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloud.Contracts;
+using TagsCloud.CustomAttributes;
 
 namespace TagsCloud.Formatters;
 
+[Injection(ServiceLifetime.Singleton)]
 public class DefaultPostFormatter : IPostFormatter
 {
-    private static readonly char[] separators = { ' ', '=', ';', ',', '.', ':', '!', '?' };
-
     public string Format(string input)
     {
-        return input.Split(separators, StringSplitOptions.RemoveEmptyEntries)[0].ToLower();
+        var idx = GetFirstNonLetterIndex(input);
+        return idx == -1 ? input : input[..idx];
+    }
+
+    private static int GetFirstNonLetterIndex(string line)
+    {
+        for (var i = 0; i < line.Length; i++)
+            if (!char.IsLetter(line[i]))
+                return i;
+
+        return -1;
     }
 }
