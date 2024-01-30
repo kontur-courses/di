@@ -4,6 +4,6 @@ namespace TagsCloudVisualization;
 
 public interface IPointGenerator
 {
-    public string Name { get; }
+    public Algorithm Name { get; }
     Point GetNextPoint();
 }

@@ -54,19 +54,18 @@ public class Program
         { "ADVPRO", "APRO", "INTJ", "CONJ", "PART", "PR", "SPRO" };
 
     [Option("-alg", Description = "Choose algorithm to generate tag cloud. Available: Spiral, Square")]
-    private string Algorithm { get; set; } = "Spiral";
+    private Algorithm Algorithm { get; set; } = Algorithm.Spiral;
 
 
     private void OnExecute()
     {
         var services = new ServiceCollection();
+        services.AddSingleton(new TagLayoutSettings(Algorithm, RemovedPartsOfSpeech, ExcludedWordsFile));
         services.AddScoped<Font>(x => new Font(FontFamily, FontSize));
         services.AddScoped<IPalette>(x => new Palette(TextColor, BackgroundColor));
-        services.AddScoped<TagLayoutSettings>(x => new TagLayoutSettings(Algorithm));
         services.AddScoped<IPointGenerator, LissajousCurvePointGenerator>();
         services.AddScoped<IPointGenerator, SpiralPointGenerator>();
-        services.AddScoped<IDullWordChecker>(x =>
-            new MystemDullWordChecker(RemovedPartsOfSpeech, ExcludedWordsFile));
+        services.AddScoped<IDullWordChecker, MystemDullWordChecker>();
         services.AddScoped<IInterestingWordsParser, MystemWordsParser>();
         services.AddScoped<IRectangleLayouter, RectangleLayouter>();
         services.AddScoped<LayoutDrawer>();

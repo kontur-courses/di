@@ -6,10 +6,17 @@ namespace TagsCloudVisualization;
 
 public class TagLayoutSettings
 {
-    public TagLayoutSettings(string algorithm)
+    public TagLayoutSettings(Algorithm algorithm, 
+        HashSet<string> removedPartOfSpeech, 
+        string? excludedWordsFile)
     {
         Algorithm = algorithm;
+        RemovedPartOfSpeech = removedPartOfSpeech;
+        ExcludedWordsFile = excludedWordsFile;
     }
 
-    public string Algorithm { get; }
+    public Algorithm Algorithm { get; }
+    public HashSet<string> RemovedPartOfSpeech { get; }
+    public string? ExcludedWordsFile { get; }
+    
 }

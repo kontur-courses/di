@@ -7,9 +7,10 @@ public class MystemDullWordChecker : IDullWordChecker
     private HashSet<string> removedPartOfSpeech;
     private HashSet<string> excludedWords = new();
 
-    public MystemDullWordChecker(HashSet<string> removedPartOfSpeech, string? excludedWordsFile)
+    public MystemDullWordChecker(TagLayoutSettings tagLayoutSettings)
     {
-        this.removedPartOfSpeech = removedPartOfSpeech;
+        removedPartOfSpeech = tagLayoutSettings.RemovedPartOfSpeech;
+        var excludedWordsFile = tagLayoutSettings.ExcludedWordsFile;
         if (excludedWordsFile is null)
             return;
 
