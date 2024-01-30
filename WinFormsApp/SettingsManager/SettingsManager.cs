@@ -1,21 +1,22 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.Xml.Serialization
 using TagsCloudContainer.SettingsClasses;
 
 namespace WinFormsApp.SettingsManager
 {
     public static class SettingsManager
     {
+        private const string settingsFile = "settings.bin";
 
         // TODO: save and load settings here
-        public static void SaveSettings(AppSettings settings, string filePath = "settings.bin")
+        public static void SaveSettings(AppSettings settings, string filePath = settingsFile)
         {
-            //var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-            //var binaryFormatter = new BinaryFormatter();
+            var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            var xmlSerializer = new XmlSerializer(typeof(AppSettings));
             //binaryFormatter.Serialize(fileStream, settings);
-            //fileStream.Close();
+            fileStream.Close();
         }
 
-        public static AppSettings LoadSettings(string filePath = "settings.bin")
+        public static AppSettings LoadSettings(string filePath = settingsFile)
         {
             AppSettings settings = null;
             //try
@@ -27,9 +28,9 @@ namespace WinFormsApp.SettingsManager
             //}
             //catch
             //{
-                settings = new AppSettings();
-                settings.DrawingSettings = new CloudDrawingSettings();
-                SaveSettings(settings);
+            settings = new AppSettings();
+            settings.DrawingSettings = new CloudDrawingSettings();
+            SaveSettings(settings);
             //}
 
             return settings;

@@ -20,7 +20,7 @@ namespace TagsCloudContainer
                 if (i >= partitionSize)
                 {
                     i = 0;
-                    j++;
+                    j = Math.Min(colors.Count - 1, j + 1);
                 }
                 i++;
             }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Windows.Forms;
 using TagsCloudContainer;
 using TagsCloudContainer.Drawer;
 using TagsCloudContainer.FrequencyAnalyzers;
@@ -25,9 +23,12 @@ namespace WinFormsApp
         private Graphics gr;
         private TagsCloudLayouter layouter;
         private IEnumerable<(string, int)> text;
+        private Image image;
 
         private AppSettings appSettings;
         private ServiceProvider serviceProvider;
+
+        private List<IPointsProvider> providers;
 
         public FormInterface()
         {
@@ -66,7 +67,9 @@ namespace WinFormsApp
             var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
             serviceProvider = services.BuildServiceProvider();
             layouter = serviceProvider.GetService<TagsCloudLayouter>();
-            
+
+            providers = serviceProvider.GetServices<IPointsProvider>().ToList();
+
             this.Size = appSettings.DrawingSettings.Size;
 
         }
@@ -87,28 +90,35 @@ namespace WinFormsApp
 
                 text = analyzer.GetAnalyzedText();
 
-                // Redraw image on change settings
-                layouter.Initialize(appSettings.DrawingSettings, text);
-                layouter.GetTextImages();
+                RedrawImage();
+            }
+        }
 
-                this.Size = appSettings.DrawingSettings.Size;
-                gr = this.CreateGraphics();
-                if (text != null)
-                {
-                    gr.DrawImage(Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages()), new Point(0, 0));
-                }
+        private void RedrawImage()
+        {
+            layouter = new TagsCloudLayouter();
+            layouter.Initialize(appSettings.DrawingSettings, text);
+            layouter.GetTextImages();
+
+            this.Size = new Size(appSettings.DrawingSettings.Size.Width + 20, appSettings.DrawingSettings.Size.Height + 50);
+            gr = this.CreateGraphics();
+            if (text != null)
+            {
+                image = Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages());
+                gr.DrawImage(image, new Point(0, 0));
+
+                SettingsManager.SettingsManager.SaveSettings(appSettings);
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "PNG files (*.png)";
+            saveDialog.Filter = "PNG files (*.png)|*.png";
 
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                // TODO: Save file
-                
+                image.Save(saveDialog.FileName);
             }
         }
 
@@ -122,27 +132,26 @@ namespace WinFormsApp
         {
             var colorSelector = new ColorSelectorForm(appSettings.DrawingSettings.Colors);
             colorSelector.ShowDialog();
-            if(colorSelector.DialogResult == DialogResult.OK)
+            if (colorSelector.DialogResult == DialogResult.OK)
             {
                 appSettings.DrawingSettings.Colors = colorSelector.Colors;
                 SettingsManager.SettingsManager.SaveSettings(appSettings);
 
-                // TODO: Draw cloud with new settings
-                //Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages()).Save(appSettings.OutImagePath);
                 if (text != null)
                 {
-                    gr.DrawImage(Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages()), new Point(0, 0));
+                    RedrawImage();
                 }
             }
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var properties = new Properties();
+            var properties = new Properties(appSettings, providers);
 
             if (properties.ShowDialog() == DialogResult.OK)
             {
-                // TODO: Parse settings
+                appSettings = properties.appSettings;
+                RedrawImage();
             }
         }
     }

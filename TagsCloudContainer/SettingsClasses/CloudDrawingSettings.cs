@@ -9,6 +9,6 @@ namespace TagsCloudContainer.SettingsClasses
         public float FontSize = 12;
         public IList<Color> Colors = new List<Color>() { Color.AliceBlue };
         public Size Size = new Size(600, 600);
-        public IPointsProvider PointsProvider;
+        public IPointsProvider PointsProvider = new SpiralPointsProvider();
     }
 }

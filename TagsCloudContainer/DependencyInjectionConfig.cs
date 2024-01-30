@@ -15,6 +15,7 @@ namespace TagsCloudContainer
             services.AddSingleton<IAnalyzer, FrequencyAnalyzer>();
             services.AddTransient<IPointsProvider, SpiralPointsProvider>();
             services.AddTransient<IPointsProvider, RandomPointsProvider>();
+            services.AddTransient<IPointsProvider, NormalPointsProvider>();
             services.AddTransient<TagsCloudLayouter>();
             services.AddTransient<CloudDrawingSettings>();
 
