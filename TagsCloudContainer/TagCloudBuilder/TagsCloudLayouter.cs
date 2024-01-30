@@ -22,6 +22,7 @@ namespace TagsCloudVisualization
 
             center = new Point(drawingSettings.Size.Width / 2, drawingSettings.Size.Height / 2);
             pointsProvider = drawingSettings.PointsProvider;
+            pointsProvider.Initialize(center);
             this.drawingSettings = drawingSettings;
             this.words = words;
 
