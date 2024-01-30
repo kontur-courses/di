@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="4.0.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageReference Include="NUnit" Version="3.13.3"/>
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj"/>
+        <ProjectReference Include="..\TagsCloud\TagsCloud.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="TestData\test_data.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\test_data.docx">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\test_data.csv">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\data.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

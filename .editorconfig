@@ -1,4 +1,0 @@
-; 4-column space indentation
-[*.{cs,tt}]
-indent_style = space
-indent_size = 4
