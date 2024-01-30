@@ -1,38 +1,30 @@
-﻿using System.Xml.Serialization
+﻿using Newtonsoft.Json;
 using TagsCloudContainer.SettingsClasses;
 
 namespace WinFormsApp.SettingsManager
 {
     public static class SettingsManager
     {
-        private const string settingsFile = "settings.bin";
-
-        // TODO: save and load settings here
+        private const string settingsFile = "settings.json";
         public static void SaveSettings(AppSettings settings, string filePath = settingsFile)
         {
-            var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-            var xmlSerializer = new XmlSerializer(typeof(AppSettings));
-            //binaryFormatter.Serialize(fileStream, settings);
-            fileStream.Close();
+            File.WriteAllText(settingsFile, JsonConvert.SerializeObject(settings));
         }
 
         public static AppSettings LoadSettings(string filePath = settingsFile)
         {
             AppSettings settings = null;
-            //try
-            //{
-            //    var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            //    var binaryFormatter = new BinaryFormatter();
-            //    settings = (AppSettings)binaryFormatter.Deserialize(fileStream);
-            //    fileStream.Close();
-            //}
-            //catch
-            //{
-            settings = new AppSettings();
-            settings.DrawingSettings = new CloudDrawingSettings();
-            SaveSettings(settings);
-            //}
-
+            if (File.Exists(filePath))
+            {
+                var serialized = File.ReadAllText(filePath);
+                settings = JsonConvert.DeserializeObject<AppSettings>(serialized);
+            }
+            else
+            {
+                settings = new AppSettings();
+                settings.DrawingSettings = new CloudDrawingSettings();
+                SaveSettings(settings);
+            }
             return settings;
         }
     }

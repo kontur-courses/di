@@ -61,8 +61,7 @@ namespace WinFormsApp
 
             gr = this.CreateGraphics();
 
-            appSettings = SettingsManager.SettingsManager.LoadSettings(); // TODO: load settings from file, ex.: SettingsManager.LoadSettings();
-            appSettings.DrawingSettings = new();
+            appSettings = SettingsManager.SettingsManager.LoadSettings();
 
             var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
             serviceProvider = services.BuildServiceProvider();
