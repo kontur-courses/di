@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Include="TagsCloudTests.csproj" />
+    <None Include="WinFormsApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
