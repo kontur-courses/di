@@ -9,6 +9,7 @@ namespace TagsCloudContainerTests
     public class WordPreprocessorTests
     {
         private IPreprocessor preprocessor;
+
         [SetUp]
         public void SetUp()
         {
