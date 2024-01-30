@@ -29,7 +29,7 @@ namespace TagsCloudContainer.CLI
         [Option("exclude", Required = false, HelpText = "File with words to exclude.")]
         public string Filter { get; set; }
 
-        [Option("layout", Required = false, HelpText = "Set cloud layouter - Spiral or Random.")]
+        [Option("layout", Required = false, HelpText = "Set cloud layouter - Spiral, Random or Normal.")]
         public string Layout { get; set; }
 
         public static AppSettings ParseArgs(CommandLineOptions options)
@@ -42,23 +42,62 @@ namespace TagsCloudContainer.CLI
             appSettings.FilterFile = options.Filter;
 
             appSettings.DrawingSettings.FontFamily = GetFontFamily(options.FontFamily);
-            appSettings.DrawingSettings.FontSize = options.FontSize;
-            appSettings.DrawingSettings.Size = options.Size;
+            appSettings.DrawingSettings.FontSize = GetFontSize(options.FontSize);
+            appSettings.DrawingSettings.Size = GetSize(options.Size);
             appSettings.DrawingSettings.Colors = GetColors(options.Colors);
             appSettings.DrawingSettings.PointsProvider = GetPointsProvider(
                 options.Layout,
                 appSettings.DrawingSettings.Size);
+
             return appSettings;
+        }
+
+        private static int GetFontSize(int fontSize)
+        {
+            if (fontSize > 0)
+            {
+                return fontSize;
+            }
+            return 12;
+        }
+
+        private static Size GetSize(Size size)
+        {
+            if (size.IsEmpty)
+            {
+                return new Size(800, 600);
+            }
+            return size;
         }
 
         private static IPointsProvider GetPointsProvider(string layout, Size size)
         {
             var center = new Point(size.Width / 2, size.Height / 2);
-            var pointProvider = new SpiralPointsProvider();
+            IPointsProvider pointProvider = new SpiralPointsProvider();
 
-            if (layout.ToLowerInvariant() == "random")
+            if (string.IsNullOrEmpty(layout))
             {
-                var p = new RandomPointsProvider();
+                pointProvider.Initialize(center);
+                return pointProvider;
+            }
+
+            switch (layout.ToLowerInvariant())
+            {
+                case "random":
+                    pointProvider = new RandomPointsProvider();
+                    break;
+
+                case "normal":
+                    pointProvider = new NormalPointsProvider();
+                    break;
+
+                case "Spiral":
+                    pointProvider = new NormalPointsProvider();
+                    break;
+
+                default:
+                    pointProvider = new SpiralPointsProvider();
+                    break;
             }
 
             pointProvider.Initialize(center);
@@ -81,8 +120,12 @@ namespace TagsCloudContainer.CLI
 
         private static IList<Color> GetColors(string colors)
         {
-            var a = colors.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            var c = a.Select(x => Color.FromName(x)).ToList();
+            if (string.IsNullOrEmpty(colors))
+            {
+                return new List<Color>() { Color.White };
+            }
+
+            var c = colors.Split(',').Select(x => Color.FromName(x)).ToList();
 
             if (c.Count > 0)
             {
