@@ -5,10 +5,10 @@ namespace TagsCloudContainer.SettingsClasses
 {
     public class CloudDrawingSettings
     {
-        public FontFamily FontFamily = new FontFamily("Arial");
+        public FontFamily FontFamily = new("Arial");
         public float FontSize = 12;
         public IList<Color> Colors = new List<Color>() { Color.AliceBlue };
-        public Size Size = new Size(600, 600);
+        public Size Size = new(600, 600);
         public IPointsProvider PointsProvider = new SpiralPointsProvider();
     }
 }

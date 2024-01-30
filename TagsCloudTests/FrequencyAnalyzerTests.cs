@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 using TagsCloudContainer;
 using TagsCloudContainer.FrequencyAnalyzers;
 
@@ -49,6 +50,31 @@ namespace TagsCloudTests
 
             // Assert
             sut.GetAnalyzedText().Should().BeEquivalentTo(expectedFrequency);
+        }
+
+        [Test]
+        public void GetAnalyzedText_ShouldNotContainExcludedWord()
+        {
+            // Arrange
+            var text = "hello\nworld\nhello";
+            var exclude = "hello";
+
+
+            // Act
+            sut.Analyze(text, CreateTempFile(exclude));
+
+            // Assert
+            sut.GetAnalyzedText().Should().NotContain(x => x.Item1.Contains(exclude));
+        }
+
+        private string CreateTempFile(string text)
+        {
+            var tempFile = Path.GetTempFileName();
+            using (var streamWriter = new StreamWriter(tempFile, false, Encoding.UTF8))
+            {
+                streamWriter.Write(text);
+            }
+            return tempFile;
         }
     }
 }

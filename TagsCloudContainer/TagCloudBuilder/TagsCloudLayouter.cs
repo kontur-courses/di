@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
+using System.Runtime.CompilerServices;
 using TagsCloudContainer;
 using TagsCloudContainer.SettingsClasses;
 
+[assembly: InternalsVisibleToAttribute("TagsCloudTests")]
 namespace TagsCloudVisualization
 {
     public class TagsCloudLayouter
@@ -60,7 +62,7 @@ namespace TagsCloudVisualization
             return !Cloud.Any(x => x.IntersectsWith(rectangle));
         }
 
-        private Rectangle PutNextRectangle(Size rectangleSize)
+        internal Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
                 throw new ArgumentException("Size width and height should be positive");

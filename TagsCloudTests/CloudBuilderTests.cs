@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;
-using TagsCloudContainer;
 using TagsCloudContainer.SettingsClasses;
 using TagsCloudVisualization;
 
@@ -9,27 +7,48 @@ namespace TagsCloudTests
 {
     internal class CloudBuilderTests
     {
-        private ServiceProvider serviceProvider;
         private TagsCloudLayouter sut;
         private List<(string, int)> words;
+        private CloudDrawingSettings drawingSettings;
 
         [SetUp]
         public void Setup()
         {
-            var services = DependencyInjectionConfig.AddCustomServices(new ServiceCollection());
-            serviceProvider = services.BuildServiceProvider();
+            drawingSettings = new CloudDrawingSettings
+            {
+                Size = new(1000, 1000),
+                FontFamily = new("Arial"),
+                FontSize = 12
+            };
 
-            var center = new Point(100, 100);
-            var pointsProvider = new SpiralPointsProvider();
-            var drawingSettings = serviceProvider.GetService<CloudDrawingSettings>();
-
-            drawingSettings.Size = new Size(center.X * 2, center.Y * 2);
-            drawingSettings.PointsProvider = pointsProvider;
             words = new() { ("TestWord1", 1), ("TestWord2", 2), ("TestWord3", 3) };
 
             sut = new TagsCloudLayouter();
             sut.Initialize(drawingSettings, words);
+        }
 
+        [Test]
+        public void Initialize_WithValidSettings_ShouldNotThrowException()
+        {
+            // Arrange
+            var layouter = new TagsCloudLayouter();
+
+            // Act & Assert
+            Assert.DoesNotThrow(() => layouter.Initialize(drawingSettings, words));
+        }
+
+        [Test]
+        public void Initialize_WithInvalidSize_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var layouter = new TagsCloudLayouter();
+            var invalidDrawingSettings = new CloudDrawingSettings
+            {
+                Size = new Size(-1, 1000)
+            };
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => layouter.Initialize(invalidDrawingSettings, words));
         }
 
         [Test]
@@ -45,40 +64,39 @@ namespace TagsCloudTests
             actualCount.Should().Be(expectedCount);
         }
 
-        //[Test]
-        //public void GetTextImages_ShouldNotOverlapRectangles()
-        //{
-        //    // Arrange
-        //    var expectedNoOverlap = true;
-        //    var cloud = sut.GetTextImages().ToList();
+        [Test]
+        public void GetTextImages_ShouldReturnCorrectTextImages()
+        {
+            // Arrange
+            var layouter = new TagsCloudLayouter();
+            layouter.Initialize(drawingSettings, words);
+
+            // Act
+            var textImages = layouter.GetTextImages().ToList();
+
+            // Assert
+            textImages.Should().ContainSingle(x => x.Text == "TestWord1");
+            textImages.Should().ContainSingle(x => x.Text == "TestWord2");
+            textImages.Should().ContainSingle(x => x.Text == "TestWord3");
+        }
+
+        [Test]
+        public void GetTextImages_ShouldNotContainOverlappingTextImages()
+        {
+            // Arrange
+            var layouter = new TagsCloudLayouter();
+            layouter.Initialize(drawingSettings, words);
 
 
-        //    // Act
-        //    var actualNoOverlap = true;
-        //    foreach (var rectangle1 in cloud)
-        //    {
-        //        foreach (var rectangle2 in sut.Cloud)
-        //        {
-        //            if (rectangle1 == rectangle2)
-        //            {
-        //                continue;
-        //            }
-        //            var isIntersect = rectangle1.IntersectsWith(rectangle2);
-        //            if (isIntersect)
-        //            {
-        //                actualNoOverlap = false;
-        //                break;
-        //            }
-        //            if (!actualNoOverlap)
-        //            {
-        //                break;
-        //            }
-        //        }
+            // Act
+            var textImages = layouter.GetTextImages().Select(x => new Rectangle(x.Position, x.Size));
+            var rectangles = textImages
+                 .SelectMany((x, i) => textImages.Skip(i + 1), Tuple.Create)
+                 .Where(x => x.Item1.IntersectsWith(x.Item2));
 
-        //    }
 
-        //    // Assert
-        //    actualNoOverlap.Should().Be(expectedNoOverlap);
-        //}
+            // Assert
+            rectangles.Should().BeEmpty();
+        }
     }
 }

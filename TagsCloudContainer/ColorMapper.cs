@@ -9,6 +9,11 @@ namespace TagsCloudContainer
             var distinctNumbers = numbers.Distinct().OrderByDescending(x => x);
             var colorMapping = new Dictionary<int, Color>();
 
+            if (!distinctNumbers.Any() || !colors.Any())
+            {
+                return colorMapping;
+            }
+
             int partitionSize = distinctNumbers.Count() / colors.Count;
 
             int i = 0;

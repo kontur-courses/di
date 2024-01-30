@@ -2,7 +2,7 @@
 {
     public class FrequencyAnalyzer : IAnalyzer
     {
-        private readonly TextPreprocessing preprocessor;
+        //private readonly TextPreprocessing preprocessor;
         private readonly Dictionary<string, int> wordFrequency;
 
         public FrequencyAnalyzer()

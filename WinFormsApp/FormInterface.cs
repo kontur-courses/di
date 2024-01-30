@@ -21,13 +21,12 @@ namespace WinFormsApp
         private ToolStripMenuItem propertiesToolStripMenu;
 
         private Graphics gr;
-        private TagsCloudLayouter layouter;
-        private IEnumerable<(string, int)> text;
         private Image image;
 
+        private TagsCloudLayouter layouter;
+        private IEnumerable<(string, int)> text;
         private AppSettings appSettings;
         private ServiceProvider serviceProvider;
-
         private List<IPointsProvider> providers;
 
         public FormInterface()
@@ -69,8 +68,7 @@ namespace WinFormsApp
 
             providers = serviceProvider.GetServices<IPointsProvider>().ToList();
 
-            this.Size = appSettings.DrawingSettings.Size;
-
+            Size = appSettings.DrawingSettings.Size;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,8 +97,8 @@ namespace WinFormsApp
             layouter.Initialize(appSettings.DrawingSettings, text);
             layouter.GetTextImages();
 
-            this.Size = new Size(appSettings.DrawingSettings.Size.Width + 20, appSettings.DrawingSettings.Size.Height + 50);
-            gr = this.CreateGraphics();
+            Size = new Size(appSettings.DrawingSettings.Size.Width + 20, appSettings.DrawingSettings.Size.Height + 50);
+            gr = CreateGraphics();
             if (text != null)
             {
                 image = Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages());
