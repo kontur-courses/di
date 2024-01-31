@@ -26,11 +26,12 @@ public class CommandLineParser: ICommandLineParser
         {
             var input = Console.ReadLine();
             var args = input.Split();
-            Parser.Default.ParseArguments(args, types).WithParsed(Parse);
+            Parser.Default.ParseArguments(args, types)
+                .WithParsed<IOptions>(Parse);
         }
     }
 
-    private void Parse<T>(T options)
+    private void Parse<T>(T options) where T : IOptions
     {
         var handler = handlers.FirstOrDefault(h => h.CanParse(options));
         if (handler is null)

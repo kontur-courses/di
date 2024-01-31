@@ -4,12 +4,12 @@ namespace ConsoleApp.Handlers;
 
 public class ExitOptionsHandler : IOptionsHandler
 {
-    public bool CanParse(object options)
+    public bool CanParse(IOptions options)
     {
         return options is ExitOptions;
     }
 
-    public string WithParsed(object options)
+    public string WithParsed(IOptions options)
     {
         Environment.Exit(0);
         return "Завершение выполнения программы.";

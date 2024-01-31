@@ -27,7 +27,7 @@ public class SetImageOptionsHandler : IOptionsHandler
             imageSettings.TextOptions.Font = options.Font;
     }
 
-    private void Map(object options)
+    private void Map(IOptions options)
     {
         if (options is SetImageOptions opts)
             Map(opts);
@@ -35,12 +35,12 @@ public class SetImageOptionsHandler : IOptionsHandler
             throw new ArgumentException(nameof(options));
     }
 
-    public bool CanParse(object options)
+    public bool CanParse(IOptions options)
     {
         return options is SetImageOptions;
     }
 
-    public string WithParsed(object options)
+    public string WithParsed(IOptions options)
     {
         Map(options);
         return "Настройки изображения установлены.";

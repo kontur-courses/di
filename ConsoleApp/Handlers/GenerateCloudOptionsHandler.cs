@@ -21,18 +21,18 @@ public class GenerateCloudOptionsHandler : IOptionsHandler
         this.cloudContainer = cloudContainer;
     }
 
-    public bool CanParse(object options)
+    public bool CanParse(IOptions options)
     {
         return options is GenerateCloudOptions;
     }
 
-    public string WithParsed(object options)
+    public string WithParsed(IOptions options)
     {
         Map(options);
         return Execute();
     }
 
-    private void Map(object options)
+    private void Map(IOptions options)
     {
         if (options is GenerateCloudOptions opts)
             Map(opts);
