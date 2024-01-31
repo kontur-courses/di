@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{78F8856D-FEBF-4EE4-9482-AA6718084B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{18D5D5E7-F49F-430B-B4C4-703583791AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{CCE40A47-2632-4CF5-BEAE-7A3D213FEBE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F8856D-FEBF-4EE4-9482-AA6718084B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F8856D-FEBF-4EE4-9482-AA6718084B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F8856D-FEBF-4EE4-9482-AA6718084B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F8856D-FEBF-4EE4-9482-AA6718084B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D5D5E7-F49F-430B-B4C4-703583791AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D5D5E7-F49F-430B-B4C4-703583791AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D5D5E7-F49F-430B-B4C4-703583791AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D5D5E7-F49F-430B-B4C4-703583791AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE40A47-2632-4CF5-BEAE-7A3D213FEBE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE40A47-2632-4CF5-BEAE-7A3D213FEBE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE40A47-2632-4CF5-BEAE-7A3D213FEBE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE40A47-2632-4CF5-BEAE-7A3D213FEBE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
