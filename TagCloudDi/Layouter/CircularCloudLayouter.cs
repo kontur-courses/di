@@ -2,16 +2,14 @@
 
 namespace TagCloudDi.Layouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ILayouter
     {
-        private readonly ArchimedeanSpiral spiral;
-        private readonly List<Rectangle> rectangles = [];
-        private readonly Point centerPoint;
+        private readonly IPointGenerator pointGenerator;
+        public readonly List<Rectangle> Rectangles = [];
 
-        public CircularCloudLayouter(Point centerPoint, ArchimedeanSpiral archimedeanSpiral)
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            this.centerPoint = centerPoint;
-            spiral = archimedeanSpiral;
+            this.pointGenerator = pointGenerator;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -23,20 +21,20 @@ namespace TagCloudDi.Layouter
                 );
             while (true)
             {
-                var nextPoint = spiral.GetNextPoint();
+                var nextPoint = pointGenerator.GetNextPoint();
                 var newPoint = new Point(nextPoint.X - rectangleSize.Width / 2, nextPoint.Y - rectangleSize.Height / 2);
                 var rectangle = new Rectangle(newPoint, rectangleSize);
                 if (IsIntersectsWithOthers(rectangle)) continue;
                 rectangle = GetCloserToCenterRectangle(rectangle);
-                rectangles.Add(rectangle);
+                Rectangles.Add(rectangle);
                 break;
             }
 
-            return rectangles[^1];
+            return Rectangles[^1];
         }
 
         private bool IsIntersectsWithOthers(Rectangle rectangle) =>
-            rectangles.Any(x => x.IntersectsWith(rectangle));
+            Rectangles.Any(x => x.IntersectsWith(rectangle));
 
         private Rectangle GetCloserToCenterRectangle(Rectangle rectangle)
         {
@@ -46,8 +44,8 @@ namespace TagCloudDi.Layouter
                 var newRectangle = GetMovedRectangle(rectangle, direction.X, direction.Y);
                 while (!IsIntersectsWithOthers(newRectangle))
                 {
-                    if (centerPoint.X - newRectangle.Size.Width / 2 == newRectangle.X
-                        || centerPoint.Y - newRectangle.Size.Height / 2 == newRectangle.Y)
+                    if (pointGenerator.CenterPoint.X - newRectangle.Size.Width / 2 == newRectangle.X
+                        || pointGenerator.CenterPoint.Y - newRectangle.Size.Height / 2 == newRectangle.Y)
                         break;
                     rectangle = newRectangle;
                     newRectangle = GetMovedRectangle(rectangle, direction.X, direction.Y);
@@ -59,8 +57,8 @@ namespace TagCloudDi.Layouter
 
         private List<(int X, int Y)> GetDirection(Rectangle rectangle)
         {
-            var horizontalDiffer = centerPoint.X - rectangle.Size.Width / 2 - rectangle.X;
-            var verticalDiffer = centerPoint.Y - rectangle.Size.Height / 2 - rectangle.Y;
+            var horizontalDiffer = pointGenerator.CenterPoint.X - rectangle.Size.Width / 2 - rectangle.X;
+            var verticalDiffer = pointGenerator.CenterPoint.Y - rectangle.Size.Height / 2 - rectangle.Y;
             var directions = new List<(int X, int Y)>();
             if (horizontalDiffer != 0 && verticalDiffer != 0)
                 directions.Add((horizontalDiffer > 0 ? 1 : -1, verticalDiffer > 0 ? 1 : -1));

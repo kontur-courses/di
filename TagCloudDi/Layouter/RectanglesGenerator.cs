@@ -3,19 +3,19 @@ using TagCloudDi.TextProcessing;
 
 namespace TagCloudDi.Layouter
 {
-    public class RectangleGenerator(TextProcessor textProcessor, Settings settings, CircularCloudLayouter layouter)
+    public class RectanglesGenerator(ITextProcessor textProcessor, Settings settings, ILayouter layouter) : IRectanglesGenerator
     {
-        public IEnumerable<(Rectangle rectangle, string word, float fontSize)> GetRectanglesData()
+        public IEnumerable<RectangleData> GetRectanglesData()
         {
-            var frequences = textProcessor.GetWordsFrequency();
-            var totalAmount = frequences.Sum(x => x.Value);
-            return frequences
+            var frequencies = textProcessor.GetWordsFrequency();
+            var totalAmount = frequencies.Sum(x => x.Value);
+            return frequencies
                 .OrderByDescending(x => x.Value)
                 .Select(x =>
                 {
                     using var font = new Font(settings.FontName, settings.FontSize * (
                         x.Value * 100 / totalAmount), FontStyle.Regular);
-                    return (layouter.PutNextRectangle(GetTextSize(x.Key, font)), x.Key, font.Size);
+                    return new RectangleData(layouter.PutNextRectangle(GetTextSize(x.Key, font)), x.Key, font.Size);
                 })
                 .ToList();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TagCloudDi.TextProcessing
 {
-    public class TextReader
+    public class FileTextReader : ITextReader
     {
         public IEnumerable<string> GetWordsFrom(string filePath)
         {
