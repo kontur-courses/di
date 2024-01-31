@@ -32,8 +32,6 @@ public class TagCloudRenderer : ITagCloudRenderer
 
     public Bitmap Render(WordLayout[] wordLayouts)
     {
-        var rectangles = wordLayouts.Select(x => x.Box).ToArray();
-
         graphics.Clear(options.ColorScheme.BackgroundColor);
 
         foreach (var layout in wordLayouts) 
@@ -45,30 +43,5 @@ public class TagCloudRenderer : ITagCloudRenderer
         }
 
         return bitmap;
-    }
-
-    private Font GetAdjustedFont(Graphics graphic, string text, Font originalFont, Size boxSize, int maxFontSize, int minFontSize, bool smallestOnFail)
-    {
-        for (int adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
-        {
-            Font testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style);
-
-            SizeF newSize = graphic.MeasureString(text, testFont);
-
-            if (boxSize.Width > Convert.ToInt32(newSize.Width) && 
-                boxSize.Height > Convert.ToInt32(newSize.Height))
-            {
-                return testFont;
-            }
-        }
-
-        if (smallestOnFail)
-        {
-            return new Font(originalFont.Name, minFontSize, originalFont.Style);
-        }
-        else
-        {
-            return originalFont;
-        }
     }
 }

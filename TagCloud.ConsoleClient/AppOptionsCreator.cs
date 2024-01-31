@@ -6,7 +6,7 @@ public static class AppOptionsCreator
     {
         var tagCloudOptions = CreateTagCloudOptions(clOptions);
         var renderOptions = CreateRenderOptions(clOptions);
-        var wordExtractorOptions = CreateWordExtractoroptions(clOptions);
+        var wordExtractorOptions = CreateWordExtractionOptions(clOptions);
         var serviceOptions = CreateServiceOptions(clOptions);
 
         return new AppOptions()
@@ -49,7 +49,7 @@ public static class AppOptionsCreator
         return new Font(fontFamily, 32, FontStyle.Regular, GraphicsUnit.Pixel);
     }
 
-    private static WordExtractionOptions CreateWordExtractoroptions(Options clOptions)
+    private static WordExtractionOptions CreateWordExtractionOptions(Options clOptions)
     {
         return new WordExtractionOptions() { MinWordLength = 4, PartsSpeech = PartSpeech.Noun | PartSpeech.Verb };
     }

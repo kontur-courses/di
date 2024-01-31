@@ -36,27 +36,28 @@ public class TagCloud : ITagCloud
 
     public Bitmap CreateCloud(Dictionary<string, int> frequencyDict)
     {
-        var kvps = frequencyDict.OrderByDescending(x => x.Value)
+        var frequencyPairs = frequencyDict.OrderByDescending(x => x.Value)
                                 .ToArray();
 
         if (tagCloudOptions.MaxTagsCount != -1)
-            kvps = kvps.Take(tagCloudOptions.MaxTagsCount).ToArray();
+            frequencyPairs = frequencyPairs.Take(tagCloudOptions.MaxTagsCount).ToArray();
 
-        var minFreq = kvps[^1].Value;
-        var maxFreq = kvps[0].Value;
+        var minFreq = frequencyPairs[^1].Value;
+        var maxFreq = frequencyPairs[0].Value;
 
         var layouts = new List<WordLayout>();
 
-        foreach (var kvp in kvps)
+        foreach (var pair in frequencyPairs)
         {
-            var mul = TagCloudHelpers.GetMultiplier(kvp.Value, minFreq, maxFreq);
-            var fontSize = GetFontSize(mul, renderOptions.MinFontSize, renderOptions.MaxFontSize);
+            // множитель на который умножается размер шрифта, в зависимости от частоты встречаемости слова. 
+            var sizeMultiplier = TagCloudHelpers.GetMultiplier(pair.Value, minFreq, maxFreq);
+            var fontSize = GetFontSize(sizeMultiplier, renderOptions.MinFontSize, renderOptions.MaxFontSize);
 
-            var size = renderer.GetStringSize(kvp.Key, fontSize);
+            var size = renderer.GetStringSize(pair.Key, fontSize);
 
             var rect = layouter.PutNextRectangle(size);
 
-            layouts.Add(new WordLayout(kvp.Key, rect, fontSize));
+            layouts.Add(new WordLayout(pair.Key, rect, fontSize));
         }
 
         return renderer.Render(layouts.ToArray());

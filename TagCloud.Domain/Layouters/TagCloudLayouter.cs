@@ -3,7 +3,7 @@ using System.Numerics;
 
 public class TagCloudLayouter : ITagCloudLayouter
 {
-    private int i;
+    private int rectanglesPlaced;
     private List<RectangleF> rectangles = new List<RectangleF>();
     private readonly PointF center;
     private RectangleF currentRectangle;
@@ -76,13 +76,13 @@ public class TagCloudLayouter : ITagCloudLayouter
 
     private Vector2 GetDirection()
     {
-        if (i % 100 == 0)
+        if (rectanglesPlaced % 100 == 0)
         {
             segmentsCount++;
             UpdateDirections();
         }
 
-        return directions[i++ % directions.Count];
+        return directions[rectanglesPlaced++ % directions.Count];
     }
 
     private void UpdateDirections()
