@@ -5,6 +5,8 @@ namespace TagsCloud.Layouters;
 
 public interface ILayouter
 {
-    public List<Tag> Tags { get; set; }
-    public void AddTag(Tag tag);
+    public IEnumerable<Tag> GetTagsCollection();
+    public void CreateTagCloud(Dictionary<string, int> tagsDictionary);
+
+    public Size GetImageSize();
 }

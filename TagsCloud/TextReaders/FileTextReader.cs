@@ -1,20 +1,28 @@
-﻿using TagsCloud.WordValidators;
+﻿using Autofac.Features.AttributeFilters;
+using TagsCloud.ConsoleCommands;
+using TagsCloud.WordValidators;
 
 namespace TagsCloud.TextReaders;
 
 public class FileTextReader:ITextReader
 {
-    private IWordValidator validator;
-    public FileTextReader(IWordValidator validator)
+    private readonly IWordValidator validator;
+    private readonly string filename; 
+    public FileTextReader(IWordValidator validator, Options options)
     {
         this.validator = validator;
+        this.filename = options.InputFile;
     }
         
-    public Tuple<string,int>[] GetWords(string filePath)
+    public Dictionary<string,int> GetWords()
     {
-        var words = File.ReadAllText(filePath).Split('\n');
-        return words.Where(w=>validator.IsWordValid(w))
-            .GroupBy(word => word)
-            .Select(group => Tuple.Create(group.Key, group.Count())).ToArray(); 
+        if (!File.Exists(filename))
+            throw new FileNotFoundException(filename);
+        return File.ReadAllText(filename)
+            .Split(new string[] {"\n","\r\n"},StringSplitOptions.None)
+            .GroupBy(word => word.ToLower())
+            .Where(g => validator.IsWordValid(g.Key))
+            .OrderByDescending(g2=>g2.Count())
+            .ToDictionary(group => group.Key, group => group.Count());
     }
 }

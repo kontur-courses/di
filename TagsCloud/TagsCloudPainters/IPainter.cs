@@ -1,6 +1,8 @@
-﻿namespace TagsCloud.TagsCloudPainters;
+﻿using TagsCloud.Layouters;
+
+namespace TagsCloud.TagsCloudPainters;
 
 public interface IPainter
 {
-    public void DrawCloud();
+    public void DrawCloud(ILayouter layouter);
 }

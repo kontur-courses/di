@@ -1,45 +1,62 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using Autofac.Features.AttributeFilters;
+using CommandLine;
+using TagsCloud.ColorGenerators;
+using TagsCloud.ConsoleCommands;
 using TagsCloud.Entities;
+using TagsCloud.Layouters;
 
 
 namespace TagsCloud.TagsCloudPainters;
 
-public class SimplePainter
+public class SimplePainter:IPainter
 {
-    private int margin = 10;
-    public void DrawCloud(string filename, IEnumerable<Tag> tags)
+    private readonly IColorGenerator colorGenerator;
+    private readonly string filename;
+    private readonly Size imageSize;
+
+    public SimplePainter(IColorGenerator colorGenerator,Options options)
     {
-      
+        this.colorGenerator = colorGenerator;
+        this.filename = options.OutputFile;
+        this.imageSize = options.ImageSize;
+
     }
 
+    public void DrawCloud(ILayouter layouter)
+    {
+        var tags = layouter.GetTagsCollection();
+        if (!tags.Any())
+            throw new ArgumentException();
+        var bitmapsize = imageSize.IsEmpty ? layouter.GetImageSize() : imageSize;
 
+        using (var bitmap = new Bitmap(bitmapsize.Width, bitmapsize.Height))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                foreach (var tag in tags)
+                {
+                    var color = colorGenerator.GetTagColor(tag);
+                    var brush = new SolidBrush(color);
+                    g.DrawString(tag.Content,tag.Font,brush,GetTagPositionOnImage(tag.TagRectangle.Location,imageSize));
+                }
+            }
+            SaveImageToFile(bitmap,filename);
+        }
+    }
+
+    private Point GetTagPositionOnImage(Point position,Size size)
+    {
+        var x = position.X + size.Width/2;
+        var y = position.Y + size.Height/2;
+
+        return new Point(x, y);
+    }
     private void SaveImageToFile(Bitmap bitmap, string filename)
     {
         var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-        var filePath = Path.Combine(projectDirectory, "images", filename);
-        bitmap.Save(filePath, ImageFormat.Png);
+        bitmap.Save(filename, ImageFormat.Png);
     }
-
-    private void SetImageSize(IEnumerable<Tag> tags, out int imageWidth, out int imageHeight)
-    {
-        var maxX = tags.Select(rec => rec.TagRectangle.X + rec.TagRectangle.Width / 2).Max();
-        var minX = tags.Select(rec => rec.TagRectangle.X - rec.TagRectangle.Width / 2).Min();
-        var maxY = tags.Select(rec => rec.TagRectangle.Y + rec.TagRectangle.Height / 2).Max();
-        var minY = tags.Select(rec => rec.TagRectangle.Y - rec.TagRectangle.Height / 2).Min();
-
-        imageWidth = (int)Math.Round(maxX - minX + margin);
-        imageHeight = (int)Math.Round(maxY - minY + margin);
-    }
-
-    private IEnumerable<Tag> GetNewRectanglesPositions(IEnumerable<Tag> tags, int imageWidth,
-        int imageHeight)
-    {
-        return tags.Select(tag =>
-        {
-            tag.TagRectangle.X = tag.TagRectangle.X + imageWidth / 2;
-            tag.TagRectangle.Y = tag.TagRectangle.Y + imageHeight / 2;
-            return tag;
-        });
-    }
+    
 }

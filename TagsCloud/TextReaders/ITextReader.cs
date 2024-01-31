@@ -1,6 +1,8 @@
-﻿namespace TagsCloud.TextReaders;
+﻿using TagsCloud.WordValidators;
+
+namespace TagsCloud.TextReaders;
 
 public interface ITextReader
 {
-    public Tuple<string,int>[] GetWords(string filePath);
+    public Dictionary<string,int> GetWords();
 }
