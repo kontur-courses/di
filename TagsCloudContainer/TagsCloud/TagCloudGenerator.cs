@@ -7,7 +7,7 @@ namespace TagsCloudContainer.TagsCloud
     {
         public Bitmap GenerateTagCloud(IEnumerable<string> words, IImageSettings imageSettings)
         {
-            var tagCloudImage = new Bitmap(imageSettings.ImageWidth, imageSettings.ImageHeight);
+            var tagCloudImage = new Bitmap(imageSettings.Width, imageSettings.Height);
             using (var graphics = Graphics.FromImage(tagCloudImage))
             {
                 graphics.Clear(imageSettings.BackgroundColor);

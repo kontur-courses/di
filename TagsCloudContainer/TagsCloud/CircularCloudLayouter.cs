@@ -19,6 +19,10 @@ namespace TagsCloudContainer.TagsCloud
         public Point CloudCenter => center;
         public IList<Rectangle> Rectangles => rectangles;
 
+        private const int MinPositiveValue = 1;
+        private const int MinWidth = 0;
+        private const int MinHeight = 0;
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             ValidateRectangleSize(rectangleSize);
@@ -34,8 +38,7 @@ namespace TagsCloudContainer.TagsCloud
             var textSize = MeasureTextSize(word, font);
             return PutNextRectangle(textSize);
         }
-
-        private const int MinPositiveValue = 1;
+        
         private Size MeasureTextSize(string text, Font font)
         {
             // размер минимального временного изображения для измерения текста
@@ -55,7 +58,7 @@ namespace TagsCloudContainer.TagsCloud
 
         private void ValidateRectangleSize(Size rectangleSize)
         {
-            if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
+            if (rectangleSize.Width <= MinWidth || rectangleSize.Height <= MinHeight)
             {
                 throw new ArgumentException("Width and height of the rectangle must be greater than zero");
             }
@@ -78,14 +81,14 @@ namespace TagsCloudContainer.TagsCloud
 
         private Point GetUpperLeftCorner(Point rectangleCenter, Size rectangleSize)
         {
-            return new Point(rectangleCenter.X - rectangleSize.Width / 2, rectangleCenter.Y - rectangleSize.Height / 2);
+            var center = TagCloudApp.CalculateCenter(rectangleSize.Width, rectangleSize.Height);
+            return new Point(rectangleCenter.X - center.X, rectangleCenter.Y - center.Y);
         }
 
         private bool RectanglesIntersect(Rectangle newRectangle)
         {
             return rectangles.Any(rect => rect.IntersectsWith(newRectangle));
         }
-
-
+        
     }
 }

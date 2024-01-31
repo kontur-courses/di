@@ -10,10 +10,13 @@ namespace TagsCloudContainer.TagsCloud
         private readonly IPreprocessor _preprocessor;
         private readonly IImageSettings _imageSettings;
         private readonly FileReader _fileReader;
+        private readonly FontSizeCalculator _fontSizeCalculator = new FontSizeCalculator();
+
         private string _fontName;
         private string outputDirectory = @"..\..\..\output";
         private const double DefaultAngleStep = 0.02;
         private const double DefaultRadiusStep = 0.04;
+        private const int Half = 2;
 
         public TagCloudApp(IPreprocessor preprocessor, IImageSettings imageSettings, FileReader fileReader)
         {
@@ -73,7 +76,7 @@ namespace TagsCloudContainer.TagsCloud
         {
             var layouter = CreateLayouter();
             var uniqueWords = new HashSet<string>();
-            var wordFrequencies = CalculateWordFrequencies(words);
+            var wordFrequencies = _fontSizeCalculator.CalculateWordFrequencies(words);
 
             var mostPopularWord = GetMostPopularWord(wordFrequencies);
 
@@ -83,7 +86,7 @@ namespace TagsCloudContainer.TagsCloud
 
             var rectangles = layouter.Rectangles.ToList();
 
-            return Visualizer.VisualizeRectangles(rectangles, uniqueWords, _imageSettings.ImageWidth, _imageSettings.ImageHeight,
+            return Visualizer.VisualizeRectangles(rectangles, uniqueWords, _imageSettings.Width, _imageSettings.Height,
                 fontSizes, _fontName, fontColor, highlightColor, percentageToHighlight, wordFrequencies: wordFrequencies);
         }
 
@@ -105,7 +108,7 @@ namespace TagsCloudContainer.TagsCloud
             {
                 if (uniqueWords.Add(word))
                 {
-                    var fontSize = CalculateWordFontSize(word, wordFrequencies);
+                    var fontSize = _fontSizeCalculator.CalculateWordFontSize(word, wordFrequencies);
                     fontSizes.Add(fontSize);
 
                     var font = new Font(fontName, fontSize);
@@ -116,44 +119,16 @@ namespace TagsCloudContainer.TagsCloud
             return fontSizes;
         }
 
-        /// <summary>
-        /// Расчитывает размер шрифта для заданного слова на основе его частоты встречаемости.
-        /// </summary>
-        /// <param name="word">Строка, представляющая слово, для которого необходимо определить размер шрифта.</param>
-        /// <param name="wordFrequencies">Словарь, содержащий частоту встречаемости каждого слова в тексте.</param>
-        /// <returns>Размер шрифта для заданного слова.</returns>      
-
-        private const int BaseFontSize = 30;
-        private const int FontSizeMultiplier = 2;
-        private const int DefaultFontSize = 10;
-        private int CalculateWordFontSize(string word, Dictionary<string, int> wordFrequencies)
+        public static Point CalculateCenter(int width, int height)
         {
-            if (wordFrequencies.TryGetValue(word, out var frequency))
-            {
-                return Math.Max(BaseFontSize, BaseFontSize + frequency * FontSizeMultiplier);
-            }
-            return DefaultFontSize;
-        }
-
-
-        private Dictionary<string, int> CalculateWordFrequencies(IEnumerable<string> words)
-        {
-            var wordFrequencies = new Dictionary<string, int>();
-
-            foreach (var word in words)
-            {
-                wordFrequencies.TryGetValue(word, out var frequency);
-                wordFrequencies[word] = frequency + 1;
-            }
-
-            return wordFrequencies;
-        }
+            return new Point(width / Half, height / Half);
+        }     
 
         private CircularCloudLayouter CreateLayouter(double angleStep = DefaultAngleStep, double radiusStep = DefaultRadiusStep)
         {
-            var center = new Point(_imageSettings.ImageWidth / 2, _imageSettings.ImageHeight / 2);
+            var center = CalculateCenter(_imageSettings.Width, _imageSettings.Height);
             var spiral = new Spiral(center, angleStep, radiusStep);
             return new CircularCloudLayouter(center, spiral);
-        }
+        }      
     }
 }

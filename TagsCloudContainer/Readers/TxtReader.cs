@@ -8,7 +8,7 @@ namespace TagsCloudContainer.Readers
         {
             try
             {
-                string[] lines = File.ReadAllLines(filePath);
+                var lines = File.ReadAllLines(filePath);
 
                 var words = lines.SelectMany(line => line.Split(' '));
 
@@ -18,7 +18,6 @@ namespace TagsCloudContainer.Readers
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error reading file: {ex.Message}");
                 return Enumerable.Empty<string>();
             }

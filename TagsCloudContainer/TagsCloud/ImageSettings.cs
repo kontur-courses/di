@@ -7,8 +7,8 @@ namespace TagsCloudContainer.TagsCloud
     {
         public Color BackgroundColor { get; } = Color.White;
         public Color FontColor { get; } = Color.Black;
-        public int ImageWidth { get; set; } = 1600;
-        public int ImageHeight { get; set; } = 1200;
+        public int Width { get; set; } = 1600;
+        public int Height { get; set; } = 1200;
 
         public Font GetFont()
         {
@@ -17,8 +17,8 @@ namespace TagsCloudContainer.TagsCloud
 
         public void UpdateImageSettings(int width, int height)
         {
-            ImageWidth = width;
-            ImageHeight = height;
+            Width = width;
+            Height = height;
         }
 
     }

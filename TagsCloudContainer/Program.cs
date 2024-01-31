@@ -10,7 +10,7 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<CommandLineOptions>(args)
-                    .WithParsed<CommandLineOptions>(o =>
+                    .WithParsed(o =>
                     {
                         using (var serviceProvider = Startup.ConfigureServices())
                         {
