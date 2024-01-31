@@ -4,7 +4,7 @@
 
     public LengthFilter(WordExtractionOptions options)
     {
-        this.length = options.MinWordLength;
+        length = options.MinWordLength;
     }
 
     public string[] Filter(string[] words)

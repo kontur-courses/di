@@ -6,5 +6,5 @@ public class RenderOptions
     public int MinFontSize { get; set; }
     public int MaxFontSize { get; set; }
     public ColorScheme ColorScheme { get; set; }
-    public string FontFamily { get; set; }
+    public Font FontBase { get; set; }
 }

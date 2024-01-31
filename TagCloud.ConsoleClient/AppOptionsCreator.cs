@@ -7,6 +7,7 @@ public static class AppOptionsCreator
         var tagCloudOptions = CreateTagCloudOptions(clOptions);
         var renderOptions = CreateRenderOptions(clOptions);
         var wordExtractorOptions = CreateWordExtractoroptions(clOptions);
+        var serviceOptions = CreateServiceOptions(clOptions);
 
         return new AppOptions()
         {
@@ -14,7 +15,8 @@ public static class AppOptionsCreator
             {
                 WordExtractionOptions = wordExtractorOptions,
                 RenderOptions = renderOptions,
-                TagCloudOptions = tagCloudOptions
+                TagCloudOptions = tagCloudOptions,
+                ServiceOptions = serviceOptions
             }
         };
     }
@@ -35,17 +37,21 @@ public static class AppOptionsCreator
         return new RenderOptions()
         {
             ColorScheme = ColorScheme.WarmScheme,
-            FontFamily = options.FontFamily ?? "Arial",
+            FontBase = CreateFontBase(options.FontFamily ?? "Arial"),
             ImageSize = ParseSize(options.ImageSize),
             MinFontSize = fontSizeSpan.min,
             MaxFontSize = fontSizeSpan.max,
         };
     }
     
+    private static Font CreateFontBase(string fontFamily)
+    {
+        return new Font(fontFamily, 32, FontStyle.Regular, GraphicsUnit.Pixel);
+    }
 
     private static WordExtractionOptions CreateWordExtractoroptions(Options clOptions)
     {
-        return new WordExtractionOptions() { MinWordLength = 4 };
+        return new WordExtractionOptions() { MinWordLength = 4, PartsSpeech = PartSpeech.Noun | PartSpeech.Verb };
     }
 
     private static Size ParseSize(string str)
@@ -69,9 +75,17 @@ public static class AppOptionsCreator
     private static (int min, int max) ParseFontSize(string str)
     {
         if (str is null)
-            return (24, 64);
+            return (24, 350);
 
         var sizes = str.Split(":").Select(int.Parse).ToArray();
         return (sizes[0], sizes[1]);
+    }
+
+    public static ServiceOptions CreateServiceOptions(Options clOptions)
+    {
+        return new ServiceOptions()
+        {
+            FilterType = FilterType.MorphologicalFilter
+        };
     }
 } 
