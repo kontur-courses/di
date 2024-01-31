@@ -1,17 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
-using ConsoleApp.Handlers;
-using ConsoleApp.Options;
 using MyStemWrapper;
 using TagsCloudContainer;
-using TagsCloudContainer.CloudGenerators;
-using TagsCloudContainer.CloudLayouters;
-using TagsCloudContainer.FileProviders;
 using TagsCloudContainer.Settings;
-using TagsCloudContainer.TextAnalysers;
-using TagsCloudContainer.TextAnalysers.WordsFilters;
-using TagsCloudContainer.TextMeasures;
-using TagsCloudContainer.Visualizers;
 
 namespace ConsoleApp;
 
@@ -30,15 +21,9 @@ public class Program
 
     public static void ConfigureService(ContainerBuilder builder)
     {
-        builder.RegisterType<CommandLineParser>().As<ICommandLineParser>();
-
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-            .Where(t => typeof(IOptions).IsAssignableFrom(t))
-            .AsImplementedInterfaces();
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-            .Where(t => typeof(IOptionsHandler).IsAssignableFrom(t))
-            .AsImplementedInterfaces();
-
+        RegisterAssemblyTypes(builder, typeof(Tag).GetTypeInfo().Assembly);
+        RegisterAssemblyTypes(builder, typeof(CommandLineParser).GetTypeInfo().Assembly);
+        
         var location = Assembly.GetExecutingAssembly().Location;
         var path = Path.GetDirectoryName(location);
         var myStem = new MyStem
@@ -51,20 +36,11 @@ public class Program
         builder.RegisterType<AppSettings>().As<IAppSettings>().SingleInstance();
         builder.RegisterType<AnalyseSettings>().As<IAnalyseSettings>().SingleInstance();
         builder.RegisterType<ImageSettings>().As<IImageSettings>().SingleInstance();
+    }
 
-        builder.RegisterType<TextPreprocessor>().As<ITextPreprocessor>();
-
-        builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
-        builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-        builder.RegisterType<WordsFilter>().As<IWordsFilter>();
-        builder.RegisterType<MyStemParser>().As<IMyStemParser>();
-        builder.RegisterType<FrequencyCalculator>().As<IFrequencyCalculator>();
-        
-        builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
-        builder.RegisterType<TagTextMeasurer>().As<ITagTextMeasurer>();
-        builder.RegisterType<ImageProvider>().As<IImageProvider>();
-        builder.RegisterType<FileReader>().As<IFileReader>();
-        builder.RegisterType<TagsCloudContainer.TagsCloudContainer>().As<ITagsCloudContainer>();
-        builder.RegisterType<CloudLayouterProvider>().As<ICloudLayouterProvider>();
+    private static void RegisterAssemblyTypes(ContainerBuilder builder, Assembly assembly)
+    {
+        builder.RegisterAssemblyTypes(assembly)
+            .AsImplementedInterfaces();
     }
 }
