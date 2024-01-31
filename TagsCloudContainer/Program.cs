@@ -31,23 +31,23 @@ namespace TagsCloudContainer
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainForm>().As<Form>().InstancePerLifetimeScope();
+            builder.RegisterType<MainForm>().As<Form>().SingleInstance();
+            builder.RegisterType<FileParser>().As<IFileParser>().SingleInstance();
+            builder.RegisterType<WordProcessor>().As<IWordProcessor>().SingleInstance();
+            builder.RegisterType<GUITagCloudClient>().As<ITagCloudClient>().SingleInstance();
+            builder.RegisterType<TagCloudDrawer>().As<IDrawer>().SingleInstance();
             builder.RegisterType<ImageSettings>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<FileSettings>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<AlgorithmSettings>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PictureBox>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<FileParser>().As<IFileParser>().InstancePerLifetimeScope();
-            builder.RegisterType<WordProcessor>().As<IWordProcessor>().InstancePerLifetimeScope();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().InstancePerLifetimeScope();
             builder.RegisterType<RectanglePlacer>().As<IRectanglePlacer>().InstancePerLifetimeScope();
-            builder.RegisterType<TagCloudDrawer>().As<IDrawer>().InstancePerLifetimeScope();
             builder.RegisterType<SelectBoringWordsFileAction>().As<IUiAction>().InstancePerLifetimeScope();
             builder.RegisterType<SelectSourceFileAction>().As<IUiAction>().InstancePerLifetimeScope();
             builder.RegisterType<SaveImageAction>().As<IUiAction>().InstancePerLifetimeScope();
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>().InstancePerLifetimeScope();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>().InstancePerLifetimeScope();
             builder.RegisterType<DrawTagCloudAction>().As<IUiAction>().InstancePerLifetimeScope();
-            builder.RegisterType<GUITagCloudClient>().As<ITagCloudClient>().InstancePerLifetimeScope();
 
             return builder;
         }

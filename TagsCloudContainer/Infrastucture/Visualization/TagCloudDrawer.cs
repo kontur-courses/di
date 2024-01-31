@@ -5,16 +5,7 @@ namespace TagsCloudContainer.Infrastucture.Visualization
 {
     public class TagCloudDrawer : IDrawer
     {
-        private PictureBox pictureBox;
-        private ImageSettings imageSettings;
-
-        public TagCloudDrawer(PictureBox pictureBox, ImageSettings imageSettings)
-        {
-            this.pictureBox = pictureBox;
-            this.imageSettings = imageSettings;
-        }
-
-        public void Draw(List<TextRectangle> rectangles)
+        public void Draw(List<TextRectangle> rectangles, PictureBox pictureBox, ImageSettings imageSettings)
         {
             using (var graphics = pictureBox.StartDrawing())
             {

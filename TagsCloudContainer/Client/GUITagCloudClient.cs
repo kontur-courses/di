@@ -27,7 +27,7 @@ namespace TagsCloudContainer.Client
         {
             var wordsCount = wordProcessor.CalculateFrequencyInterestingWords(sourceFilePath, boringFilePath);
             var rectangles = cloudLayouter.GetRectangles(wordsCount);
-            drawer.Draw(rectangles);
+            drawer.Draw(rectangles, pictureBox, imageSettings);
         }
 
         public void SaveImage(string filePath)
