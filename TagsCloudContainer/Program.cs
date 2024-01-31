@@ -32,7 +32,9 @@ namespace TagsCloudContainer
             layouter.Initialize(appSettings.DrawingSettings, analyzer.GetAnalyzedText());
 
             Visualizer.Draw(appSettings.DrawingSettings.Size,
-                            layouter.GetTextImages()).Save(appSettings.OutImagePath);
+                            layouter.GetTextImages(),
+                            appSettings.DrawingSettings.BgColor)
+                .Save(appSettings.OutImagePath);
             Console.WriteLine("Resulting image saved to " + appSettings.OutImagePath);
         }
     }

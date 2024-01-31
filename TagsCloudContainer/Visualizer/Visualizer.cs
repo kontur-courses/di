@@ -5,12 +5,12 @@ namespace TagsCloudContainer.Drawer
     public static class Visualizer
     {
 
-        public static Image Draw(Size size, IEnumerable<TextImage> textImages)
+        public static Image Draw(Size size, IEnumerable<TextImage> textImages, Color? bgColor = null)
         {
             var image = new Bitmap(size.Width, size.Height);
             var gr = Graphics.FromImage(image);
 
-            gr.Clear(Color.Black);
+            gr.Clear(bgColor ?? Color.Black);
 
             foreach (var textImage in textImages)
             {

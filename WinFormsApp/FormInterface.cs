@@ -101,9 +101,11 @@ namespace WinFormsApp
             gr = CreateGraphics();
             if (text != null)
             {
-                image = Visualizer.Draw(appSettings.DrawingSettings.Size, layouter.GetTextImages());
-                gr.DrawImage(image, new Point(0, 0));
+                image = Visualizer.Draw(appSettings.DrawingSettings.Size,
+                                        layouter.GetTextImages(),
+                                        appSettings.DrawingSettings.BgColor);
 
+                gr.DrawImage(image, new Point(0, 0));
                 SettingsManager.SettingsManager.SaveSettings(appSettings);
             }
         }

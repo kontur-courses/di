@@ -32,6 +32,9 @@ namespace TagsCloudContainer.CLI
         [Option("layout", Required = false, HelpText = "Set cloud layouter - Spiral, Random or Normal.")]
         public string Layout { get; set; }
 
+        [Option("background", Required = false, HelpText = "Set background color.")]
+        public string BgColor { get; set; }
+
         public static AppSettings ParseArgs(CommandLineOptions options)
         {
             var appSettings = new AppSettings();
@@ -48,6 +51,7 @@ namespace TagsCloudContainer.CLI
             appSettings.DrawingSettings.PointsProvider = GetPointsProvider(
                 options.Layout,
                 appSettings.DrawingSettings.Size);
+            appSettings.DrawingSettings.BgColor = GetBGColor(options.BgColor);
 
             return appSettings;
         }
@@ -91,7 +95,7 @@ namespace TagsCloudContainer.CLI
                     pointProvider = new NormalPointsProvider();
                     break;
 
-                case "Spiral":
+                case "spiral":
                     pointProvider = new NormalPointsProvider();
                     break;
 
@@ -133,6 +137,11 @@ namespace TagsCloudContainer.CLI
             }
 
             return new List<Color>() { Color.White };
+        }
+
+        private static Color GetBGColor(string colorName)
+        {
+            return Color.FromName(colorName);
         }
     }
 }
