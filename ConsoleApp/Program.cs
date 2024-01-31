@@ -1,66 +1,67 @@
 ﻿using System.Reflection;
 using Autofac;
-using CommandLine;
-using ConsoleApp;
-using ConsoleApp.CommandLineParsers.Handlers;
-using ConsoleApp.CommandLineParsers.Options;
+using ConsoleApp.Handlers;
+using ConsoleApp.Options;
 using MyStemWrapper;
 using TagsCloudContainer;
+using TagsCloudContainer.CloudGenerators;
 using TagsCloudContainer.CloudLayouters;
+using TagsCloudContainer.FileProviders;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.TextAnalysers;
+using TagsCloudContainer.TextMeasures;
 using TagsCloudContainer.Visualizers;
 
-internal class Program
+namespace ConsoleApp;
+
+public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         var builder = new ContainerBuilder();
         ConfigureService(builder);
         var container = builder.Build();
 
         using var scope = container.BeginLifetimeScope();
-        var commandLineReader = scope.Resolve<CommandLineReader>();
-        while (true)
-        {
-            commandLineReader.Read();
-        }
+        var commandLineReader = scope.Resolve<ICommandLineParser>();
+        commandLineReader.ParseFromConsole();
     }
 
-    private static void ConfigureService(ContainerBuilder builder)
+    public static void ConfigureService(ContainerBuilder builder)
     {
+        builder.RegisterType<CommandLineParser>().As<ICommandLineParser>();
+
         builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
             .Where(t => typeof(IOptions).IsAssignableFrom(t))
             .AsImplementedInterfaces();
-
-        builder.RegisterType<PreprocessTextOptionsHandler>().As<IOptionsHandler<PreprocessTextOptions>, IOptionsHandler>();
-        builder.RegisterType<SaveImageOptionsHandler>().As<IOptionsHandler<SaveImageOptions>, IOptionsHandler>();
-        builder.RegisterType<ExitOptionsHandler>().As<IOptionsHandler<ExitOptions>, IOptionsHandler>();
-        builder.RegisterType<CommandLineReader>().AsSelf();
+        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            .Where(t => typeof(IOptionsHandler).IsAssignableFrom(t))
+            .AsImplementedInterfaces();
 
         var location = Assembly.GetExecutingAssembly().Location;
         var path = Path.GetDirectoryName(location);
         var myStem = new MyStem
         {
-            PathToMyStem =
-                $"{path}\\mystem.exe",
-            Parameters = "-nli"
+            PathToMyStem = $"{path}\\mystem.exe",
+            Parameters = "-nli",
         };
         builder.RegisterInstance(myStem).AsSelf().SingleInstance();
 
-        builder.RegisterType<CloudData>().AsSelf().SingleInstance();
-        builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
-        builder.RegisterType<AnalyseSettings>().AsSelf().SingleInstance();
+        builder.RegisterType<AppSettings>().As<IAppSettings>().SingleInstance();
+        builder.RegisterType<AnalyseSettings>().As<IAnalyseSettings>().SingleInstance();
+        builder.RegisterType<ImageSettings>().As<IImageSettings>().SingleInstance();
 
         builder.RegisterType<TextPreprocessor>().As<ITextPreprocessor>();
         builder.RegisterType<FileReader>().AsSelf();
 
-
         builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
         builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
 
-
         builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
-        builder.RegisterType<FontSizeProvider>().AsSelf();
+        builder.RegisterType<TagTextMeasurer>().As<ITagTextMeasurer>();
+        builder.RegisterType<ImageProvider>().As<IImageProvider>();
+        builder.RegisterType<FileReader>().As<IFileReader>();
+        builder.RegisterType<TagsCloudContainer.TagsCloudContainer>().As<ITagsCloudContainer>();
+        builder.RegisterType<CloudLayouterProvider>().As<ICloudLayouterProvider>();
     }
 }

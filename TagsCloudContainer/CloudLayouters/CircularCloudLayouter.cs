@@ -14,19 +14,18 @@ public class CircularCloudLayouter : ICloudLayouter
     private const double FullCircle = Math.PI * 2;
     private const int SpiralStepThreshold = 10;
 
-    public CircularCloudLayouter(ImageSettings imageSettings)
+    public CircularCloudLayouter(IImageSettings imageSettings)
     {
-        this.center = new Point(imageSettings.ImageSize.Width / 2, imageSettings.ImageSize.Height / 2);
+        center = new Point(imageSettings.ImageSize.Width / 2, imageSettings.ImageSize.Height / 2);
         rectangles = new List<Rectangle>();
         spiralStep = 1;
     }
-
-    public IReadOnlyList<Rectangle> AddedRectangles => rectangles;
 
     public Rectangle PutNextRectangle(Size rectangleSize)
     {
         if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
             throw new ArgumentException($"{nameof(rectangleSize)} should be with positive width and height");
+        
         var location = GetPosition(rectangleSize);
         var rectangle = new Rectangle(location, rectangleSize);
         rectangles.Add(rectangle);
@@ -57,6 +56,7 @@ public class CircularCloudLayouter : ICloudLayouter
             {
                 rectangles.Add(candidateRectangle);
                 angle = currentAngle;
+                
                 return candidateRectangle.Location;
             }
 

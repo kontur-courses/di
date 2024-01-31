@@ -5,30 +5,34 @@ namespace TagsCloudContainer.TextAnalysers;
 
 public class TextPreprocessor: ITextPreprocessor
 {
-    private readonly CloudData cloudData;
     private readonly MyStem myStem;
-    private readonly AnalyseSettings settings;
+    private readonly IAnalyseSettings settings;
 
-    public TextPreprocessor(CloudData cloudData, MyStem myStem, AnalyseSettings settings)
+    public TextPreprocessor(MyStem myStem, IAnalyseSettings settings)
     {
-        this.cloudData = cloudData;
         this.myStem = myStem;
         this.settings = settings;
     }
 
-    public CloudData Preprocess(string text)
+    public AnalyzeData Preprocess(string text)
     {
-        var s = myStem.Analysis(text);
-        var wordInfos = s.Split('\n');
+        var analyzed = myStem.Analysis(text);
+        var wordInfos = analyzed.Split('\n');
         var words = wordInfos
-            .Where(inf => !CheckWordIsBoring(inf))
-            .Select(inf => inf.Split('=').First().ToLower());
-        UpdateCloud(words);
+            .Where(info => !CheckWordIsBoring(info) && WordData.CanMap(info))
+            .Select(info => info.Split('=').First().ToLower());
         
-        return cloudData;
+        var wordsFrequency = CalculateFrequency(words);
+        var wordData = wordsFrequency
+            .Select(pair => new WordData(pair.Key, pair.Value));
+        
+        return new AnalyzeData
+        {
+            WordData = wordData.ToArray(),
+        };
     }
     
-    private void UpdateCloud(IEnumerable<string> words)
+    private Dictionary<string,int> CalculateFrequency(IEnumerable<string> words)
     {
         var frequency = new Dictionary<string, int>();
         foreach (var word in words)
@@ -37,7 +41,7 @@ public class TextPreprocessor: ITextPreprocessor
             frequency[word] += 1;
         }
 
-        cloudData.WordsFrequency = frequency;
+        return frequency;
     }
 
     private bool CheckWordIsBoring(string wordInfo)
@@ -53,8 +57,8 @@ public class TextPreprocessor: ITextPreprocessor
         if (word.Contains("??"))
             return true;
 
-        var speechType = data[1];
+        var speechType = data[1].Split(',').First();
 
-        return !settings.ValidParts.Contains(speechType);
+        return !settings.ValidSpeechParts.Contains(speechType);
     }
 }

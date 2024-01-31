@@ -1,18 +1,17 @@
-using System.Drawing;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp;
 
 namespace TagsCloudContainer.Settings;
 
-public class ImageSettings
+public class ImageSettings: IImageSettings
 {
-    public Font Font { get; set; } = new(FontFamily.GenericSerif, 20);
-
-    public string File { get; set; } = "output";
-    
     public Color PrimaryColor { get; set; } = Color.Yellow;
-    
+
     public Color SecondaryColor { get; set; } = Color.Blue;
 
     public Color BackgroundColor { get; set; } = Color.Black;
 
-    public Size ImageSize { get; set; } = new(800, 800);
+    public Size ImageSize { get; set; } = new(1000, 1000);
+
+    public TextOptions TextOptions { get; set; } = new(SystemFonts.CreateFont("Segoe UI", 30, FontStyle.Regular));
 }
