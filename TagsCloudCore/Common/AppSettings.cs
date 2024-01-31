@@ -5,6 +5,4 @@ namespace TagsCloudCore.Common;
 public static class AppSettings
 {
     public static string PathToBoringWordsFilter => ConfigurationManager.AppSettings["BoringWordsFilterPath"]!;
-
-    public static string DefaultColorerName => ConfigurationManager.AppSettings["DefaultColorerName"]!;
 }
