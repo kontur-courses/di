@@ -2,5 +2,5 @@ namespace TagsCloudContainer.TextAnalysers;
 
 public interface ITextPreprocessor
 {
-    public AnalyzeData Preprocess(string text);
+    public WordDetails[] Preprocess(string text);
 }

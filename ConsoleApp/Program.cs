@@ -9,6 +9,7 @@ using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.FileProviders;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.TextAnalysers;
+using TagsCloudContainer.TextAnalysers.WordsFilters;
 using TagsCloudContainer.TextMeasures;
 using TagsCloudContainer.Visualizers;
 
@@ -52,11 +53,13 @@ public class Program
         builder.RegisterType<ImageSettings>().As<IImageSettings>().SingleInstance();
 
         builder.RegisterType<TextPreprocessor>().As<ITextPreprocessor>();
-        builder.RegisterType<FileReader>().AsSelf();
 
         builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
         builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-
+        builder.RegisterType<WordsFilter>().As<IWordsFilter>();
+        builder.RegisterType<MyStemParser>().As<IMyStemParser>();
+        builder.RegisterType<FrequencyCalculator>().As<IFrequencyCalculator>();
+        
         builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
         builder.RegisterType<TagTextMeasurer>().As<ITagTextMeasurer>();
         builder.RegisterType<ImageProvider>().As<IImageProvider>();

@@ -5,15 +5,16 @@ using TagsCloudContainer.Visualizers;
 
 namespace TagsCloudContainer;
 
-public class TagsCloudContainer: ITagsCloudContainer
+public class TagsCloudContainer : ITagsCloudContainer
 {
-    private readonly FileReader fileReader;
+    private readonly IFileReader fileReader;
     private readonly ICloudVisualizer visualizer;
     private readonly ITagsCloudGenerator cloudGenerator;
     private readonly ITextPreprocessor textPreprocessor;
     private readonly IImageProvider imageProvider;
-    
-    public TagsCloudContainer(ITagsCloudGenerator cloudGenerator, ICloudVisualizer visualizer, ITextPreprocessor textPreprocessor, FileReader fileReader, IImageProvider imageProvider)
+
+    public TagsCloudContainer(ITagsCloudGenerator cloudGenerator, ICloudVisualizer visualizer,
+        ITextPreprocessor textPreprocessor, IFileReader fileReader, IImageProvider imageProvider)
     {
         this.cloudGenerator = cloudGenerator;
         this.visualizer = visualizer;

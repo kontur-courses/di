@@ -6,7 +6,7 @@ namespace TagsCloudContainer.CloudGenerators;
 public class TagsCloudGenerator: ITagsCloudGenerator
 {
     private readonly ITagTextMeasurer tagTextProvider;
-    private ICloudLayouterProvider cloudLayouterProvider;
+    private readonly ICloudLayouterProvider cloudLayouterProvider;
 
     public TagsCloudGenerator(ICloudLayouterProvider cloudLayouterProvider, ITagTextMeasurer tagTextProvider)
     {
@@ -14,10 +14,10 @@ public class TagsCloudGenerator: ITagsCloudGenerator
         this.tagTextProvider = tagTextProvider;
     }
 
-    public ITagCloud Generate(AnalyzeData analyzeData)
+    public ITagCloud Generate(IEnumerable<WordDetails> wordsDetails)
     {
         var cloudLayouter = cloudLayouterProvider.Get();    
-        var sorted = SortWords(analyzeData);
+        var sorted = SortWords(wordsDetails);
 
         var tags = new List<Tag>();
         foreach (var word in sorted)
@@ -33,9 +33,9 @@ public class TagsCloudGenerator: ITagsCloudGenerator
         };
     }
 
-    private IEnumerable<string> SortWords(AnalyzeData analyzeData)
+    private IEnumerable<string> SortWords(IEnumerable<WordDetails> wordsDetails)
     {
-        return analyzeData.WordData
+        return wordsDetails
             .OrderByDescending(x => x.Frequency)
             .Select(x => x.Word);
     }

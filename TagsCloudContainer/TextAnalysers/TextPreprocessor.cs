@@ -1,64 +1,35 @@
 using MyStemWrapper;
-using TagsCloudContainer.Settings;
+using TagsCloudContainer.TextAnalysers.WordsFilters;
 
 namespace TagsCloudContainer.TextAnalysers;
 
 public class TextPreprocessor: ITextPreprocessor
 {
     private readonly MyStem myStem;
-    private readonly IAnalyseSettings settings;
+    private readonly IMyStemParser myStemParser;
+    private readonly IWordsFilter wordsFilter;
+    private readonly IFrequencyCalculator frequencyCalculator;
 
-    public TextPreprocessor(MyStem myStem, IAnalyseSettings settings)
+    public TextPreprocessor(MyStem myStem, IMyStemParser myStemParser, IWordsFilter wordsFilter, IFrequencyCalculator frequencyCalculator)
     {
         this.myStem = myStem;
-        this.settings = settings;
+        this.myStemParser = myStemParser;
+        this.wordsFilter = wordsFilter;
+        this.frequencyCalculator = frequencyCalculator;
     }
 
-    public AnalyzeData Preprocess(string text)
+    public WordDetails[] Preprocess(string text)
     {
         var analyzed = myStem.Analysis(text);
         var wordInfos = analyzed.Split('\n');
-        var words = wordInfos
-            .Where(info => !CheckWordIsBoring(info) && WordData.CanMap(info))
-            .Select(info => info.Split('=').First().ToLower());
-        
-        var wordsFrequency = CalculateFrequency(words);
-        var wordData = wordsFrequency
-            .Select(pair => new WordData(pair.Key, pair.Value));
-        
-        return new AnalyzeData
+        var wordsDetails = new List<WordDetails>(wordInfos.Length);
+        foreach (var wordInfo in wordInfos)
         {
-            WordData = wordData.ToArray(),
-        };
-    }
-    
-    private Dictionary<string,int> CalculateFrequency(IEnumerable<string> words)
-    {
-        var frequency = new Dictionary<string, int>();
-        foreach (var word in words)
-        {
-            frequency.TryAdd(word, 0);
-            frequency[word] += 1;
+            if (myStemParser.CanParse(wordInfo))
+                wordsDetails.Add(myStemParser.Parse(wordInfo));
         }
 
-        return frequency;
-    }
-
-    private bool CheckWordIsBoring(string wordInfo)
-    {
-        if (string.IsNullOrWhiteSpace(wordInfo))
-            return true;
-        
-        var data = wordInfo.Split('=');
-        if (data.Length < 2)
-            return true;
-        
-        var word = data[0];
-        if (word.Contains("??"))
-            return true;
-
-        var speechType = data[1].Split(',').First();
-
-        return !settings.ValidSpeechParts.Contains(speechType);
+        return wordsFilter.Filter(frequencyCalculator.CalculateFrequency(wordsDetails))
+            .ToArray();
     }
 }

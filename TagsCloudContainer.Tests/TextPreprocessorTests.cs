@@ -1,7 +1,6 @@
 using Autofac;
 using ConsoleApp;
 using FluentAssertions;
-using MyStemWrapper;
 using TagsCloudContainer.TextAnalysers;
 
 namespace TagsCloudContainer.Tests;
@@ -21,8 +20,6 @@ public class TextPreprocessorTests
         
         var scope = builder.Build();
         sut = scope.Resolve<TextPreprocessor>();
-        var myStem = scope.Resolve<MyStem>();
-        // myStem.PathToMyStem = "";
     }
     
     [Test]
@@ -30,10 +27,10 @@ public class TextPreprocessorTests
     {
         var text = "собака  . !   ";
         
-        var analyzeData = sut.Preprocess(text);
+        var wordsDetails = sut.Preprocess(text);
 
-        analyzeData.WordData.Should().HaveCount(1);
-        analyzeData.WordData.Should().BeEquivalentTo(new[] {new WordData("собака", 1)});
+        wordsDetails.Should().HaveCount(1);
+        wordsDetails.Should().BeEquivalentTo(new[] {new WordDetails("собака", speechPart: "S")});
     }
     
     [Test]
@@ -42,9 +39,9 @@ public class TextPreprocessorTests
         var text = "Собака Любить Кость";
         var expected = text.Split().Select(word => word.ToLower());
         
-        var analyzeData = sut.Preprocess(text);
+        var wordsDetails = sut.Preprocess(text);
 
-        analyzeData.WordData.Select(word => word.Word).Should().BeEquivalentTo(expected);
+        wordsDetails.Select(word => word.Word).Should().BeEquivalentTo(expected);
     }
     
     [Test]
@@ -53,9 +50,9 @@ public class TextPreprocessorTests
         var text = "собаки любят красивых собак";
         var expected = new[] { "собака", "любить", "красивый" };
 
-        var analyzeData = sut.Preprocess(text);
+        var wordsDetails = sut.Preprocess(text);
 
-        analyzeData.WordData.Select(word => word.Word).Should().BeEquivalentTo(expected);
+        wordsDetails.Select(word => word.Word).Should().BeEquivalentTo(expected);
     }
     
     [Test]
@@ -63,8 +60,8 @@ public class TextPreprocessorTests
     {
         var text = "я не ваш только с от к мы нашему кому";
         
-        var analyzeData = sut.Preprocess(text);
+        var wordsDetails = sut.Preprocess(text);
 
-        analyzeData.WordData.Should().BeEmpty();
+        wordsDetails.Should().BeEmpty();
     }
 }

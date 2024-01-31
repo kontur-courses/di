@@ -30,17 +30,14 @@ public class TagsCloudGeneratorTests
     {
         var popularWord = "bbb";
         var center = new Point(imageSettings.ImageSize.Width / 2, imageSettings.ImageSize.Height / 2);
-        var analyzeData = new AnalyzeData
+        var wordsDetails = new[]
         {
-            WordData = new[]
-            {
-                new WordData("aaa", 4),
-                new WordData(popularWord, 10),
-                new WordData("ccc", 4),
-            }
+            new WordDetails("aaa", 4),
+            new WordDetails(popularWord, 10),
+            new WordDetails("ccc", 4),
         };
 
-        var cloud = sut.Generate(analyzeData);
+        var cloud = sut.Generate(wordsDetails);
         
         var tag = cloud.Tags.First(tag => tag.Word == popularWord);
         tag.Rectangle.Contains(center).Should().BeTrue();
@@ -50,12 +47,11 @@ public class TagsCloudGeneratorTests
     public void Should_ContainsAllWords()
     {
         var words = new[] { "a", "b", "c", "d", "e", "f", "g" };
-        var analyzeData = new AnalyzeData
-        {
-            WordData = words.Select(word => new WordData(word, 1)).ToArray()
-        };
+        var wordsDetails = words
+            .Select(word => new WordDetails(word))
+            .ToArray();
 
-        var cloud = sut.Generate(analyzeData);
+        var cloud = sut.Generate(wordsDetails);
         
         cloud.Tags.Select(tag => tag.Word).Should().BeEquivalentTo(words);
     }

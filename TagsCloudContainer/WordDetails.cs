@@ -1,15 +1,18 @@
 namespace TagsCloudContainer;
 
-public class WordData
+public class WordDetails
 {
     public string Word { get; }
     
-    public int Frequency { get; }
+    public int Frequency { get; set; }
+    
+    public string? SpeechPart { get; }
 
-    public WordData(string word, int frequency)
+    public WordDetails(string word, int frequency = 1, string? speechPart = null)
     {
         Word = word;
         Frequency = frequency;
+        SpeechPart = speechPart;
     }
     
     public static bool CanMap(string wordInfo)
