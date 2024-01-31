@@ -97,9 +97,11 @@ public class TagCloudLayouter : ITagCloudLayouter
         {
             var radians = angle * Math.PI / 180;
             var tangent = Math.Tan(radians);
+            // координаты на первой четверти единичной окружности
             var x = 1f;
             var y = (float)(tangent * x);
 
+            // добавление координат соответствующих точек на всех четвертях окружности
             for (var j = 0; j < multipliers.Length - 1; j++)
             {
                 var vector = new Vector2(x * multipliers[j], y * multipliers[j + 1]);

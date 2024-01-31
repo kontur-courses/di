@@ -75,7 +75,7 @@ public static class AppOptionsCreator
     private static (int min, int max) ParseFontSize(string str)
     {
         if (str is null)
-            return (24, 350);
+            return (24, 64);
 
         var sizes = str.Split(":").Select(int.Parse).ToArray();
         return (sizes[0], sizes[1]);
