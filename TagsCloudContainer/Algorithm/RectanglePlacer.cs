@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TagsCloudContainer.Infrastucture;
 using TagsCloudContainer.Infrastucture.Settings;
 
@@ -5,21 +6,16 @@ namespace TagsCloudContainer.Algorithm
 {
     public sealed class RectanglePlacer : IRectanglePlacer
     {
-        private Point center;
-        private double radius;
-        private double angle;
-        private double deltaRadius;
-        private double deltaAngle;
+        private readonly AlgorithmSettings algorithmSettings;
+        private readonly ImageSettings imageSettings;
 
-        public RectanglePlacer(AlgorithmSettings algorithmSettings, Point center)
+        public RectanglePlacer(AlgorithmSettings algorithmSettings, ImageSettings imageSettings)
         {
-            if (center.X < 0 || center.Y < 0)
+            if (imageSettings.Width / 2 < 0 || imageSettings.Height / 2 < 0)
                 throw new ArgumentException("the coordinates of the center must be positive numbers");
-            this.center = center;
-            this.deltaRadius = algorithmSettings.DeltaRadius;
-            this.deltaAngle = algorithmSettings.DeltaAngle;
-            this.radius = algorithmSettings.Radius;
-            this.angle = algorithmSettings.Angle;
+
+            this.algorithmSettings = algorithmSettings;
+            this.imageSettings = imageSettings;
         }
 
         public RectangleF GetPossibleNextRectangle(List<TextRectangle> cloudRectangles, SizeF rectangleSize)
@@ -32,6 +28,10 @@ namespace TagsCloudContainer.Algorithm
 
         private RectangleF FindPossibleNextRectangle(List<TextRectangle> cloudRectangles, SizeF rectangleSize)
         {
+            var radius = algorithmSettings.Radius;
+            var angle = algorithmSettings.Angle;
+            var center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+
             while (true)
             {
                 var point = new Point(
@@ -45,8 +45,8 @@ namespace TagsCloudContainer.Algorithm
                     return possibleRectangle;
                 }
 
-                angle += deltaAngle;
-                radius += deltaRadius;
+                angle += algorithmSettings.DeltaAngle;
+                radius += algorithmSettings.DeltaRadius;
             }
         }
 

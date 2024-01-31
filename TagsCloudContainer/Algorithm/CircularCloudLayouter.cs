@@ -5,21 +5,18 @@ namespace TagsCloudContainer.Algorithm
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly AlgorithmSettings algorithmSettings;
         private readonly ImageSettings imageSettings;
+        private readonly IRectanglePlacer rectanglePlacer;
 
 
-        public CircularCloudLayouter(AlgorithmSettings algorithmSettings, ImageSettings imageSettings)
+        public CircularCloudLayouter(ImageSettings imageSettings, IRectanglePlacer rectanglePlacer)
         {
-            this.algorithmSettings = algorithmSettings;
             this.imageSettings = imageSettings;
+            this.rectanglePlacer = rectanglePlacer;
         }
 
         public List<TextRectangle> GetRectangles(Dictionary<string, int> wordFrequencies)
         {
-            var rectanglePlacer = new RectanglePlacer(
-                algorithmSettings,
-                new Point(imageSettings.Width / 2, imageSettings.Height / 2));
             var rectangles = new List<TextRectangle>();
             var bitmap = new Bitmap(imageSettings.Width, imageSettings.Height);
             var graphics = Graphics.FromImage(bitmap);

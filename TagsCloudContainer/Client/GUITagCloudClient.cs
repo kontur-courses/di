@@ -1,10 +1,9 @@
 using TagsCloudContainer.Algorithm;
-using TagsCloudContainer.Client;
 using TagsCloudContainer.Infrastucture.Extensions;
 using TagsCloudContainer.Infrastucture.Settings;
 using TagsCloudContainer.Infrastucture.Visualization;
 
-namespace TagsCloudContainer.Actions
+namespace TagsCloudContainer.Client
 {
     public class GUITagCloudClient : ITagCloudClient
     {
