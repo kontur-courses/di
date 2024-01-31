@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using TagsCloudPainter.FileReader;
 using TagsCloudPainter.Parser;
 using TagsCloudPainter.Settings;
 
@@ -11,26 +10,23 @@ public class BoringTextParserTests
     [SetUp]
     public void Setup()
     {
-        textFileReader = new TextFileReader();
-        var boringText = textFileReader
-            .ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\boringWords.txt");
+        boringText = $"что{Environment.NewLine}и{Environment.NewLine}в";
         textSettings = new TextSettings { BoringText = boringText };
         boringTextParser = new BoringTextParser(textSettings);
     }
 
     private TextSettings textSettings;
     private BoringTextParser boringTextParser;
-    private TextFileReader textFileReader;
+    private string boringText;
 
     [Test]
     public void ParseText_ShouldReturnWordsListWithoutBoringWords()
     {
         var boringWords = boringTextParser
             .GetBoringWords(
-                textFileReader.ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\boringWords.txt"))
+                boringText)
             .ToHashSet();
-        var parsedText = boringTextParser
-            .ParseText(textFileReader.ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\testFile.txt"));
+        var parsedText = boringTextParser.ParseText("Скучные Слова что в и");
         var isBoringWordsInParsedText = parsedText.Where(boringWords.Contains).Any();
         isBoringWordsInParsedText.Should().BeFalse();
     }
@@ -38,25 +34,22 @@ public class BoringTextParserTests
     [Test]
     public void ParseText_ShouldReturnNotEmptyWordsList_WhenPassedNotEmptyText()
     {
-        var parsedText = boringTextParser
-            .ParseText(textFileReader.ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\testFile.txt"));
+        var parsedText = boringTextParser.ParseText("Скучные Слова что в и");
         parsedText.Count.Should().BeGreaterThan(0);
     }
 
     [Test]
     public void ParseText_ShouldReturnWordsInLowerCase()
     {
-        var parsedText = boringTextParser
-            .ParseText(textFileReader.ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\testFile.txt"));
-        var isAnyWordNotLowered = parsedText.Where(word => word.ToLower() != word).Any();
+        var parsedText = boringTextParser.ParseText("Скучные Слова что в и");
+        var isAnyWordNotLowered = parsedText.Any(word => !word.Equals(word, StringComparison.CurrentCultureIgnoreCase));
         isAnyWordNotLowered.Should().BeFalse();
     }
 
     [Test]
     public void ParseText_ShouldReturnWordsListWithTheSameAmountAsInText()
     {
-        var parsedText = boringTextParser
-            .ParseText(textFileReader.ReadFile(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\testFile.txt"));
-        parsedText.Count.Should().Be(20);
+        var parsedText = boringTextParser.ParseText("Скучные Слова что в и");
+        parsedText.Count.Should().Be(2);
     }
 }

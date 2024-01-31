@@ -5,6 +5,7 @@ using TagsCloudPainter.FileReader;
 using TagsCloudPainter.FormPointer;
 using TagsCloudPainter.Parser;
 using TagsCloudPainter.Settings;
+using TagsCloudPainter.Sizer;
 using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication.Actions;
 using TagsCloudPainterApplication.Infrastructure;
@@ -66,5 +67,6 @@ public class TagsCloudPainterLibModule : Module
         builder.RegisterType<TagsBuilder>().As<ITagsBuilder>().SingleInstance();
         builder.RegisterType<BoringTextParser>().As<ITextParser>().SingleInstance();
         builder.RegisterType<TextFileReader>().As<IFileReader>().SingleInstance();
+        builder.RegisterType<StringSizer>().As<IStringSizer>().SingleInstance();
     }
 }

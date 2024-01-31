@@ -55,6 +55,9 @@ public class DrawTagCloudAction : IUiAction
     public void Perform()
     {
         var wordsFilePath = GetFilePath();
+        if (string.IsNullOrEmpty(wordsFilePath))
+            return;
+
         SettingsForm.For(tagsCloudSettings).ShowDialog();
         tagsCloudSettings.CloudSettings.BackgroundColor = palette.BackgroundColor;
         tagsCloudSettings.TagSettings.TagColor = palette.PrimaryColor;
@@ -91,8 +94,7 @@ public class DrawTagCloudAction : IUiAction
 
     private void DrawCloud(TagsCloud cloud)
     {
-        var bitmap = cloudDrawer.DrawCloud(cloud, imageSettings.Width, imageSettings.Height);
-
+        using var bitmap = cloudDrawer.DrawCloud(cloud, imageSettings.Width, imageSettings.Height);
         using (var graphics = imageHolder.StartDrawing())
         {
             graphics.DrawImage(bitmap, new Point(0, 0));

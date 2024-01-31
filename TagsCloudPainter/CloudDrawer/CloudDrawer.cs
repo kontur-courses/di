@@ -24,19 +24,20 @@ public class CloudDrawer
 
         var drawingScale = CalculateObjectDrawingScale(cloud.GetWidth(), cloud.GetHeight(), imageWidth, imageHeight);
         var bitmap = new Bitmap(imageWidth, imageHeight);
-        var graphics = Graphics.FromImage(bitmap);
-        var pen = new Pen(tagSettings.TagColor);
-
-        graphics.TranslateTransform(-cloud.Center.X, -cloud.Center.Y);
-        graphics.ScaleTransform(drawingScale, drawingScale, MatrixOrder.Append);
-        graphics.TranslateTransform(cloud.Center.X, cloud.Center.Y, MatrixOrder.Append);
-        graphics.Clear(cloudSettings.BackgroundColor);
-        foreach (var tag in cloud.Tags)
+        using var graphics = Graphics.FromImage(bitmap);
+        using var pen = new Pen(tagSettings.TagColor);
         {
-            var font = new Font(tagSettings.TagFontName, tag.Key.FontSize);
-            graphics.DrawString(tag.Key.Value, font, pen.Brush, tag.Value.Location);
+            graphics.TranslateTransform(-cloud.Center.X, -cloud.Center.Y);
+            graphics.ScaleTransform(drawingScale, drawingScale, MatrixOrder.Append);
+            graphics.TranslateTransform(cloud.Center.X, cloud.Center.Y, MatrixOrder.Append);
+            graphics.Clear(cloudSettings.BackgroundColor);
+            foreach (var tag in cloud.Tags)
+            {
+                var font = new Font(tagSettings.TagFontName, tag.Key.FontSize);
+                graphics.DrawString(tag.Key.Value, font, pen.Brush, tag.Value.Location);
+            }
         }
-
+        ;
         return bitmap;
     }
 

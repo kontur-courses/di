@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using TagsCloudPainter.CloudLayouter;
+using TagsCloudPainter.Extensions;
 using TagsCloudPainter.FormPointer;
 using TagsCloudPainter.Settings;
+using TagsCloudPainter.Sizer;
 using TagsCloudPainter.Tags;
-using TagsCloudPainter.Utils;
 
 namespace TagsCloudPainterTests;
 
@@ -18,15 +19,16 @@ public class TagsCloudLayouterTests
         tagSettings = new TagSettings { TagFontSize = 32 };
         var pointerSettings = new SpiralPointerSettings { AngleConst = 1, RadiusConst = 0.5, Step = 0.1 };
         var formPointer = new ArchimedeanSpiralPointer(cloudSettings.Value, pointerSettings);
-        tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings);
+        stringSizer = new StringSizer();
+        tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings, stringSizer);
     }
 
     private TagsCloudLayouter tagsCloudLayouter;
     private TagSettings tagSettings;
+    private IStringSizer stringSizer;
 
     private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]
     {
-        new TestCaseData(new Tag("", 10, 1)).SetName("WhenGivenTagWithEmptyValue"),
         new TestCaseData(new Tag("das", 0, 1)).SetName("WhenGivenTagWithFontSizeLessThanOne")
     };
 
@@ -40,11 +42,11 @@ public class TagsCloudLayouterTests
     public void PutNextTag_ShouldReturnRectangleOfTheTagValueSize()
     {
         var tag = new Tag("ads", 10, 5);
-        var tagRectangle = Utils.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
+        var tagSize = stringSizer.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
 
         var resultRectangle = tagsCloudLayouter.PutNextTag(tag);
 
-        resultRectangle.Size.Should().Be(tagRectangle);
+        resultRectangle.Size.Should().Be(tagSize);
     }
 
     [Test]
@@ -66,7 +68,7 @@ public class TagsCloudLayouterTests
         var center = tagsCloudLayouter.GetCloud().Center;
         var tag = new Tag("ads", 10, 5);
         var firstRectangle = tagsCloudLayouter.PutNextTag(tag);
-        var firstRectangleCenter = Utils.GetRectangleCenter(firstRectangle);
+        var firstRectangleCenter = firstRectangle.GetCenter();
 
         firstRectangleCenter.Should().Be(center);
     }

@@ -24,7 +24,12 @@ public class TextFileReaderTests
             .Returns("Товарищи! постоянное информационно-пропагандистское обеспечение нашей " +
                      $"деятельности играет важную роль в формировании форм развития.{Environment.NewLine}{Environment.NewLine}" +
                      "Значимость этих проблем настолько очевидна, что укрепление и развитие.")
-            .SetName("WhenPassedDocxFile")
+            .SetName("WhenPassedDocxFile"),
+        new TestCaseData(@$"{Environment.CurrentDirectory}..\..\..\..\TextFiles\testFile.doc")
+            .Returns("Товарищи! постоянное информационно-пропагандистское обеспечение нашей " +
+                     $"деятельности играет важную роль в формировании форм развития.{Environment.NewLine}{Environment.NewLine}" +
+                     "Значимость этих проблем настолько очевидна, что укрепление и развитие.")
+            .SetName("WhenPassedDocFile")
     };
 
     [TestCaseSource(nameof(ReadTextFiles))]

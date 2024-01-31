@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
+using TagsCloudPainter.Extensions;
 using TagsCloudPainter.FormPointer;
 using TagsCloudPainter.Settings;
+using TagsCloudPainter.Sizer;
 using TagsCloudPainter.Tags;
 
 namespace TagsCloudPainter.CloudLayouter;
@@ -9,14 +11,20 @@ public class TagsCloudLayouter : ICloudLayouter
 {
     private readonly Lazy<CloudSettings> cloudSettings;
     private readonly IFormPointer formPointer;
+    private readonly IStringSizer stringSizer;
     private readonly TagSettings tagSettings;
     private TagsCloud cloud;
 
-    public TagsCloudLayouter(Lazy<CloudSettings> cloudSettings, IFormPointer formPointer, TagSettings tagSettings)
+    public TagsCloudLayouter(
+        Lazy<CloudSettings> cloudSettings,
+        IFormPointer formPointer,
+        TagSettings tagSettings,
+        IStringSizer stringSizer)
     {
         this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
         this.formPointer = formPointer ?? throw new ArgumentNullException(nameof(formPointer));
         this.tagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
+        this.stringSizer = stringSizer ?? throw new ArgumentNullException();
     }
 
     private TagsCloud Cloud
@@ -27,13 +35,13 @@ public class TagsCloudLayouter : ICloudLayouter
 
     public Rectangle PutNextTag(Tag tag)
     {
-        var rectangleSize = Utils.Utils.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
-        if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
+        var tagSize = stringSizer.GetStringSize(tag.Value, tagSettings.TagFontName, tag.FontSize);
+        if (tagSize.Height <= 0 || tagSize.Width <= 0)
             throw new ArgumentException("either width or height of rectangle size is not possitive");
 
-        var nextRectangle = Utils.Utils.GetRectangleFromCenter(formPointer.GetNextPoint(), rectangleSize);
+        var nextRectangle = formPointer.GetNextPoint().GetRectangle(tagSize);
         while (Cloud.Tags.Values.Any(rectangle => rectangle.IntersectsWith(nextRectangle)))
-            nextRectangle = Utils.Utils.GetRectangleFromCenter(formPointer.GetNextPoint(), rectangleSize);
+            nextRectangle = formPointer.GetNextPoint().GetRectangle(tagSize);
 
         Cloud.AddTag(tag, nextRectangle);
 

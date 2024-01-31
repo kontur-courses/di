@@ -4,7 +4,8 @@ public class Tag
 {
     public Tag(string value, float fontSize, int count)
     {
-        Value = value ?? "";
+        ArgumentException.ThrowIfNullOrEmpty(value, nameof(value));
+        Value = value;
         FontSize = fontSize;
         Count = count;
     }

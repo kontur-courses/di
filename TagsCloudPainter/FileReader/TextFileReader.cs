@@ -1,9 +1,10 @@
-﻿using Spire.Doc;
-
-namespace TagsCloudPainter.FileReader;
+﻿namespace TagsCloudPainter.FileReader;
 
 public class TextFileReader : IFileReader
 {
+    private readonly DocFileReader docFileReader = new();
+    private readonly TxtFileReader txtFileReader = new();
+
     public string ReadFile(string path)
     {
         if (!File.Exists(path))
@@ -11,24 +12,10 @@ public class TextFileReader : IFileReader
 
         return Path.GetExtension(path) switch
         {
-            ".txt" => ReadTxtFile(path),
-            ".doc" => ReadDocFile(path),
-            ".docx" => ReadDocFile(path),
+            ".txt" => txtFileReader.ReadFile(path),
+            ".doc" => docFileReader.ReadFile(path),
+            ".docx" => docFileReader.ReadFile(path),
             _ => throw new ArgumentException("Incorrect file extension. Supported file extensions: txt, doc, docx")
         };
-    }
-
-    private static string ReadTxtFile(string path)
-    {
-        return File.ReadAllText(path).Trim();
-    }
-
-    private static string ReadDocFile(string path)
-    {
-        var doc = new Document();
-        doc.LoadFromFile(path);
-        var text = doc.GetText();
-        var lastIndexOfSpirePart = text.IndexOf(Environment.NewLine);
-        return text.Substring(lastIndexOfSpirePart + 2).Trim();
     }
 }

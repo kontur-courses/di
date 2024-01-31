@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using TagsCloudPainter.Settings;
+using TagsCloudPainterApplication.Properties;
 
 namespace TagsCloudPainterApplication.Infrastructure.Settings;
 
@@ -15,11 +16,11 @@ public class TagsCloudSettings
         TagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
         SpiralPointerSettings = spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
         TextSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
-        TagFontSize = Properties.AppSettings.Default.tagFontSize;
-        TagFontName = Properties.AppSettings.Default.tagFontName;
-        PointerStep = Properties.AppSettings.Default.pointerStep;
-        PointerRadiusConst = Properties.AppSettings.Default.pointerRadiusConst;
-        PointerAngleConst = Properties.AppSettings.Default.pointerAngleConst;
+        TagFontSize = AppSettings.Default.tagFontSize;
+        TagFontName = AppSettings.Default.tagFontName;
+        PointerStep = AppSettings.Default.pointerStep;
+        PointerRadiusConst = AppSettings.Default.pointerRadiusConst;
+        PointerAngleConst = AppSettings.Default.pointerAngleConst;
     }
 
     [Browsable(false)] public CloudSettings CloudSettings { get; }
