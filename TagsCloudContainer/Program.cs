@@ -26,7 +26,7 @@ public static class Program
         
         services.AddSingleton<IUI, CLI>();
         
-        services.AddSingleton(new CLI().Setup(args));
+        services.AddSingleton(ApplicationArguments.Setup(args));
 
         services.AddTransient<ICircularCloudLayouter, CircularCloudLayouter>();
         services.AddTransient<ImageGenerator>();

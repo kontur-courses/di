@@ -9,14 +9,14 @@ public class CLITests
     [Test]
     public void HelpCommand_Should_NotThrow()
     {
-        var action = () => new CLI().Setup(["--help"]);
+        var action = () => ApplicationArguments.Setup(["--help"]);
         action.Should().NotThrow();
     }
 
     [Test]
     public void MissRequiredCommand_Should_Throw()
     {
-        var action = () => new CLI().Setup([
+        var action = () => ApplicationArguments.Setup([
             """
             -i="/Users/draginsky/Rider/di/TagsCloudContainer/src/words.txt"
             -o="/Users/draginsky/Rider/di/TagsCloudContainer/out/res"
