@@ -7,7 +7,7 @@ namespace TagCloudDi.Applications
         public void Run()
         {
             var image = drawer.GetImage();
-            image.Save(settings.SavePath + '.' + settings.ImageFormat.ToLower(), settings.GetFormat());
+            image.Save($"{settings.SavePath}.{settings.ImageFormat.ToLower()}", settings.GetFormat());
             Console.WriteLine($"Saved to {settings.SavePath + '.' + settings.ImageFormat.ToLower()}");
         }
     }
