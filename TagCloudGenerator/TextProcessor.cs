@@ -2,7 +2,9 @@
 {
     public class TextProcessor : ITextProcessor
     {
-        public IEnumerable<string> ProcessText(IEnumerable<string> text)
+        public TextProcessor() { }
+      
+        public virtual IEnumerable<string> ProcessText(IEnumerable<string> text)
         {                      
             foreach (string line in text)
                 yield return line.ToLower();          

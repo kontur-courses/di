@@ -26,6 +26,7 @@ public class Program
         var services = new ServiceCollection();
         services.AddTransient<TagCloudDrawer>();
         services.AddTransient<TextProcessor>();
+        services.AddTransient<ITextProcessor>(x => new BoringWordsTextProcessor(x.GetRequiredService<TextProcessor>()));
         services.AddTransient<WordCounter>();
         services.AddTransient<TagCloudGenerator.TextReader>();
         var container = services.BuildServiceProvider();

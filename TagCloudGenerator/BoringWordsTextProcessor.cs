@@ -2,9 +2,10 @@
 
 namespace TagCloudGenerator
 {
-    public class BoringWordsTextProcessor : TextProcessorWrapper
+    public class BoringWordsTextProcessor : TextProcessor
     {
-        public BoringWordsTextProcessor(ITextProcessor textProcessor) : base(textProcessor) { }
+        private readonly ITextProcessor textProcessor;
+        public BoringWordsTextProcessor(ITextProcessor textProcessor) { this.textProcessor = textProcessor; }
 
         public override IEnumerable<string> ProcessText(IEnumerable<string> text)
         {

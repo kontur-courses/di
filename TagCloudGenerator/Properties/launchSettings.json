@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagCloudGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "-p \"C:\\Users\\lholy\\Documents\\GitHub\\di\\TagCloudGeneratorTest\\TestsData\\test7.txt\" -n \"TEST.png\" -s 10,10"
+    }
+  }
+}

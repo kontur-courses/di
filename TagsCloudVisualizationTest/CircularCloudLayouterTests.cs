@@ -15,7 +15,7 @@ namespace TagsCloudVisualizationTest
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(Center, new Spiral(new Point(0,0), 1, 0.1));
+      //  private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(new Spiral(new Point(0,0), 1, 0.1));
         private static readonly Point Center = new Point(50, 50);
         private RectangleF[] currentRectangles;
 
@@ -36,7 +36,7 @@ namespace TagsCloudVisualizationTest
 
         [Test]
         public static void CircularCloudLayouterCtor_WhenPassValidArguments_DoesNotThrowException() =>
-            Assert.DoesNotThrow(() => new CircularCloudLayouter(Center, new Spiral(new Point(0,0), 1, 0.1)));
+            Assert.DoesNotThrow(() => new CircularCloudLayouter(new Spiral(new Point(0,0), 1, 0.1)));
 
         public static TestCaseData[] InvalidArguments =
         {
@@ -48,12 +48,19 @@ namespace TagsCloudVisualizationTest
 
         [TestOf(nameof(CircularCloudLayouter.PutNextRectangle))]
         [TestCaseSource(nameof(InvalidArguments))]
-        public void WhenPassInvalidArguments_ShouldThrowArgumentException(int width, int height) =>
+        public void WhenPassInvalidArguments_ShouldThrowArgumentException(int width, int height)
+        {
+            CircularCloudLayouter layouter = new CircularCloudLayouter(new Spiral(new Point(width/2, height/2), 1, 0.1));
+
             Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(new Size(width, height)));
+        }
+           
 
         [Test]
         public void WhenPutNewRectangle_ShouldBeAddedToList()
         {
+            CircularCloudLayouter layouter = new CircularCloudLayouter(new Spiral(new Point(0, 0), 1, 0.1));
+
             currentRectangles = new RectangleF[]
             {
                 layouter.PutNextRectangle(new Size(40, 20))
@@ -74,6 +81,7 @@ namespace TagsCloudVisualizationTest
         [TestCaseSource(nameof(RectanglesPosition))]
         public bool WhenPassSeveralRectangles_ShouldReturnCorrectIntersectionResult(Size rectangleSize, Size newRectangleSize)
         {
+            CircularCloudLayouter layouter = new CircularCloudLayouter(new Spiral(new Point(0, 0), 1, 0.1));
             currentRectangles = new RectangleF[]
             {
                 layouter.PutNextRectangle(rectangleSize),
@@ -87,13 +95,15 @@ namespace TagsCloudVisualizationTest
         [TestOf(nameof(CircularCloudLayouter.PutNextRectangle))]
         public void WhenPassFirstPoint_ShouldBeInCenter()
         {
+            CircularCloudLayouter layouter = new CircularCloudLayouter(new Spiral(new Point(500, 500), 1, 0.1));
+
             currentRectangles = new RectangleF[]
             {
                 layouter.PutNextRectangle(new Size(40, 20))
             };
 
-            currentRectangles.First().Location.X.Should().Be(30);
-            currentRectangles.First().Location.Y.Should().Be(40);
+            currentRectangles.First().Location.X.Should().Be(480);
+            currentRectangles.First().Location.Y.Should().Be(490);
         }
     }
 }

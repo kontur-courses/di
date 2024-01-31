@@ -37,5 +37,10 @@ namespace TagsCloudVisualization.PointDistributors
 
             return position;
         }
+
+        public Point GetCenter()
+        {
+            return center;
+        }
     }
 }

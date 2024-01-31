@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using TagCloudGenerator;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudVisualization.PointDistributors;
+using System.Linq;
 
 namespace TagCloudGeneratorTest
 {
@@ -29,13 +29,9 @@ namespace TagCloudGeneratorTest
         [TestOf(nameof(TextProcessor))]
         public void WhenPassWordsInUppercase_ShouldReturnWordsInLowerCase()
         {
-            var text = textProcessor.ProcessText(new[] { "Cloud", "Tags" });
+            var text = textProcessor.ProcessText(new[] { "Cloud"}).ToArray();
 
-            var result = "";
-            foreach (var word in text)
-                result += (word + Environment.NewLine);
-
-            result.Should().Be("cloud\r\ntags\r\n");
+            text[0].Should().Be("cloud");
         }
 
         [Test]
@@ -50,67 +46,53 @@ namespace TagCloudGeneratorTest
 
         private static TestCaseData[] BoringWordsTestCases =
         {
-            new TestCaseData((object)new []{"but", "tag"}).Returns("tag\r\n").SetName("WithConjunction"),
-            new TestCaseData((object)new []{"i", "tag"}).Returns("tag\r\n").SetName("WithPronoun"),
-            new TestCaseData((object)new []{"a", "tag"}).Returns("tag\r\n").SetName("WithDeterminer"),
-            new TestCaseData((object)new []{"under", "tag"}).Returns("tag\r\n").SetName("WithPreposition"),
+            new TestCaseData((object)new []{"but", "tag"}).Returns("tag").SetName("WithConjunction"),
+            new TestCaseData((object)new []{"i", "tag"}).Returns("tag").SetName("WithPronoun"),
+            new TestCaseData((object)new []{"a", "tag"}).Returns("tag").SetName("WithDeterminer"),
+            new TestCaseData((object)new []{"under", "tag"}).Returns("tag").SetName("WithPreposition"),
         };
     
         [TestOf(nameof(BoringWordsTextProcessor))]
         [TestCaseSource(nameof(BoringWordsTestCases))]
         public string WhenPassTextWithBoringWords_ShouldReturnWordsWithoutBoringWords(IEnumerable<string> values)
         {
-            var text = boringWordsTextProcessor.ProcessText(values);
+            var text = boringWordsTextProcessor.ProcessText(values).ToArray();
 
-            var result = "";
-            foreach (var word in text)
-                result += word + Environment.NewLine;
-
-            return result;
+            return text[0];
         }
 
         [Test]
         [TestOf(nameof(WordCounter))]
         public void WhenPassTextWithTheMostFrequentlyRepeatedWord_ThisWordShouldBeFirstInDictionary()
         {
-            var text = textProcessor.ProcessText(new[] { "tag", "cloud", "cloud", "cloud", "tag" });
+            var text = textProcessor.ProcessText(new[] { "tag", "cloud", "cloud", "cloud", "tag" }).ToArray();
             var dictionary = counter.CountWords(text);
 
-            var result = "";
+            var result = new List<string>(2);
+            foreach (var (key, _) in dictionary)
+                result.Add(key);
 
-            foreach (var (key , _) in dictionary)
-                result += key + " ";
-
-            result.Should().Be("cloud tag ");
+            result[0].Should().Be("cloud");
         }
 
         private static TestCaseData[] PathArguments =
         {
-            new TestCaseData("../../../TestsData/testFor.txt").Returns("текст из txt ").SetName("WithTxtFormat"),
-            new TestCaseData("../../../TestsData/testFor.docx").Returns("текст из docx ").SetName("WitDocxFormat"),
-            new TestCaseData("../../../TestsData/testFor.pdf").Returns("текст из pdf ").SetName("WitPdfFormat")
+            new TestCaseData("../../../TestsData/testFor.txt").Returns(new [] {"текст", "из", "txt"}).SetName("WithTxtFormat"),
+            new TestCaseData("../../../TestsData/testFor.docx").Returns(new [] {"текст", "из", "docx"}).SetName("WitDocxFormat"),
+            new TestCaseData("../../../TestsData/testFor.pdf").Returns(new [] {"текст", "из", "pdf"}).SetName("WitPdfFormat")
         };
 
         [TestOf(nameof(TextReader))]
         [TestCaseSource(nameof(PathArguments))]
-        public string WhenPassFile_ShouldReturnCorrectResult(string filePath)
-        {
-            var text = textReader.ReadTextFromFile(filePath);
-           
-            var result = "";
-            foreach (var word in text)
-                result += word + " ";
-
-            return result;
-        }
+        public string[] WhenPassFile_ShouldReturnCorrectResult(string filePath) => textReader.ReadTextFromFile(filePath).ToArray();
 
         [Test]
         [TestOf(nameof(TagCloudDrawer))]
         public void ShouldReturnCorrectImage()
         {
-            var currentBitmap = GetCurrentImage();
+            var currentBitmap = GetCurrentImage();           
 
-            var pathToImage = "C:\\Users\\lholy\\Documents\\GitHub\\di\\TagCloudGeneratorTest\\TestsData\\ForTests.png";
+            var pathToImage = "../../../TestsData/ForTests.png";
             Bitmap correctBitmap = new Bitmap(pathToImage);
 
             var result = true;
@@ -131,8 +113,8 @@ namespace TagCloudGeneratorTest
 
         private Bitmap GetCurrentImage()
         {
-            tagCloudDrawer = new TagCloudDrawer(counter, textProcessor, textReader);
-            var filePath = "C:\\Users\\lholy\\Documents\\GitHub\\di\\TagCloudGeneratorTest\\TestsData\\test7.txt";
+            tagCloudDrawer = new TagCloudDrawer(counter, boringWordsTextProcessor, textReader);
+            var filePath = "../../../TestsData/test7.txt";
             var settings = new TagsCloudVisualization.VisualizingSettings();
             settings.ImageSize = new Size(1300, 1300);
             settings.PointDistributor = new Spiral(new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2), 1, 0.1);

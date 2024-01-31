@@ -10,10 +10,10 @@ namespace TagsCloudVisualization
         private readonly Cloud cloud;
         private readonly IPointDistributor distributor;
 
-        public CircularCloudLayouter(Point center, IPointDistributor type)
-        {
-            cloud = new Cloud(center);
+        public CircularCloudLayouter(IPointDistributor type)
+        {        
             distributor = type;
+            cloud = new Cloud(distributor.GetCenter());
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

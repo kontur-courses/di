@@ -7,11 +7,11 @@ namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
-        private TextProcessor textProcessor;
+        private ITextProcessor textProcessor;
         private WordCounter wordCounter;
         private TextReader textReader;
 
-        public TagCloudDrawer(WordCounter wordCounter, TextProcessor textProcessor, TextReader textReader) 
+        public TagCloudDrawer(WordCounter wordCounter, ITextProcessor textProcessor, TextReader textReader) 
         {
             this.textProcessor = textProcessor;
             this.wordCounter = wordCounter;
@@ -24,14 +24,24 @@ namespace TagCloudGenerator
                 throw new ArgumentNullException(nameof(filePath));
            
             var words = textReader.ReadTextFromFile(filePath);        
-            var deleteBoringWords = new BoringWordsTextProcessor(textProcessor);
-            words = deleteBoringWords.ProcessText(words);
+            words = textProcessor.ProcessText(words);
             var wordsWithCount = wordCounter.CountWords(words);
 
-            Console.WriteLine("The tag cloud is drawn");
+            ImageScaler imageScaler = new ImageScaler(wordsWithCount);
+            var rectangles = GetRectanglesToDraw(wordsWithCount, visualizingSettings);
 
-            return Draw(wordsWithCount, visualizingSettings);
-        }
+            var smallestSizeOfRectangles = imageScaler.GetMinPoints(rectangles);
+            var unscaledImageSize = imageScaler.GetImageSizeWithRealSizeRectangles(rectangles, smallestSizeOfRectangles);
+
+            if (imageScaler.NeedScale(visualizingSettings, unscaledImageSize))
+            {
+                var bitmap = imageScaler.DrawScaleCloud(visualizingSettings, rectangles, unscaledImageSize, smallestSizeOfRectangles);
+                Console.WriteLine("The tag cloud is drawn");
+                return bitmap;
+            }
+            
+            return Draw(wordsWithCount, visualizingSettings, rectangles);
+        }      
 
         public void SaveImage(Bitmap bitmap, VisualizingSettings visualizingSettings)
         {
@@ -83,27 +93,44 @@ namespace TagCloudGenerator
                     throw new NotImplementedException();
             }
         }
-
-        private Bitmap Draw(Dictionary<string, int> text, VisualizingSettings settings)
+    
+        private Bitmap Draw(Dictionary<string, int> tags, VisualizingSettings settings, RectangleF[] rectangles)
         {
             var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            var center = new Point(settings.ImageSize.Width/2, settings.ImageSize.Height/2);
-            var distributor = settings.PointDistributor;
-            var layouter = new CircularCloudLayouter(center, distributor);
-            var brush = new SolidBrush(settings.PenColor);
-            var graphics = Graphics.FromImage(bitmap);
+            using var brush = new SolidBrush(settings.PenColor);
+            using var graphics = Graphics.FromImage(bitmap);
             graphics.Clear(settings.BackgroundColor);
 
+            for (var i = 0; i < rectangles.Length; i++)          
+                foreach (var tag in tags)
+                {
+                    var rectangle = rectangles[i];
+                    var font = new Font(settings.Font, 24 + (tag.Value * 6));
+                    graphics.DrawString(tag.Key, font, brush, rectangle.X, rectangle.Y);
+                    i++;
+                }
+
+            Console.WriteLine("The tag cloud is drawn");
+
+            return bitmap;
+        }
+
+        private RectangleF[] GetRectanglesToDraw(Dictionary<string, int> text, VisualizingSettings settings)
+        {
+            using var bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            using var graphics = Graphics.FromImage(bitmap);
+            var layouter = new CircularCloudLayouter(settings.PointDistributor);
+            var rectangles = new List<RectangleF>();
             foreach (var line in text)
             {
-                var font = new Font(settings.Font, 24 + (line.Value * 6));
+                using var font = new Font(settings.Font, 24 + (line.Value * 6));
                 SizeF size = graphics.MeasureString(line.Key, font);
-                var rect = layouter.PutNextRectangle(size.ToSize());
-              
-                graphics.DrawString(line.Key, font, brush, rect.X, rect.Y);
+                var rectangle = layouter.PutNextRectangle(size.ToSize());
+
+                rectangles.Add(rectangle);              
             }
 
-           return bitmap;
-        }  
+            return rectangles.ToArray();
+        }
     }
 }
