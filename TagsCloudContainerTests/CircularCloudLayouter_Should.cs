@@ -16,7 +16,8 @@ namespace TagsCloudContainerTests
         {
             var algSettings = new AlgorithmSettings();
             var imgSettings = new ImageSettings();
-            layouter = new CircularCloudLayouter(algSettings, imgSettings);
+            var rectanglePlacer = new RectanglePlacer(algSettings, imgSettings);
+            layouter = new CircularCloudLayouter(imgSettings, rectanglePlacer);
         }
 
         [Test]
