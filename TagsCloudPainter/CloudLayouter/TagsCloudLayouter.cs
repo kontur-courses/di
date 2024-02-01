@@ -9,14 +9,14 @@ namespace TagsCloudPainter.CloudLayouter;
 
 public class TagsCloudLayouter : ICloudLayouter
 {
-    private readonly Lazy<CloudSettings> cloudSettings;
+    private readonly CloudSettings cloudSettings;
     private readonly IFormPointer formPointer;
     private readonly IStringSizer stringSizer;
     private readonly TagSettings tagSettings;
     private TagsCloud cloud;
 
     public TagsCloudLayouter(
-        Lazy<CloudSettings> cloudSettings,
+        CloudSettings cloudSettings,
         IFormPointer formPointer,
         TagSettings tagSettings,
         IStringSizer stringSizer)
@@ -25,12 +25,7 @@ public class TagsCloudLayouter : ICloudLayouter
         this.formPointer = formPointer ?? throw new ArgumentNullException(nameof(formPointer));
         this.tagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
         this.stringSizer = stringSizer ?? throw new ArgumentNullException();
-    }
-
-    private TagsCloud Cloud
-    {
-        get => cloud ??= new TagsCloud(cloudSettings.Value.CloudCenter, []);
-        set => cloud = value;
+        cloud = new TagsCloud(cloudSettings.CloudCenter, []);
     }
 
     public Rectangle PutNextTag(Tag tag)
@@ -40,10 +35,10 @@ public class TagsCloudLayouter : ICloudLayouter
             throw new ArgumentException("either width or height of rectangle size is not possitive");
 
         var nextRectangle = formPointer.GetNextPoint().GetRectangle(tagSize);
-        while (Cloud.Tags.Values.Any(rectangle => rectangle.IntersectsWith(nextRectangle)))
+        while (cloud.Tags.Any(pair => pair.Item2.IntersectsWith(nextRectangle)))
             nextRectangle = formPointer.GetNextPoint().GetRectangle(tagSize);
 
-        Cloud.AddTag(tag, nextRectangle);
+        cloud.AddTag(tag, nextRectangle);
 
         return nextRectangle;
     }
@@ -58,12 +53,12 @@ public class TagsCloudLayouter : ICloudLayouter
 
     public TagsCloud GetCloud()
     {
-        return new TagsCloud(Cloud.Center, Cloud.Tags);
+        return new TagsCloud(cloud.Center, cloud.Tags);
     }
 
     public void Reset()
     {
         formPointer.Reset();
-        Cloud = new TagsCloud(cloudSettings.Value.CloudCenter, []);
+        cloud = new TagsCloud(cloudSettings.CloudCenter, []);
     }
 }

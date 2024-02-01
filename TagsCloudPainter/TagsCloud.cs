@@ -5,27 +5,27 @@ namespace TagsCloudPainter;
 
 public class TagsCloud
 {
-    public TagsCloud(Point center, Dictionary<Tag, Rectangle> tags)
+    public TagsCloud(Point center, List<(Tag, Rectangle)> tags)
     {
         Center = center;
         Tags = tags ?? [];
     }
 
     public Point Center { get; private set; }
-    public Dictionary<Tag, Rectangle> Tags { get; }
+    public List<(Tag, Rectangle)> Tags { get; }
 
     public void AddTag(Tag tag, Rectangle rectangle)
     {
-        Tags.Add(tag, rectangle);
+        Tags.Add((tag, rectangle));
     }
 
     public int GetWidth()
     {
-        return Tags.Values.Max(rect => rect.X) - Tags.Values.Min(rect => rect.X);
+        return Tags.Max(pair => pair.Item2.X) - Tags.Min(pair => pair.Item2.X);
     }
 
     public int GetHeight()
     {
-        return Tags.Values.Max(rect => rect.Y) - Tags.Values.Min(rect => rect.Y);
+        return Tags.Max(pair => pair.Item2.Y) - Tags.Min(pair => pair.Item2.Y);
     }
 }

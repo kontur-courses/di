@@ -33,8 +33,8 @@ public class CloudDrawer
             graphics.Clear(cloudSettings.BackgroundColor);
             foreach (var tag in cloud.Tags)
             {
-                var font = new Font(tagSettings.TagFontName, tag.Key.FontSize);
-                graphics.DrawString(tag.Key.Value, font, pen.Brush, tag.Value.Location);
+                var font = new Font(tagSettings.TagFontName, tag.Item1.FontSize);
+                graphics.DrawString(tag.Item1.Value, font, pen.Brush, tag.Item2.Location);
             }
         }
         ;
