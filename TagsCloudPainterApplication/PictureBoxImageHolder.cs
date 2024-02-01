@@ -1,4 +1,5 @@
 using System.Drawing.Imaging;
+using System.Reflection;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
 
@@ -31,7 +32,8 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
 
     public void SaveImage(string fileName)
     {
-        GetImage().Save(fileName);
+        var imageFormat = GetImageFormat(Path.GetExtension(fileName));
+        GetImage().Save(fileName, imageFormat);
     }
 
     public Image GetImage()
@@ -40,5 +42,16 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
             Image = new Bitmap(imageSettings.Value.Width, imageSettings.Value.Height, PixelFormat.Format24bppRgb);
 
         return Image;
+    }
+
+    private static ImageFormat GetImageFormat(string extension)
+    {
+        PropertyInfo prop = typeof(ImageFormat)
+            .GetProperties().Where(p => p.Name.Equals(extension.Replace(".", ""), StringComparison.InvariantCultureIgnoreCase))
+            .FirstOrDefault();
+
+        return prop is not null
+            ? prop.GetValue(prop) as ImageFormat
+            : throw new ArgumentException($"there is no image format with {extension} extension");
     }
 }
