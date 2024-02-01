@@ -23,7 +23,7 @@ public class SaveImageAction : IUiAction
             InitialDirectory = Path.GetFullPath(Environment.CurrentDirectory),
             DefaultExt = "png",
             FileName = "image.png",
-            Filter = "Изображения (*.png)|*.png|Изображения (*.jpeg)|*.jpeg"
+            Filter = "Изображения (*.png)|*.png|Изображения (*.jpeg)|*.jpeg|Изображения (*.bmp)|*.bmp|Изображения (*.gif)|*.gif"
         };
         var res = dialog.ShowDialog();
         if (res == DialogResult.OK)
