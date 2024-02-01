@@ -1,9 +1,11 @@
-﻿namespace TagsCloud.WordValidators;
+﻿using MyStemWrapper;
+
+namespace TagsCloud.WordValidators;
 
 public class SimpleWordValidator: IWordValidator
 {
     public bool IsWordValid(string word)
     {
-        return true;
+        return word.Length>3;
     }
 }

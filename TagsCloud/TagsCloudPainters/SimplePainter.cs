@@ -15,13 +15,14 @@ public class SimplePainter:IPainter
     private readonly IColorGenerator colorGenerator;
     private readonly string filename;
     private readonly Size imageSize;
+    private readonly Color backgroundColor;
 
     public SimplePainter(IColorGenerator colorGenerator,Options options)
     {
         this.colorGenerator = colorGenerator;
         this.filename = options.OutputFile;
         this.imageSize = options.ImageSize;
-
+        this.backgroundColor = Color.FromName(options.Background);
     }
 
     public void DrawCloud(ILayouter layouter)
@@ -35,6 +36,7 @@ public class SimplePainter:IPainter
         {
             using (Graphics g = Graphics.FromImage(bitmap))
             {
+                g.Clear(backgroundColor);
                 foreach (var tag in tags)
                 {
                     var color = colorGenerator.GetTagColor(tag);
@@ -56,6 +58,7 @@ public class SimplePainter:IPainter
     private void SaveImageToFile(Bitmap bitmap, string filename)
     {
         var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+        Console.WriteLine(projectDirectory);
         bitmap.Save(filename, ImageFormat.Png);
     }
     

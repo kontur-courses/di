@@ -15,6 +15,8 @@ public class Program
         using (var scope = container.BeginLifetimeScope())
         {
             var app = scope.Resolve<IApp>();
+            var o = scope.Resolve<Options>().PartsOfSpeech.Count();
+            Console.WriteLine(o);
             app.Run();
         }
     }

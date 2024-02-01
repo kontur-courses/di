@@ -6,20 +6,20 @@ namespace TagsCloud.App;
 
 public class App:IApp
 {
-    private readonly ITextReader textReader;
+    private readonly IWordsProvider wordsProvider;
     private readonly ILayouter layouter;
     private readonly IPainter painter;
     
-    public App(ITextReader textReader,ILayouter layouter, IPainter painter)
+    public App(IWordsProvider wordsProvider,ILayouter layouter, IPainter painter)
     {
-        this.textReader = textReader;
+        this.wordsProvider = wordsProvider;
         this.layouter = layouter;
         this.painter = painter;
     }
 
     public void Run()
     {
-        layouter.CreateTagCloud( textReader.GetWords());
+        layouter.CreateTagCloud( wordsProvider.GetWords());
         painter.DrawCloud(layouter);
     }
 }

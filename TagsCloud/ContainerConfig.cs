@@ -21,7 +21,7 @@ public static class ContainerConfig
         builder.RegisterType<RandomColorGenerator>().As<IColorGenerator>().SingleInstance();
         builder.RegisterType<SpiralDistributor>().As<IDistributor>();
         builder.RegisterType<SimplePainter>().As<IPainter>();
-        builder.RegisterType<FileTextReader>().As<ITextReader>();
+        builder.RegisterType<WordsProvider>().As<IWordsProvider>();
         builder.RegisterType<SimpleWordFontCalculator>().As<IWordFontCalculator>();
         builder.RegisterType<SimpleWordValidator>().As<IWordValidator>();
         builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();

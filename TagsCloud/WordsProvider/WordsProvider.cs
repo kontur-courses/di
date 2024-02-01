@@ -4,11 +4,11 @@ using TagsCloud.WordValidators;
 
 namespace TagsCloud.TextReaders;
 
-public class FileTextReader:ITextReader
+public class WordsProvider:IWordsProvider
 {
     private readonly IWordValidator validator;
     private readonly string filename; 
-    public FileTextReader(IWordValidator validator, Options options)
+    public WordsProvider(IWordValidator validator, Options options)
     {
         this.validator = validator;
         this.filename = options.InputFile;

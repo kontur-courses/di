@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using TagsCloud.ColorGenerators;
-using TagsCloud.ConsoleCommands;
 using TagsCloud.Distributors;
 using TagsCloud.Entities;
 using TagsCloud.WordSizeCalculators;

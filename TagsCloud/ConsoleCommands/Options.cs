@@ -15,12 +15,15 @@ public class Options
 
         [Option('f', "font", Default = "Arial", HelpText = "Set tagsCloud word Font")]
         public string TagsFont { get; set; }
-        
-        [Option('p', "parts", Default = null, HelpText = "Word available parts of speech.")]
-        public IEnumerable<string> PartsOfSpeech { get; set; }
 
-        [Option('s', "imagesize", Default = null, HelpText = "Set output image size")]
+        [Option('s', "imagesize",Default = null,HelpText = "Set output image size")]
         [TypeConverter(typeof(SizeTypeConverter))]
         public Size ImageSize { get; set; }
+
+        [Option('b', "background", Default = "Empty", HelpText = "Set tagsCloud output background color")]
+        public string Background { get; set; }
+        
+        [Option('t', "parts", Default = new string[]{"sdsd","sfdfd"}, HelpText = "Word available parts of speech.")]
+        public IEnumerable<string> PartsOfSpeech { get; set; }
 }
 

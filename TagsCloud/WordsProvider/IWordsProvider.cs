@@ -2,7 +2,7 @@
 
 namespace TagsCloud.TextReaders;
 
-public interface ITextReader
+public interface IWordsProvider
 {
     public Dictionary<string,int> GetWords();
 }
