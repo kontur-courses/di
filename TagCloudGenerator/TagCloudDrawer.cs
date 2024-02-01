@@ -7,13 +7,13 @@ namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
-        private IEnumerable<ITextProcessor> textProcessors;
+        private ITextProcessor[] textProcessors;
         private WordCounter wordCounter;
         private TextReader textReader;
 
         public TagCloudDrawer(WordCounter wordCounter, IEnumerable<ITextProcessor> textProcessors, TextReader textReader) 
         {
-            this.textProcessors = textProcessors;
+            this.textProcessors = textProcessors.ToArray();
             this.wordCounter = wordCounter;
             this.textReader = textReader;
         }
