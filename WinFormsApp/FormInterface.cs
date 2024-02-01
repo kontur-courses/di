@@ -129,11 +129,12 @@ namespace WinFormsApp
 
         private void colorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var colorSelector = new ColorSelectorForm(appSettings.DrawingSettings.Colors);
+            var colorSelector = new ColorSelectorForm(appSettings.DrawingSettings.Colors, appSettings.DrawingSettings.BgColor);
             colorSelector.ShowDialog();
             if (colorSelector.DialogResult == DialogResult.OK)
             {
                 appSettings.DrawingSettings.Colors = colorSelector.Colors;
+                appSettings.DrawingSettings.BgColor = colorSelector.BGColor;
                 SettingsManager.SettingsManager.SaveSettings(appSettings);
 
                 if (text != null)
