@@ -1,0 +1,31 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
+              GeneratedClassNamespace="TagsCloudPainterApplication.Properties" GeneratedClassName="Settings">
+    <Profiles/>
+    <Settings>
+        <Setting Name="boringTextFilePath" Type="System.String" Scope="User">
+            <Value Profile="(Default)">Data\BoringWords.txt</Value>
+        </Setting>
+        <Setting Name="imageWidth" Type="System.Int32" Scope="User">
+            <Value Profile="(Default)">800</Value>
+        </Setting>
+        <Setting Name="imageHeight" Type="System.Int32" Scope="User">
+            <Value Profile="(Default)">600</Value>
+        </Setting>
+        <Setting Name="tagFontSize" Type="System.Int32" Scope="User">
+            <Value Profile="(Default)">32</Value>
+        </Setting>
+        <Setting Name="tagFontName" Type="System.String" Scope="User">
+            <Value Profile="(Default)">Arial</Value>
+        </Setting>
+        <Setting Name="pointerStep" Type="System.Double" Scope="User">
+            <Value Profile="(Default)">0.1</Value>
+        </Setting>
+        <Setting Name="pointerRadiusConst" Type="System.Double" Scope="User">
+            <Value Profile="(Default)">0.5</Value>
+        </Setting>
+        <Setting Name="pointerAngleConst" Type="System.Double" Scope="User">
+            <Value Profile="(Default)">1</Value>
+        </Setting>
+    </Settings>
+</SettingsFile>
