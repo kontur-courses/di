@@ -8,7 +8,7 @@ public class TextFileReaderTests
     [SetUp]
     public void Setup()
     {
-        var fileReaders = new List<IFileReader>() { new TxtFileReader(), new DocFileReader()};
+        var fileReaders = new List<IFileReader> { new TxtFileReader(), new DocFileReader() };
         textFileReader = new TextFileReader(fileReaders);
     }
 

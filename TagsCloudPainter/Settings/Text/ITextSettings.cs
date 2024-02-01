@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainter.Settings
+﻿namespace TagsCloudPainter.Settings;
+
+public interface ITextSettings
 {
-    public interface ITextSettings
-    {
-        public string BoringText { get; set; }
-    }
+    public string BoringText { get; set; }
 }

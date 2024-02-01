@@ -1,5 +1,4 @@
 using System.Drawing.Imaging;
-using System.Reflection;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings.Image;
 
@@ -46,8 +45,9 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
 
     private static ImageFormat GetImageFormat(string extension)
     {
-        PropertyInfo prop = typeof(ImageFormat)
-            .GetProperties().Where(p => p.Name.Equals(extension.Replace(".", ""), StringComparison.InvariantCultureIgnoreCase))
+        var prop = typeof(ImageFormat)
+            .GetProperties().Where(p =>
+                p.Name.Equals(extension.Replace(".", ""), StringComparison.InvariantCultureIgnoreCase))
             .FirstOrDefault();
 
         return prop is not null

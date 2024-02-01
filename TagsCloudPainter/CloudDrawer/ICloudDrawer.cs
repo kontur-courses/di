@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudPainter.Drawer
+namespace TagsCloudPainter.Drawer;
+
+public interface ICloudDrawer
 {
-    public interface ICloudDrawer
-    {
-        public Bitmap DrawCloud(TagsCloud cloud, int imageWidth, int imageHeight);
-    }
+    public Bitmap DrawCloud(TagsCloud cloud, int imageWidth, int imageHeight);
 }

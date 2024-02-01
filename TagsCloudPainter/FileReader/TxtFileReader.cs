@@ -1,5 +1,4 @@
-﻿
-namespace TagsCloudPainter.FileReader;
+﻿namespace TagsCloudPainter.FileReader;
 
 public class TxtFileReader : IFileReader
 {

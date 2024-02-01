@@ -24,7 +24,7 @@ public class TagsCloudLayouterTests
         var formPointer = new ArchimedeanSpiralPointer(cloudSettings, pointerSettings);
         stringSizer = A.Fake<IStringSizer>();
         A.CallTo(() => stringSizer.GetStringSize(A<string>.Ignored, A<string>.Ignored, A<float>.Ignored))
-            .Returns(new Size(10,10));
+            .Returns(new Size(10, 10));
         tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings, stringSizer);
     }
 
@@ -34,9 +34,9 @@ public class TagsCloudLayouterTests
 
     private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]
     {
-        new TestCaseData(new Size(0,10)).SetName("WidthNotPossitive"),
-        new TestCaseData(new Size(10,0)).SetName("HeightNotPossitive"),
-        new TestCaseData(new Size(0,0)).SetName("HeightAndWidthNotPossitive"),
+        new TestCaseData(new Size(0, 10)).SetName("WidthNotPossitive"),
+        new TestCaseData(new Size(10, 0)).SetName("HeightNotPossitive"),
+        new TestCaseData(new Size(0, 0)).SetName("HeightAndWidthNotPossitive")
     };
 
     [TestCaseSource(nameof(PutNextTagArgumentException))]

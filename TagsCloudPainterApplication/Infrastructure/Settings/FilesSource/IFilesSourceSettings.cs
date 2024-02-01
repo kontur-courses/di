@@ -1,7 +1,6 @@
-﻿namespace TagsCloudPainterApplication.Infrastructure.Settings.FilesSource
+﻿namespace TagsCloudPainterApplication.Infrastructure.Settings.FilesSource;
+
+public interface IFilesSourceSettings
 {
-    public interface IFilesSourceSettings
-    {
-        public string BoringTextFilePath { get; set; }
-    }
+    public string BoringTextFilePath { get; set; }
 }

@@ -15,11 +15,12 @@ public class TextFileReader : IFormatFileReader<string>
             throw new FileNotFoundException();
 
         var fileExtension = Path.GetExtension(path);
-        var fileReader = fileReaders.FirstOrDefault(fileReader => fileReader.SupportedExtensions.Contains(fileExtension));
+        var fileReader =
+            fileReaders.FirstOrDefault(fileReader => fileReader.SupportedExtensions.Contains(fileExtension));
 
-        return fileReader is not null 
-            ? fileReader.ReadFile(path) 
+        return fileReader is not null
+            ? fileReader.ReadFile(path)
             : throw new ArgumentException($"Incorrect file extension {fileExtension}. " +
-            $"Supported file extensions: txt, doc, docx");
+                                          $"Supported file extensions: txt, doc, docx");
     }
 }

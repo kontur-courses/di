@@ -16,13 +16,13 @@ public class DrawTagCloudAction : IUiAction
 {
     private readonly ICloudDrawer cloudDrawer;
     private readonly ICloudLayouter cloudLayouter;
-    private readonly IFormatFileReader<string> textFileReader;
     private readonly IFilesSourceSettings filesSourceSettings;
     private readonly IImageHolder imageHolder;
     private readonly IImageSettings imageSettings;
     private readonly Palette palette;
     private readonly ITagsBuilder tagsBuilder;
     private readonly ITagsCloudSettings tagsCloudSettings;
+    private readonly IFormatFileReader<string> textFileReader;
     private readonly ITextParser textParser;
 
     public DrawTagCloudAction(
