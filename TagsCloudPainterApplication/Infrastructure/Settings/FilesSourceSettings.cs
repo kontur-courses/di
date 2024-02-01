@@ -8,7 +8,7 @@ public class FilesSourceSettings
 
     public FilesSourceSettings(AppSettings settings)
     {
-        BoringTextFilePath = @$"{Environment.CurrentDirectory}..\..\..\..\" + settings.boringTextFilePath;
+        BoringTextFilePath = settings.boringTextFilePath;
     }
 
     public string BoringTextFilePath
