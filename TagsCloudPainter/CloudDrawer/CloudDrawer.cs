@@ -5,7 +5,7 @@ using TagsCloudPainter.Settings.Tag;
 
 namespace TagsCloudPainter.Drawer;
 
-public class CloudDrawer
+public class CloudDrawer : ICloudDrawer
 {
     private readonly ICloudSettings cloudSettings;
     private readonly ITagSettings tagSettings;

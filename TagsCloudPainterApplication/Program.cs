@@ -66,7 +66,7 @@ public class TagsCloudPainterLibModule : Module
         builder.RegisterType<SpiralPointerSettings>().As<ISpiralPointerSettings>().SingleInstance();
         builder.RegisterType<CloudSettings>().As<ICloudSettings>().SingleInstance();
 
-        builder.RegisterType<CloudDrawer>().AsSelf().SingleInstance();
+        builder.RegisterType<CloudDrawer>().As<ICloudDrawer>().SingleInstance();
         builder.RegisterType<ArchimedeanSpiralPointer>().As<IFormPointer>();
         builder.RegisterType<TagsCloudLayouter>().As<ICloudLayouter>();
         builder.RegisterType<TagsBuilder>().As<ITagsBuilder>().SingleInstance();

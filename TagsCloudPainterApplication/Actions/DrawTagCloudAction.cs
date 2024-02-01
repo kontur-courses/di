@@ -14,7 +14,7 @@ namespace TagsCloudPainterApplication.Actions;
 
 public class DrawTagCloudAction : IUiAction
 {
-    private readonly CloudDrawer cloudDrawer;
+    private readonly ICloudDrawer cloudDrawer;
     private readonly ICloudLayouter cloudLayouter;
     private readonly IFormatFileReader<string> textFileReader;
     private readonly IFilesSourceSettings filesSourceSettings;
@@ -30,7 +30,7 @@ public class DrawTagCloudAction : IUiAction
         ITagsCloudSettings tagsCloudSettings,
         IFilesSourceSettings filesSourceSettings,
         IImageHolder imageHolder,
-        CloudDrawer cloudDrawer,
+        ICloudDrawer cloudDrawer,
         ICloudLayouter cloudLayouter,
         ITagsBuilder tagsBuilder,
         ITextParser textParser,

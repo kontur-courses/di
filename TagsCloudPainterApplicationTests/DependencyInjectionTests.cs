@@ -51,7 +51,7 @@ public class DependencyInjectionTests
     private static IEnumerable<TestCaseData> SingleInstanceDependencesTypes => new[]
     {
         new TestCaseData(typeof(ITagSettings)),
-        new TestCaseData(typeof(CloudDrawer)),
+        new TestCaseData(typeof(ICloudDrawer)),
         new TestCaseData(typeof(IFormatFileReader<string>)),
         new TestCaseData(typeof(ITextParser)),
         new TestCaseData(typeof(ITagsBuilder)),

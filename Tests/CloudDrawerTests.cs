@@ -18,7 +18,7 @@ public class CloudDrawerTests
         drawer = new CloudDrawer(tagSettings, cloudSettings);
     }
 
-    private CloudDrawer drawer;
+    private ICloudDrawer drawer;
 
     private static IEnumerable<TestCaseData> DrawArgumentException => new[]
     {
