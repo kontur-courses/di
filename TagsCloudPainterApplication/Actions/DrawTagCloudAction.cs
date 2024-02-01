@@ -13,7 +13,7 @@ public class DrawTagCloudAction : IUiAction
 {
     private readonly CloudDrawer cloudDrawer;
     private readonly ICloudLayouter cloudLayouter;
-    private readonly IFileReader fileReader;
+    private readonly IFormatFileReader<string> textFileReader;
     private readonly FilesSourceSettings filesSourceSettings;
     private readonly IImageHolder imageHolder;
     private readonly ImageSettings imageSettings;
@@ -31,14 +31,14 @@ public class DrawTagCloudAction : IUiAction
         ICloudLayouter cloudLayouter,
         ITagsBuilder tagsBuilder,
         ITextParser textParser,
-        IFileReader fileReader,
+        IFormatFileReader<string> textFileReader,
         Palette palette)
     {
         this.cloudDrawer = cloudDrawer ?? throw new ArgumentNullException(nameof(cloudDrawer));
         this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
         this.tagsBuilder = tagsBuilder ?? throw new ArgumentNullException(nameof(tagsBuilder));
         this.textParser = textParser ?? throw new ArgumentNullException(nameof(textParser));
-        this.fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+        this.textFileReader = textFileReader ?? throw new ArgumentNullException(nameof(textFileReader));
         this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
         this.tagsCloudSettings = tagsCloudSettings ?? throw new ArgumentNullException(nameof(tagsCloudSettings));
         this.imageHolder = imageHolder ?? throw new ArgumentNullException(nameof(imageHolder));
@@ -62,8 +62,8 @@ public class DrawTagCloudAction : IUiAction
         tagsCloudSettings.CloudSettings.BackgroundColor = palette.BackgroundColor;
         tagsCloudSettings.TagSettings.TagColor = palette.PrimaryColor;
 
-        var wordsText = fileReader.ReadFile(wordsFilePath);
-        tagsCloudSettings.TextSettings.BoringText = fileReader.ReadFile(filesSourceSettings.BoringTextFilePath);
+        var wordsText = textFileReader.ReadFile(wordsFilePath);
+        tagsCloudSettings.TextSettings.BoringText = textFileReader.ReadFile(filesSourceSettings.BoringTextFilePath);
         var parsedWords = textParser.ParseText(wordsText);
         var cloud = GetCloud(parsedWords);
         DrawCloud(cloud);

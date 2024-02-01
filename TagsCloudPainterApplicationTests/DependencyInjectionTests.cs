@@ -47,7 +47,7 @@ public class DependencyInjectionTests
     {
         new TestCaseData(typeof(TagSettings)),
         new TestCaseData(typeof(CloudDrawer)),
-        new TestCaseData(typeof(IFileReader)),
+        new TestCaseData(typeof(IFormatFileReader<string>)),
         new TestCaseData(typeof(ITextParser)),
         new TestCaseData(typeof(ITagsBuilder)),
         new TestCaseData(typeof(TextSettings)),

@@ -8,10 +8,11 @@ public class TextFileReaderTests
     [SetUp]
     public void Setup()
     {
-        fileReader = new TextFileReader();
+        var fileReaders = new List<IFileReader>() { new TxtFileReader(), new DocFileReader()};
+        textFileReader = new TextFileReader(fileReaders);
     }
 
-    private TextFileReader fileReader;
+    private TextFileReader textFileReader;
 
     private static IEnumerable<TestCaseData> ReadTextFiles => new[]
     {
@@ -35,12 +36,12 @@ public class TextFileReaderTests
     [TestCaseSource(nameof(ReadTextFiles))]
     public string ReadFile_ShouldReturnFileText(string path)
     {
-        return fileReader.ReadFile(path);
+        return textFileReader.ReadFile(path);
     }
 
     [Test]
     public void ReadFile_ThrowsFileNotFoundExceptio_WhenPassedNonexistentPath()
     {
-        Assert.Throws<FileNotFoundException>(() => fileReader.ReadFile(""));
+        Assert.Throws<FileNotFoundException>(() => textFileReader.ReadFile(""));
     }
 }

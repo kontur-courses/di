@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using FakeItEasy;
 using FluentAssertions;
 using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Extensions;
@@ -15,11 +16,13 @@ public class TagsCloudLayouterTests
     [SetUp]
     public void Setup()
     {
-        var cloudSettings = new Lazy<CloudSettings>(new CloudSettings { CloudCenter = new Point(0, 0) });
+        var cloudSettings = new CloudSettings { CloudCenter = new Point(0, 0) };
         tagSettings = new TagSettings { TagFontSize = 32 };
         var pointerSettings = new SpiralPointerSettings { AngleConst = 1, RadiusConst = 0.5, Step = 0.1 };
-        var formPointer = new ArchimedeanSpiralPointer(cloudSettings.Value, pointerSettings);
-        stringSizer = new StringSizer();
+        var formPointer = new ArchimedeanSpiralPointer(cloudSettings, pointerSettings);
+        stringSizer = A.Fake<IStringSizer>();
+        A.CallTo(() => stringSizer.GetStringSize(A<string>.Ignored, A<string>.Ignored, A<float>.Ignored))
+            .Returns(new Size(10,10));
         tagsCloudLayouter = new TagsCloudLayouter(cloudSettings, formPointer, tagSettings, stringSizer);
     }
 
@@ -29,13 +32,17 @@ public class TagsCloudLayouterTests
 
     private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]
     {
-        new TestCaseData(new Tag("das", 0, 1)).SetName("WhenGivenTagWithFontSizeLessThanOne")
+        new TestCaseData(new Size(0,10)).SetName("WidthNotPossitive"),
+        new TestCaseData(new Size(10,0)).SetName("HeightNotPossitive"),
+        new TestCaseData(new Size(0,0)).SetName("HeightAndWidthNotPossitive"),
     };
 
     [TestCaseSource(nameof(PutNextTagArgumentException))]
-    public void PutNextRectangle_ShouldThrowArgumentException(Tag tag)
+    public void PutNextRectangle_ShouldThrowArgumentException_WhenGivenTagWith(Size size)
     {
-        Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutNextTag(tag));
+        A.CallTo(() => stringSizer.GetStringSize(A<string>.Ignored, A<string>.Ignored, A<float>.Ignored))
+            .Returns(size);
+        Assert.Throws<ArgumentException>(() => tagsCloudLayouter.PutNextTag(new Tag("a", 2, 1)));
     }
 
     [Test]

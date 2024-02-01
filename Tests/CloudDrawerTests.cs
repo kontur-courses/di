@@ -22,15 +22,15 @@ public class CloudDrawerTests
     private static IEnumerable<TestCaseData> DrawArgumentException => new[]
     {
         new TestCaseData(new TagsCloud(new Point(0, 0),
-                new Dictionary<Tag, Rectangle> { { new Tag("a", 1, 1), new(1, 1, 1, 1) } }), 0, 1)
+                new List<(Tag, Rectangle)> { (new Tag("a", 1, 1), new(1, 1, 1, 1) )} ), 0, 1)
             .SetName("WhenGivenNotPositiveImageWidth"),
         new TestCaseData(new TagsCloud(new Point(0, 0),
-                new Dictionary<Tag, Rectangle> { { new Tag("a", 1, 1), new(1, 1, 1, 1) } }), 1, 0)
+                new List <(Tag, Rectangle) > {(new Tag("a", 1, 1), new(1, 1, 1, 1)) }), 1, 0)
             .SetName("WhenGivenNotPositiveImageHeight"),
         new TestCaseData(new TagsCloud(new Point(0, 0),
-                new Dictionary<Tag, Rectangle> { { new Tag("a", 1, 1), new(1, 1, 1, 1) } }), 0, 0)
+                new List <(Tag, Rectangle) > {(new Tag("a", 1, 1), new(1, 1, 1, 1)) }), 0, 0)
             .SetName("WhenGivenNotPositiveImageHeightAndWidth"),
-        new TestCaseData(new TagsCloud(new Point(0, 0), new Dictionary<Tag, Rectangle>()), 1, 1)
+        new TestCaseData(new TagsCloud(new Point(0, 0), new List<(Tag, Rectangle)>()), 1, 1)
             .SetName("WhenGivenCloudWithEmptyTagsDictionary")
     };
 
@@ -43,13 +43,13 @@ public class CloudDrawerTests
     private static IEnumerable<TestCaseData> DrawNoException => new[]
     {
         new TestCaseData(new TagsCloud(new Point(5, 5),
-                new Dictionary<Tag, Rectangle> { { new Tag("abcdadg", 10, 1), new(5, 5, 20, 3) } }), 10, 10)
+                new List<(Tag, Rectangle)> { ( new Tag("abcdadg", 10, 1), new(5, 5, 20, 3) ) }), 10, 10)
             .SetName("WhenCloudWidthIsGreaterThanImageWidth"),
         new TestCaseData(new TagsCloud(new Point(5, 5),
-                new Dictionary<Tag, Rectangle> { { new Tag("abcdadg", 10, 1), new(5, 5, 3, 20) } }), 10, 10)
+                new List <(Tag, Rectangle) > {(new Tag("abcdadg", 10, 1), new(5, 5, 3, 20)) }), 10, 10)
             .SetName("WhenCloudHeightIsGreaterThanImageHeight"),
         new TestCaseData(new TagsCloud(new Point(5, 5),
-                new Dictionary<Tag, Rectangle> { { new Tag("abcdadg", 10, 1), new(5, 5, 20, 20) } }), 10, 10)
+                new List <(Tag, Rectangle) > {(new Tag("abcdadg", 10, 1), new(5, 5, 20, 20)) }), 10, 10)
             .SetName("WhenCloudIsBiggerThanImage")
     };
 

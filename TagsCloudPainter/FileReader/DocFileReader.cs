@@ -2,8 +2,10 @@
 
 namespace TagsCloudPainter.FileReader;
 
-internal class DocFileReader : IFileReader
+public class DocFileReader : IFileReader
 {
+    public HashSet<string> SupportedExtensions => new() { ".doc", ".docx" };
+
     public string ReadFile(string path)
     {
         var doc = new Document();

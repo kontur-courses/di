@@ -66,7 +66,9 @@ public class TagsCloudPainterLibModule : Module
         builder.RegisterType<TagsCloudLayouter>().As<ICloudLayouter>();
         builder.RegisterType<TagsBuilder>().As<ITagsBuilder>().SingleInstance();
         builder.RegisterType<BoringTextParser>().As<ITextParser>().SingleInstance();
-        builder.RegisterType<TextFileReader>().As<IFileReader>().SingleInstance();
+        builder.RegisterType<TextFileReader>().As<IFormatFileReader<string>>().SingleInstance();
+        builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
+        builder.RegisterType<DocFileReader>().As<IFileReader>().SingleInstance();
         builder.RegisterType<StringSizer>().As<IStringSizer>().SingleInstance();
     }
 }

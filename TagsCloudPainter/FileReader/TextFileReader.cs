@@ -1,21 +1,25 @@
 ﻿namespace TagsCloudPainter.FileReader;
 
-public class TextFileReader : IFileReader
+public class TextFileReader : IFormatFileReader<string>
 {
-    private readonly DocFileReader docFileReader = new();
-    private readonly TxtFileReader txtFileReader = new();
+    private readonly IEnumerable<IFileReader> fileReaders;
+
+    public TextFileReader(IEnumerable<IFileReader> fileReaders)
+    {
+        this.fileReaders = fileReaders;
+    }
 
     public string ReadFile(string path)
     {
         if (!File.Exists(path))
             throw new FileNotFoundException();
 
-        return Path.GetExtension(path) switch
-        {
-            ".txt" => txtFileReader.ReadFile(path),
-            ".doc" => docFileReader.ReadFile(path),
-            ".docx" => docFileReader.ReadFile(path),
-            _ => throw new ArgumentException("Incorrect file extension. Supported file extensions: txt, doc, docx")
-        };
+        var fileExtension = Path.GetExtension(path);
+        var fileReader = fileReaders.FirstOrDefault(fileReader => fileReader.SupportedExtensions.Contains(fileExtension));
+
+        return fileReader is not null 
+            ? fileReader.ReadFile(path) 
+            : throw new ArgumentException($"Incorrect file extension {fileExtension}. " +
+            $"Supported file extensions: txt, doc, docx");
     }
 }
