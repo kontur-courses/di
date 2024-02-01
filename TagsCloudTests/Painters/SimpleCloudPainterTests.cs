@@ -16,7 +16,7 @@ public class SimpleCloudPainterTests
     public void SetUp()
     {
         var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin", "");
-        var options = new Options() { OutputFile = Path.Combine(projectDirectory, "Painters", "images", FileName) };
+        var options = new Options() { OutputFile = Path.Combine(projectDirectory, "Painters", "images", FileName), Background = "Empty"};
         testFilePath = options.OutputFile;
         var color = new Mock<IColorGenerator>();
         color.Setup(c => c.GetTagColor(It.IsAny<Tag>())).Returns(Color.Black);
@@ -38,7 +38,7 @@ public class SimpleCloudPainterTests
     public void CloudLayouterDrawer_Initialize_Throws_ArgumentException_When_Rectangles_length_Is_Zero()
     {
         var layouter = new Mock<ILayouter>();
-        layouter.Setup(l => l.GetTagsCollection()).Returns(new List<Tag>());
+        layouter.Setup(l => l.GetTagsCollection()).Returns(new List<Tag>(){});
         layouter.Setup(l => l.GetImageSize()).Returns(new Size(500, 500));
         Assert.Throws<ArgumentException>(() => painter.DrawCloud(layouter.Object));
     }
