@@ -15,7 +15,7 @@ public class OpacityColorProvider : IColorProvider
     {
         var baseC = options.ColorScheme.FontColor;
 
-        var opacity = 255 * 0.2;
+        var opacity = 255 * 0.4;
         opacity += 255 * 0.5 * TagCloudHelpers.GetMultiplier(
             layout.FontSize, options.MinFontSize, options.MaxFontSize);
 

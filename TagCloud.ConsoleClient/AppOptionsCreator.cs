@@ -36,7 +36,7 @@ public static class AppOptionsCreator
 
         return new RenderOptions()
         {
-            ColorScheme = ColorScheme.WarmScheme,
+            ColorScheme = ColorScheme.CalmScheme,
             FontBase = CreateFontBase(options.FontFamily ?? "Arial"),
             ImageSize = ParseSize(options.ImageSize),
             MinFontSize = fontSizeSpan.min,

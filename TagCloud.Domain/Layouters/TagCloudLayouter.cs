@@ -7,10 +7,8 @@ public class TagCloudLayouter : ITagCloudLayouter
     private List<RectangleF> rectangles = new List<RectangleF>();
     private readonly PointF center;
     private RectangleF currentRectangle;
-    private int segmentsCount = 2;
+    private int segmentsCount = 4;
     private List<Vector2> directions = new List<Vector2>();
-
-    public Rectangle[] Rectangles => rectangles.Select(Rectangle.Truncate).ToArray();
 
     public TagCloudLayouter(TagCloudOptions options)
     {
@@ -89,17 +87,15 @@ public class TagCloudLayouter : ITagCloudLayouter
     {
         var directions = new List<Vector2>();
 
-        var step = 90f / segmentsCount;
+        var step = Math.PI / 2 / segmentsCount;
 
         var multipliers = new[] { -1, 1, 1, -1, -1 };
 
-        for (var angle = step; angle <= 90 - step; angle += step)
+        for (var angle = step; angle <= Math.PI / 2 - step; angle += step)
         {
-            var radians = angle * Math.PI / 180;
-            var tangent = Math.Tan(radians);
             // координаты на первой четверти единичной окружности
-            var x = 1f;
-            var y = (float)(tangent * x);
+            var x = (float)Math.Cos(angle);
+            var y = (float)Math.Sin(angle);
 
             // добавление координат соответствующих точек на всех четвертях окружности
             for (var j = 0; j < multipliers.Length - 1; j++)

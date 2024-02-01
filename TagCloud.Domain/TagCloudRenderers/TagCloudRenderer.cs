@@ -6,19 +6,14 @@ public class TagCloudRenderer : ITagCloudRenderer
     private readonly RenderOptions options;
     private readonly IColorProvider colorProvider;
 
-    private readonly Size imageSize;
     private readonly Graphics graphics;
     private readonly Bitmap bitmap;
-    private readonly Font fontBase;
+
 
     public TagCloudRenderer(RenderOptions options, IColorProvider colorProvider)
     {
-        imageSize = options.ImageSize;
-
-        bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+        bitmap = new Bitmap(options.ImageSize.Width, options.ImageSize.Height);
         graphics = Graphics.FromImage(bitmap);
-
-        fontBase = options.FontBase;
 
         this.colorProvider = colorProvider;
         this.options = options;
@@ -26,9 +21,10 @@ public class TagCloudRenderer : ITagCloudRenderer
 
     public Size GetStringSize(string str, int fontSize)
     {
-        var newFont = new Font(fontBase.Name, fontSize, fontBase.Style);
+        var newFont = GetFontWithAdjastentSize(fontSize);
         return Size.Truncate(graphics.MeasureString(str, newFont));
     }
+    private Font GetFontWithAdjastentSize(int fontSize) => new Font(options.FontBase.Name, fontSize, options.FontBase.Style);
 
     public Bitmap Render(WordLayout[] wordLayouts)
     {
@@ -37,7 +33,7 @@ public class TagCloudRenderer : ITagCloudRenderer
         foreach (var layout in wordLayouts) 
         {
             var brush = new SolidBrush(colorProvider.GetColor(layout));
-            var adjFont = new Font(fontBase.Name, layout.FontSize, fontBase.Style);
+            var adjFont = GetFontWithAdjastentSize(layout.FontSize);
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
             graphics.DrawString(layout.Content, adjFont, brush, layout.Box.Location);
         }
