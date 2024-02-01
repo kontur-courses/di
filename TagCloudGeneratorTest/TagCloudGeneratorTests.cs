@@ -21,7 +21,7 @@ namespace TagCloudGeneratorTest
         {
             textProcessor = new TextProcessor();
             counter = new WordCounter();
-            boringWordsTextProcessor = new BoringWordsTextProcessor(textProcessor);
+            boringWordsTextProcessor = new BoringWordsTextProcessor();
             textReader = new TextReader();            
         }
 
@@ -90,7 +90,7 @@ namespace TagCloudGeneratorTest
         [TestOf(nameof(TagCloudDrawer))]
         public void ShouldReturnCorrectImage()
         {
-            var currentBitmap = GetCurrentImage();           
+            var currentBitmap = GetCurrentImage();
 
             var pathToImage = "../../../TestsData/ForTests.png";
             Bitmap correctBitmap = new Bitmap(pathToImage);
@@ -108,18 +108,19 @@ namespace TagCloudGeneratorTest
                             result = false;
                     }
             }
-            result.Should().BeTrue();   
+            result.Should().BeTrue();
         }
 
         private Bitmap GetCurrentImage()
         {
-            tagCloudDrawer = new TagCloudDrawer(counter, boringWordsTextProcessor, textReader);
+            var processors = new []{(ITextProcessor) textProcessor, boringWordsTextProcessor};
+            tagCloudDrawer = new TagCloudDrawer(counter, processors , textReader);
             var filePath = "../../../TestsData/test7.txt";
             var settings = new TagsCloudVisualization.VisualizingSettings();
             settings.ImageSize = new Size(1300, 1300);
             settings.PointDistributor = new Spiral(new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2), 1, 0.1);
             settings.ImageName = "currentBitmap.png";
-
+       
             return tagCloudDrawer.DrawWordsCloud(filePath, settings);
         }
     }

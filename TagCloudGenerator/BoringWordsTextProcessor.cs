@@ -2,15 +2,10 @@
 
 namespace TagCloudGenerator
 {
-    public class BoringWordsTextProcessor : TextProcessor
-    {
-        private readonly ITextProcessor textProcessor;
-        public BoringWordsTextProcessor(ITextProcessor textProcessor) { this.textProcessor = textProcessor; }
-
-        public override IEnumerable<string> ProcessText(IEnumerable<string> text)
+    public class BoringWordsTextProcessor : ITextProcessor
+    {         
+        public IEnumerable<string> ProcessText(IEnumerable<string> text)
         {
-            text = textProcessor.ProcessText(text);
-
             var wordList = WordList.CreateFromFiles(
                 "../../../Dictionaries/English (American).dic",
                 "../../../Dictionaries/English (American).aff");

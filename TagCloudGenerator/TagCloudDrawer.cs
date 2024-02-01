@@ -7,13 +7,13 @@ namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
-        private ITextProcessor textProcessor;
+        private IEnumerable<ITextProcessor> textProcessors;
         private WordCounter wordCounter;
         private TextReader textReader;
 
-        public TagCloudDrawer(WordCounter wordCounter, ITextProcessor textProcessor, TextReader textReader) 
+        public TagCloudDrawer(WordCounter wordCounter, IEnumerable<ITextProcessor> textProcessors, TextReader textReader) 
         {
-            this.textProcessor = textProcessor;
+            this.textProcessors = textProcessors;
             this.wordCounter = wordCounter;
             this.textReader = textReader;
         }
@@ -23,8 +23,11 @@ namespace TagCloudGenerator
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
            
-            var words = textReader.ReadTextFromFile(filePath);        
-            words = textProcessor.ProcessText(words);
+            var words = textReader.ReadTextFromFile(filePath);   
+            
+            foreach (var processor in textProcessors)
+                words = processor.ProcessText(words).ToArray();
+          
             var wordsWithCount = wordCounter.CountWords(words);
 
             ImageScaler imageScaler = new ImageScaler(wordsWithCount);

@@ -38,17 +38,17 @@ namespace TagsCloudVisualization
             }
                
             var coefficient = GetScaleCoefficients(unscaledImageSize, settings.ImageSize);
-            graphics.ScaleTransform(coefficient.sx, coefficient.sy);
+            graphics.ScaleTransform(coefficient, coefficient);
          
             return bitmap;
         }
 
-        private (float sx, float sy) GetScaleCoefficients(Size unscaledImageSize, Size imageSize)
+        private float GetScaleCoefficients(Size unscaledImageSize, Size imageSize)
         {
             var sx = (float)unscaledImageSize.Width / imageSize.Width;
             var sy = (float)unscaledImageSize.Height / imageSize.Height;
 
-            return (sx, sy);
+            return (float)Math.Max(sx, sy);
         }
 
         public Size GetImageSizeWithRealSizeRectangles(RectangleF[] rectangles, Size smallestSizeOfRectangles)
