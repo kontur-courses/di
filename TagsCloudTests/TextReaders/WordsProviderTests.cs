@@ -7,7 +7,7 @@ using TagsCloud.WordValidators;
 namespace TagsCloudTests;
 
 [TestFixture]
-public class FileTextReaderTests
+public class WordsProviderTests
 {
     private Mock<IWordValidator> validator;
 
@@ -25,7 +25,7 @@ public class FileTextReaderTests
         var options = new Options();
         options.InputFile =
             Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, "input.txt");
-        var textReader = new FileTextReader(validator.Object, options);
+        var textReader = new WordsProvider(validator.Object, options);
         Assert.Throws<FileNotFoundException>(() => textReader.GetWords());
     }
 
@@ -35,7 +35,7 @@ public class FileTextReaderTests
         var options = new Options();
         options.InputFile =
             Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin",""),"TextReaders", "input.txt");
-        var words = new FileTextReader(validator.Object, options).GetWords();
+        var words = new WordsProvider(validator.Object, options).GetWords();
         var dict = new Dictionary<string, int>()
         {
             { "ренат", 3 }, 
