@@ -16,7 +16,7 @@ public static class ContainerConfig
 {
     public static IContainer Configure(Options options)
     {
-        var builder =  new ContainerBuilder();
+        var builder = new ContainerBuilder();
         builder.RegisterInstance(options).AsSelf();
         builder.RegisterType<RandomColorGenerator>().As<IColorGenerator>().SingleInstance();
         builder.RegisterType<SpiralDistributor>().As<IDistributor>();
@@ -28,5 +28,4 @@ public static class ContainerConfig
         builder.RegisterType<App.App>().As<IApp>();
         return builder.Build();
     }
-    
 }

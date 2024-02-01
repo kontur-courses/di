@@ -3,7 +3,7 @@ using TagsCloud.ConsoleCommands;
 
 namespace TagsCloud.WordSizeCalculators;
 
-public class SimpleWordFontCalculator: IWordFontCalculator
+public class SimpleWordFontCalculator : IWordFontCalculator
 {
     private readonly string font;
 
@@ -11,6 +11,7 @@ public class SimpleWordFontCalculator: IWordFontCalculator
     {
         this.font = options.TagsFont;
     }
+
     public Font GetWordFont(string word, int count)
     {
         return new Font(font, count);

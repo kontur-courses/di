@@ -34,11 +34,12 @@ public class WordsProviderTests
     {
         var options = new Options();
         options.InputFile =
-            Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin",""),"TextReaders", "input.txt");
+            Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin", ""),
+                "TextReaders", "input.txt");
         var words = new WordsProvider(validator.Object, options).GetWords();
         var dict = new Dictionary<string, int>()
         {
-            { "ренат", 3 }, 
+            { "ренат", 3 },
             { "привет", 4 },
             { "дом", 1 },
             { "стол", 2 }

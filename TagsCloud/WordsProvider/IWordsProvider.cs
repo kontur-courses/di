@@ -4,5 +4,5 @@ namespace TagsCloud.TextReaders;
 
 public interface IWordsProvider
 {
-    public Dictionary<string,int> GetWords();
+    public Dictionary<string, int> GetWords();
 }

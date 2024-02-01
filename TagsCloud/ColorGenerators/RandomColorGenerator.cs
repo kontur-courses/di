@@ -3,7 +3,7 @@ using TagsCloud.Entities;
 
 namespace TagsCloud.ColorGenerators;
 
-public class RandomColorGenerator: IColorGenerator
+public class RandomColorGenerator : IColorGenerator
 {
     private static readonly Random Random = new Random();
 

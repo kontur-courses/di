@@ -4,5 +4,5 @@ namespace TagsCloud.Distributors;
 
 public interface IDistributor
 {
-     Point GetNextPosition();
+    Point GetNextPosition();
 }

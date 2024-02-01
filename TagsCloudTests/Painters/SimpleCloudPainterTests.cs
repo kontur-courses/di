@@ -15,8 +15,8 @@ public class SimpleCloudPainterTests
     [SetUp]
     public void SetUp()
     {
-        var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin","");
-        var options = new Options(){OutputFile = Path.Combine(projectDirectory, "Painters", "images", FileName)};
+        var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin", "");
+        var options = new Options() { OutputFile = Path.Combine(projectDirectory, "Painters", "images", FileName) };
         testFilePath = options.OutputFile;
         var color = new Mock<IColorGenerator>();
         color.Setup(c => c.GetTagColor(It.IsAny<Tag>())).Returns(Color.Black);
@@ -49,7 +49,7 @@ public class SimpleCloudPainterTests
         var layouter = new Mock<ILayouter>();
         layouter.Setup(l => l.GetTagsCollection()).Returns(new List<Tag>()
         {
-            new Tag(new Rectangle(0, 0, 5, 5), new Font("Arial",10),"Hello")
+            new Tag(new Rectangle(0, 0, 5, 5), new Font("Arial", 10), "Hello")
         });
         layouter.Setup(l => l.GetImageSize()).Returns(new Size(500, 500));
         painter.DrawCloud(layouter.Object);
