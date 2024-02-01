@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudPainter.Settings;
 
-public class TextSettings
+public class TextSettings : ITextSettings
 {
     public string BoringText { get; set; } = string.Empty;
 }

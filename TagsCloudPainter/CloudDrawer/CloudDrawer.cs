@@ -1,15 +1,16 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.Tag;
 
 namespace TagsCloudPainter.Drawer;
 
 public class CloudDrawer
 {
-    private readonly CloudSettings cloudSettings;
-    private readonly TagSettings tagSettings;
+    private readonly ICloudSettings cloudSettings;
+    private readonly ITagSettings tagSettings;
 
-    public CloudDrawer(TagSettings tagSettings, CloudSettings cloudSettings)
+    public CloudDrawer(ITagSettings tagSettings, ICloudSettings cloudSettings)
     {
         this.tagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
         this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));

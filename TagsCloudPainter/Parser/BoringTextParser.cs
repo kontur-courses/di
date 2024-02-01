@@ -5,9 +5,9 @@ namespace TagsCloudPainter.Parser;
 public class BoringTextParser : ITextParser
 {
     private static readonly string[] _separators = [" ", ". ", ", ", "; ", "-", "—", Environment.NewLine];
-    private readonly TextSettings textSettings;
+    private readonly ITextSettings textSettings;
 
-    public BoringTextParser(TextSettings textSettings)
+    public BoringTextParser(ITextSettings textSettings)
     {
         this.textSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
     }

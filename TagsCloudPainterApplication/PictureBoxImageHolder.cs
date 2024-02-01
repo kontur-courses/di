@@ -1,15 +1,15 @@
 using System.Drawing.Imaging;
 using System.Reflection;
 using TagsCloudPainterApplication.Infrastructure;
-using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Infrastructure.Settings.Image;
 
 namespace TagsCloudPainterApplication;
 
 public class PictureBoxImageHolder : PictureBox, IImageHolder
 {
-    private readonly Lazy<ImageSettings> imageSettings;
+    private readonly Lazy<IImageSettings> imageSettings;
 
-    public PictureBoxImageHolder(Lazy<ImageSettings> imageSettings)
+    public PictureBoxImageHolder(Lazy<IImageSettings> imageSettings)
     {
         this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
     }

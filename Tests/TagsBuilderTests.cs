@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainter.Tags;
 
 namespace TagsCloudPainterTests;

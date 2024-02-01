@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using TagsCloudPainter;
 using TagsCloudPainter.Drawer;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainter.Tags;
 
 namespace TagsCloudPainterTests;

@@ -6,6 +6,9 @@ using TagsCloudPainter.Parser;
 using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication.Infrastructure;
 using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Infrastructure.Settings.FilesSource;
+using TagsCloudPainterApplication.Infrastructure.Settings.Image;
+using TagsCloudPainterApplication.Infrastructure.Settings.TagsCloud;
 
 namespace TagsCloudPainterApplication.Actions;
 
@@ -14,18 +17,18 @@ public class DrawTagCloudAction : IUiAction
     private readonly CloudDrawer cloudDrawer;
     private readonly ICloudLayouter cloudLayouter;
     private readonly IFormatFileReader<string> textFileReader;
-    private readonly FilesSourceSettings filesSourceSettings;
+    private readonly IFilesSourceSettings filesSourceSettings;
     private readonly IImageHolder imageHolder;
-    private readonly ImageSettings imageSettings;
+    private readonly IImageSettings imageSettings;
     private readonly Palette palette;
     private readonly ITagsBuilder tagsBuilder;
-    private readonly TagsCloudSettings tagsCloudSettings;
+    private readonly ITagsCloudSettings tagsCloudSettings;
     private readonly ITextParser textParser;
 
     public DrawTagCloudAction(
-        ImageSettings imageSettings,
-        TagsCloudSettings tagsCloudSettings,
-        FilesSourceSettings filesSourceSettings,
+        IImageSettings imageSettings,
+        ITagsCloudSettings tagsCloudSettings,
+        IFilesSourceSettings filesSourceSettings,
         IImageHolder imageHolder,
         CloudDrawer cloudDrawer,
         ICloudLayouter cloudLayouter,

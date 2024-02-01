@@ -4,7 +4,9 @@ using FluentAssertions;
 using TagsCloudPainter.CloudLayouter;
 using TagsCloudPainter.Extensions;
 using TagsCloudPainter.FormPointer;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.FormPointer;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainter.Sizer;
 using TagsCloudPainter.Tags;
 
@@ -27,7 +29,7 @@ public class TagsCloudLayouterTests
     }
 
     private TagsCloudLayouter tagsCloudLayouter;
-    private TagSettings tagSettings;
+    private ITagSettings tagSettings;
     private IStringSizer stringSizer;
 
     private static IEnumerable<TestCaseData> PutNextTagArgumentException => new[]

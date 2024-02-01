@@ -1,12 +1,12 @@
-﻿using TagsCloudPainter.Settings;
+﻿using TagsCloudPainter.Settings.Tag;
 
 namespace TagsCloudPainter.Tags;
 
 public class TagsBuilder : ITagsBuilder
 {
-    private readonly TagSettings _settings;
+    private readonly ITagSettings _settings;
 
-    public TagsBuilder(TagSettings settings)
+    public TagsBuilder(ITagSettings settings)
     {
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     }

@@ -1,14 +1,14 @@
 ﻿using TagsCloudPainterApplication.Properties;
 
-namespace TagsCloudPainterApplication.Infrastructure.Settings;
+namespace TagsCloudPainterApplication.Infrastructure.Settings.FilesSource;
 
-public class FilesSourceSettings
+public class FilesSourceSettings : IFilesSourceSettings
 {
     private string boringTextFilePath;
 
-    public FilesSourceSettings(AppSettings settings)
+    public FilesSourceSettings(IAppSettings settings)
     {
-        BoringTextFilePath = settings.boringTextFilePath;
+        BoringTextFilePath = settings.BoringTextFilePath;
     }
 
     public string BoringTextFilePath

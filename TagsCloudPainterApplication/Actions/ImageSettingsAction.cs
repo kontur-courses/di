@@ -1,12 +1,13 @@
 ﻿using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Infrastructure.Settings.Image;
 
 namespace TagsCloudPainterApplication.Actions;
 
 public class ImageSettingsAction : IUiAction
 {
-    private readonly ImageSettings imageSettings;
+    private readonly IImageSettings imageSettings;
 
-    public ImageSettingsAction(ImageSettings imageSettings)
+    public ImageSettingsAction(IImageSettings imageSettings)
     {
         this.imageSettings = imageSettings ?? throw new ArgumentNullException(nameof(imageSettings));
     }

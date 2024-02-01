@@ -7,113 +7,141 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TagsCloudPainterApplication.Properties {
-    
-    
+namespace TagsCloudPainterApplication.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
-    public sealed partial class AppSettings : global::System.Configuration.ApplicationSettingsBase {
-        
+    public sealed partial class AppSettings : global::System.Configuration.ApplicationSettingsBase, IAppSettings
+    {
+
         private static AppSettings defaultInstance = ((AppSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new AppSettings())));
-        
-        public static AppSettings Default {
-            get {
+
+        public static AppSettings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data\\BoringWords.txt")]
-        public string boringTextFilePath {
-            get {
+        public string BoringTextFilePath
+        {
+            get
+            {
                 return ((string)(this["boringTextFilePath"]));
             }
-            set {
+            set
+            {
                 this["boringTextFilePath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("800")]
-        public int imageWidth {
-            get {
+        public int ImageWidth
+        {
+            get
+            {
                 return ((int)(this["imageWidth"]));
             }
-            set {
+            set
+            {
                 this["imageWidth"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("600")]
-        public int imageHeight {
-            get {
+        public int ImageHeight
+        {
+            get
+            {
                 return ((int)(this["imageHeight"]));
             }
-            set {
+            set
+            {
                 this["imageHeight"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("32")]
-        public int tagFontSize {
-            get {
+        public int TagFontSize
+        {
+            get
+            {
                 return ((int)(this["tagFontSize"]));
             }
-            set {
+            set
+            {
                 this["tagFontSize"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Arial")]
-        public string tagFontName {
-            get {
+        public string TagFontName
+        {
+            get
+            {
                 return ((string)(this["tagFontName"]));
             }
-            set {
+            set
+            {
                 this["tagFontName"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
-        public double pointerStep {
-            get {
+        public double PointerStep
+        {
+            get
+            {
                 return ((double)(this["pointerStep"]));
             }
-            set {
+            set
+            {
                 this["pointerStep"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
-        public double pointerRadiusConst {
-            get {
+        public double PointerRadiusConst
+        {
+            get
+            {
                 return ((double)(this["pointerRadiusConst"]));
             }
-            set {
+            set
+            {
                 this["pointerRadiusConst"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double pointerAngleConst {
-            get {
+        public double PointerAngleConst
+        {
+            get
+            {
                 return ((double)(this["pointerAngleConst"]));
             }
-            set {
+            set
+            {
                 this["pointerAngleConst"] = value;
             }
         }

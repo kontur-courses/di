@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using TagsCloudPainter.Extensions;
 using TagsCloudPainter.FormPointer;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainter.Sizer;
 using TagsCloudPainter.Tags;
 
@@ -9,16 +10,16 @@ namespace TagsCloudPainter.CloudLayouter;
 
 public class TagsCloudLayouter : ICloudLayouter
 {
-    private readonly CloudSettings cloudSettings;
+    private readonly ICloudSettings cloudSettings;
     private readonly IFormPointer formPointer;
     private readonly IStringSizer stringSizer;
-    private readonly TagSettings tagSettings;
+    private readonly ITagSettings tagSettings;
     private TagsCloud cloud;
 
     public TagsCloudLayouter(
-        CloudSettings cloudSettings,
+        ICloudSettings cloudSettings,
         IFormPointer formPointer,
-        TagSettings tagSettings,
+        ITagSettings tagSettings,
         IStringSizer stringSizer)
     {
         this.cloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));

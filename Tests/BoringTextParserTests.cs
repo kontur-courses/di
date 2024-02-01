@@ -15,7 +15,7 @@ public class BoringTextParserTests
         boringTextParser = new BoringTextParser(textSettings);
     }
 
-    private TextSettings textSettings;
+    private ITextSettings textSettings;
     private BoringTextParser boringTextParser;
     private string boringText;
 

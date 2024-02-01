@@ -1,11 +1,11 @@
 using TagsCloudPainterApplication.Actions;
-using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Infrastructure.Settings.Image;
 
 namespace TagsCloudPainterApplication;
 
 public partial class MainForm : Form
 {
-    public MainForm(IUiAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
+    public MainForm(IUiAction[] actions, IImageSettings imageSettings, PictureBoxImageHolder pictureBox)
     {
         ArgumentNullException.ThrowIfNull(actions);
         ArgumentNullException.ThrowIfNull(imageSettings);

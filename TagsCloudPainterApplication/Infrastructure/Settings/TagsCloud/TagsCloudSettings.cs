@@ -1,33 +1,36 @@
 ﻿using System.ComponentModel;
 using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.FormPointer;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainterApplication.Properties;
 
-namespace TagsCloudPainterApplication.Infrastructure.Settings;
+namespace TagsCloudPainterApplication.Infrastructure.Settings.TagsCloud;
 
-public class TagsCloudSettings
+public class TagsCloudSettings : ITagsCloudSettings
 {
     public TagsCloudSettings(
-        CloudSettings cloudSettings,
-        TagSettings tagSettings,
-        SpiralPointerSettings spiralPointerSettings,
-        TextSettings textSettings,
-        AppSettings appSettings)
+        ICloudSettings cloudSettings,
+        ITagSettings tagSettings,
+        ISpiralPointerSettings spiralPointerSettings,
+        ITextSettings textSettings,
+        IAppSettings appSettings)
     {
         CloudSettings = cloudSettings ?? throw new ArgumentNullException(nameof(cloudSettings));
         TagSettings = tagSettings ?? throw new ArgumentNullException(nameof(tagSettings));
         SpiralPointerSettings = spiralPointerSettings ?? throw new ArgumentNullException(nameof(spiralPointerSettings));
         TextSettings = textSettings ?? throw new ArgumentNullException(nameof(textSettings));
-        TagFontSize = appSettings.tagFontSize;
-        TagFontName = appSettings.tagFontName;
-        PointerStep = appSettings.pointerStep;
-        PointerRadiusConst = appSettings.pointerRadiusConst;
-        PointerAngleConst = appSettings.pointerAngleConst;
+        TagFontSize = appSettings.TagFontSize;
+        TagFontName = appSettings.TagFontName;
+        PointerStep = appSettings.PointerStep;
+        PointerRadiusConst = appSettings.PointerRadiusConst;
+        PointerAngleConst = appSettings.PointerAngleConst;
     }
 
-    [Browsable(false)] public CloudSettings CloudSettings { get; }
-    [Browsable(false)] public TagSettings TagSettings { get; }
-    [Browsable(false)] public SpiralPointerSettings SpiralPointerSettings { get; }
-    [Browsable(false)] public TextSettings TextSettings { get; }
+    [Browsable(false)] public ICloudSettings CloudSettings { get; }
+    [Browsable(false)] public ITagSettings TagSettings { get; }
+    [Browsable(false)] public ISpiralPointerSettings SpiralPointerSettings { get; }
+    [Browsable(false)] public ITextSettings TextSettings { get; }
 
     public int TagFontSize
     {

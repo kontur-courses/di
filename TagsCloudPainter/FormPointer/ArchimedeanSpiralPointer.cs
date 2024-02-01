@@ -1,15 +1,16 @@
 ﻿using System.Drawing;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.FormPointer;
 
 namespace TagsCloudPainter.FormPointer;
 
 public class ArchimedeanSpiralPointer : IFormPointer
 {
-    private readonly CloudSettings cloudSettings;
-    private readonly SpiralPointerSettings spiralPointerSettings;
+    private readonly ICloudSettings cloudSettings;
+    private readonly ISpiralPointerSettings spiralPointerSettings;
     private double сurrentDifference;
 
-    public ArchimedeanSpiralPointer(CloudSettings cloudSettings, SpiralPointerSettings spiralPointerSettings)
+    public ArchimedeanSpiralPointer(ICloudSettings cloudSettings, ISpiralPointerSettings spiralPointerSettings)
     {
         if (spiralPointerSettings.Step <= 0
             || spiralPointerSettings.RadiusConst <= 0

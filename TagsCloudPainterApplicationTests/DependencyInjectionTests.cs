@@ -5,11 +5,16 @@ using TagsCloudPainter.FileReader;
 using TagsCloudPainter.FormPointer;
 using TagsCloudPainter.Parser;
 using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.FormPointer;
+using TagsCloudPainter.Settings.Tag;
 using TagsCloudPainter.Tags;
 using TagsCloudPainterApplication;
 using TagsCloudPainterApplication.Actions;
 using TagsCloudPainterApplication.Infrastructure;
-using TagsCloudPainterApplication.Infrastructure.Settings;
+using TagsCloudPainterApplication.Infrastructure.Settings.FilesSource;
+using TagsCloudPainterApplication.Infrastructure.Settings.Image;
+using TagsCloudPainterApplication.Infrastructure.Settings.TagsCloud;
 using TagsCloudPainterApplication.Properties;
 
 namespace TagsCloudPainterApplicationTests;
@@ -45,21 +50,21 @@ public class DependencyInjectionTests
 
     private static IEnumerable<TestCaseData> SingleInstanceDependencesTypes => new[]
     {
-        new TestCaseData(typeof(TagSettings)),
+        new TestCaseData(typeof(ITagSettings)),
         new TestCaseData(typeof(CloudDrawer)),
         new TestCaseData(typeof(IFormatFileReader<string>)),
         new TestCaseData(typeof(ITextParser)),
         new TestCaseData(typeof(ITagsBuilder)),
-        new TestCaseData(typeof(TextSettings)),
-        new TestCaseData(typeof(CloudSettings)),
-        new TestCaseData(typeof(SpiralPointerSettings)),
+        new TestCaseData(typeof(ITextSettings)),
+        new TestCaseData(typeof(ICloudSettings)),
+        new TestCaseData(typeof(ISpiralPointerSettings)),
         new TestCaseData(typeof(Palette)),
-        new TestCaseData(typeof(ImageSettings)),
-        new TestCaseData(typeof(FilesSourceSettings)),
-        new TestCaseData(typeof(TagsCloudSettings)),
+        new TestCaseData(typeof(IImageSettings)),
+        new TestCaseData(typeof(IFilesSourceSettings)),
+        new TestCaseData(typeof(ITagsCloudSettings)),
         new TestCaseData(typeof(PictureBoxImageHolder)),
         new TestCaseData(typeof(IImageHolder)),
-        new TestCaseData(typeof(AppSettings))
+        new TestCaseData(typeof(IAppSettings))
     };
 
     [TestCaseSource(nameof(SingleInstanceDependencesTypes))]

@@ -1,6 +1,7 @@
 using System.Drawing;
 using TagsCloudPainter.FormPointer;
-using TagsCloudPainter.Settings;
+using TagsCloudPainter.Settings.Cloud;
+using TagsCloudPainter.Settings.FormPointer;
 
 namespace TagsCloudPainterTests;
 
