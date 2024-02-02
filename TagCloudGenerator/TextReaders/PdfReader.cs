@@ -4,13 +4,8 @@ namespace TagCloudGenerator.TextReaders
 {
     public class PdfReader : ITextReader
     {
-        public bool IsFileExtension(string filePath)
-        {
-            var extension = Path.GetExtension(filePath);
-
-            return extension == ".pdf";
-        }
-
+        public string GetFileExtension() => ".pdf";
+       
         public IEnumerable<string> ReadTextFromFile(string filePath)
         {
             var text = new List<string>();

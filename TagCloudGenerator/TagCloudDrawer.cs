@@ -26,10 +26,15 @@ namespace TagCloudGenerator
                 throw new ArgumentNullException(nameof(filePath));
 
             var words = new List<string>();
+            var extension = Path.GetExtension(filePath);
+
             foreach (var textReader in textReaders)
-            {
-                if (textReader.IsFileExtension(filePath))
+            {                
+                if (extension == textReader.GetFileExtension())
+                {
                     words = textReader.ReadTextFromFile(filePath).ToList();
+                    break;
+                }                
             }
             
             foreach (var processor in textProcessors)

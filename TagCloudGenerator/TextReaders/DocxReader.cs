@@ -4,12 +4,7 @@ namespace TagCloudGenerator.TextReaders
 {
     public class DocxReader : ITextReader
     {
-        public bool IsFileExtension(string filePath)
-        {
-            var extension = Path.GetExtension(filePath);
-
-            return extension == ".docx";
-        }
+        public string GetFileExtension() => ".docx";
 
         public IEnumerable<string> ReadTextFromFile(string filePath)
         {
