@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagCloud.ConsoleClient": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"text.txt\"\r\n-o \"image.jpeg\"\r\n-c 4000x4000\r\n-s 12000x12000\r\n-F \"Arial\"\r\n-f 30:100"
+    }
+  }
+}
