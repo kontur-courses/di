@@ -2,34 +2,40 @@
 using System.Reflection;
 using TagsCloudVisualization;
 using System.Drawing.Imaging;
+using TagCloudGenerator.TextReaders;
+using TagCloudGenerator.TextProcessors;
 
 namespace TagCloudGenerator
 {
     public class TagCloudDrawer
     {
         private ITextProcessor[] textProcessors;
+        private ITextReader[] textReaders;
         private WordCounter wordCounter;
-        private TextReader textReader;
 
-        public TagCloudDrawer(WordCounter wordCounter, IEnumerable<ITextProcessor> textProcessors, TextReader textReader) 
+        public TagCloudDrawer(WordCounter wordCounter, IEnumerable<ITextProcessor> textProcessors, IEnumerable<ITextReader> textReaders) 
         {
             this.textProcessors = textProcessors.ToArray();
+            this.textReaders = textReaders.ToArray();
             this.wordCounter = wordCounter;
-            this.textReader = textReader;
         }
 
         public Bitmap DrawWordsCloud(string filePath, VisualizingSettings visualizingSettings)
         {          
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
-           
-            var words = textReader.ReadTextFromFile(filePath);   
+
+            var words = new List<string>();
+            foreach (var textReader in textReaders)
+            {
+                if (textReader.IsFileExtension(filePath))
+                    words = textReader.ReadTextFromFile(filePath).ToList();
+            }
             
             foreach (var processor in textProcessors)
-                words = processor.ProcessText(words).ToArray();
+                words = processor.ProcessText(words).ToList();
           
             var wordsWithCount = wordCounter.CountWords(words);
-
             ImageScaler imageScaler = new ImageScaler(wordsWithCount);
             var rectangles = GetRectanglesToDraw(wordsWithCount, visualizingSettings);
 

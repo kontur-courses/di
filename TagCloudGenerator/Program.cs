@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;
 using TagCloudGenerator;
+using TagCloudGenerator.TextProcessors;
+using TagCloudGenerator.TextReaders;
 using TagsCloudVisualization;
 using TagsCloudVisualization.PointDistributors;
 
@@ -25,10 +27,12 @@ public class Program
     {
         var services = new ServiceCollection();
         services.AddTransient<TagCloudDrawer>();
-        services.AddTransient<ITextProcessor,TextProcessor>();
+        services.AddTransient<ITextProcessor,WordsLowerTextProcessor>();
         services.AddTransient<ITextProcessor,BoringWordsTextProcessor>();  
         services.AddTransient<WordCounter>();
-        services.AddTransient<TagCloudGenerator.TextReader>();
+        services.AddTransient<ITextReader, TxtReader>();
+        services.AddTransient<ITextReader, PdfReader>();
+        services.AddTransient<ITextReader, DocxReader>();
         var container = services.BuildServiceProvider();
 
         return container.GetRequiredService<TagCloudDrawer>();

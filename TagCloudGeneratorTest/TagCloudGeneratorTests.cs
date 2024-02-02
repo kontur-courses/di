@@ -5,28 +5,29 @@ using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudVisualization.PointDistributors;
 using System.Linq;
+using TagCloudGenerator.TextReaders;
+using TagCloudGenerator.TextProcessors;
 
 namespace TagCloudGeneratorTest
 {
     public class Tests
     {
-        private TextProcessor textProcessor;
+        private WordsLowerTextProcessor textProcessor;
         private WordCounter counter;
         private BoringWordsTextProcessor boringWordsTextProcessor;
-        private TextReader textReader;
+        private ITextReader textReader;
         private TagCloudDrawer tagCloudDrawer;
 
         [SetUp]
         public void Setup()
         {
-            textProcessor = new TextProcessor();
+            textProcessor = new WordsLowerTextProcessor();
             counter = new WordCounter();
-            boringWordsTextProcessor = new BoringWordsTextProcessor();
-            textReader = new TextReader();            
+            boringWordsTextProcessor = new BoringWordsTextProcessor();       
         }
 
         [Test]
-        [TestOf(nameof(TextProcessor))]
+        [TestOf(nameof(WordsLowerTextProcessor))]
         public void WhenPassWordsInUppercase_ShouldReturnWordsInLowerCase()
         {
             var text = textProcessor.ProcessText(new[] { "Cloud"}).ToArray();
@@ -77,14 +78,14 @@ namespace TagCloudGeneratorTest
 
         private static TestCaseData[] PathArguments =
         {
-            new TestCaseData("../../../TestsData/testFor.txt").Returns(new [] {"текст", "из", "txt"}).SetName("WithTxtFormat"),
-            new TestCaseData("../../../TestsData/testFor.docx").Returns(new [] {"текст", "из", "docx"}).SetName("WitDocxFormat"),
-            new TestCaseData("../../../TestsData/testFor.pdf").Returns(new [] {"текст", "из", "pdf"}).SetName("WitPdfFormat")
+            new TestCaseData("../../../TestsData/testFor.txt", new TxtReader()).Returns(new [] {"текст", "из", "txt"}).SetName("WithTxtFormat"),
+            new TestCaseData("../../../TestsData/testFor.docx", new DocxReader()).Returns(new [] {"текст", "из", "docx"}).SetName("WitDocxFormat"),
+            new TestCaseData("../../../TestsData/testFor.pdf", new PdfReader()).Returns(new [] {"текст", "из", "pdf"}).SetName("WitPdfFormat")
         };
 
-        [TestOf(nameof(TextReader))]
+        [TestOf(nameof(PdfReader))]
         [TestCaseSource(nameof(PathArguments))]
-        public string[] WhenPassFile_ShouldReturnCorrectResult(string filePath) => textReader.ReadTextFromFile(filePath).ToArray();
+        public string[] WhenPassFile_ShouldReturnCorrectResult(string filePath, ITextReader textReader) => textReader.ReadTextFromFile(filePath).ToArray();
 
         [Test]
         [TestOf(nameof(TagCloudDrawer))]
@@ -114,7 +115,7 @@ namespace TagCloudGeneratorTest
         private Bitmap GetCurrentImage()
         {
             var processors = new []{(ITextProcessor) textProcessor, boringWordsTextProcessor};
-            tagCloudDrawer = new TagCloudDrawer(counter, processors , textReader);
+            tagCloudDrawer = new TagCloudDrawer(counter, processors, new []{(ITextReader) new TxtReader(), new DocxReader(), new PdfReader()});
             var filePath = "../../../TestsData/test7.txt";
             var settings = new TagsCloudVisualization.VisualizingSettings();
             settings.ImageSize = new Size(1300, 1300);
