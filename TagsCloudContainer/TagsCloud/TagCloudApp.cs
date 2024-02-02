@@ -35,15 +35,23 @@ namespace TagsCloudContainer.TagsCloud
         {
             SetFontAndImageSettings(options.FontName, options.ImageWidth, options.ImageHeight);
 
-            var words = _fileReader.ReadFile(options.TextFilePath);
-            var processedWords = _preprocessor.Process(words, options.BoringWordsFilePath);
-            var uniqueWordCount = CountUniqueWords(processedWords);
+            var wordsResult = _fileReader.ReadFile(options.TextFilePath);
 
-            var (fontColor, highlightColor) = GetColors(options.FontColor, options.HighlightColor);
+            if (wordsResult.IsSuccess)
+            {
+                var processedWords = _preprocessor.Process(wordsResult.Value, options.BoringWordsFilePath);
+                var uniqueWordCount = CountUniqueWords(processedWords);
 
-            var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
+                var (fontColor, highlightColor) = GetColors(options.FontColor, options.HighlightColor);
 
-            SaveTagCloudImage(tagCloudImage, outputDirectory, uniqueWordCount);
+                var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
+
+                SaveTagCloudImage(tagCloudImage, outputDirectory, uniqueWordCount);
+            }
+            else
+            {
+                Console.WriteLine($"Error reading file: {wordsResult.ErrorMessage}");
+            }
         }
 
         private (Color fontColor, Color highlightColor) GetColors(string fontColorName, string highlightColorName)
@@ -122,13 +130,13 @@ namespace TagsCloudContainer.TagsCloud
         public static Point CalculateCenter(int width, int height)
         {
             return new Point(width / Half, height / Half);
-        }     
+        }
 
         private CircularCloudLayouter CreateLayouter(double angleStep = DefaultAngleStep, double radiusStep = DefaultRadiusStep)
         {
             var center = CalculateCenter(_imageSettings.Width, _imageSettings.Height);
             var spiral = new Spiral(center, angleStep, radiusStep);
             return new CircularCloudLayouter(center, spiral);
-        }      
+        }
     }
 }

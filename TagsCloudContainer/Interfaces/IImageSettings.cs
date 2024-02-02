@@ -4,8 +4,8 @@ namespace TagsCloudContainer.Interfaces
 {
     public interface IImageSettings
     {
-        Color BackgroundColor { get; }
-        Color FontColor { get; }
+        Color BackgroundColor { get; init; }
+        Color FontColor { get; init; }
         Font GetFont();
         int Width { get; set; }
         int Height { get; set; }
@@ -13,3 +13,4 @@ namespace TagsCloudContainer.Interfaces
         void UpdateImageSettings(int width, int height);
     }
 }
+

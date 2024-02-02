@@ -42,7 +42,5 @@ namespace TagsCloudContainerTests
             Assert.That(options.TextFilePath, Is.EqualTo("src/text.txt"));
             Assert.That(options.FontColor, Is.EqualTo("Green"));
         }
-
-
     }
 }

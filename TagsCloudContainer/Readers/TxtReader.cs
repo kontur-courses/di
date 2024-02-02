@@ -1,10 +1,11 @@
 ﻿using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Utility;
 
 namespace TagsCloudContainer.Readers
 {
     public class TxtReader : IFileReader
     {
-        public IEnumerable<string> ReadWords(string filePath)
+        public Result<IEnumerable<string>> ReadWords(string filePath)
         {
             try
             {
@@ -14,12 +15,11 @@ namespace TagsCloudContainer.Readers
 
                 var nonEmptyWords = words.Where(word => !string.IsNullOrEmpty(word));
 
-                return nonEmptyWords;
+                return Result<IEnumerable<string>>.Success(nonEmptyWords);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading file: {ex.Message}");
-                return Enumerable.Empty<string>();
+                return Result<IEnumerable<string>>.Failure($"Error reading file: {ex.Message}");
             }
         }
     }

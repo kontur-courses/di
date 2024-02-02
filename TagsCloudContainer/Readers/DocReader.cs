@@ -1,27 +1,29 @@
 ﻿using Spire.Doc;
 using Spire.Doc.Documents;
 using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Utility;
 
 namespace TagsCloudContainer.Readers
 {
     public class DocReader : IFileReader
     {
-        public IEnumerable<string> ReadWords(string filePath)
+        public Result<IEnumerable<string>> ReadWords(string filePath)
         {
             try
             {
                 var document = new Document();
                 document.LoadFromFile(filePath);
 
-                return document.Sections
+                var words = document.Sections
                     .Cast<Section>()
                     .SelectMany(section => section.Paragraphs.Cast<Paragraph>())
                     .SelectMany(paragraph => paragraph.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+
+                return Result<IEnumerable<string>>.Success(words);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading .doc file: {ex.Message}");
-                return Enumerable.Empty<string>();
+                return Result<IEnumerable<string>>.Failure($"Error reading .doc file: {ex.Message}");
             }
         }
     }

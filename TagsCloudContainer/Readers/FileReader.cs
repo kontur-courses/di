@@ -2,31 +2,48 @@
 using TagsCloudContainer.Enums;
 using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.Readers;
+using TagsCloudContainer.Utility;
 
 namespace TagsCloudContainer.TagsCloud
 {
     public class FileReader
     {
-        public IEnumerable<string> ReadFile(string filePath)
+        public Result<IEnumerable<string>> ReadFile(string filePath)
         {
-            var fileReader = GetFileReader(filePath);
-            return fileReader.ReadWords(filePath);
+            var fileReaderResult = GetFileReader(filePath);
+
+            if (fileReaderResult.IsSuccess)
+            {
+                var fileReader = fileReaderResult.Value;
+                return fileReader.ReadWords(filePath);
+            }
+            else
+            {
+                return Result<IEnumerable<string>>.Failure(fileReaderResult.ErrorMessage);
+            }
         }
 
-        private IFileReader GetFileReader(string filePath)
+        private Result<IFileReader> GetFileReader(string filePath)
         {
-            FileType fileType = GetFileType(filePath);
-
-            switch (fileType)
+            try
             {
-                case FileType.Doc:
-                    return new DocReader();
-                case FileType.Docx:
-                    return new DocxReader();
-                case FileType.Txt:
-                    return new TxtReader();
-                default:
-                    throw new InvalidOperationException("Unsupported file extension");
+                FileType fileType = GetFileType(filePath);
+
+                switch (fileType)
+                {
+                    case FileType.Doc:
+                        return Result<IFileReader>.Success(new DocReader());
+                    case FileType.Docx:
+                        return Result<IFileReader>.Success(new DocxReader());
+                    case FileType.Txt:
+                        return Result<IFileReader>.Success(new TxtReader());
+                    default:
+                        return Result<IFileReader>.Failure("Unsupported file extension");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Result<IFileReader>.Failure($"Error getting file reader: {ex.Message}");
             }
         }
 

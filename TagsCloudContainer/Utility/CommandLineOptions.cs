@@ -31,7 +31,5 @@ namespace TagsCloudContainer.Utility
 
         [Option('p', "percentageToHighlight", Required = false, Default=0.2, HelpText = "Percentage To Highlight popular words")]
         public double PercentageToHighLight { get; set; }      
-
-
     }
 }

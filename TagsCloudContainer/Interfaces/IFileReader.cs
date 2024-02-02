@@ -1,8 +1,10 @@
 ﻿
+using TagsCloudContainer.Utility;
+
 namespace TagsCloudContainer.Interfaces
 {
     public interface IFileReader
     {
-        IEnumerable<string> ReadWords(string filePath);
+        Result<IEnumerable<string>> ReadWords(string filePath);
     }
 }

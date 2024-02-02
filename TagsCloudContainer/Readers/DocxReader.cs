@@ -1,11 +1,12 @@
 ﻿using NPOI.XWPF.UserModel;
 using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Utility;
 
 namespace TagsCloudContainer.Readers
 {
     public class DocxReader : IFileReader
     {
-        public IEnumerable<string> ReadWords(string filePath)
+        public Result<IEnumerable<string>> ReadWords(string filePath)
         {
             var words = new List<string>();
 
@@ -18,13 +19,13 @@ namespace TagsCloudContainer.Readers
                         words.AddRange(paragraph.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries));
                     }
                 }
+
+                return Result<IEnumerable<string>>.Success(words);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading .docx file: {ex.Message}");
+                return Result<IEnumerable<string>>.Failure($"Error reading .docx file: {ex.Message}");
             }
-
-            return words;
         }
     }
 }

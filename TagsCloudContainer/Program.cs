@@ -10,14 +10,14 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<CommandLineOptions>(args)
-                    .WithParsed(o =>
+                    .WithParsed(options =>
                     {
                         using (var serviceProvider = Startup.ConfigureServices())
                         {
                             var tagCloudApp = serviceProvider.GetRequiredService<TagCloudApp>();
-                            tagCloudApp.Run(o);
+                            tagCloudApp.Run(options);
                         }
                     });
-        }                
+        }   
     }
 }
