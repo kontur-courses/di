@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <RootNamespace>TagCloudTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,7 +19,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
       <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="testFiles\boringWords.txt">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Update="testFiles\in.txt">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

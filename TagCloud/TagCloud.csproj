@@ -11,4 +11,9 @@
       <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.0.0" />
+      <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.0" />
+    </ItemGroup>
+
 </Project>
