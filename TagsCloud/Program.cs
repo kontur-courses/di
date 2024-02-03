@@ -12,12 +12,9 @@ public class Program
         var options = CommandLine.Parser.Default.ParseArguments<Options>(args).Value;
         var container = ContainerConfig.Configure(options);
 
-        using (var scope = container.BeginLifetimeScope())
-        {
-            var app = scope.Resolve<IApp>();
-            var o = scope.Resolve<Options>().PartsOfSpeech.Count();
-            Console.WriteLine(o);
-            app.Run();
-        }
+        using var scope = container.BeginLifetimeScope();
+
+        var app = scope.Resolve<IApp>();
+        app.Run();
     }
 }

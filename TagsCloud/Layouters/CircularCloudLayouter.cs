@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloud.Distributors;
 using TagsCloud.Entities;
-using TagsCloud.WordSizeCalculators;
+using TagsCloud.WordFontCalculators;
 
 namespace TagsCloud.Layouters;
 
@@ -45,7 +45,7 @@ public class CircularCloudLayouter : ILayouter
                 rectangle.Location = distributor.GetNextPosition();
             }
 
-            rectangle = ComperessRectangle(rectangle);
+            rectangle = CompressRectangleToCenter(rectangle);
             UpdateImageSize(rectangle);
             var newtag = new Tag(rectangle, tagFont, tag.Key);
             tags.Add(newtag);
@@ -75,12 +75,12 @@ public class CircularCloudLayouter : ILayouter
         bottomBorder = bottom < bottomBorder ? bottom : bottomBorder;
     }
 
-    private bool CheckIntersection(Rectangle currRectangle)
+    private bool CheckIntersection(Rectangle currentRectangle)
     {
-        return tags.Any(rec => currRectangle.IntersectsWith(rec.TagRectangle));
+        return tags.Any(rec => currentRectangle.IntersectsWith(rec.TagRectangle));
     }
 
-    private Rectangle ComperessRectangle(Rectangle rectangle)
+    private Rectangle CompressRectangleToCenter(Rectangle rectangle)
     {
         var changes = 1;
         while (changes > 0)

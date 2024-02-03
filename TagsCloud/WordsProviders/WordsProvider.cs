@@ -2,7 +2,7 @@
 using TagsCloud.ConsoleCommands;
 using TagsCloud.WordValidators;
 
-namespace TagsCloud.TextReaders;
+namespace TagsCloud.WordsProviders;
 
 public class WordsProvider : IWordsProvider
 {

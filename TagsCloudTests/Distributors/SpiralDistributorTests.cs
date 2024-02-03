@@ -2,7 +2,7 @@
 using FluentAssertions;
 using TagsCloud.Distributors;
 
-namespace TagsCloudTests;
+namespace TagsCloudTests.Distributors;
 
 [TestFixture]
 public class SpiralDistributorTests
@@ -19,7 +19,7 @@ public class SpiralDistributorTests
 
 
     [Test]
-    public void SprialDistribution_Initialize__Default_Params()
+    public void SprialDistributor_InitializeDefaultParams()
     {
         spiralDistribution.Center.Should().Be(center);
         spiralDistribution.Angle.Should().Be(0);
@@ -29,7 +29,7 @@ public class SpiralDistributorTests
     }
 
     [Test]
-    public void SprialDistribution_Initialize__Custom_Params()
+    public void SprialDistribution_InitializeCustomParams()
     {
         var customCenter = new Point(1, 1);
         var customSpiralDistribution = new SpiralDistributor(customCenter, 0.6, 0.7);
@@ -42,26 +42,26 @@ public class SpiralDistributorTests
     [TestCase(0, 1, TestName = "When_AngleStep_Is_Zero")]
     [TestCase(0.6, -1, TestName = "When_Radius_Is_Negative")]
     [TestCase(0.6, 0, TestName = "When_Radius_Is_Zero")]
-    public void SpiralDistribution_Initialize_Throw_ArgumentException(double angleStep, double radiusStep)
+    public void SpiralDistributionConstructor_ShouldThrowArgumentException(double angleStep, double radiusStep)
     {
         Assert.Throws<ArgumentException>(() => new SpiralDistributor(center, angleStep, radiusStep));
     }
 
     [Test]
-    public void SpiralDistribution_First_Call_GetNextPoint_Should_Return_Center()
+    public void SpiralDistribution_ShouldReturnCenter_WhenFirstCallGetNextPoint()
     {
         spiralDistribution.GetNextPosition().Should().Be(center);
     }
 
     [Test]
-    public void SpiralDistribution_Should_Increase_Angle_After_Call_GetNextPoint()
+    public void SpiralDistribution_ShouldIncreaseAngle_WhenCallGetNextPoint()
     {
         spiralDistribution.GetNextPosition();
         spiralDistribution.Angle.Should().Be(spiralDistribution.AngleStep);
     }
 
     [Test]
-    public void SpiralDistribution_Should_Increase_Radius_When_Angle_More_Than_2Pi()
+    public void SpiralDistribution_ShouldIncreaseRadius_WhenAngleMoreThan2Pi()
     {
         var expectedAngle = spiralDistribution.Angle * 64 - 2 * Math.PI;
         for (var i = 0; i < 63; i++) spiralDistribution.GetNextPosition();

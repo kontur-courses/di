@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.WordSizeCalculators;
+namespace TagsCloud.WordFontCalculators;
 
 public interface IWordFontCalculator
 {

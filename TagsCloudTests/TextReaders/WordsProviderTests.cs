@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
 using TagsCloud.ConsoleCommands;
-using TagsCloud.TextReaders;
+using TagsCloud.WordsProviders;
 using TagsCloud.WordValidators;
 
-namespace TagsCloudTests;
+namespace TagsCloudTests.TextReaders;
 
 [TestFixture]
 public class WordsProviderTests
@@ -20,7 +20,7 @@ public class WordsProviderTests
 
 
     [Test]
-    public void ReadTextFromIncorrectFilePath()
+    public void WordsProvider_ShouldThrowFileNotFoundException_WhenReadTextFromIncorrectFilePath()
     {
         var options = new Options();
         options.InputFile =
@@ -30,7 +30,7 @@ public class WordsProviderTests
     }
 
     [Test]
-    public void ReadTextFromFile()
+    public void WordsProvider_ShouldReadTextFromFile()
     {
         var options = new Options();
         options.InputFile =

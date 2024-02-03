@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 using FluentAssertions;
-using NUnit.Framework.Interfaces;
 using TagsCloud.ConsoleCommands;
 using TagsCloud.Distributors;
 using TagsCloud.Layouters;
-using TagsCloud.WordSizeCalculators;
+using TagsCloud.WordFontCalculators;
 
 namespace TagsCloudTests.Layouters;
 
@@ -29,7 +28,7 @@ public class CircularLayouterTests
         private SpiralDistributor distributor;
 
         [Test]
-        public void CircularCloudLayouter_Initialize_Params()
+        public void CircularCloudLayouter_InitializeParams()
         {
             tagsCloud.GetTagsCollection().Count().Should().Be(0);
             tagsCloud.Center.Should().Be(center);
@@ -37,14 +36,14 @@ public class CircularLayouterTests
 
 
         [Test]
-        public void PutNextRectangle_Should_Place_First_On_Center()
+        public void PutNextRectangle_ShouldPlaceFirstOnCenter()
         {
             tagsCloud.CreateTagCloud(new Dictionary<string, int>() { { "Реваванат", 3 } });
             tagsCloud.GetTagsCollection().ToArray()[0].TagRectangle.Location.Should().Be(center);
         }
 
         [Test]
-        public void CircularCloudLayouter_Should_Has_No_Intersections_When_1000_Words()
+        public void CircularCloudLayouter_ShouldHasNoIntersections_When1000Words()
         {
             tagsCloud.CreateTagCloud(GetRandomWordsDictionary());
             tagsCloud.GetTagsCollection().Any(tag1 =>
@@ -54,7 +53,7 @@ public class CircularLayouterTests
         }
 
         [Test]
-        public void CircularCloudLayouter_Should_Be_Close_To_Circle()
+        public void CircularCloudLayouter_ShouldBeCloseToCircle()
         {
             var randomDict = GetRandomWordsDictionary();
             tagsCloud.CreateTagCloud(randomDict);

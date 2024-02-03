@@ -1,6 +1,6 @@
 ﻿using TagsCloud.Layouters;
 using TagsCloud.TagsCloudPainters;
-using TagsCloud.TextReaders;
+using TagsCloud.WordsProviders;
 
 namespace TagsCloud.App;
 
@@ -20,6 +20,6 @@ public class App : IApp
     public void Run()
     {
         layouter.CreateTagCloud(wordsProvider.GetWords());
-        painter.DrawCloud(layouter);
+        painter.DrawCloud(layouter.GetTagsCollection(),layouter.GetImageSize());
     }
 }

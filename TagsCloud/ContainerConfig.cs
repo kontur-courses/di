@@ -5,8 +5,8 @@ using TagsCloud.ConsoleCommands;
 using TagsCloud.Distributors;
 using TagsCloud.Layouters;
 using TagsCloud.TagsCloudPainters;
-using TagsCloud.TextReaders;
-using TagsCloud.WordSizeCalculators;
+using TagsCloud.WordsProviders;
+using TagsCloud.WordFontCalculators;
 using TagsCloud.WordValidators;
 
 

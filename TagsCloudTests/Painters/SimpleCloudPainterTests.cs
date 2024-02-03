@@ -6,9 +6,8 @@ using TagsCloud.ConsoleCommands;
 using TagsCloud.Entities;
 using TagsCloud.Layouters;
 using TagsCloud.TagsCloudPainters;
-using TagsCloud.WordValidators;
 
-namespace TagsCloudTests.TagsCloudPainters;
+namespace TagsCloudTests.Painters;
 
 public class SimpleCloudPainterTests
 {
@@ -35,16 +34,16 @@ public class SimpleCloudPainterTests
     private string testFilePath;
 
     [Test]
-    public void CloudLayouterDrawer_Initialize_Throws_ArgumentException_When_Rectangles_length_Is_Zero()
+    public void CloudLayouterDrawerConstructor_ThrowsArgumentException_WhenRectanglesLengthIsZero()
     {
         var layouter = new Mock<ILayouter>();
         layouter.Setup(l => l.GetTagsCollection()).Returns(new List<Tag>(){});
         layouter.Setup(l => l.GetImageSize()).Returns(new Size(500, 500));
-        Assert.Throws<ArgumentException>(() => painter.DrawCloud(layouter.Object));
+        Assert.Throws<ArgumentException>(() => painter.DrawCloud(layouter.Object.GetTagsCollection(),layouter.Object.GetImageSize()));
     }
 
     [Test]
-    public void CloudLayouterDrawer_IsCreate_Image()
+    public void CloudLayouterDrawer_ShouldCreateImage()
     {
         var layouter = new Mock<ILayouter>();
         layouter.Setup(l => l.GetTagsCollection()).Returns(new List<Tag>()
@@ -52,7 +51,7 @@ public class SimpleCloudPainterTests
             new Tag(new Rectangle(0, 0, 5, 5), new Font("Arial", 10), "Hello")
         });
         layouter.Setup(l => l.GetImageSize()).Returns(new Size(500, 500));
-        painter.DrawCloud(layouter.Object);
+        painter.DrawCloud(layouter.Object.GetTagsCollection(),layouter.Object.GetImageSize());
         File.Exists(testFilePath).Should().BeTrue();
     }
 }

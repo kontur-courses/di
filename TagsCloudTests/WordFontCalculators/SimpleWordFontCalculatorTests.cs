@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using TagsCloud.ConsoleCommands;
-using TagsCloud.WordSizeCalculators;
+using TagsCloud.WordFontCalculators;
 
 namespace TagsCloudTests.WordFontCalculators;
 
@@ -13,7 +13,7 @@ public class SimpleWordFontCalculatorTests
     [TestCase("Work", 12)]
     [TestCase("Home", 5)]
     [TestCase("Big", 134)]
-    public void SimpleWordFontCalculator_Should_Return_FontSize_As_Word_Count(string word, int count)
+    public void SimpleWordFontCalculator_ShouldReturnFontSizeAsWordCount(string word, int count)
     {
         var options = new Options() { TagsFont = "Arial" };
         var fontCalculator = new SimpleWordFontCalculator(options);

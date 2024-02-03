@@ -6,9 +6,9 @@ public class SpiralDistributor : IDistributor
 {
     public double Angle { get; private set; }
     public double Radius { get; private set; }
-    public readonly double AngleStep;
-    public readonly double RadiusStep;
-    public readonly Point Center;
+    public double AngleStep { get; private set; }
+    public double RadiusStep { get; private set; }
+    public Point Center { get; private set; }
 
     public SpiralDistributor(Point center = new Point(), double angleStep = 0.1, double radiusStep = 0.1)
     {

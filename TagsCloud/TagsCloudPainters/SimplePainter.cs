@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using TagsCloud.ColorGenerators;
 using TagsCloud.ConsoleCommands;
+using TagsCloud.Entities;
 using TagsCloud.Layouters;
 
 
@@ -22,29 +23,25 @@ public class SimplePainter : IPainter
         this.backgroundColor = Color.FromName(options.Background);
     }
 
-    public void DrawCloud(ILayouter layouter)
+    public void DrawCloud(IEnumerable<Tag> tags, Size size)
     {
-        var tags = layouter.GetTagsCollection();
         if (!tags.Any())
             throw new ArgumentException();
-        var bitmapsize = imageSize.IsEmpty ? layouter.GetImageSize() : imageSize;
+        var bitmapsize = imageSize.IsEmpty ? size : imageSize;
 
-        using (var bitmap = new Bitmap(bitmapsize.Width, bitmapsize.Height))
+        using var bitmap = new Bitmap(bitmapsize.Width, bitmapsize.Height);
+        using var g = Graphics.FromImage(bitmap);
+        g.Clear(backgroundColor);
+        foreach (var tag in tags)
         {
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                g.Clear(backgroundColor);
-                foreach (var tag in tags)
-                {
-                    var color = colorGenerator.GetTagColor(tag);
-                    var brush = new SolidBrush(color);
-                    g.DrawString(tag.Content, tag.Font, brush,
-                        GetTagPositionOnImage(tag.TagRectangle.Location, imageSize));
-                }
-            }
-
-            SaveImageToFile(bitmap, filename);
+            var color = colorGenerator.GetTagColor(tag);
+            var brush = new SolidBrush(color);
+            g.DrawString(tag.Content, tag.Font, brush,
+                GetTagPositionOnImage(tag.TagRectangle.Location, imageSize));
         }
+
+
+        SaveImageToFile(bitmap, filename);
     }
 
     private Point GetTagPositionOnImage(Point position, Size size)

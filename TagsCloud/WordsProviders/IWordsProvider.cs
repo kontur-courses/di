@@ -1,6 +1,6 @@
 ﻿using TagsCloud.WordValidators;
 
-namespace TagsCloud.TextReaders;
+namespace TagsCloud.WordsProviders;
 
 public interface IWordsProvider
 {
