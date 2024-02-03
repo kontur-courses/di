@@ -4,7 +4,7 @@ using TagsCloud.ConsoleCommands;
 using TagsCloud.WordsProviders;
 using TagsCloud.WordValidators;
 
-namespace TagsCloudTests.TextReaders;
+namespace TagsCloudTests.WordsProviders;
 
 [TestFixture]
 public class WordsProviderTests
@@ -35,7 +35,7 @@ public class WordsProviderTests
         var options = new Options();
         options.InputFile =
             Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName.Replace("\\bin", ""),
-                "TextReaders", "input.txt");
+                "WordsProviders", "input.txt");
         var words = new WordsProvider(validator.Object, options).GetWords();
         var dict = new Dictionary<string, int>()
         {
