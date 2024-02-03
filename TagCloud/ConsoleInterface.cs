@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace TagCloud;
@@ -100,7 +101,7 @@ public class ConsoleInterface : IProgramInterface
                                        tagCloudSettings.InputFile,
                                        tagCloudSettings.BoringWordsFile);
 
-            bitmap.Save(tagCloudSettings.OutputFile);
+            bitmap.Save(tagCloudSettings.OutputFile, ImageFormat.Png);
         }
 
         private static Bitmap GetCloudImage(ITagCloudCreatorFactory tagCloudCreatorFactory, Size pictureSize,

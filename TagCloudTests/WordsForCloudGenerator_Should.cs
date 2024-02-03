@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using FluentAssertions;
 using TagCloud;
 using TagCloud.Factory;
@@ -79,8 +80,8 @@ public class WordsForCloudGenerator_Should
                  50,
                  "in.txt",
                  null);
-        tagCloudCreatorWithBoringWords.GetCloud().Save("WithBoringWords.bmp");
-        File.Exists("WithBoringWords.bmp").Should().BeTrue();
+        tagCloudCreatorWithBoringWords.GetCloud().Save("WithBoringWords.png", ImageFormat.Png);
+        File.Exists("WithBoringWords.png").Should().BeTrue();
     }
 
     [Test]
@@ -94,7 +95,7 @@ public class WordsForCloudGenerator_Should
                  50,
                  "in.txt",
                  "boringWords.txt");
-        tagCloudCreatorWithoutBoringWords.GetCloud().Save("WithoutBoringWords.bmp");
-        File.Exists("WithoutBoringWords.bmp").Should().BeTrue();
+        tagCloudCreatorWithoutBoringWords.GetCloud().Save("WithoutBoringWords.png", ImageFormat.Png);
+        File.Exists("WithoutBoringWords.png").Should().BeTrue();
     }
 }
