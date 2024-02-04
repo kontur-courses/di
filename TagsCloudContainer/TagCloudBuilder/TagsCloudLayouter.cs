@@ -2,7 +2,6 @@
 using TagsCloudContainer;
 using TagsCloudContainer.SettingsClasses;
 
-//[assembly: InternalsVisibleToAttribute("TagsCloudTests")]
 namespace TagsCloudVisualization
 {
     public class TagsCloudLayouter
