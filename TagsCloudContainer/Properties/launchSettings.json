@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudContainer": {
+      "commandName": "Project",
+      "commandLineArgs": "-f sample.txt -o testout.png --exclude excludedWords.txt --font Calibri --colors Gold,Pink,LightGoldenrodYellow --layout SpiralPointsProvider --fontsize 12 --size 500,500 --background Blue"
+    }
+  }
+}
