@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Interfaces
         int Width { get; set; }
         int Height { get; set; }
 
-        void UpdateImageSettings(int width, int height);
+        void UpdateSettings(int width, int height);
     }
 }
 

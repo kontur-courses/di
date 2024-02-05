@@ -15,7 +15,7 @@ namespace TagsCloudContainer.TagsCloud
             return new Font("Verdana", 20);
         }
 
-        public void UpdateImageSettings(int width, int height)
+        public void UpdateSettings(int width, int height)
         {
             Width = width;
             Height = height;

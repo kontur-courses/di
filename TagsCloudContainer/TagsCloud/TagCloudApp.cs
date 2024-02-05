@@ -39,19 +39,23 @@ namespace TagsCloudContainer.TagsCloud
 
             if (wordsResult.IsSuccess)
             {
-                var processedWords = _preprocessor.Process(wordsResult.Value, options.BoringWordsFilePath);
-                var uniqueWordCount = CountUniqueWords(processedWords);
-
-                var (fontColor, highlightColor) = GetColors(options.FontColor, options.HighlightColor);
-
-                var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
-
-                SaveTagCloudImage(tagCloudImage, outputDirectory, uniqueWordCount);
+                ProcessAndGenerateTagCloud(wordsResult.Value, options);
             }
             else
             {
                 Console.WriteLine($"Error reading file: {wordsResult.ErrorMessage}");
             }
+        }
+
+        private void ProcessAndGenerateTagCloud(IEnumerable<string> words, CommandLineOptions options)
+        {
+            var processedWords = _preprocessor.Process(words, options.BoringWordsFilePath);
+            var uniqueWordCount = CountUniqueWords(processedWords);
+            var (fontColor, highlightColor) = GetColors(options.FontColor, options.HighlightColor);
+
+            var tagCloudImage = GenerateTagCloud(processedWords, options.FontName, fontColor, highlightColor, options.PercentageToHighLight);
+
+            SaveTagCloudImage(tagCloudImage, outputDirectory, uniqueWordCount);
         }
 
         private (Color fontColor, Color highlightColor) GetColors(string fontColorName, string highlightColorName)
@@ -62,7 +66,7 @@ namespace TagsCloudContainer.TagsCloud
         private void SetFontAndImageSettings(string fontName, int imageWidth, int imageHeight)
         {
             SetFontName(fontName);
-            _imageSettings.UpdateImageSettings(imageWidth, imageHeight);
+            _imageSettings.UpdateSettings(imageWidth, imageHeight);
         }
 
         public void SaveTagCloudImage(Bitmap tagCloudImage, string outputDirectory, int uniqueWordCount)

@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
 using TagsCloudContainer.Enums;
 using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.Readers;
@@ -47,21 +47,30 @@ namespace TagsCloudContainer.TagsCloud
             }
         }
 
-        private FileType GetFileType(string filePath)
+        static FileType GetFileType(string filePath)
         {
             string fileExtension = Path.GetExtension(filePath)?.ToLower();
 
-            switch (fileExtension)
+            var fileTypes = Enum.GetValues(typeof(FileType)).Cast<FileType>();
+
+            foreach (var fileType in fileTypes)
             {
-                case ".doc":
-                    return FileType.Doc;
-                case ".docx":
-                    return FileType.Docx;
-                case ".txt":
-                    return FileType.Txt;
-                default:
-                    throw new InvalidOperationException("Unsupported file extension");
+                var descriptionAttribute = GetEnumDescription(fileType);
+                if (descriptionAttribute != null && descriptionAttribute.Equals(fileExtension))
+                {
+                    return fileType;
+                }
             }
+
+            throw new InvalidOperationException("Unsupported file extension");
+        }
+
+        static string GetEnumDescription(Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+            var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+
+            return attribute?.Description;
         }
     }
 }
