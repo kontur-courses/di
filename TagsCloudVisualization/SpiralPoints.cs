@@ -18,8 +18,8 @@ public sealed class SpiralPoints : IPoints
     /// </exception>
     public IEnumerable<Point> GetPoints()
     {
-        double radius = 0;
-        var term = radiusStep / 360;
+        var radius = 0d;
+        var shift = radiusStep / 360;
         while (true)
         {
             for (var pointNumber = 0; pointNumber < 360; pointNumber++)
@@ -28,7 +28,7 @@ public sealed class SpiralPoints : IPoints
                 var currentPoint = new Point(center.X, center.Y);
                 currentPoint.Offset((int)(Math.Cos(pointAngle) * radius), (int)(Math.Sin(pointAngle) * radius));
                 yield return currentPoint;
-                radius += term;
+                radius += shift;
             }
         }
     }

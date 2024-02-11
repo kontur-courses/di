@@ -10,7 +10,7 @@ public class CloudDrawer : ICloudDrawer
         this.pictureSize = pictureSize;
     }
 
-    public Bitmap DrawCloud(IEnumerable<WordForCloud> wordsForCloud)
+    public Bitmap DrawCloud(IEnumerable<Tag> wordsForCloud)
     {
         var bitmap = new Bitmap(pictureSize.Width, pictureSize.Height);
         var gr = Graphics.FromImage(bitmap);

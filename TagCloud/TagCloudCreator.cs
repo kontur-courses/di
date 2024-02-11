@@ -1,17 +1,18 @@
 ﻿using System.Drawing;
+using TagCloud.Interfaces;
 
 namespace TagCloud;
 
 public class TagCloudCreator : ITagCloudCreator
 {
-    private readonly IWordsForCloudGenerator wordsForCloudGenerator;
+    private readonly ITagGenerator tagGenerator;
     private readonly IWordsReader wordsReader;
     private readonly IWordsNormalizer wordsNormalizer;
     private readonly ICloudDrawer cloudDrawer;
     private readonly string inputFile;
     private readonly string boringWordsFile;
 
-    public TagCloudCreator(IWordsForCloudGenerator wordsForCloudGenerator,
+    public TagCloudCreator(ITagGenerator tagGenerator,
         IWordsReader wordsReader,
         IWordsNormalizer wordsNormalizer,
         ICloudDrawer cloudDrawer,
@@ -21,7 +22,7 @@ public class TagCloudCreator : ITagCloudCreator
         this.wordsNormalizer = wordsNormalizer;
         this.cloudDrawer = cloudDrawer;
         this.wordsReader = wordsReader;
-        this.wordsForCloudGenerator = wordsForCloudGenerator;
+        this.tagGenerator = tagGenerator;
         this.inputFile = inputFile;
         this.boringWordsFile = boringWordsFile;
     }
@@ -30,7 +31,7 @@ public class TagCloudCreator : ITagCloudCreator
     {
         var words = wordsReader.Get(inputFile);
         var normalizedWords = wordsNormalizer.NormalizeWords(words, wordsReader.Get(boringWordsFile).Select(x=>x.ToLower()).ToHashSet());
-        var wordsForCloud = wordsForCloudGenerator.Generate(normalizedWords);
+        var wordsForCloud = tagGenerator.Generate(normalizedWords);
         return cloudDrawer.DrawCloud(wordsForCloud);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TagCloud;
 
-public class WordForCloud
+public class Tag
 {
     public Font Font { get; }
     public int FontSize { get; }
@@ -11,7 +11,7 @@ public class WordForCloud
     public string Word { get; }
     public Color WordColor { get; }
 
-    public WordForCloud(string font, int fontSize, string word, Rectangle wordSize, Color wordColor)
+    public Tag(string font, int fontSize, string word, Rectangle wordSize, Color wordColor)
     {
         Font = new Font(font, fontSize);
         FontSize = fontSize;
