@@ -1,6 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudGenerator", "TagCloudGenerator\TagCloudGenerator.csproj", "{B14E37AB-3A55-4A1E-BCF9-D0D85C0384DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{750BDDAD-260C-4F5E-90D1-7078A046B7E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudVisualizationTest", "TagsCloudVisualizationTest\TagsCloudVisualizationTest.csproj", "{E29A8867-98CD-435A-89B7-C1BD9BC88C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGeneratorTest", "TagCloudGeneratorTest\TagCloudGeneratorTest.csproj", "{FFB804BC-7EA1-48FE-BF2C-64D1FB3D92CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +23,27 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14E37AB-3A55-4A1E-BCF9-D0D85C0384DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14E37AB-3A55-4A1E-BCF9-D0D85C0384DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14E37AB-3A55-4A1E-BCF9-D0D85C0384DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14E37AB-3A55-4A1E-BCF9-D0D85C0384DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750BDDAD-260C-4F5E-90D1-7078A046B7E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750BDDAD-260C-4F5E-90D1-7078A046B7E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750BDDAD-260C-4F5E-90D1-7078A046B7E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750BDDAD-260C-4F5E-90D1-7078A046B7E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E29A8867-98CD-435A-89B7-C1BD9BC88C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29A8867-98CD-435A-89B7-C1BD9BC88C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29A8867-98CD-435A-89B7-C1BD9BC88C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A8867-98CD-435A-89B7-C1BD9BC88C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB804BC-7EA1-48FE-BF2C-64D1FB3D92CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB804BC-7EA1-48FE-BF2C-64D1FB3D92CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB804BC-7EA1-48FE-BF2C-64D1FB3D92CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB804BC-7EA1-48FE-BF2C-64D1FB3D92CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAC59976-B8E0-4215-BDC5-AF0D943E6952}
 	EndGlobalSection
 EndGlobal
